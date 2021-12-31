@@ -6,50 +6,19 @@ class ActivityStoreInterface {
     #db;
     #select_sync_members;
     #select_activities_for_member_since;
-    #select_member_by_name;
     #select_character_id;
     #select_activities_for_character_since;
+    #select_weapon_stats;
 
     constructor(db) {
         this.db = db;
+        this.#initStatements();
     }
 
     #initStatements() {
-        this.select_member_by_name = db.prepare('SELECT member.member_id, member.platform_id, member.display_name, member.bungie_display_name, member.bungie_display_name_code from "sync" join member on member.id');
 
-    }
-
-    //TODO: add support for endDate
-    retrieveActivitiesSince(memberId, characterSelection, mode, startDate) {
-
-        //todo: probably should initialize all of these at startup
-        if (this.select_activities_for_member_since === undefined) {
-            this.select_activities_for_member_since = this.db.prepare(
-                `SELECT
-                    *,
-                    activity.mode as activity_mode,
-                    activity.id as activity_index_id,
-                    character_activity_stats.id as character_activity_stats_index  
-                FROM
-                    character_activity_stats
-                INNER JOIN
-                    activity ON character_activity_stats.activity = activity.id,
-                    character on character_activity_stats.character = character.id,
-                    member on member.id = character.member
-                WHERE
-                    member.id = (select id from member where member_id = @memberId) AND
-                    period > @startMoment AND
-                    period < @endMoment AND
-                    exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
-                    not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
-                ORDER BY
-                    activity.period DESC`);
-        }
-
-        if (this.select_activities_for_character_since === undefined) {
-
-            this.select_activities_for_character_since = this.db.prepare(
-                `SELECT
+        this.select_activities_for_member_since = this.db.prepare(
+            `SELECT
                 *,
                 activity.mode as activity_mode,
                 activity.id as activity_index_id,
@@ -62,16 +31,59 @@ class ActivityStoreInterface {
                 member on member.id = character.member
             WHERE
                 member.id = (select id from member where member_id = @memberId) AND
-                activity.period > @startMoment AND
-                activity.period < @endMoment AND
+                period > @startMoment AND
+                period < @endMoment AND
                 exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
-                not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId) AND
-                character_activity_stats.character = character.id AND
-                character.class = @characterClassId
+                not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
             ORDER BY
                 activity.period DESC`);
-        }
 
+        this.select_activities_for_character_since = this.db.prepare(
+            `SELECT
+                    *,
+                    activity.mode as activity_mode,
+                    activity.id as activity_index_id,
+                    character_activity_stats.id as character_activity_stats_index  
+                FROM
+                    character_activity_stats
+                INNER JOIN
+                    activity ON character_activity_stats.activity = activity.id,
+                    character on character_activity_stats.character = character.id,
+                    member on member.id = character.member
+                WHERE
+                    member.id = (select id from member where member_id = @memberId) AND
+                    activity.period > @startMoment AND
+                    activity.period < @endMoment AND
+                    exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
+                    not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId) AND
+                    character_activity_stats.character = character.id AND
+                    character.class = @characterClassId
+                ORDER BY
+                    activity.period DESC`);
+
+        this.select_sync_members = this.db.prepare('SELECT "member_id", "platform_id", "display_name", "bungie_display_name", "bungie_display_name_code" from sync join member on sync.member = member.id');
+
+        this.select_weapon_stats = this.db.prepare(`
+            SELECT
+                *
+            FROM
+                weapon_result
+            WHERE character_activity_stats = @characterActivityStatsRowIndex
+        `);
+
+        this.select_medals = this.db.prepare(`
+            SELECT
+                *
+            FROM
+                medal_result
+            WHERE
+                character_activity_stats = @characterActivityStatsRowIndex
+        `);
+
+    }
+
+    //TODO: add support for endDate
+    retrieveActivitiesSince(memberId, characterSelection, mode, startDate) {
 
         let restrictMode = -1;
         if (mode.isPrivate()) {
@@ -107,17 +119,131 @@ class ActivityStoreInterface {
             });
         }
 
-        return rows;
-    }
+        let activities = [];
+        for (let r of rows) {
+            let stats = this.parseCrucibleStats(r);
 
-    retrieveSyncMembers() {
-        if (this.select_sync_members == undefined) {
-            this.select_sync_members = this.db.prepare('SELECT "member_id", "platform_id", "display_name", "bungie_display_name", "bungie_display_name_code" from sync join member on sync.member = member.id');
+            let player = {
+                classType: r.class,
+            };
+
+            let summary = {
+                period: r.period,
+                activityId: r.activity_id,
+                mode: r.mode,
+                platform: r.platform,
+                directorActivityHash: r.director_activity_hash,
+                referenceId: r.reference_id,
+                player: player,
+                stats: stats,
+            };
+
+
+            activities.push(summary);
         }
 
-        return this.select_sync_members.all();
+        return activities;
     }
 
+    parseCrucibleStats(activityRow) {
+
+        let weapons = this.retrieveWeapons(activityRow.character_activity_stats_index);
+        let medals = this.retrieveMedals(activityRow.character_activity_stats_index);
+
+        let extended = {
+            precisionKills: activityRow.precision_kills,
+            abilityKills: activityRow.weapon_kills_ability,
+            grenadeKills: activityRow.weapon_kills_grenade,
+            meleeKills: activityRow.weapon_kills_melee,
+            superKills: activityRow.weapon_kills_super,
+            all_medals_earned: activityRow.all_medals_earned,
+
+            weapons: weapons,
+            medals: medals,
+        };
+
+        let stats = {
+            assists: activityRow.assists,
+            score: activityRow.score,
+            kills: activityRow.kills,
+            deaths: activityRow.deaths,
+            averageScorePerKill: activityRow.average_score_per_kill,
+            averageScoreRerLife: activityRow.average_score_per_life,
+            completed: activityRow.completed === 1,
+            opponents_defeated: activityRow.opponents_defeated,
+            //efficiency: calculate_efficiency(kills, deaths, assists),
+            //killsDeathsRatio: calculate_kills_deaths_ratio(kills, deaths),
+            //killsDeathsAssists: calculate_kills_deaths_assists(
+            //    kills, deaths, assists,
+            //),
+            activity_duration_seconds: activityRow.activity_duration_seconds,
+            standing: activityRow.standing, //TODO: might need to do something here
+            team: activityRow.team,
+            completionReason: activityRow.completion_reason,
+            startSeconds: activityRow.start_seconds,
+            timePlayedSeconds: activityRow.time_played_seconds,
+            playerCount: activityRow.player_count,
+            teamScore: activityRow.team_score,
+            extended: extended,
+        };
+
+        return stats;
+    }
+
+    retrieveMedals(characterActivityStatsRowIndex) {
+        let rows = this.select_medals.all(
+            { characterActivityStatsRowIndex: characterActivityStatsRowIndex });
+
+        let medals = [];
+
+        for (let r of rows) {
+
+            let id = r.reference_id;
+
+            if (id === "precisionKills" ||
+                id === "weaponKillsAbility" ||
+                id === "weaponKillsGrenade" ||
+                id === "weaponKillsMelee" ||
+                id === "weaponKillsSuper" ||
+                id === "allMedalsEarned") {
+                continue;
+            }
+
+            let item = {
+                id: r.reference_id,
+                count: r.count,
+            };
+
+            medals.push(item);
+        }
+
+        return medals;
+    }
+
+    retrieveWeapons(characterActivityStatsRowIndex) {
+        let rows = this.select_weapon_stats.all({ characterActivityStatsRowIndex: characterActivityStatsRowIndex }
+        );
+
+        let weaponStats = [];
+        for (let r of rows) {
+            let item = {
+                id: r.reference_id,
+                kills: r.kills,
+                precisionKills: r.precision_kills,
+            };
+
+            weaponStats.push(item);
+        }
+
+        return weaponStats;
+    }
+
+
+    retrieveSyncMembers() {
+        return this.select_sync_members.all();
+    }
 }
+
+
 
 module.exports = ActivityStoreInterface;

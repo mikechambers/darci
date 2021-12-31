@@ -55,9 +55,9 @@ app.get("/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (req, r
     console.log(mode);
     console.log(moment.getDate());
 
-    let rows = activityStore.retrieveActivitiesSince(memberId, characterClassSelection, mode, moment.getDate());
+    let activities = activityStore.retrieveActivitiesSince(memberId, characterClassSelection, mode, moment.getDate());
 
-    res.json(rows);
+    res.json(activities);
 });
 
 app.get("/players/", (req, res) => {
