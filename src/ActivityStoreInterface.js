@@ -80,10 +80,12 @@ class ActivityStoreInterface {
                 character_activity_stats = @characterActivityStatsRowIndex
         `);
 
+        this.select_member = this.db.prepare(`select * from member where member_id = @memberId`);
+
     }
 
     //TODO: add support for endDate
-    retrieveActivitiesSince(memberId, characterSelection, mode, startDate) {
+    retrieveActivities(memberId, characterSelection, mode, startDate, endDate) {
 
         let restrictMode = -1;
         if (mode.isPrivate()) {
@@ -99,7 +101,7 @@ class ActivityStoreInterface {
             rows = this.select_activities_for_member_since.all({
                 memberId: memberId,
                 startMoment: startDate.toISOString(),
-                endMoment: (new Date(Date.now())).toISOString(),
+                endMoment: endDate.toISOString(),
                 modeId: mode.id,
                 restrictModeId: restrictMode
             });
@@ -125,6 +127,7 @@ class ActivityStoreInterface {
 
             let player = {
                 classType: r.class,
+                characterId: r.character_id,
             };
 
             let summary = {
@@ -241,6 +244,20 @@ class ActivityStoreInterface {
 
     retrieveSyncMembers() {
         return this.select_sync_members.all();
+    }
+
+    retrieveMember(memberId) {
+
+        let row = this.select_member.get({ memberId: memberId });
+
+        let out = {
+            memberId: row.member_id,
+            bungieDisplayName: row.bungie_display_name,
+            bungieDisplayNameCode: row.bungie_display_name_code,
+            platform: row.platform_id,
+        }
+
+        return out;
     }
 }
 

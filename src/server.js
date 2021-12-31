@@ -55,9 +55,31 @@ app.get("/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (req, r
     console.log(mode);
     console.log(moment.getDate());
 
-    let activities = activityStore.retrieveActivitiesSince(memberId, characterClassSelection, mode, moment.getDate());
+    let endMoment = Moment.NOW;
+    let activities = activityStore.retrieveActivities(memberId, characterClassSelection, mode, moment.getDate(), endMoment.getDate());
 
-    res.json(activities);
+    //query for name, and whether we have synced? maybe only if no activities have returned
+
+    //note: we could get this from the above query.
+    let player = activityStore.retrieveMember(memberId);
+
+    //rename retrieveActivitiesSince to retrieveActivities and pass in end moment date
+    let query = {
+        startDate: moment.getDate(),
+        endDate: endMoment.getDate(),
+        startMoment: moment.toString(),
+        endMoment: endMoment.toString(),
+        mode: mode.toString(),
+        classSelection: characterClassSelection.toString(),
+    }
+
+    let out = {
+        query: query,
+        player: player,
+        activities: activities,
+    }
+
+    res.json(out);
 });
 
 app.get("/players/", (req, res) => {
