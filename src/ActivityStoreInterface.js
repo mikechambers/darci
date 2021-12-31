@@ -61,6 +61,7 @@ class ActivityStoreInterface {
                 character on character_activity_stats.character = character.id,
                 member on member.id = character.member
             WHERE
+                member.id = (select id from member where member_id = @memberId) AND
                 activity.period > @startMoment AND
                 activity.period < @endMoment AND
                 exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
