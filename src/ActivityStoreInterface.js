@@ -22,6 +22,7 @@ class ActivityStoreInterface {
     //TODO: add support for endDate
     retrieveActivitiesSince(memberId, characterSelection, mode, startDate) {
 
+        //todo: probably should initialize all of these at startup
         if (this.select_activities_for_member_since === undefined) {
             this.select_activities_for_member_since = this.db.prepare(
                 `SELECT
