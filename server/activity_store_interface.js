@@ -1,5 +1,5 @@
-const CharacterClassSelection = require("./CharacterClassSelection");
-const Mode = require("./Mode");
+const CharacterClassSelection = require("./character_class_selection");
+const Mode = require("./mode");
 
 class ActivityStoreInterface {
 
@@ -243,7 +243,20 @@ class ActivityStoreInterface {
 
 
     retrieveSyncMembers() {
-        return this.select_sync_members.all();
+
+        let rows = this.select_sync_members.all();
+
+        let out = [];
+        for (let row of rows) {
+            out.push({
+                memberId: row.member_id,
+                bungieDisplayName: row.bungie_display_name,
+                bungieDisplayNameCode: row.bungie_display_name_code,
+                platform: row.platform_id,
+            });
+        }
+
+        return out;
     }
 
     retrieveMember(memberId) {

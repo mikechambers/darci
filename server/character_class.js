@@ -1,4 +1,4 @@
-const EnumBase = require("./EnumBase.js");
+const EnumBase = require("./enum_base.js");
 
 class CharacterClass extends EnumBase {
     static TITAN = new CharacterClass("Titan", 0);

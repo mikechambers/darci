@@ -1,4 +1,4 @@
-const EnumBase = require("./EnumBase");
+const EnumBase = require("./enum_base");
 
 class Moment extends EnumBase {
 

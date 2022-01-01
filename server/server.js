@@ -1,10 +1,10 @@
-const CharacterClassSelection = require("./CharacterClassSelection.js");
+const CharacterClassSelection = require("./character_class_selection.js");
 
 const express = require("express");
 const Database = require('better-sqlite3');
-const Mode = require("./Mode.js");
-const Moment = require("./Moment.js");
-const ActivityStoreInterface = require("./ActivityStoreInterface.js");
+const Mode = require("./mode.js");
+const Moment = require("./moment.js");
+const ActivityStoreInterface = require("./activity_store_interface.js");
 
 const db = new Database('/Users/mesh/Library/Application Support/dcli/dcli.sqlite3',
     { readonly: true, verbose: console.log });
@@ -12,7 +12,7 @@ const db = new Database('/Users/mesh/Library/Application Support/dcli/dcli.sqlit
 const activityStore = new ActivityStoreInterface(db);
 
 const app = express();
-const port = 3000;
+const port = 3001;
 const hostname = "127.0.0.1";
 let counter = 0;
 
@@ -22,6 +22,7 @@ app.get("/", (req, res) => {
     res.setHeader('Content-Type', 'text/plain');
     res.end("Hello World");
 });
+
 
 ///player/member_id/class/mode/moment/end-moment/
 
@@ -82,12 +83,13 @@ app.get("/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (req, r
     res.json(out);
 });
 
-app.get("/players/", (req, res) => {
+app.get("/api/getplayers/", (req, res) => {
 
     let rows = activityStore.retrieveSyncMembers();
 
-    let out = JSON.stringify(rows);
-
+    let out = {
+        players: rows,
+    };
     res.json(out);
 });
 
