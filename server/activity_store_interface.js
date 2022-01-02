@@ -159,7 +159,7 @@ class ActivityStoreInterface {
             grenadeKills: activityRow.weapon_kills_grenade,
             meleeKills: activityRow.weapon_kills_melee,
             superKills: activityRow.weapon_kills_super,
-            all_medals_earned: activityRow.all_medals_earned,
+            //all_medals_earned: activityRow.all_medals_earned,
 
             weapons: weapons,
             medals: medals,
@@ -173,13 +173,13 @@ class ActivityStoreInterface {
             averageScorePerKill: activityRow.average_score_per_kill,
             averageScoreRerLife: activityRow.average_score_per_life,
             completed: activityRow.completed === 1,
-            opponents_defeated: activityRow.opponents_defeated,
+            opponentsDefeated: activityRow.opponents_defeated,
             //efficiency: calculate_efficiency(kills, deaths, assists),
             //killsDeathsRatio: calculate_kills_deaths_ratio(kills, deaths),
             //killsDeathsAssists: calculate_kills_deaths_assists(
             //    kills, deaths, assists,
             //),
-            activity_duration_seconds: activityRow.activity_duration_seconds,
+            activityDurationSeconds: activityRow.activity_duration_seconds,
             standing: activityRow.standing, //TODO: might need to do something here
             team: activityRow.team,
             completionReason: activityRow.completion_reason,
