@@ -6,7 +6,9 @@ const Mode = require("./mode.js");
 const Moment = require("./moment.js");
 const ActivityStoreInterface = require("./activity_store_interface.js");
 
-const db = new Database('/Users/mesh/Library/Application Support/dcli/dcli.sqlite3',
+const dbPath = process.env.DCLI_DB_PATH;
+console.log(`Using data store at: ${dbPath}`);
+const db = new Database(dbPath,
     { readonly: true, verbose: console.log });
 
 const activityStore = new ActivityStoreInterface(db);
