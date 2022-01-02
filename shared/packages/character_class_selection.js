@@ -1,5 +1,6 @@
-const EnumBase = require("./enum_base.js");
-const CharacterClass = require("./character_class.js");
+const { EnumBase } = require('./enum_base');
+const { CharacterClass } = require('./character_class');
+
 
 class CharacterClassSelection extends EnumBase {
     static TITAN = new CharacterClassSelection("Titan", 0);
@@ -32,7 +33,7 @@ class CharacterClassSelection extends EnumBase {
     }
 
     static fromId(id) {
-        let out = super._fromString(CharacterClassSelection, id);
+        let out = super._fromId(CharacterClassSelection, id);
 
         if (out != undefined) {
             return out;
@@ -58,4 +59,4 @@ class CharacterClassSelection extends EnumBase {
 
 }
 
-module.exports = CharacterClassSelection;
+module.exports = { CharacterClassSelection };

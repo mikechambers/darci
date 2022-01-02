@@ -1,5 +1,10 @@
-const CharacterClassSelection = require("./character_class_selection");
-const Mode = require("./mode");
+//const { CharacterClassSelection, Mode } = require('shared');
+
+const shared = require('shared');
+
+const CharacterClassSelection = shared.CharacterClassSelection.CharacterClassSelection;
+const Mode = shared.Mode.Mode;
+
 
 class ActivityStoreInterface {
 
@@ -98,6 +103,7 @@ class ActivityStoreInterface {
         //but since ALL will probably be the most used case, we have a query just for
         //that which is more efficient (that doing an IN). (about 30% faster).
         if (characterSelection === CharacterClassSelection.ALL) {
+
             rows = this.select_activities_for_member_since.all({
                 memberId: memberId,
                 startMoment: startDate.toISOString(),

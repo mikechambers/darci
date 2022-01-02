@@ -1,4 +1,4 @@
-const EnumBase = require("./enum_base.js");
+const { EnumBase } = require('./enum_base');
 
 class Mode extends EnumBase {
     static Unknown = new Mode("Unknown", -1);
@@ -98,7 +98,7 @@ class Mode extends EnumBase {
     }
 
     static fromId(id) {
-        let out = super._fromString(Mode, id);
+        let out = super._fromId(Mode, id);
 
         if (out != undefined) {
             return out;
@@ -120,4 +120,4 @@ class Mode extends EnumBase {
 
 }
 
-module.exports = Mode;
+module.exports = { Mode };

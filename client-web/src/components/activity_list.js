@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } from "../utils"
 import { FLOAT_DECIMAL_PRECISION } from '../consts';
 
+import { Mode } from 'shared';
 
 const ActivityListContainer = (props) => {
 
@@ -77,9 +78,11 @@ const ActivityList = (props) => {
                     let kda = calculateKillsDeathsAssists(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
                     let eff = calculateEfficiency(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
 
+                    let mode = Mode.fromId(activity.mode);
+
                     return (<tr key={index}>
                         <td>{activity.referenceId}</td>
-                        <td>{activity.mode}</td>
+                        <td>{mode.toString()}</td>
                         <td>{activity.stats.standing}</td>
                         <td>{kills}</td>
                         <td>{assists}</td>

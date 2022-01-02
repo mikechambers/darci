@@ -1,9 +1,12 @@
-const CharacterClassSelection = require("./character_class_selection.js");
+const shared = require('shared');
+
+const CharacterClassSelection = shared.CharacterClassSelection.CharacterClassSelection;
+const Mode = shared.Mode.Mode;
+const Moment = shared.Moment.Moment;
 
 const express = require("express");
 const Database = require('better-sqlite3');
-const Mode = require("./mode.js");
-const Moment = require("./moment.js");
+
 const ActivityStoreInterface = require("./activity_store_interface.js");
 
 const dbPath = process.env.DCLI_DB_PATH;
@@ -34,13 +37,18 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
     //todo: make sure its safe
     let memberId = req.params.member_id;
 
+
+
     let characterClassSelection = CharacterClassSelection.fromString(req.params.characterClass);
+    console.log(characterClassSelection);
 
     //todo: need to add an all to classes
     //CharacterClassSelection (LastActive and All)
     if (characterClassSelection == characterClassSelection.UNKNOWN) {
         characterClassSelection = CharacterClassSelection.ALL;
     }
+
+    console.log(characterClassSelection);
 
     let mode = Mode.fromString(req.params.mode);
 
@@ -53,10 +61,6 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
     if (moment === Moment.UNKNOWN) {
 
     }
-
-    console.log(characterClassSelection);
-    console.log(mode);
-    console.log(moment.getDate());
 
     let endMoment = Moment.NOW;
     let activities = activityStore.retrieveActivities(memberId, characterClassSelection, mode, moment.getDate(), endMoment.getDate());
@@ -81,6 +85,8 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
         player: player,
         activities: activities,
     }
+
+    console.log(out);
 
     res.json(out);
 });
