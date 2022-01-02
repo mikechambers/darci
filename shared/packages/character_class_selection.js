@@ -12,7 +12,7 @@ class CharacterClassSelection extends EnumBase {
 
     static LAST_ACTIVE_PARAM = "lastactive";
 
-    constructor(type, id, label) {
+    constructor(type, id, label = undefined) {
         super(type, id, label);
     }
 

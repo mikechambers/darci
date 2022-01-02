@@ -1,24 +1,38 @@
-//const { CharacterClassSelection, Mode } = require('shared');
 
+const Database = require('better-sqlite3');
 const { CharacterClassSelection, Mode } = require('shared');
 
 class ActivityStoreInterface {
 
     #db;
+    #dbPath;
     #select_sync_members;
     #select_activities_for_member_since;
-    #select_character_id;
     #select_activities_for_character_since;
     #select_weapon_stats;
+    #select_medals;
+    #select_member;
 
-    constructor(db) {
-        this.db = db;
+    constructor(dbPath) {
+        this.#dbPath = dbPath;
+
+        this.#initDb();
+    }
+
+    #initDb() {
+        if (this.#db !== undefined) {
+            //check this
+            this.#db.close();
+        }
+
+        console.log(`Using data store at: ${this.#dbPath}`);
+        this.#db = new Database(this.#dbPath, { readonly: true, verbose: console.log });
         this.#initStatements();
     }
 
     #initStatements() {
 
-        this.select_activities_for_member_since = this.db.prepare(
+        this.#select_activities_for_member_since = this.#db.prepare(
             `SELECT
                 *,
                 activity.mode as activity_mode,
@@ -39,7 +53,7 @@ class ActivityStoreInterface {
             ORDER BY
                 activity.period DESC`);
 
-        this.select_activities_for_character_since = this.db.prepare(
+        this.#select_activities_for_character_since = this.#db.prepare(
             `SELECT
                     *,
                     activity.mode as activity_mode,
@@ -62,9 +76,9 @@ class ActivityStoreInterface {
                 ORDER BY
                     activity.period DESC`);
 
-        this.select_sync_members = this.db.prepare('SELECT "member_id", "platform_id", "display_name", "bungie_display_name", "bungie_display_name_code" from sync join member on sync.member = member.id');
+        this.#select_sync_members = this.#db.prepare('SELECT "member_id", "platform_id", "display_name", "bungie_display_name", "bungie_display_name_code" from sync join member on sync.member = member.id');
 
-        this.select_weapon_stats = this.db.prepare(`
+        this.#select_weapon_stats = this.#db.prepare(`
             SELECT
                 *
             FROM
@@ -72,7 +86,7 @@ class ActivityStoreInterface {
             WHERE character_activity_stats = @characterActivityStatsRowIndex
         `);
 
-        this.select_medals = this.db.prepare(`
+        this.#select_medals = this.#db.prepare(`
             SELECT
                 *
             FROM
@@ -81,7 +95,7 @@ class ActivityStoreInterface {
                 character_activity_stats = @characterActivityStatsRowIndex
         `);
 
-        this.select_member = this.db.prepare(`select * from member where member_id = @memberId`);
+        this.#select_member = this.#db.prepare(`select * from member where member_id = @memberId`);
 
     }
 
@@ -100,7 +114,7 @@ class ActivityStoreInterface {
         //that which is more efficient (that doing an IN). (about 30% faster).
         if (characterSelection === CharacterClassSelection.ALL) {
 
-            rows = this.select_activities_for_member_since.all({
+            rows = this.#select_activities_for_member_since.all({
                 memberId: memberId,
                 startMoment: startDate.toISOString(),
                 endMoment: endDate.toISOString(),
@@ -113,7 +127,7 @@ class ActivityStoreInterface {
             //validated before being sent in here
             let characterClass = characterSelection.getCharacterClass();
 
-            rows = this.select_activities_for_character_since.all({
+            rows = this.#select_activities_for_character_since.all({
                 memberId: memberId,
                 startMoment: startDate.toISOString(),
                 endMoment: (new Date(Date.now())).toISOString(),
@@ -196,7 +210,7 @@ class ActivityStoreInterface {
     }
 
     retrieveMedals(characterActivityStatsRowIndex) {
-        let rows = this.select_medals.all(
+        let rows = this.#select_medals.all(
             { characterActivityStatsRowIndex: characterActivityStatsRowIndex });
 
         let medals = [];
@@ -226,7 +240,7 @@ class ActivityStoreInterface {
     }
 
     retrieveWeapons(characterActivityStatsRowIndex) {
-        let rows = this.select_weapon_stats.all({ characterActivityStatsRowIndex: characterActivityStatsRowIndex }
+        let rows = this.#select_weapon_stats.all({ characterActivityStatsRowIndex: characterActivityStatsRowIndex }
         );
 
         let weaponStats = [];
@@ -246,7 +260,7 @@ class ActivityStoreInterface {
 
     retrieveSyncMembers() {
 
-        let rows = this.select_sync_members.all();
+        let rows = this.#select_sync_members.all();
 
         let out = [];
         for (let row of rows) {
@@ -263,7 +277,7 @@ class ActivityStoreInterface {
 
     retrieveMember(memberId) {
 
-        let row = this.select_member.get({ memberId: memberId });
+        let row = this.#select_member.get({ memberId: memberId });
 
         let out = {
             memberId: row.member_id,
@@ -275,7 +289,5 @@ class ActivityStoreInterface {
         return out;
     }
 }
-
-
 
 module.exports = ActivityStoreInterface;

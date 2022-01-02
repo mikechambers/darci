@@ -1,21 +1,20 @@
 const { CharacterClassSelection, Mode, Moment } = require('shared');
 
 const express = require("express");
-const Database = require('better-sqlite3');
 
 const ActivityStoreInterface = require("./activity_store_interface.js");
+const ManifestInterface = require('./manifest_interface.js');
 
-const dbPath = process.env.DCLI_DB_PATH;
-console.log(`Using data store at: ${dbPath}`);
-const db = new Database(dbPath,
-    { readonly: true, verbose: console.log });
+const DB_PATH = process.env.DCLI_DB_PATH;
+const MANIFEST_DB_PATH = process.env.MANIFEST_DB_PATH;
+const MANIFEST_INFO_PATH = process.env.MANIFEST_INFO_PATH;
 
-const activityStore = new ActivityStoreInterface(db);
+const activityStore = new ActivityStoreInterface(DB_PATH);
+const manifestInterface = new ManifestInterface(MANIFEST_DB_PATH, MANIFEST_INFO_PATH);
 
 const app = express();
 const port = 3001;
 const hostname = "127.0.0.1";
-let counter = 0;
 
 app.get("/", (req, res) => {
 
@@ -90,7 +89,19 @@ app.get("/api/players/", (req, res) => {
     let out = {
         players: rows,
     };
+
     res.json(out);
+});
+
+app.get("/manifest/:version/", (req, res) => {
+
+    //check version verses manifest_info
+    //if same, do what?
+    //if different, generate new manifest json, and send
+    //check timestamp from last generated, and send cached version depending on
+    //how old it is
+
+    res.json({});
 });
 
 app.listen(port, () => {
