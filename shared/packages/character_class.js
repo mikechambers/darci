@@ -6,8 +6,8 @@ class CharacterClass extends EnumBase {
     static WARLOCK = new CharacterClass("Warlock", 2);
     static UNKNOWN = new CharacterClass("Unknown", -1);
 
-    constructor(type, id) {
-        super(type, id);
+    constructor(type, id, label) {
+        super(type, id, label);
     }
 
     static fromId(id) {

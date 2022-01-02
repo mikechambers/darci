@@ -4,7 +4,6 @@ import { ActivityListContainer } from "../components/activity_list"
 
 const PlayerSummaryView = () => {
     let params = useParams();
-    console.log(params);
 
     return (
         <main style={{ padding: "1rem 0" }}>

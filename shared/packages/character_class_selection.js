@@ -12,8 +12,8 @@ class CharacterClassSelection extends EnumBase {
 
     static LAST_ACTIVE_PARAM = "lastactive";
 
-    constructor(type, id) {
-        super(type, id);
+    constructor(type, id, label) {
+        super(type, id, label);
     }
 
     getCharacterClass() {

@@ -36,15 +36,12 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
 
 
     let characterClassSelection = CharacterClassSelection.fromString(req.params.characterClass);
-    console.log(characterClassSelection);
 
     //todo: need to add an all to classes
     //CharacterClassSelection (LastActive and All)
     if (characterClassSelection == characterClassSelection.UNKNOWN) {
         characterClassSelection = CharacterClassSelection.ALL;
     }
-
-    console.log(characterClassSelection);
 
     let mode = Mode.fromString(req.params.mode);
 
@@ -82,7 +79,6 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
         activities: activities,
     }
 
-    console.log(out);
 
     res.json(out);
 });

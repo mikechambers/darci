@@ -2,10 +2,12 @@ class EnumBase {
 
     #_type;
     #_id;
+    #_label;
 
-    constructor(type, id) {
+    constructor(type, id, label = undefined) {
         this._type = type;
         this._id = id;
+        this._label = label;
     }
 
     get id() {
@@ -61,6 +63,14 @@ class EnumBase {
         }
 
         return undefined;
+    }
+
+    toString() {
+        if (this._label !== undefined) {
+            return this._label;
+        }
+
+        return this._type;
     }
 }
 

@@ -7,38 +7,38 @@ class Moment extends EnumBase {
 
     static UNKNOWN = new Moment("Unknown");
     static NOW = new Moment("Now");
-    static DAILY = new Moment("Daily");
+    static DAILY = new Moment("Daily", "Daily Reset");
     //static NEXT_DAILY = new Moment("NextDaily");
-    static WEEKEND = new Moment("Weekend");
+    static WEEKEND = new Moment("Weekend", "Friday Reset");
     //static NEXT_WEEKEND = new Moment("NextWeekend");
-    static WEEKLY = new Moment("Weekly");
+    static WEEKLY = new Moment("Weekly", "Weekly Reset");
     //static NEXT_WEEKLY = new Moment("NextWeekly");
-    static DAY = new Moment("Day");
+    static DAY = new Moment("Day", "Last Day");
     //static NEXT_DAY = new Moment("NextDay");
-    static WEEK = new Moment("Week");
+    static WEEK = new Moment("Week", "Last Week");
     //static NEXT_WEEK = new Moment("NextWeek");
-    static MONTH = new Moment("Month");
+    static MONTH = new Moment("Month", "Last Month");
     //static NEXT_MONTH = new Moment("NextMonth");
-    static ALL_TIME = new Moment("AllTime");
+    static ALL_TIME = new Moment("AllTime", "All Time");
     //static CUSTOM = new Moment("Custom");
-    static LAUNCH = new Moment("Launch");
-    static CURSE_OF_OSIRIS = new Moment("CurseOfOsiris");
+    static LAUNCH = new Moment("Launch", "Destiny 2 Launch");
+    static CURSE_OF_OSIRIS = new Moment("CurseOfOsiris", "Curse of Osiris");
     static WARMIND = new Moment("Warmind");
-    static SEASON_OF_THE_OUTLAW = new Moment("SeasonOfTheOutlaw");
-    static SEASON_OF_THE_FORGE = new Moment("SeasonOfTheForge");
-    static SEASON_OF_THE_DRIFTER = new Moment("SeasonOfTheDrifter");
-    static SEASON_OF_OPULENCE = new Moment("SeasonOfOpulence");
-    static SEASON_OF_THE_UNDYING = new Moment("SeasonOfTheUndying");
-    static SEASON_OF_DAWN = new Moment("SeasonOfDawn");
-    static SEASON_OF_THE_WORTHY = new Moment("SeasonOfTheWorthy");
-    static SEASON_OF_ARRIVALS = new Moment("SeasonOfArrivals");
-    static SEASON_OF_THE_HUNT = new Moment("SeasonOfTheHunt");
-    static SEASON_OF_THE_CHOSEN = new Moment("SeasonOfTheChosen");
-    static SEASON_OF_THE_SPLICER = new Moment("SeasonOfTheSplicer");
-    static SEASON_OF_THE_LOST = new Moment("SeasonOfTheLost");
+    static SEASON_OF_THE_OUTLAW = new Moment("SeasonOfTheOutlaw", "Season of the Outlaw");
+    static SEASON_OF_THE_FORGE = new Moment("SeasonOfTheForge", "Season of the Forge");
+    static SEASON_OF_THE_DRIFTER = new Moment("SeasonOfTheDrifter", "Season of the Drifter");
+    static SEASON_OF_OPULENCE = new Moment("SeasonOfOpulence", "Season of Opulence");
+    static SEASON_OF_THE_UNDYING = new Moment("SeasonOfTheUndying", "Season of the Undying");
+    static SEASON_OF_DAWN = new Moment("SeasonOfDawn", "Season of the Dawn");
+    static SEASON_OF_THE_WORTHY = new Moment("SeasonOfTheWorthy", "Season of the Worthy");
+    static SEASON_OF_ARRIVALS = new Moment("SeasonOfArrivals", "Season of Arrivals");
+    static SEASON_OF_THE_HUNT = new Moment("SeasonOfTheHunt", "Season of the Hunt");
+    static SEASON_OF_THE_CHOSEN = new Moment("SeasonOfTheChosen", "Season of the Chosen");
+    static SEASON_OF_THE_SPLICER = new Moment("SeasonOfTheSplicer", "Season of the Splicer");
+    static SEASON_OF_THE_LOST = new Moment("SeasonOfTheLost", "Season of the Lost");
 
-    constructor(type) {
-        super(type);
+    constructor(type, label = undefined) {
+        super(type, undefined, label);
     }
 
     getDate() {

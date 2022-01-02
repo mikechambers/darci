@@ -45,8 +45,6 @@ const ActivityList = (props) => {
 
     let activities = (props.activities) ? props.activities : [];
 
-    console.log(activities);
-
     return (
         <table>
             <thead>
