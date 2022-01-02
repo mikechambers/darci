@@ -1,5 +1,5 @@
-const { EnumBase } = require('./enum_base');
-const { CharacterClass } = require('./character_class');
+const EnumBase = require('./enum_base');
+const CharacterClass = require('./character_class');
 
 
 class CharacterClassSelection extends EnumBase {
@@ -59,4 +59,4 @@ class CharacterClassSelection extends EnumBase {
 
 }
 
-module.exports = { CharacterClassSelection };
+module.exports = CharacterClassSelection;

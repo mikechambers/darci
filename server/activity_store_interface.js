@@ -1,10 +1,6 @@
 //const { CharacterClassSelection, Mode } = require('shared');
 
-const shared = require('shared');
-
-const CharacterClassSelection = shared.CharacterClassSelection.CharacterClassSelection;
-const Mode = shared.Mode.Mode;
-
+const { CharacterClassSelection, Mode } = require('shared');
 
 class ActivityStoreInterface {
 

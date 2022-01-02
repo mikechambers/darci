@@ -64,4 +64,4 @@ class EnumBase {
     }
 }
 
-module.exports = { EnumBase };
+module.exports = EnumBase;

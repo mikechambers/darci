@@ -1,4 +1,4 @@
-const { EnumBase } = require('./enum_base');
+const EnumBase = require('./enum_base');
 
 class Moment extends EnumBase {
 
@@ -189,4 +189,4 @@ class Moment extends EnumBase {
 
 }
 
-module.exports = { Moment };
+module.exports = Moment;

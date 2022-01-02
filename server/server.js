@@ -1,8 +1,4 @@
-const shared = require('shared');
-
-const CharacterClassSelection = shared.CharacterClassSelection.CharacterClassSelection;
-const Mode = shared.Mode.Mode;
-const Moment = shared.Moment.Moment;
+const { CharacterClassSelection, Mode, Moment } = require('shared');
 
 const express = require("express");
 const Database = require('better-sqlite3');
