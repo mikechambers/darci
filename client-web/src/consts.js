@@ -1,0 +1,5 @@
+const FLOAT_DECIMAL_PRECISION = 2;
+
+export {
+    FLOAT_DECIMAL_PRECISION
+};

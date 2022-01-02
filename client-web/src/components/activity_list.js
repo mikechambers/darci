@@ -1,5 +1,9 @@
 import { useState, useEffect } from 'react';
 
+import { calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } from "../utils"
+import { FLOAT_DECIMAL_PRECISION } from '../consts';
+
+
 const ActivityListContainer = (props) => {
 
     let memberId = props.memberId;
@@ -59,27 +63,34 @@ const ActivityList = (props) => {
                     <th>SUPERS</th>
                     <th>GRENADES</th>
                     <th>MELEES</th>
-                    <th>ABILITY</th>
                     <th>MERCY</th>
                 </tr>
             </thead>
             <tbody>
                 {activities.map((activity, index) => {
+
+                    let kills = activity.stats.kills;
+                    let deaths = activity.stats.deaths;
+                    let assists = activity.stats.assists;
+
+                    let kd = calculateKillsDeathsRatio(kills, deaths).toFixed(FLOAT_DECIMAL_PRECISION);
+                    let kda = calculateKillsDeathsAssists(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
+                    let eff = calculateEfficiency(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
+
                     return (<tr key={index}>
                         <td>{activity.referenceId}</td>
                         <td>{activity.mode}</td>
                         <td>{activity.stats.standing}</td>
-                        <td>{activity.stats.kills}</td>
-                        <td>{activity.stats.assists}</td>
+                        <td>{kills}</td>
+                        <td>{assists}</td>
                         <td>{activity.stats.opponentsDefeated}</td>
-                        <td>{activity.stats.deaths}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{deaths}</td>
+                        <td>{kd}</td>
+                        <td>{kda}</td>
+                        <td>{eff}</td>
                         <td>{activity.stats.extended.superKills}</td>
                         <td>{activity.stats.extended.grenadeKills}</td>
                         <td>{activity.stats.extended.meleeKills}</td>
-                        <td>{activity.stats.extended.abilityKills}</td>
                         <td>{(activity.stats.completionReason === 4 ? "TRUE" : "")}</td>
                     </tr>);
                 })}
