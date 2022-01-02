@@ -14,7 +14,9 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App />} >
           <Route index path="/" element={<HomeView />} />
-          <Route path="player" element={<PlayerSummaryView />} />
+          <Route path="player" element={<PlayerSummaryView />}>
+            <Route path=":memberId" element={<PlayerSummaryView />} />
+          </Route>
           <Route path="activity" element={<ActivityDetailView />} />
         </Route>
 

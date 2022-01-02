@@ -1,15 +1,15 @@
-import React from 'react';
 
+import { useParams } from "react-router-dom";
 
-class PlayerSummaryView extends React.Component {
+const PlayerSummaryView = () => {
+    let params = useParams();
 
-    render() {
-        return (
-            <main style={{ padding: "1rem 0" }}>
-                <h2>Player</h2>
-            </main>
-        );
-    };
-}
+    return (
+        <main style={{ padding: "1rem 0" }}>
+            <h2>Player</h2>
+        </main>
+    );
+
+};
 
 export default PlayerSummaryView;
