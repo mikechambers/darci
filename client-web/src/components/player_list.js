@@ -7,8 +7,9 @@ const PlayerList = (props) => {
 
     return (
         players.map((player, index) => {
+            let to = `/player/${player.memberId}`;
             return (<div key="{index}">
-                <Link to="/player/memberid/">{player.bungieDisplayName}#{player.bungieDisplayNameCode}</Link>
+                <Link to={to}>{player.bungieDisplayName}#{player.bungieDisplayNameCode}</Link>
             </div>);
         })
     );
@@ -24,7 +25,7 @@ const PlayerListContainer = (props) => {
             let response;
             let data;
             try {
-                response = await fetch('/api/getplayers/');
+                response = await fetch('/api/players/');
                 data = await response.json()
             } catch (e) {
                 console.log(e);
@@ -35,7 +36,7 @@ const PlayerListContainer = (props) => {
         };
 
         featchData();
-    });
+    }, []);
 
 
     return (

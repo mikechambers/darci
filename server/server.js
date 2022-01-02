@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 ///player/member_id/class/mode/moment/end-moment/
 
 //can append regex to each one : https://expressjs.com/en/guide/routing.html
-app.get("/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (req, res) => {
+app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (req, res) => {
 
     //todo: make sure its safe
     let memberId = req.params.member_id;
@@ -85,7 +85,7 @@ app.get("/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (req, r
     res.json(out);
 });
 
-app.get("/api/getplayers/", (req, res) => {
+app.get("/api/players/", (req, res) => {
 
     let rows = activityStore.retrieveSyncMembers();
 

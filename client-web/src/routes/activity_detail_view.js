@@ -1,4 +1,5 @@
 
+
 const ActivityDetailView = (props) => {
     return (
         <main style={{ padding: "1rem 0" }}>
