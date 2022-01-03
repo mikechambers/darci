@@ -1,7 +1,7 @@
 const Database = require('better-sqlite3');
 const fs = require("fs");
 
-const MANIFEST_CHECK_INTERVAL_MS_MIN = 1000 * 60 * 1; //1 min
+const MANIFEST_CHECK_INTERVAL_MS_MIN = 1000 * 60 * 60; //1 min
 class ManifestInterface {
 
     #db;

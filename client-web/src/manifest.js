@@ -10,9 +10,8 @@ class Manifest {
         let manifestData = storage.getItem(STORAGE_MANIFEST_DATA_KEY);
 
         let version = "update";
-        if (manifestData != undefined) {
+        if (manifestData) {
             version = manifestData.version;
-            return;
         }
 
         let response;
@@ -29,6 +28,7 @@ class Manifest {
         }
 
         if (updated) {
+            console.log(`New manifest data found. Storing : ${version}`);
             storage.setItem(STORAGE_MANIFEST_DATA_KEY, JSON.stringify(manifestData));
         }
 
