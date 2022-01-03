@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } from "../utils"
 import { FLOAT_DECIMAL_PRECISION } from '../consts';
+import { ManifestContext } from '../app';
 
 import { Mode } from 'shared';
+import Manifest from '../manifest';
 
 const ActivityListContainer = (props) => {
 
     let memberId = props.memberId;
 
-    //memberid, mode, moment
     const [activities, setActivities] = useState(null);
 
     useEffect(() => {
         async function featchData() {
-
 
             if (!memberId) {
                 return;
@@ -44,6 +44,8 @@ const ActivityListContainer = (props) => {
 const ActivityList = (props) => {
 
     let activities = (props.activities) ? props.activities : [];
+    const manifest = useContext(ManifestContext);
+
 
     return (
         <table>
@@ -78,8 +80,13 @@ const ActivityList = (props) => {
 
                     let mode = Mode.fromId(activity.mode);
 
+                    let mapName = manifest.getActivityDefinition(activity.referenceId).name;
+
+                    //console.log(activity.referenceId);
+                    //console.log(manifest.getActivityDefinition(activity.referenceId));
+
                     return (<tr key={index}>
-                        <td>{activity.referenceId}</td>
+                        <td>{mapName}</td>
                         <td>{mode.toString()}</td>
                         <td>{activity.stats.standing}</td>
                         <td>{kills}</td>

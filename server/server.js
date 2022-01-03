@@ -100,12 +100,13 @@ app.get("/manifest/:version/", (req, res) => {
     const manifestNeedsUpdating = manifestInterface.hasUpdatedManifest(req.params.version);
 
     if (!manifestNeedsUpdating) {
-        res.json({});
+        res.json({ updated: false });
         return;
     }
 
     let out = manifestInterface.manifest;
 
+    out.updated = true;
     res.json(out);
 });
 

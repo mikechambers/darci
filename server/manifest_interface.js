@@ -92,7 +92,7 @@ class ManifestInterface {
             FROM
                 DestinyActivityDefinition
             WHERE
-                json like '%"isPvP":true%'`
+                json like '%"placeHash":4088006058%'`
         );
 
         this.#select_historical_stats_definition = this.#db.prepare(`
@@ -195,6 +195,8 @@ class ManifestInterface {
 }
 
 const idToHash = function (id) {
+
+    //return id >>> 0;
     return id >>> 32;
 }
 

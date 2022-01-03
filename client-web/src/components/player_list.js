@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
+import { ManifestContext } from '../app';
 
 const PlayerList = (props) => {
     let players = (props.players) ? props.players : [];
