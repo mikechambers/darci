@@ -11,6 +11,8 @@ class ManifestInterface {
     #cacheAgeLimit = 1000 * 60 * 60;
 
     #select_activity_definitions;
+    #select_inventory_item_definitions;
+    #select_historical_stats_definition;
 
     #manifestDbPath;
     #manifestInfoPath
@@ -36,13 +38,36 @@ class ManifestInterface {
     }
 
     #initStatements() {
-        this.#select_activity_definitions = this.#db.prepare(`
+        this.#select_inventory_item_definitions = this.#db.prepare(`
         SELECT
             *
         FROM
-            DestinyActivityDefinition
+        DestinyInventoryItemDefinition
         WHERE
-            json like '%"isPvP":true%'`);
+            json like '%"itemType":3,%'`
+        );
+
+        this.#select_activity_definitions = this.#db.prepare(`
+            SELECT
+                *
+            FROM
+                DestinyActivityDefinition
+            WHERE
+                json like '%"isPvP":true%'`
+        );
+
+        this.#select_historical_stats_definition = this.#db.prepare(`
+            SELECT
+                *
+            FROM
+                DestinyHistoricalStatsDefinition
+            WHERE
+                json like '%medalTierIdentifier%'
+        `);
+
+
+
+
     }
 
     #initManifest() {
@@ -78,10 +103,50 @@ class ManifestInterface {
                 activityDefinition[id] = out;
             }
 
+            rows = this.#select_inventory_item_definitions.all();
+
+            let inventoryItemDefinition = {};
+            for (let row of rows) {
+                let d = JSON.parse(row.json);
+                const id = idToHash(row.id);
+
+                let out = {
+                    //description: d.displayProperties.description,
+                    name: d.displayProperties.name,
+                    itemType: d.itemType,
+                    itemSubType: d.itemSubType,
+                }
+
+                inventoryItemDefinition[id] = out;
+            }
+
+            rows = this.#select_historical_stats_definition.all();
+
+            let historicalStatsDefinition = {};
+            for (let row of rows) {
+                let d = JSON.parse(row.json);
+                let key = row.key;
+
+                //filter out gambit medals
+                if (key.toLowerCase().startsWith("medals_pvecomp")) {
+                    continue;
+                }
+
+                let out = {
+                    name: d.statName,
+                    description: d.statDescription,
+                    iconImage: d.iconImage,
+                };
+
+                historicalStatsDefinition[key] = out;
+            }
+
             this.#manifest = {
                 version: this.#version,
                 data: {
                     activityDefinition: activityDefinition,
+                    inventoryItemDefinition: inventoryItemDefinition,
+                    historicalStatsDefinition: historicalStatsDefinition,
                 }
             };
 
