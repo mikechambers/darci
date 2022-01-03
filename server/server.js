@@ -9,8 +9,10 @@ const DB_PATH = process.env.DCLI_DB_PATH;
 const MANIFEST_DB_PATH = process.env.MANIFEST_DB_PATH;
 const MANIFEST_INFO_PATH = process.env.MANIFEST_INFO_PATH;
 
+const MANIFEST_CHECK_INTERVAL_MS = 1000 * 60 * 60; //check once an hour
+
 const activityStore = new ActivityStoreInterface(DB_PATH);
-const manifestInterface = new ManifestInterface(MANIFEST_DB_PATH, MANIFEST_INFO_PATH);
+const manifestInterface = new ManifestInterface(MANIFEST_DB_PATH, MANIFEST_INFO_PATH, MANIFEST_CHECK_INTERVAL_MS);
 
 const app = express();
 const port = 3001;
@@ -102,11 +104,21 @@ app.get("/manifest/:version/", (req, res) => {
         return;
     }
 
-    let out = manifestInterface.getManifest();
+    let out = manifestInterface.manifest;
 
     res.json(out);
 });
 
-app.listen(port, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
-});
+
+//note, cant use await format here
+manifestInterface.init().catch(
+    (err) => {
+        throw err;
+    }
+).then(
+    () => {
+        app.listen(port, () => {
+            console.log(`Server running at http://${hostname}:${port}/`);
+        });
+    }
+);
