@@ -1,4 +1,5 @@
 const Database = require('better-sqlite3');
+const fs = require("fs");
 
 class ManifestInterface {
 
@@ -8,6 +9,8 @@ class ManifestInterface {
     #generatedDate;
     #version;
     #cacheAgeLimit = 1000 * 60 * 60;
+
+    #select_activity_definitions;
 
     #manifestDbPath;
     #manifestInfoPath
@@ -33,29 +36,70 @@ class ManifestInterface {
     }
 
     #initStatements() {
+        this.#select_activity_definitions = this.#db.prepare(`
+        SELECT
+            *
+        FROM
+            DestinyActivityDefinition
+        WHERE
+            json like '%"isPvP":true%'`);
     }
 
     #initManifest() {
+        //todo: need to test async on start up if file is missing
+        fs.readFile(this.#manifestInfoPath, 'utf8', (err, data) => {
+            if (err) {
+                throw err;
+            }
 
+            let obj = JSON.parse(data);
+            let version = obj.url;
+
+
+            if (version === undefined) {
+                throw new Error("Manifest Info file invalid format. url is undefined.");
+            }
+
+            this.#version = version;
+
+            let rows = this.#select_activity_definitions.all();
+
+            let activityDefinition = {};
+            for (let row of rows) {
+                let d = JSON.parse(row.json);
+
+                const id = idToHash(row.id);
+
+                let out = {
+                    name: d.displayProperties.name,
+                    image: d.pgcrImage,
+                };
+
+                activityDefinition[id] = out;
+            }
+
+            this.#manifest = {
+                version: this.#version,
+                data: {
+                    activityDefinition: activityDefinition,
+                }
+            };
+
+            this.#db.close();
+        });
     }
 
     hasUpdatedManifest(version) {
-        return version === this.#version;
+        return version !== this.#version;
     }
 
     getManifest() {
-        //is there a cached version?
-        //if no generate it
-        //if yes, check if its out of date
-        //if its out of date, check manifest_info
-        //to see if there is an updated version
-        //if there is, reload db, and generate new manifest (do we need to reload?)
-        //return manifest
+        return this.#manifest;
     }
+}
 
-    #generateManifest() {
-
-    }
+const idToHash = function (id) {
+    return id >>> 32;
 }
 
 module.exports = ManifestInterface;

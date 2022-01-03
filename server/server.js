@@ -95,13 +95,16 @@ app.get("/api/players/", (req, res) => {
 
 app.get("/manifest/:version/", (req, res) => {
 
-    //check version verses manifest_info
-    //if same, do what?
-    //if different, generate new manifest json, and send
-    //check timestamp from last generated, and send cached version depending on
-    //how old it is
+    const manifestNeedsUpdating = manifestInterface.hasUpdatedManifest(req.params.version);
 
-    res.json({});
+    if (!manifestNeedsUpdating) {
+        res.json({});
+        return;
+    }
+
+    let out = manifestInterface.getManifest();
+
+    res.json(out);
 });
 
 app.listen(port, () => {
