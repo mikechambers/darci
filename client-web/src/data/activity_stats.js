@@ -1,0 +1,85 @@
+const { CompletionReason, Mode, Standing } = require("shared");
+//const Standing = require("shared/packages/standing");
+const {
+    calculateKillsDeathsRatio,
+    calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("utils");
+
+class ActivityStats {
+
+    assists = 0;
+    kills = 0;
+    deaths = 0;
+    opponentsDefeated = 0;
+    efficiency = 0;
+    killsDeathsRatio = 0;
+    killsDeathsAssists = 0;
+    timePlayedSeconds = 0;
+
+    wins = 0;
+    losses = 0;
+    draws = 0;
+
+    mercies = 0;
+
+    highestKills = 0;
+    highestAssists = 0;
+    highestDeaths = 0;
+    highestOpponentsDefeated = 0;
+    highestEfficiency = 0;
+    highestKillsDeathsRatio = 0;
+    highestKillsDeathsAssists = 0;
+
+    precisionKills = 0;
+    abilityKills = 0;
+    grenadeKills = 0;
+    meleeKills = 0;
+    superKills = 0;
+
+    #activities;
+    constructor(activities) {
+        this.#activities = activities;
+        this.#update();
+    }
+
+    #update() {
+        for (let a of this.#activities) {
+            this.assists += a.assists;
+            this.kills += a.kills;
+            this.deaths += a.deaths;
+            this.opponentsDefeated += a.opponentsDefeated;
+
+            //note, we can update data with Enums, and manifest info
+
+            let mode = Mode.fromId(a.mode);
+            let standing = Standing.fromIdAndMode(a.standing, mode);
+            switch (standing) {
+                case Standing.VICTORY:
+                    this.wins++;
+                    break;
+                case Standing.DEFEAT:
+                    this.losses++;
+                    break;
+                case Standing.UNKNOWN:
+                    this.draws++
+                    break;
+            }
+
+            let completionReason = CompletionReason.fromId(a.completionReason);
+
+            if (completionReason == CompletionReason.MERCY) {
+                this.mercies++;
+            }
+        }
+
+        this.efficiency = calculateKillsDeathsRatio = calculateEfficiency(
+            this.kills, this.deaths, this.assists);
+        this.killsDeathsRatio = calculateKillsDeathsRatio(this.kills, this.deaths);
+        this.killsDeathsAssists = calculateKillsDeathsAssists(
+            this.kills, this.deaths, this.assists);
+
+    }
+
+    get totalActivities() {
+        return this.#activities ? this.#activities.length() : 0;
+    }
+}

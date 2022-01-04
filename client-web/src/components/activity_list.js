@@ -5,7 +5,6 @@ import { FLOAT_DECIMAL_PRECISION } from '../consts';
 import { ManifestContext } from '../app';
 
 import { Mode } from 'shared';
-import Manifest from '../manifest';
 
 const ActivityListContainer = (props) => {
 
