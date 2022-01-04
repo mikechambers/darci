@@ -35,8 +35,10 @@ class ActivityStats {
     superKills = 0;
 
     #activities = [];
-    constructor(activities) {
+    #manifest;
+    constructor(activities, manifest) {
         this.#activities = activities;
+        this.#manifest = manifest;
         this.#update();
     }
 
@@ -44,18 +46,20 @@ class ActivityStats {
 
         for (let activity of this.#activities) {
 
-            let a = activity.stats;
 
-            this.assists += a.assists;
-            this.kills += a.kills;
-            this.deaths += a.deaths;
-            this.opponentsDefeated += a.opponentsDefeated;
+            //let mapName = manifest.getActivityDefinition(activity.referenceId).name;
+            activity.mapName = this.#manifest.getActivityDefinition(activity.referenceId).name;
+
+            this.assists += activity.stats.assists;
+            this.kills += activity.stats.kills;
+            this.deaths += activity.stats.deaths;
+            this.opponentsDefeated += activity.stats.opponentsDefeated;
 
             //note, we can update data with Enums, and manifest info
 
 
             let mode = Mode.fromId(activity.mode);
-            let standing = Standing.fromIdAndMode(a.standing, mode);
+            let standing = Standing.fromIdAndMode(activity.stats.standing, mode);
             switch (standing) {
                 case Standing.VICTORY:
                     this.wins++;
@@ -68,16 +72,16 @@ class ActivityStats {
                     break;
             }
 
-            a.mode = mode;
-            a.standing = standing;
+            activity.stats.mode = mode;
+            activity.stats.standing = standing;
 
-            let completionReason = CompletionReason.fromId(a.completionReason);
+            let completionReason = CompletionReason.fromId(activity.stats.completionReason);
 
             if (completionReason == CompletionReason.MERCY) {
                 this.mercies++;
             }
 
-            a.completionReason = completionReason;
+            activity.stats.completionReason = completionReason;
         }
 
         this.efficiency = calculateEfficiency(

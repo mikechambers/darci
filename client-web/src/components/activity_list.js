@@ -13,6 +13,8 @@ const ActivityListContainer = (props) => {
 
     const [activityStats, setActivityStats] = useState(null);
 
+    const manifest = useContext(ManifestContext);
+
     useEffect(() => {
         async function featchData() {
 
@@ -30,10 +32,9 @@ const ActivityListContainer = (props) => {
                 return;
             }
 
-            const activityStats = new ActivityStats(data.activities);
+            const activityStats = new ActivityStats(data.activities, manifest);
 
             setActivityStats(activityStats);
-
         };
 
         featchData();
@@ -48,10 +49,7 @@ const ActivityListContainer = (props) => {
 const ActivityList = (props) => {
 
     let activityStats = props.activityStats;
-
     let activities = (activityStats) ? activityStats.activities : [];
-
-    const manifest = useContext(ManifestContext);
 
     return (
         <table>
@@ -84,13 +82,8 @@ const ActivityList = (props) => {
                     let kda = calculateKillsDeathsAssists(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
                     let eff = calculateEfficiency(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
 
-                    let mapName = manifest.getActivityDefinition(activity.referenceId).name;
-
-                    //console.log(activity.referenceId);
-                    //console.log(manifest.getActivityDefinition(activity.referenceId));
-
                     return (<tr key={index}>
-                        <td>{mapName}</td>
+                        <td>{activity.mapName}</td>
                         <td>{activity.stats.mode.toString()}</td>
                         <td>{activity.stats.standing.toString()}</td>
                         <td>{kills}</td>
