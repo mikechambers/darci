@@ -1,16 +1,17 @@
 import { useState, useEffect, useContext } from 'react';
 
-import { calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } from "../utils"
+import { calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } from "../utils";
 import { FLOAT_DECIMAL_PRECISION } from '../consts';
 import { ManifestContext } from '../app';
+import ActivityStats from '../data/activity_stats';
 
-import { Mode } from 'shared';
+import { CompletionReason, Mode } from 'shared';
 
 const ActivityListContainer = (props) => {
 
     let memberId = props.memberId;
 
-    const [activities, setActivities] = useState(null);
+    const [activityStats, setActivityStats] = useState(null);
 
     useEffect(() => {
         async function featchData() {
@@ -29,22 +30,28 @@ const ActivityListContainer = (props) => {
                 return;
             }
 
-            setActivities(data.activities);
+            const activityStats = new ActivityStats(data.activities);
+
+            setActivityStats(activityStats);
+
         };
 
         featchData();
+
     }, []);
 
     return (
-        <ActivityList activities={activities} />
+        <ActivityList activityStats={activityStats} />
     );
 };
 
 const ActivityList = (props) => {
 
-    let activities = (props.activities) ? props.activities : [];
-    const manifest = useContext(ManifestContext);
+    let activityStats = props.activityStats;
 
+    let activities = (activityStats) ? activityStats.activities : [];
+
+    const manifest = useContext(ManifestContext);
 
     return (
         <table>
@@ -77,8 +84,6 @@ const ActivityList = (props) => {
                     let kda = calculateKillsDeathsAssists(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
                     let eff = calculateEfficiency(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
 
-                    let mode = Mode.fromId(activity.mode);
-
                     let mapName = manifest.getActivityDefinition(activity.referenceId).name;
 
                     //console.log(activity.referenceId);
@@ -86,8 +91,8 @@ const ActivityList = (props) => {
 
                     return (<tr key={index}>
                         <td>{mapName}</td>
-                        <td>{mode.toString()}</td>
-                        <td>{activity.stats.standing}</td>
+                        <td>{activity.stats.mode.toString()}</td>
+                        <td>{activity.stats.standing.toString()}</td>
                         <td>{kills}</td>
                         <td>{assists}</td>
                         <td>{activity.stats.opponentsDefeated}</td>
@@ -98,7 +103,7 @@ const ActivityList = (props) => {
                         <td>{activity.stats.extended.superKills}</td>
                         <td>{activity.stats.extended.grenadeKills}</td>
                         <td>{activity.stats.extended.meleeKills}</td>
-                        <td>{(activity.stats.completionReason === 4 ? "TRUE" : "")}</td>
+                        <td>{(activity.stats.completionReason === CompletionReason.MERCY ? "TRUE" : "")}</td>
                     </tr>);
                 })}
             </tbody></table>

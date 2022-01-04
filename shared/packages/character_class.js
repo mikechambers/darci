@@ -11,13 +11,13 @@ class CharacterClass extends EnumBase {
     }
 
     static fromId(id) {
-        let out = super._fromString(CharacterClass, id);
+        let out = super._fromId(CharacterClass, id);
 
         if (out != undefined) {
             return out;
         }
 
-        return this.UNKNOWN;
+        return CharacterClass.UNKNOWN;
     }
 
     static fromString(type) {
@@ -28,7 +28,7 @@ class CharacterClass extends EnumBase {
             return out;
         }
 
-        return this.UNKNOWN;
+        return CharacterClass.UNKNOWN;
     }
 
 }

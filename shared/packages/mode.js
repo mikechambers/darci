@@ -1,7 +1,7 @@
 const EnumBase = require('./enum_base');
 
 class Mode extends EnumBase {
-    static Unknown = new Mode("Unknown", -1);
+    static UNKNOWN = new Mode("Unknown", -1);
     static NONE = new Mode("None", 0);
     //static TITAN = new Mode("Story", 2);
     //static TITAN = new Mode("Strike", 3);
@@ -104,7 +104,7 @@ class Mode extends EnumBase {
             return out;
         }
 
-        return this.UNKNOWN;
+        return Mode.UNKNOWN;
     }
 
     static fromString(type) {
@@ -115,7 +115,7 @@ class Mode extends EnumBase {
             return out;
         }
 
-        return this.UNKNOWN;
+        return Mode.UNKNOWN;
     }
 
 }

@@ -39,7 +39,7 @@ class CharacterClassSelection extends EnumBase {
             return out;
         }
 
-        return this.UNKNOWN;
+        return CharacterClassSelection.UNKNOWN;
     }
 
     static fromString(type) {
@@ -54,7 +54,7 @@ class CharacterClassSelection extends EnumBase {
             return out;
         }
 
-        return this.UNKNOWN;
+        return CharacterClassSelection.UNKNOWN;
     }
 
 }

@@ -184,7 +184,7 @@ class Moment extends EnumBase {
             return out;
         }
 
-        return this.UNKNOWN;
+        return Moment.UNKNOWN;
     }
 
 }

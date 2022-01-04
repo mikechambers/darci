@@ -1,8 +1,7 @@
 const { CompletionReason, Mode, Standing } = require("shared");
 //const Standing = require("shared/packages/standing");
 const {
-    calculateKillsDeathsRatio,
-    calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("utils");
+    calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("../utils");
 
 class ActivityStats {
 
@@ -35,14 +34,18 @@ class ActivityStats {
     meleeKills = 0;
     superKills = 0;
 
-    #activities;
+    #activities = [];
     constructor(activities) {
         this.#activities = activities;
         this.#update();
     }
 
     #update() {
-        for (let a of this.#activities) {
+
+        for (let activity of this.#activities) {
+
+            let a = activity.stats;
+
             this.assists += a.assists;
             this.kills += a.kills;
             this.deaths += a.deaths;
@@ -50,7 +53,8 @@ class ActivityStats {
 
             //note, we can update data with Enums, and manifest info
 
-            let mode = Mode.fromId(a.mode);
+
+            let mode = Mode.fromId(activity.mode);
             let standing = Standing.fromIdAndMode(a.standing, mode);
             switch (standing) {
                 case Standing.VICTORY:
@@ -64,14 +68,19 @@ class ActivityStats {
                     break;
             }
 
+            a.mode = mode;
+            a.standing = standing;
+
             let completionReason = CompletionReason.fromId(a.completionReason);
 
             if (completionReason == CompletionReason.MERCY) {
                 this.mercies++;
             }
+
+            a.completionReason = completionReason;
         }
 
-        this.efficiency = calculateKillsDeathsRatio = calculateEfficiency(
+        this.efficiency = calculateEfficiency(
             this.kills, this.deaths, this.assists);
         this.killsDeathsRatio = calculateKillsDeathsRatio(this.kills, this.deaths);
         this.killsDeathsAssists = calculateKillsDeathsAssists(
@@ -82,4 +91,10 @@ class ActivityStats {
     get totalActivities() {
         return this.#activities ? this.#activities.length() : 0;
     }
+
+    get activities() {
+        return this.#activities;
+    }
 }
+
+export default ActivityStats;

@@ -196,7 +196,7 @@ class ActivityStoreInterface {
             //    kills, deaths, assists,
             //),
             activityDurationSeconds: activityRow.activity_duration_seconds,
-            standing: activityRow.standing, //TODO: might need to do something here
+            standing: activityRow.standing,
             team: activityRow.team,
             completionReason: activityRow.completion_reason,
             startSeconds: activityRow.start_seconds,

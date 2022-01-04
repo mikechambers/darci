@@ -13,31 +13,31 @@ class Standing extends EnumBase {
     }
 
     static fromId(id) {
-        let out = super._fromString(Standing, id);
+        let out = super._fromId(Standing, id);
 
         if (out != undefined) {
             return out;
         }
 
-        return this.UNKNOWN;
+        return Standing.UNKNOWN;
     }
 
     static fromIdAndMode(id, mode) {
-
-        //0 is always victory
-        if (id == Standing.VICTORY.id) {
-            return Standing.VICTORY;
-        }
 
         //in rumble, 0,1,2 is victory.
         //note, this will return wrong results for
         //private rumble, (only 0 will be victory)
         //due to api bug.
         //https://github.com/Bungie-net/api/issues/1386
-        return (mode == Mode.RUMBLE & id > 2) ?
-            Standing.DEFEAT
-            :
-            Standing.VICTORY;
+        if (mode == Mode.RUMBLE) {
+            if (id > 2) {
+                return Standing.DEFEAT;
+            } else {
+                return Standing.VICTORY;
+            }
+        }
+
+        return Standing.fromId(id);
     }
 
     static fromString(type) {
@@ -48,7 +48,7 @@ class Standing extends EnumBase {
             return out;
         }
 
-        return this.UNKNOWN;
+        return Standing.UNKNOWN;
     }
 
 }

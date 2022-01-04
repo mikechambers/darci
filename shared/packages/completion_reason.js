@@ -5,7 +5,7 @@ class CompletionReason extends EnumBase {
     static TIMER_FINISHED = new CompletionReason("TimeFinished", 1, "Timer Finished");
     static FAILED = new CompletionReason("Failed", 2);
     static NO_OPPONENTS = new CompletionReason("NoOpponents", 3, "No Opponents");
-    static MERCY = new CompletionReason("Mercy", 3);
+    static MERCY = new CompletionReason("Mercy", 4);
     static UNKNOWN = new CompletionReason("Unknown", 255);
 
     constructor(type, id, label = undefined) {
@@ -13,13 +13,14 @@ class CompletionReason extends EnumBase {
     }
 
     static fromId(id) {
-        let out = super._fromString(CompletionReason, id);
+
+        let out = super._fromId(CompletionReason, id);
 
         if (out != undefined) {
             return out;
         }
 
-        return this.UNKNOWN;
+        return CompletionReason.UNKNOWN;
     }
 
     static fromString(type) {
@@ -30,7 +31,7 @@ class CompletionReason extends EnumBase {
             return out;
         }
 
-        return this.UNKNOWN;
+        return CompletionReason.UNKNOWN;
     }
 }
 
