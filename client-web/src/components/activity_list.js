@@ -4,16 +4,19 @@ import { calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAss
 import { FLOAT_DECIMAL_PRECISION } from '../consts';
 import { ManifestContext } from '../app';
 import ActivityStats from '../data/activity_stats';
+import Action, { PLAYER_ACTIVITIES_LOADED } from '../app_state/action';
 
 import { CompletionReason, Mode } from 'shared';
 
-const ActivityListContainer = (props) => {
+import { AppContext } from "../app"
+
+const PlayerSummaryLoader = (props) => {
 
     let memberId = props.memberId;
 
-    const [activityStats, setActivityStats] = useState(null);
-
-    const manifest = useContext(ManifestContext);
+    const { state, dispatch } = useContext(AppContext);
+    const manifest = state.manifest;
+    const activityStats = state.playerActivityStats;
 
     useEffect(() => {
         async function featchData() {
@@ -32,9 +35,11 @@ const ActivityListContainer = (props) => {
                 return;
             }
 
+            console.log(data);
+
             const activityStats = new ActivityStats(data.activities, manifest);
 
-            setActivityStats(activityStats);
+            dispatch(new Action(PLAYER_ACTIVITIES_LOADED, activityStats));
         };
 
         featchData();
@@ -106,5 +111,5 @@ const ActivityList = (props) => {
 
 export default ActivityList;
 export {
-    ActivityListContainer
+    PlayerSummaryLoader
 };

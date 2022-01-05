@@ -1,14 +1,15 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { Component, useState, useEffect, useReducer } from 'react';
 import { Outlet } from "react-router-dom";
 import Manifest from './manifest';
+import reducer from "./app_state/reducer";
+import initialState from './app_state/initial_state';
+import Action, { MANIFEST_UPDATED } from './app_state/action';
 
-
-
-const ManifestContext = React.createContext(undefined);
+export const AppContext = React.createContext();
 
 const App = (props) => {
-
-  const [manifest, setManifest] = useState(null);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const manifest = state.manifest;
 
   useEffect(() => {
 
@@ -18,14 +19,15 @@ const App = (props) => {
 
       //todo: do we need to handle error here?
       await manifest.init();
-      setManifest(manifest);
+
+      dispatch(new Action(MANIFEST_UPDATED, manifest));
     };
 
     initManifest();
   }, []);
 
   return (
-    <ManifestContext.Provider value={manifest}>
+    <AppContext.Provider value={{ state, dispatch }}>
       <div>
         <h2>Site Headers</h2>
         {!manifest
@@ -34,9 +36,8 @@ const App = (props) => {
         }
 
       </div>
-    </ManifestContext.Provider>
+    </AppContext.Provider>
   );
 };
 
 export default App;
-export { ManifestContext };
