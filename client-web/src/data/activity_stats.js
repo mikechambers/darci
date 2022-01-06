@@ -1,3 +1,5 @@
+import Manifest from "../manifest";
+
 const { CompletionReason, Mode, Standing } = require("shared");
 //const Standing = require("shared/packages/standing");
 const {
@@ -38,6 +40,12 @@ class ActivityStats {
     #manifest;
     constructor(activities, manifest) {
         this.#activities = activities;
+
+        //this is in case we cant load a manifest for some reason
+        if (!manifest) {
+            manifest = new Manifest();
+        }
+
         this.#manifest = manifest;
         this.#update();
     }

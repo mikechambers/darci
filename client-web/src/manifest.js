@@ -1,38 +1,11 @@
-const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
+
 
 class Manifest {
 
     #manifestData;
 
-    async init() {
-
-        const storage = window.localStorage;
-        let manifestData = storage.getItem(STORAGE_MANIFEST_DATA_KEY);
-
-        let version = "update";
-        if (manifestData) {
-            version = manifestData.version;
-        }
-
-        let response;
-        let data;
-        let updated = false;
-        try {
-            response = await fetch(`/manifest/${version}/`);
-            data = await response.json();
-            updated = data.updated;
-            manifestData = data;
-        } catch (e) {
-            //note: if we cant load data, we just return undefined for everything
-            console.log(e);
-        }
-
-        if (updated) {
-            console.log(`New manifest data found. Storing : ${version}`);
-            storage.setItem(STORAGE_MANIFEST_DATA_KEY, JSON.stringify(manifestData));
-        }
-
-        this.#manifestData = data;
+    constructor(manifestData) {
+        this.#manifestData = manifestData;
     }
 
     getActivityDefinition(id) {
