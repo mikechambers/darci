@@ -144,6 +144,7 @@ class ActivityStoreInterface {
             let player = {
                 classType: r.class,
                 characterId: r.character_id,
+                memberId: memberId
             };
 
             let summary = {

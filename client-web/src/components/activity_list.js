@@ -1,6 +1,6 @@
 import { calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } from "../utils";
 import { FLOAT_DECIMAL_PRECISION } from '../consts';
-
+import { Link } from "react-router-dom";
 import { CompletionReason } from 'shared';
 
 const ActivityList = (props) => {
@@ -39,8 +39,11 @@ const ActivityList = (props) => {
                     let kda = calculateKillsDeathsAssists(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
                     let eff = calculateEfficiency(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
 
-                    return (<tr key={index}>
-                        <td>{activity.mapName}</td>
+                    return (<tr key={activity.activityId}>
+                        <td>
+                            <Link to={`/activity/${activity.activityId}/${activity.player.memberId}`}>{activity.mapName}</Link>
+
+                        </td>
                         <td>{activity.stats.mode.toString()}</td>
                         <td>{activity.stats.standing.toString()}</td>
                         <td>{kills}</td>
