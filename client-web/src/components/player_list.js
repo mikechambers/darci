@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-
-import { ManifestContext } from '../app';
+import { useFetchPlayers } from '../data/fetch_hooks';
 
 const PlayerList = (props) => {
-    let players = (props.players) ? props.players : [];
+    let players = useFetchPlayers();
 
     return (
         players.map((player, index) => {
@@ -20,24 +19,6 @@ const PlayerListContainer = (props) => {
 
     const [players, setPlayers] = useState(null);
 
-    useEffect(() => {
-
-        async function featchData() {
-            let response;
-            let data;
-            try {
-                response = await fetch('/api/players/');
-                data = await response.json()
-            } catch (e) {
-                console.log(e);
-                return;
-            }
-
-            setPlayers(data.players);
-        };
-
-        featchData();
-    }, []);
 
 
     return (

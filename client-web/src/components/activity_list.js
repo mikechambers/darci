@@ -1,57 +1,7 @@
-
-
 import { calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } from "../utils";
 import { FLOAT_DECIMAL_PRECISION } from '../consts';
-import { ManifestContext } from '../app';
-import ActivityStats from '../data/activity_stats';
-import Action, { PLAYER_ACTIVITIES_LOADED } from '../app_state/action';
 
-import { CompletionReason, Mode } from 'shared';
-
-/*
-import { AppContext } from "../app"
-
-const PlayerSummaryLoader = (props) => {
-
-    let memberId = props.memberId;
-
-    const { state, dispatch } = useContext(AppContext);
-    const manifest = state.manifest;
-    const activityStats = state.playerActivityStats;
-
-    useEffect(() => {
-        async function featchData() {
-
-            if (!memberId) {
-                return;
-            }
-
-            let response;
-            let data;
-            try {
-                response = await fetch(`/api/player/${memberId}/all/all_pvp/weekly/`);
-                data = await response.json()
-            } catch (e) {
-                console.log(e);
-                return;
-            }
-
-            console.log(data);
-
-            const activityStats = new ActivityStats(data.activities, manifest);
-
-            dispatch(new Action(PLAYER_ACTIVITIES_LOADED, activityStats));
-        };
-
-        featchData();
-
-    }, []);
-
-    return (
-        <ActivityList activityStats={activityStats} />
-    );
-};
-*/
+import { CompletionReason } from 'shared';
 
 const ActivityList = (props) => {
 
