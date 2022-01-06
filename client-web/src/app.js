@@ -11,13 +11,18 @@ export const AppContext = React.createContext();
 const App = (props) => {
   const [global, dispatchGlobal] = useReducer(reducer, initialState);
 
-  const manifest = useFetchManifest();
+  const manifest = global.manifest;
+  const m = useFetchManifest();
 
   useEffect(() => {
-    if (manifest) {
-      dispatchGlobal(new Action(MANIFEST_UPDATED, manifest));
+    if (m) {
+      setTimeout(
+        () => {
+          dispatchGlobal(new Action(MANIFEST_UPDATED, m));
+        }, 1000); //we add 1 second so we dont get a quick flash of items switching
+
     }
-  }, [manifest]);
+  }, [m]);
 
   return (
     <AppContext.Provider value={{ global, dispatchGlobal }}>

@@ -76,6 +76,10 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
 
     useEffect(() => {
 
+        if (!manifest) {
+            return;
+        }
+
         const load = async () => {
             console.log("useFetchPlayerActivities : loading data");
 
@@ -94,7 +98,7 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
         };
 
         load();
-    }, [memberId]);
+    }, [memberId, manifest]);
 
     return activityStats;
 }
