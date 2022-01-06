@@ -34,15 +34,16 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
     //todo: make sure its safe
     let memberId = req.params.member_id;
 
-
-
     let characterClassSelection = CharacterClassSelection.fromString(req.params.characterClass);
 
+
+    console.log(req.params);
     //todo: need to add an all to classes
     //CharacterClassSelection (LastActive and All)
     if (characterClassSelection == characterClassSelection.UNKNOWN) {
         characterClassSelection = CharacterClassSelection.ALL;
     }
+
 
     let mode = Mode.fromString(req.params.mode);
 
@@ -53,8 +54,10 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
     let moment = Moment.fromString(req.params.moment);
 
     if (moment === Moment.UNKNOWN) {
-
+        moment = Moment.DAILY;
     }
+
+
 
     let endMoment = Moment.NOW;
     let activities = activityStore.retrieveActivities(memberId, characterClassSelection, mode, moment.getDate(), endMoment.getDate());

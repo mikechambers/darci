@@ -18,10 +18,6 @@ class EnumBase {
         return this._type;
     }
 
-    toString() {
-        return this.type;
-    }
-
     static _fromId(classType, id) {
         let properties = Object.getOwnPropertyNames(classType);
 
@@ -65,11 +61,15 @@ class EnumBase {
         return undefined;
     }
 
-    toString() {
-        if (this._label !== undefined) {
-            return this._label;
+    toLabel() {
+        if (!this._label) {
+            return this._type;
         }
 
+        return this._label;
+    }
+
+    toString() {
         return this._type;
     }
 }

@@ -3,6 +3,7 @@ import ActivityStats from "./activity_stats"
 
 import { useState, useContext, useEffect } from "react";
 import Manifest from "../manifest";
+import { Mode, Moment } from "shared";
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 export const DATA_REFRESH_INTERVAL = 60 * 1000; //1  minute
@@ -68,7 +69,7 @@ export const useFetchManifest = () => {
     return manifest;
 };
 
-export const useFetchPlayerActivities = (memberId) => {
+export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment = Moment.WEEK) => {
     const [activityStats, setActivityStats] = useState(null);
     const { global, dispatchGlobal } = useContext(AppContext);
     const manifest = global.manifest;
@@ -81,7 +82,7 @@ export const useFetchPlayerActivities = (memberId) => {
             let response;
             let data;
             try {
-                response = await fetch(`/api/player/${memberId}/all/all_pvp/weekly/`);
+                response = await fetch(`/api/player/${memberId}/all/${mode.toString()}/${moment.toString()}/`);
                 data = await response.json();
             } catch (e) {
                 console.log(e);
