@@ -1,15 +1,15 @@
 import React, { Component, useState, useEffect, useReducer } from 'react';
 import { Outlet } from "react-router-dom";
 import Manifest from './manifest';
-import reducer from "./app_state/reducer";
-import initialState from './app_state/initial_state';
+import reducer, { initialState } from "./app_state/reducer";
+import { Link } from "react-router-dom";
 import Action, { MANIFEST_UPDATED } from './app_state/action';
 
 export const AppContext = React.createContext();
 
 const App = (props) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const manifest = state.manifest;
+  const [global, dispatchGlobal] = useReducer(reducer, initialState);
+  const manifest = global.manifest;
 
   useEffect(() => {
 
@@ -20,16 +20,19 @@ const App = (props) => {
       //todo: do we need to handle error here?
       await manifest.init();
 
-      dispatch(new Action(MANIFEST_UPDATED, manifest));
+      dispatchGlobal(new Action(MANIFEST_UPDATED, manifest));
     };
 
     initManifest();
   }, []);
 
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
+    <AppContext.Provider value={{ global, dispatchGlobal }}>
       <div>
         <h2>Site Headers</h2>
+        <div>
+          <Link to='/'>main</Link>
+        </div>
         {!manifest
           ? <div>Loading Manifest...</div>
           : <Outlet />

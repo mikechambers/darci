@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+
 
 import { calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } from "../utils";
 import { FLOAT_DECIMAL_PRECISION } from '../consts';
@@ -8,6 +8,7 @@ import Action, { PLAYER_ACTIVITIES_LOADED } from '../app_state/action';
 
 import { CompletionReason, Mode } from 'shared';
 
+/*
 import { AppContext } from "../app"
 
 const PlayerSummaryLoader = (props) => {
@@ -50,6 +51,7 @@ const PlayerSummaryLoader = (props) => {
         <ActivityList activityStats={activityStats} />
     );
 };
+*/
 
 const ActivityList = (props) => {
 
@@ -110,6 +112,3 @@ const ActivityList = (props) => {
 
 
 export default ActivityList;
-export {
-    PlayerSummaryLoader
-};
