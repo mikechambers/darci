@@ -5,9 +5,10 @@ import ActivityList from "../components/activity_list"
 import ActivitySummary from "../components/activity_summary";
 import PlayerExperience from "../components/player_experience";
 import PlayerHeader from "../components/player_header";
-import { useFetchPlayerActivities, DATA_REFRESH_INTERVAL } from "../data/fetch_hooks";
+import { useFetchPlayerActivities, useFetchPlayerProfile } from "../data/fetch_hooks";
 import { useInterval } from "../utils";
 import { Mode, Moment } from "shared";
+import { DATA_REFRESH_INTERVAL } from '../consts';
 
 const PlayerSummaryView = () => {
     const [_, forceUpdate] = useReducer((x) => x + 1, 0);
@@ -16,6 +17,9 @@ const PlayerSummaryView = () => {
 
     let mode = Mode.fromString(params.mode);
     let moment = Moment.fromString(params.moment);
+
+    let profile = useFetchPlayerProfile(params.memberId, 1);
+    console.log(profile);
 
 
     let activityStats = useFetchPlayerActivities(params.memberId, mode, moment);

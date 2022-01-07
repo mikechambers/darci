@@ -15,9 +15,10 @@ class ManifestInterface {
     #select_activity_definitions;
     #select_inventory_item_definitions;
     #select_historical_stats_definition;
+    #select_trials_inventory_item_definitions;
 
     #manifestDbPath;
-    #manifestInfoPath
+    #manifestInfoPath;
 
     constructor(manifestDbPath, manifestInfoPath, manifestCheckIntervalMs = 1000 * 60 * 60) {
         this.#manifestDbPath = manifestDbPath;
@@ -84,6 +85,15 @@ class ManifestInterface {
         DestinyInventoryItemDefinition
         WHERE
             json like '%"itemType":3,%'`
+        );
+
+        this.#select_trials_inventory_item_definitions = this.#db.prepare(`
+        SELECT
+            *
+        FROM
+        DestinyInventoryItemDefinition
+        WHERE
+            json like '%"itemTypeDisplayName":"Trials Passage"%'`
         );
 
         this.#select_activity_definitions = this.#db.prepare(`
@@ -154,6 +164,23 @@ class ManifestInterface {
             inventoryItemDefinition[id] = out;
         }
 
+        rows = this.#select_trials_inventory_item_definitions.all();
+
+        let trialsPassageItemDefinitions = {};
+        for (let row of rows) {
+            let d = JSON.parse(row.json);
+            const id = idToHash(row.id);
+
+            let out = {
+                name: d.displayProperties.name,
+                description: d.displayProperties.description,
+                icon: d.displayProperties.icon,
+                id: id,
+            }
+
+            trialsPassageItemDefinitions[id] = out;
+        }
+
         rows = this.#select_historical_stats_definition.all();
 
         let historicalStatsDefinition = {};
@@ -181,6 +208,7 @@ class ManifestInterface {
                 activityDefinition: activityDefinition,
                 inventoryItemDefinition: inventoryItemDefinition,
                 historicalStatsDefinition: historicalStatsDefinition,
+                trialsPassageItemDefinitions: trialsPassageItemDefinitions,
             }
         };
     }

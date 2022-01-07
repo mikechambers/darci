@@ -4,9 +4,11 @@ import ActivityStats from "./activity_stats"
 import { useState, useContext, useEffect } from "react";
 import Manifest from "../manifest";
 import { Mode, Moment } from "shared";
+import { DESTINY_API_KEY } from "../consts";
+import PlayerProfile from "./player_profile";
+
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
-export const DATA_REFRESH_INTERVAL = 60 * 1000; //1  minute
 
 export const useFetchManifest = () => {
 
@@ -59,7 +61,6 @@ export const useFetchManifest = () => {
                 console.log("using stored manifest data");
                 out = new Manifest(storedData);
             }
-
             setManifest(out);
         };
 
@@ -108,7 +109,7 @@ export const useFetchPlayers = () => {
     const [players, setPlayers] = useState([]);
     useEffect(() => {
 
-        async function featchData() {
+        async function fetchData() {
             let response;
             let data;
             try {
@@ -122,8 +123,47 @@ export const useFetchPlayers = () => {
             setPlayers(data.players);
         };
 
-        featchData();
+        fetchData();
     }, []);
 
     return players;
+}
+
+export const useFetchPlayerProfile = (memberId, platformId) => {
+
+    const [profile, setProfile] = useState();
+    const { global, dispatchGlobal } = useContext(AppContext);
+    const manifest = global.manifest;
+
+    useEffect(() => {
+
+        async function fetchData() {
+            console.log("useFetchPlayerProfile : loading");
+            let response;
+            let data;
+            let args = {
+                headers: { 'X-API-Key': `${DESTINY_API_KEY}` }
+            };
+            console.log(args.headers);
+            try {
+                response = await fetch(
+                    `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=100,200,202`,
+                    args
+                );
+                data = await response.json()
+            } catch (e) {
+                console.log(e);
+                return;
+            }
+
+            //TODO: need to check it wasnt an error returned.
+
+            let p = new PlayerProfile(data.Response, manifest);
+            setProfile(p);
+        };
+
+        fetchData();
+    }, []);
+
+    return profile;
 }

@@ -21,12 +21,24 @@ class Manifest {
 
         let d = this.#manifestData.data.activityDefinition[id];
 
-        if (!d) {
+        return (!d) ? out : d;
+    }
+
+    getTrialsPassageDefinition(id) {
+        let out = {
+            name: "Unknown",
+            description: undefined,
+            icon: undefined,
+            id: id,
+        }
+
+        if (!this.#manifestData) {
             return out;
         }
 
-        return d;
+        let d = this.#manifestData.data.trialsPassageItemDefinitions[id];
 
+        return (!d) ? out : d;
     }
 }
 
