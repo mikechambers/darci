@@ -343,7 +343,7 @@ class ActivityStoreInterface {
                 memberId: row.member_id,
                 bungieDisplayName: row.bungie_display_name,
                 bungieDisplayNameCode: row.bungie_display_name_code,
-                platform: row.platform_id,
+                platformId: row.platform_id,
             });
         }
 

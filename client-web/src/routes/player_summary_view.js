@@ -17,7 +17,7 @@ const PlayerSummaryView = () => {
     let mode = Mode.fromString(params.mode);
     let moment = Moment.fromString(params.moment);
 
-    let profile = useFetchPlayerProfile(params.memberId, 1);
+    let profile = useFetchPlayerProfile(params.memberId, params.platformId);
 
     let activityStats = useFetchPlayerActivities(params.memberId, mode, moment);
 

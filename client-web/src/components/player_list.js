@@ -5,9 +5,10 @@ import { useFetchPlayers } from '../data/fetch_hooks';
 const PlayerList = (props) => {
     let players = useFetchPlayers();
 
+    console.log(players);
     return (
         players.map((player, index) => {
-            let to = `/player/${player.memberId}/all/allpvp/week/`;
+            let to = `/player/${player.memberId}/${player.platform}/all/allpvp/week/`;
             return (<div key={player.memberId}>
                 <Link to={to}>{player.bungieDisplayName}#{player.bungieDisplayNameCode}</Link>
             </div>);

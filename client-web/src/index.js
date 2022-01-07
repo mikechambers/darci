@@ -16,10 +16,12 @@ ReactDOM.render(
           <Route index path="/" element={<HomeView />} />
           <Route path="player" element={<PlayerSummaryView />}>
             <Route path=":memberId" element={<PlayerSummaryView />}>
-              <Route path=":classType" element={<PlayerSummaryView />}>
-                <Route path=":mode" element={<PlayerSummaryView />}>
-                  <Route path=":moment" element={<PlayerSummaryView />} />
-                  <Route />
+              <Route path=":platformId" element={<PlayerSummaryView />}>
+                <Route path=":classType" element={<PlayerSummaryView />}>
+                  <Route path=":mode" element={<PlayerSummaryView />}>
+                    <Route path=":moment" element={<PlayerSummaryView />} />
+                    <Route />
+                  </Route>
                 </Route>
               </Route>
             </Route>
