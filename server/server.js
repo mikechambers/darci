@@ -1,4 +1,4 @@
-const { CharacterClassSelection, Mode, Moment } = require('shared');
+const { CharacterClassSelection, Mode, Moment, ServerError } = require('shared');
 const {
     SERVER_PORT,
     SERVER_HOSTNAME,
@@ -21,18 +21,13 @@ const app = express();
 const port = SERVER_PORT;
 const hostname = SERVER_HOSTNAME;
 
-app.get("/", (req, res) => {
-
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/plain');
-    res.end("Hello World");
+app.get("/", (req, res, next) => {
+    sendJsonResponse(res, {});
 });
 
-
 ///player/member_id/class/mode/moment/end-moment/
-
 //can append regex to each one : https://expressjs.com/en/guide/routing.html
-app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (req, res) => {
+app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (req, res, next) => {
 
     let memberId = req.params.member_id;
 
@@ -87,10 +82,11 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
         activities: activities,
         summary: summary
     }
-    res.json(out);
+
+    sendJsonResponse(res, out);
 });
 
-app.get("/api/players/", (req, res) => {
+app.get("/api/players/", (req, res, next) => {
 
     let rows = activityStore.retrieveSyncMembers();
 
@@ -98,26 +94,65 @@ app.get("/api/players/", (req, res) => {
         players: rows,
     };
 
-    res.json(out);
+    sendJsonResponse(res, out);
 });
 
-app.get("/manifest/:version/", (req, res) => {
+const manifestNoUpdateData = { updated: false };
+app.get("/manifest/:version/", (req, res, next) => {
 
     const manifestNeedsUpdating = manifestInterface.hasUpdatedManifest(req.params.version);
 
-    if (!manifestNeedsUpdating) {
-        res.json({ updated: false });
-        return;
+    let out = manifestNoUpdateData;
+
+    if (manifestNeedsUpdating) {
+        out = manifestInterface.manifest;
+        out.updated = true;
     }
 
-    let out = manifestInterface.manifest;
-
-    out.updated = true;
-    res.json(out);
+    sendJsonResponse(res, out);
 });
 
 
+const SUCCESS_STATUS = "succes";
+const ERROR_STATUS = "error";
+
+const sendJsonResponse = (res, data) => {
+    const out = {
+        response: data,
+        status: SUCCESS_STATUS,
+    }
+
+    res.json(out);
+}
+
+//Error handler
+app.use(function (err, req, res, next) {
+    console.log("ERROR HANDLER");
+    console.error(err.stack)
+
+    let msg = err.message;
+    let name = err.name;
+
+    if (!(err instanceof ServerError)) {
+        msg = `Server runtime error [${err.name}].`;
+        name = ServerError.SERVER_RUNTIME_ERROR;
+    }
+
+    const out = {
+        response: undefined,
+        status: ERROR_STATUS,
+        error: {
+            message: msg,
+            name: name,
+        },
+    }
+
+    res.json(out);
+});
+
 //note, cant use await format here
+//this makes a syncronous file system read
+//todo: need to try to make this async
 manifestInterface.init().catch(
     (err) => {
         throw err;

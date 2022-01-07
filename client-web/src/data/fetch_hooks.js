@@ -37,7 +37,7 @@ export const useFetchManifest = () => {
                 rawData = await response.text();
 
                 remoteData = JSON.parse(rawData);
-                updated = remoteData.updated;
+                updated = remoteData.response.updated;
             } catch (e) {
                 //todo: if we cant load data, we just return undefined for everything
 
@@ -51,7 +51,7 @@ export const useFetchManifest = () => {
 
             let out;
             if (updated) {
-                out = new Manifest(remoteData);
+                out = new Manifest(remoteData.response);
 
                 console.log("MANIFEST: new manifest data found");
                 storage.setItem(STORAGE_MANIFEST_DATA_KEY, rawData);
@@ -93,7 +93,7 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
                 return;
             }
 
-            const activityStats = new ActivityStats(data, manifest);
+            const activityStats = new ActivityStats(data.response, manifest);
             setActivityStats(activityStats);
         };
 
@@ -119,7 +119,7 @@ export const useFetchPlayers = () => {
                 return;
             }
 
-            setPlayers(data.players);
+            setPlayers(data.response.players);
         };
 
         fetchData();
@@ -138,6 +138,7 @@ export const useFetchPlayerProfile = (memberId, platformId) => {
 
         async function fetchData() {
             console.log("useFetchPlayerProfile : loading");
+
             let response;
             let data;
             let args = {
@@ -156,6 +157,12 @@ export const useFetchPlayerProfile = (memberId, platformId) => {
             }
 
             //TODO: need to check it wasnt an error returned.
+
+            /*            ​
+                ErrorCode: 7  ​
+                ErrorStatus: "ParameterParseFailure"
+                Message: "Unable to parse your parameters.  Please correct them, and try again."
+            */
 
             let p = new PlayerProfile(data.Response, manifest);
             setProfile(p);

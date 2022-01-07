@@ -118,6 +118,7 @@ class ManifestInterface {
 
     async #getSystemManifestVersion() {
 
+        //todo: this is a sync call. should look at making this async again
         let data = await fs.promises.readFile(this.#manifestInfoPath, 'utf8');
 
         let obj = JSON.parse(data);

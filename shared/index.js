@@ -5,6 +5,7 @@ const EnumBase = require("./packages/enum_base");
 const CharacterClassSelection = require("./packages/character_class_selection");
 const Standing = require("./packages/standing");
 const CompletionReason = require("./packages/completion_reason");
+const ServerError = require("./packages/server_error");
 
 module.exports = {
     EnumBase: EnumBase,
@@ -13,5 +14,6 @@ module.exports = {
     CharacterClass: CharacterClass,
     CharacterClassSelection: CharacterClassSelection,
     Standing: Standing,
-    CompletionReason: CompletionReason
+    CompletionReason: CompletionReason,
+    ServerError: ServerError,
 };
