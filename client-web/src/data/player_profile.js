@@ -8,12 +8,17 @@ const TRIALS_PROGRESSION_ID = "2755675426";
 const GLORY_STREAK_ID = "2572719399";
 const VALOR_STREAK_ID = "2203850209";
 
+/*
 const TRIALS_WINS_ID = "1062449239";
 const TRIALS_LOSSES_ID = "2093709363";
-
 const TRIALS_ROUNDS_WON_ID = "3497267100";
-const MERCY_FORGIVEN_ID = "1349727737";
+const FLAWLESS_ID = "1349727737";
+*/
 
+const TRIALS_WINS_ID = 1586211619;
+const TRIALS_LOSSES_ID = 2369244651;
+const TRIALS_ROUNDS_WON_ID = 984122744;
+const TRIALS_FLAWLESS_ID = 2211480687;
 
 class PlayerProfile {
 
@@ -50,16 +55,54 @@ class PlayerProfile {
                     streak: progressions[GLORY_STREAK_ID].currentProgress,
                 };
 
-                //TODO: need to get the right value for this, but cant test until weekend
-                let passage = manifest.getTrialsPassageDefinition(-1);
 
-                //TODO: make this undefined if empty
-                let currentCard = {
-                    wins: progressions[TRIALS_WINS_ID].level,
-                    losses: progressions[TRIALS_LOSSES_ID].level,
-                    roundsWon: progressions[TRIALS_ROUNDS_WON_ID].level,
-                    passage: passage,
-                };
+                let trialsPassageIds = manifest.trialsPassageIds;
+
+                let currentCard;
+                const uninstancedItemObjectives = data.characterProgressions.data[cId]["uninstancedItemObjectives"];
+                for (const id of trialsPassageIds) {
+
+                    //This is an Array of objects
+                    let trialsData = uninstancedItemObjectives[id];
+                    if (!uninstancedItemObjectives[id]) {
+                        continue;
+                    }
+
+                    let wins;
+                    let losses;
+                    let roundsWon;
+                    let isFlawless;
+
+                    console.log(trialsData);
+                    for (const obj of trialsData) {
+                        switch (obj.objectiveHash) {
+                            case TRIALS_WINS_ID:
+                                wins = obj.progress;
+                                break;
+                            case TRIALS_LOSSES_ID:
+                                losses = obj.progress;
+                                break;
+                            case TRIALS_ROUNDS_WON_ID:
+                                roundsWon = obj.progress;
+                                break;
+                            case TRIALS_FLAWLESS_ID:
+                                isFlawless = (obj.progress == 1);
+                                break;
+                        }
+                    }
+
+
+                    const passage = manifest.getTrialsPassageDefinition(id);
+                    currentCard = {
+                        wins: wins,
+                        losses: losses,
+                        roundsWon: roundsWon,
+                        isFlawless: isFlawless,
+                        passage: passage,
+                    };
+                }
+
+                console.log(currentCard);
 
                 trials = {
                     currentProgress: progressions[TRIALS_PROGRESSION_ID].currentProgress,

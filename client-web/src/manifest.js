@@ -4,8 +4,16 @@ class Manifest {
 
     #manifestData;
 
+    #trialsPassageIds = [];
+
     constructor(manifestData) {
         this.#manifestData = manifestData;
+
+        for (const [key, value] of Object.entries(this.#manifestData.data.trialsPassageItemDefinitions)) {
+            if (value.id) {
+                this.#trialsPassageIds.push(value.id);
+            }
+        }
     }
 
     getActivityDefinition(id) {
@@ -39,6 +47,10 @@ class Manifest {
         let d = this.#manifestData.data.trialsPassageItemDefinitions[id];
 
         return (!d) ? out : d;
+    }
+
+    get trialsPassageIds() {
+        return this.#trialsPassageIds;
     }
 }
 

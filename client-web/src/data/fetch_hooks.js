@@ -129,7 +129,6 @@ export const useFetchPlayers = () => {
 }
 
 export const useFetchPlayerProfile = (memberId, platformId) => {
-
     const [profile, setProfile] = useState();
     const { global, dispatchGlobal } = useContext(AppContext);
     const manifest = global.manifest;
@@ -146,8 +145,9 @@ export const useFetchPlayerProfile = (memberId, platformId) => {
             };
 
             try {
+                let rnd = new Date().getTime();
                 response = await fetch(
-                    `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=100,200,202`,
+                    `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=100,200,202&rnd=${rnd}`,
                     args
                 );
                 data = await response.json()
@@ -156,13 +156,17 @@ export const useFetchPlayerProfile = (memberId, platformId) => {
                 return;
             }
 
-            //TODO: need to check it wasnt an error returned.
-
             /*            ​
                 ErrorCode: 7  ​
                 ErrorStatus: "ParameterParseFailure"
                 Message: "Unable to parse your parameters.  Please correct them, and try again."
             */
+            if (data.ErrorCode !== 1) {
+                //TODO: Need to handle this
+                console.log("Bungie API Error");
+                console.log("ErrorCode : ", data.ErrorCode);
+                console.log("ErrorMessage : ", data.Message);
+            }
 
             let p = new PlayerProfile(data.Response, manifest);
             setProfile(p);
