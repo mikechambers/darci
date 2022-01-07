@@ -20,7 +20,7 @@ class PlayerProfile {
     #data;
     #characters;
     #lastActiveCharacter;
-    constructor() {
+    constructor(data, manifest) {
         this.#data = data;
 
         let lastActiveCharacter = undefined;
@@ -28,7 +28,6 @@ class PlayerProfile {
         this.#characters = [];
         for (const cId in data.characters.data) {
 
-            console.log();
             let progressions = data.characterProgressions.data[cId].progressions;
 
             let valor = {};

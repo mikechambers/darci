@@ -19,7 +19,7 @@ const App = (props) => {
       setTimeout(
         () => {
           dispatchGlobal(new Action(MANIFEST_UPDATED, m));
-        }, 1000); //we add 1 second so we dont get a quick flash of items switching
+        }, 10); //we add 1 second so we dont get a quick flash of items switching
 
     }
   }, [m]);

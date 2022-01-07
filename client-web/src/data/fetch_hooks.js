@@ -26,7 +26,6 @@ export const useFetchManifest = () => {
             //need to json this
             version = encodeURIComponent(storedData.version);
         }
-        console.log("version", version);
 
         const f = async () => {
             let response;
@@ -54,11 +53,11 @@ export const useFetchManifest = () => {
             if (updated) {
                 out = new Manifest(remoteData);
 
-                console.log("new manifest data found");
+                console.log("MANIFEST: new manifest data found");
                 storage.setItem(STORAGE_MANIFEST_DATA_KEY, rawData);
 
             } else if (storedData) {
-                console.log("using stored manifest data");
+                console.log("MANIFEST: using stored manifest data");
                 out = new Manifest(storedData);
             }
             setManifest(out);
@@ -90,7 +89,7 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
                 response = await fetch(`/api/player/${memberId}/all/${mode.toString()}/${moment.toString()}/`);
                 data = await response.json();
             } catch (e) {
-                console.log(e);
+                console.log("useFetchPlayerActivities Error", e);
                 return;
             }
 
@@ -99,7 +98,7 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
         };
 
         load();
-    }, [memberId, manifest]);
+    }, []);
 
     return activityStats;
 }
@@ -116,7 +115,7 @@ export const useFetchPlayers = () => {
                 response = await fetch('/api/players/');
                 data = await response.json()
             } catch (e) {
-                console.log(e);
+                console.log("useFetchPlayers Error:", e);
                 return;
             }
 
@@ -144,7 +143,7 @@ export const useFetchPlayerProfile = (memberId, platformId) => {
             let args = {
                 headers: { 'X-API-Key': `${DESTINY_API_KEY}` }
             };
-            console.log(args.headers);
+
             try {
                 response = await fetch(
                     `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=100,200,202`,
@@ -152,7 +151,7 @@ export const useFetchPlayerProfile = (memberId, platformId) => {
                 );
                 data = await response.json()
             } catch (e) {
-                console.log(e);
+                console.log("useFetchPlayerProfile Error", e);
                 return;
             }
 

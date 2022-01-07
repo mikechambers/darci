@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState, useEffect, useContext, useReducer, useRef } from 'react';
-import ActivityStats from "../data/activity_stats";
+import { useReducer } from 'react';
 import ActivityList from "../components/activity_list"
 import ActivitySummary from "../components/activity_summary";
 import PlayerExperience from "../components/player_experience";
@@ -19,8 +18,6 @@ const PlayerSummaryView = () => {
     let moment = Moment.fromString(params.moment);
 
     let profile = useFetchPlayerProfile(params.memberId, 1);
-    console.log(profile);
-
 
     let activityStats = useFetchPlayerActivities(params.memberId, mode, moment);
 

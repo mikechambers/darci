@@ -21,12 +21,10 @@ export function useInterval(callback, interval) {
         }
 
         const intervalId = setInterval(() => {
-            console.log("interval tick");
             callback();
         }, interval);
 
         return () => {
-            console.log("clear interval");
             clearInterval(intervalId);
         };
     });
