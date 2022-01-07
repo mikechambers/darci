@@ -1,22 +1,25 @@
 const { CharacterClassSelection, Mode, Moment } = require('shared');
+const {
+    SERVER_PORT,
+    SERVER_HOSTNAME,
+    MANIFEST_CHECK_INTERVAL_MS,
+    MAX_ACTIVITIES_PAGE_LIMIT,
+    DB_PATH,
+    MANIFEST_DB_PATH,
+    MANIFEST_INFO_PATH } = require('./config');
 
 const express = require("express");
 
 const ActivityStoreInterface = require("./activity_store_interface.js");
 const ManifestInterface = require('./manifest_interface.js');
 
-const DB_PATH = process.env.DCLI_DB_PATH;
-const MANIFEST_DB_PATH = process.env.MANIFEST_DB_PATH;
-const MANIFEST_INFO_PATH = process.env.MANIFEST_INFO_PATH;
-
-const MANIFEST_CHECK_INTERVAL_MS = 1000 * 60 * 60; //check once an hour
-
 const activityStore = new ActivityStoreInterface(DB_PATH);
 const manifestInterface = new ManifestInterface(MANIFEST_DB_PATH, MANIFEST_INFO_PATH, MANIFEST_CHECK_INTERVAL_MS);
 
 const app = express();
-const port = 3001;
-const hostname = "127.0.0.1";
+
+const port = SERVER_PORT;
+const hostname = SERVER_HOSTNAME;
 
 app.get("/", (req, res) => {
 
@@ -31,19 +34,15 @@ app.get("/", (req, res) => {
 //can append regex to each one : https://expressjs.com/en/guide/routing.html
 app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (req, res) => {
 
-    //todo: make sure its safe
     let memberId = req.params.member_id;
 
     let characterClassSelection = CharacterClassSelection.fromString(req.params.characterClass);
 
-
-    console.log(req.params);
     //todo: need to add an all to classes
     //CharacterClassSelection (LastActive and All)
     if (characterClassSelection == characterClassSelection.UNKNOWN) {
         characterClassSelection = CharacterClassSelection.ALL;
     }
-
 
     let mode = Mode.fromString(req.params.mode);
 
@@ -57,18 +56,18 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
         moment = Moment.DAILY;
     }
 
+    const endMoment = Moment.NOW;
+    const activities = activityStore.retrieveActivities(memberId, characterClassSelection, mode, moment.getDate(), endMoment.getDate());
 
-
-    let endMoment = Moment.NOW;
-    let activities = activityStore.retrieveActivities(memberId, characterClassSelection, mode, moment.getDate(), endMoment.getDate());
+    const summary = activityStore.summarizeActivities(activities);
 
     //query for name, and whether we have synced? maybe only if no activities have returned
 
     //note: we could get this from the above query.
-    let player = activityStore.retrieveMember(memberId);
+    const player = activityStore.retrieveMember(memberId);
 
     //rename retrieveActivitiesSince to retrieveActivities and pass in end moment date
-    let query = {
+    const query = {
         startDate: moment.getDate(),
         endDate: endMoment.getDate(),
         startMoment: moment.toString(),
@@ -77,13 +76,17 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
         classSelection: characterClassSelection.toString(),
     }
 
-    let out = {
+    if (activities.length > MAX_ACTIVITIES_PAGE_LIMIT) {
+        //note this remove items from the array
+        activities.splice(MAX_ACTIVITIES_PAGE_LIMIT);
+    }
+
+    const out = {
         query: query,
         player: player,
         activities: activities,
+        summary: summary
     }
-
-
     res.json(out);
 });
 

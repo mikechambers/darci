@@ -93,7 +93,7 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
                 return;
             }
 
-            const activityStats = new ActivityStats(data.activities, manifest);
+            const activityStats = new ActivityStats(data, manifest);
             setActivityStats(activityStats);
         };
 

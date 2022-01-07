@@ -1,6 +1,6 @@
 
 const Database = require('better-sqlite3');
-const { CharacterClassSelection, Mode } = require('shared');
+const { CharacterClassSelection, Mode, Standing, CompletionReason } = require('shared');
 
 class ActivityStoreInterface {
 
@@ -147,7 +147,7 @@ class ActivityStoreInterface {
                 memberId: memberId
             };
 
-            let summary = {
+            let details = {
                 period: r.period,
                 activityId: r.activity_id,
                 mode: r.mode,
@@ -158,9 +158,10 @@ class ActivityStoreInterface {
                 stats: stats,
             };
 
-
-            activities.push(summary);
+            activities.push(details);
         }
+
+
 
         return activities;
     }
@@ -208,6 +209,79 @@ class ActivityStoreInterface {
         };
 
         return stats;
+    }
+
+    summarizeActivities(activities) {
+        const out = {
+            assists: 0,
+            kills: 0,
+            deaths: 0,
+            opponentsDefeated: 0,
+            efficiency: 0,
+            killsDeathsRatio: 0,
+            killsDeathsAssists: 0,
+            timePlayedSeconds: 0,
+            wins: 0,
+            losses: 0,
+            draws: 0,
+            mercies: 0,
+            highestKills: 0,
+            highestAssists: 0,
+            highestDeaths: 0,
+            highestOpponentsDefeated: 0,
+            highestEfficiency: 0,
+            highestKillsDeathsRatio: 0,
+            highestKillsDeathsAssists: 0,
+            precisionKills: 0,
+            abilityKills: 0,
+            grenadeKills: 0,
+            meleeKills: 0,
+            superKills: 0,
+        }
+
+        for (let activity of activities) {
+
+            out.assists += activity.stats.assists;
+            out.kills += activity.stats.kills;
+            out.deaths += activity.stats.deaths;
+            out.opponentsDefeated += activity.stats.opponentsDefeated;
+
+            let mode = Mode.fromId(activity.mode);
+            let standing = Standing.fromIdAndMode(activity.stats.standing, mode);
+            switch (standing) {
+                case Standing.VICTORY:
+                    out.wins++;
+                    break;
+                case Standing.DEFEAT:
+                    out.losses++;
+                    break;
+                case Standing.UNKNOWN:
+                    out.draws++;
+                    break;
+            }
+
+            //activity.stats.mode = mode;
+            //activity.stats.standing = standing;
+
+            let completionReason = CompletionReason.fromId(activity.stats.completionReason);
+
+            if (completionReason == CompletionReason.MERCY) {
+                out.mercies++;
+            }
+
+            //activity.stats.completionReason = completionReason;
+        }
+
+        /*
+        out.efficiency = calculateEfficiency(
+            out.kills, out.deaths, out.assists);
+        out.killsDeathsRatio = calculateKillsDeathsRatio(out.kills, out.deaths);
+        out.killsDeathsAssists = calculateKillsDeathsAssists(
+            out.kills, out.deaths, out.assists);
+            */
+
+        return out;
+
     }
 
     retrieveMedals(characterActivityStatsRowIndex) {
