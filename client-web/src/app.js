@@ -4,7 +4,7 @@ import Manifest from './manifest';
 import reducer, { initialState } from "./app_state/reducer";
 import { Link } from "react-router-dom";
 import Action, { MANIFEST_UPDATED } from './app_state/action';
-import { useFetchManifest } from './data/fetch_hooks';
+import { useFetchManifest } from './data/hooks';
 
 export const AppContext = React.createContext();
 
