@@ -29,7 +29,7 @@ class ActivityStoreInterface {
         }
 
         console.log(`Using data store at: ${this.#dbPath}`);
-        this.#db = new Database(this.#dbPath, { readonly: true, verbose: console.log });
+        this.#db = new Database(this.#dbPath, { readonly: true });
         this.#initStatements();
     }
 

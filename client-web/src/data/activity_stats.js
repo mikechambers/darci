@@ -13,7 +13,6 @@ class ActivityStats {
     constructor(data, manifest) {
         this.#activities = data.activities;
         this.#summary = data.summary;
-        console.log(this.#summary);
 
         //this is in case we cant load a manifest for some reason
         if (!manifest) {

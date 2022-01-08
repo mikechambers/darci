@@ -74,7 +74,7 @@ class ManifestInterface {
         }
 
         console.log(`Using Manifest db at: ${this.#manifestDbPath}`);
-        this.#db = new Database(this.#manifestDbPath, { readonly: true, verbose: console.log });
+        this.#db = new Database(this.#manifestDbPath, { readonly: true });
     }
 
     #initStatements() {
