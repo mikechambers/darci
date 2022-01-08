@@ -7,6 +7,10 @@ const Standing = require("./packages/standing");
 const CompletionReason = require("./packages/completion_reason");
 const ServerError = require("./packages/server_error");
 
+const { calculateEfficiency,
+    calculateKillsDeathsRatio,
+    calculateKillsDeathsAssists } = require('./packages/utils');
+
 module.exports = {
     EnumBase: EnumBase,
     Mode: Mode,
@@ -16,4 +20,7 @@ module.exports = {
     Standing: Standing,
     CompletionReason: CompletionReason,
     ServerError: ServerError,
+    calculateEfficiency,
+    calculateKillsDeathsRatio,
+    calculateKillsDeathsAssists
 };

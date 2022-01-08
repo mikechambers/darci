@@ -92,7 +92,7 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
                 console.log("useFetchPlayerActivities Error", e);
                 return;
             }
-
+            console.log(data);
             const activityStats = new ActivityStats(data.response, manifest);
             setActivityStats(activityStats);
         };

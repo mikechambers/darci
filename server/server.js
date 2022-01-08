@@ -71,6 +71,7 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
         classSelection: characterClassSelection.toString(),
     }
 
+    const length = activities.length;
     if (activities.length > MAX_ACTIVITIES_PAGE_LIMIT) {
         //note this remove items from the array
         activities.splice(MAX_ACTIVITIES_PAGE_LIMIT);
@@ -80,7 +81,13 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
         query: query,
         player: player,
         activities: activities,
-        summary: summary
+        summary: summary,
+        page: {
+            total: length,
+            index: 0,
+            pageSize: MAX_ACTIVITIES_PAGE_LIMIT,
+            packageSize: activities.length,
+        }
     }
 
     sendJsonResponse(res, out);
@@ -150,17 +157,14 @@ app.use(function (err, req, res, next) {
     res.json(out);
 });
 
-//note, cant use await format here
-//this makes a syncronous file system read
-//todo: need to try to make this async
-manifestInterface.init().catch(
-    (err) => {
-        throw err;
-    }
-).then(
-    () => {
-        app.listen(port, () => {
-            console.log(`Server running at http://${hostname}:${port}/`);
-        });
-    }
-);
+
+const init = async () => {
+    console.log("Initializing Manifest");
+    await manifestInterface.init();
+
+    app.listen(port, () => {
+        console.log(`Server running at http://${hostname}:${port}/`);
+    });
+};
+
+init();

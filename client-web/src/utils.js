@@ -1,19 +1,23 @@
 import { useEffect } from "react";
 
-const calculateKillsDeathsRatio = function (kills, deaths) {
-    return (deaths !== 0) ? kills / deaths : kills;
+
+export const calculateAverage = (value, total) => {
+    if (!total) {
+        return 0;
+    }
+
+    return value / total;
 }
 
-const calculateKillsDeathsAssists = function (kills, deaths, assists) {
-    let t = kills + (assists / 2);
-    return (deaths !== 0) ? t / deaths : t;
+export const calculatePercent = (value, total) => {
+    if (!total) {
+        return 0;
+    }
+
+    return (value / total) * 100.0;
 }
 
-const calculateEfficiency = function (kills, deaths, assists) {
-    return (deaths !== 0) ? (kills + assists) / deaths : 0;
-}
-
-export function useInterval(callback, interval) {
+export const useInterval = (callback, interval) => {
 
     useEffect(() => {
         if (!interval) {
@@ -29,9 +33,3 @@ export function useInterval(callback, interval) {
         };
     });
 }
-
-export {
-    calculateEfficiency,
-    calculateKillsDeathsRatio,
-    calculateKillsDeathsAssists
-};

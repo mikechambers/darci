@@ -31,13 +31,7 @@ const ActivityList = (props) => {
             <tbody>
                 {activities.map((activity, index) => {
 
-                    let kills = activity.stats.kills;
-                    let deaths = activity.stats.deaths;
-                    let assists = activity.stats.assists;
 
-                    let kd = calculateKillsDeathsRatio(kills, deaths).toFixed(FLOAT_DECIMAL_PRECISION);
-                    let kda = calculateKillsDeathsAssists(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
-                    let eff = calculateEfficiency(kills, deaths, assists).toFixed(FLOAT_DECIMAL_PRECISION);
 
                     return (<tr key={activity.activityId}>
                         <td>
@@ -46,13 +40,13 @@ const ActivityList = (props) => {
                         </td>
                         <td>{activity.stats.mode.toString()}</td>
                         <td>{activity.stats.standing.toString()}</td>
-                        <td>{kills}</td>
-                        <td>{assists}</td>
+                        <td>{activity.stats.kills}</td>
+                        <td>{activity.stats.assists}</td>
                         <td>{activity.stats.opponentsDefeated}</td>
-                        <td>{deaths}</td>
-                        <td>{kd}</td>
-                        <td>{kda}</td>
-                        <td>{eff}</td>
+                        <td>{activity.stats.deaths}</td>
+                        <td>{activity.stats.killsDeathsRatio.toFixed(2)}</td>
+                        <td>{activity.stats.killsDeathsAssists.toFixed(2)}</td>
+                        <td>{activity.stats.efficiency.toFixed(2)}</td>
                         <td>{activity.stats.extended.superKills}</td>
                         <td>{activity.stats.extended.grenadeKills}</td>
                         <td>{activity.stats.extended.meleeKills}</td>

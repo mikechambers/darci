@@ -13,6 +13,7 @@ class ActivityStats {
     constructor(data, manifest) {
         this.#activities = data.activities;
         this.#summary = data.summary;
+        console.log(this.#summary);
 
         //this is in case we cant load a manifest for some reason
         if (!manifest) {
@@ -30,11 +31,6 @@ class ActivityStats {
             let mapName = this.#manifest.getActivityDefinition(activity.referenceId).name;
             activity.mapName = this.#manifest.getActivityDefinition(activity.referenceId).name;
 
-            this.#summary.assists += activity.stats.assists;
-            this.#summary.kills += activity.stats.kills;
-            this.#summary.deaths += activity.stats.deaths;
-            this.#summary.opponentsDefeated += activity.stats.opponentsDefeated;
-
             let mode = Mode.fromId(activity.mode);
             activity.stats.mode = mode;
 
@@ -45,11 +41,13 @@ class ActivityStats {
             activity.stats.completionReason = completionReason;
         }
 
+        /*
         this.#summary.efficiency = calculateEfficiency(
             this.#summary.kills, this.#summary.deaths, this.#summary.assists);
         this.#summary.killsDeathsRatio = calculateKillsDeathsRatio(this.#summary.kills, this.#summary.deaths);
         this.#summary.killsDeathsAssists = calculateKillsDeathsAssists(
             this.#summary.kills, this.#summary.deaths, this.#summary.assists);
+            */
 
     }
 

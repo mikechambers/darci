@@ -1,6 +1,9 @@
 
 const Database = require('better-sqlite3');
-const { CharacterClassSelection, Mode, Standing, CompletionReason } = require('shared');
+const {
+    CharacterClassSelection, Mode, Standing, CompletionReason,
+    calculateEfficiency, calculateKillsDeathsAssists,
+    calculateKillsDeathsRatio } = require('shared');
 
 class ActivityStoreInterface {
 
@@ -192,11 +195,12 @@ class ActivityStoreInterface {
             averageScoreRerLife: activityRow.average_score_per_life,
             completed: activityRow.completed === 1,
             opponentsDefeated: activityRow.opponents_defeated,
-            //efficiency: calculate_efficiency(kills, deaths, assists),
-            //killsDeathsRatio: calculate_kills_deaths_ratio(kills, deaths),
-            //killsDeathsAssists: calculate_kills_deaths_assists(
-            //    kills, deaths, assists,
-            //),
+
+            efficiency: calculateEfficiency(activityRow.kills, activityRow.deaths, activityRow.assists),
+            killsDeathsRatio: calculateKillsDeathsRatio(activityRow.kills, activityRow.deaths),
+            killsDeathsAssists: calculateKillsDeathsAssists(
+                activityRow.kills, activityRow.deaths, activityRow.assists,
+            ),
             activityDurationSeconds: activityRow.activity_duration_seconds,
             standing: activityRow.standing,
             team: activityRow.team,
@@ -213,38 +217,65 @@ class ActivityStoreInterface {
 
     summarizeActivities(activities) {
         const out = {
-            assists: 0,
-            kills: 0,
-            deaths: 0,
-            opponentsDefeated: 0,
-            efficiency: 0,
-            killsDeathsRatio: 0,
-            killsDeathsAssists: 0,
+
+            activityCount: 0,
             timePlayedSeconds: 0,
+
             wins: 0,
             losses: 0,
             draws: 0,
             mercies: 0,
-            highestKills: 0,
-            highestAssists: 0,
-            highestDeaths: 0,
-            highestOpponentsDefeated: 0,
-            highestEfficiency: 0,
-            highestKillsDeathsRatio: 0,
-            highestKillsDeathsAssists: 0,
-            precisionKills: 0,
-            abilityKills: 0,
+
+            assists: 0,
+            kills: 0,
+            deaths: 0,
+            opponentsDefeated: 0,
+            efficiency: 0.0,
+            killsDeathsRatio: 0.0,
+            killsDeathsAssists: 0.0,
             grenadeKills: 0,
             meleeKills: 0,
             superKills: 0,
+
+            highestAssists: 0,
+            highestKills: 0,
+            highestDeaths: 0,
+            highestOpponentsDefeated: 0,
+            highestEfficiency: 0.0,
+            highestKillsDeathsRatio: 0.0,
+            highestKillsDeathsAssists: 0.0,
+            highestGrenadeKills: 0,
+            highestMeleeKills: 0,
+            highestSuperKills: 0,
         }
 
+        out.activityCount = activities.length;
         for (let activity of activities) {
+
+            if (activity.stats.assists > out.highestAssists) { out.highestAssists = activity.stats.assists };
+            if (activity.stats.kills > out.highestKills) { out.highestKills = activity.stats.kills };
+            if (activity.stats.deaths > out.highestDeaths) { out.highestDeaths = activity.stats.deaths };
+
+            if (activity.stats.opponentsDefeated > out.highestOpponentsDefeated) { out.highestOpponentsDefeated = activity.stats.opponentsDefeated };
+
+            if (activity.stats.efficiency > out.highestEfficiency) { out.highestEfficiency = activity.stats.efficiency };
+            if (activity.stats.killsDeathsRatio > out.highestKillsDeathsRatio) { out.highestKillsDeathsRatio = activity.stats.killsDeathsRatio };
+            if (activity.stats.killsDeathsAssists > out.highestKillsDeathsAssists) { out.highestKillsDeathsAssists = activity.stats.killsDeathsAssists };
+
+            if (activity.stats.extended.grenadeKills > out.highestGrenadeKills) { out.highestGrenadeKills = activity.stats.extended.grenadeKills };
+            if (activity.stats.extended.meleeKills > out.highestMeleeKills) { out.highestMeleeKills = activity.stats.extended.meleeKills };
+            if (activity.stats.extended.superKills > out.highestSuperKills) { out.highestSuperKills = activity.stats.extended.superKills };
+
+            out.grenadeKills = activity.stats.extended.grenadeKills;
+            out.superKills = activity.stats.extended.superKills;
+            out.meleeKills = activity.stats.extended.meleeKills;
 
             out.assists += activity.stats.assists;
             out.kills += activity.stats.kills;
             out.deaths += activity.stats.deaths;
             out.opponentsDefeated += activity.stats.opponentsDefeated;
+
+            out.timePlayedSeconds = activity.stats.timePlayedSeconds;
 
             let mode = Mode.fromId(activity.mode);
             let standing = Standing.fromIdAndMode(activity.stats.standing, mode);
@@ -260,26 +291,20 @@ class ActivityStoreInterface {
                     break;
             }
 
-            //activity.stats.mode = mode;
-            //activity.stats.standing = standing;
-
             let completionReason = CompletionReason.fromId(activity.stats.completionReason);
 
             if (completionReason == CompletionReason.MERCY) {
                 out.mercies++;
             }
-
-            //activity.stats.completionReason = completionReason;
         }
 
-        /*
         out.efficiency = calculateEfficiency(
             out.kills, out.deaths, out.assists);
         out.killsDeathsRatio = calculateKillsDeathsRatio(out.kills, out.deaths);
         out.killsDeathsAssists = calculateKillsDeathsAssists(
             out.kills, out.deaths, out.assists);
-            */
 
+        console.log(out);
         return out;
 
     }

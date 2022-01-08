@@ -20,6 +20,7 @@ const PlayerSummaryView = () => {
     let profile = useFetchPlayerProfile(params.memberId, params.platformId);
 
     let activityStats = useFetchPlayerActivities(params.memberId, mode, moment);
+    console.log(activityStats);
 
     //forces the component to reload every N seconds, so we can reload data
     useInterval(() => {
