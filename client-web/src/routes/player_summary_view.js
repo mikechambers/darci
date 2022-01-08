@@ -4,7 +4,7 @@ import ActivityList from "../components/activity_list"
 import ActivitySummary from "../components/activity_summary";
 import PlayerExperience from "../components/player_experience";
 import PlayerHeader from "../components/player_header";
-import { useFetchPlayerActivities, useFetchPlayerProfile } from "../data/fetch_hooks";
+import { useFetchPlayerActivities, useFetchPlayerProfile } from "../data/hooks";
 import { useInterval } from "../utils";
 import { Mode, Moment } from "shared";
 import { DATA_REFRESH_INTERVAL } from '../consts';

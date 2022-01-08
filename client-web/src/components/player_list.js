@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
-import { useFetchPlayers } from '../data/fetch_hooks';
+import { useFetchPlayers } from '../data/hooks';
 
 const PlayerList = (props) => {
     let players = useFetchPlayers();

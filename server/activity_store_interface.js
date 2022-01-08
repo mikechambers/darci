@@ -250,6 +250,9 @@ class ActivityStoreInterface {
         }
 
         out.activityCount = activities.length;
+
+        let medalMap = new Map();
+        let weaponMap = new Map();
         for (let activity of activities) {
 
             if (activity.stats.assists > out.highestAssists) { out.highestAssists = activity.stats.assists };
@@ -296,7 +299,39 @@ class ActivityStoreInterface {
             if (completionReason == CompletionReason.MERCY) {
                 out.mercies++;
             }
+
+            for (const medal of activity.stats.extended.medals) {
+                let item = medalMap.get(medal.id);
+
+                if (!item) {
+                    item = {
+                        ...medal,
+                    };
+                } else {
+                    item.count += medal.count;
+                }
+                medalMap.set(medal.id, item);
+            }
+
+            for (const weapon of activity.stats.extended.weapons) {
+                let item = weaponMap.get(weapon.id);
+
+                if (!item) {
+                    item = {
+                        ...weapon,
+                        activityCount: 1,
+                    };
+                } else {
+                    item.activityCount++;
+                    item.kills += weapon.kills;
+                    item.precisionKills += weapon.precisionKills;
+                }
+                weaponMap.set(weapon.id, item);
+            }
         }
+
+        let medalArr = mapElementsToArray(medalMap);
+        let weaponArr = mapElementsToArray(weaponMap);
 
         out.efficiency = calculateEfficiency(
             out.kills, out.deaths, out.assists);
@@ -304,9 +339,9 @@ class ActivityStoreInterface {
         out.killsDeathsAssists = calculateKillsDeathsAssists(
             out.kills, out.deaths, out.assists);
 
-        console.log(out);
+        out.medals = medalArr;
+        out.weapons = weaponArr;
         return out;
-
     }
 
     retrieveMedals(characterActivityStatsRowIndex) {
@@ -388,6 +423,15 @@ class ActivityStoreInterface {
 
         return out;
     }
+}
+
+const mapElementsToArray = (map) => {
+    let out = [];
+    map.forEach((val, key) => {
+        out.push(val);
+    });
+
+    return out;
 }
 
 module.exports = ActivityStoreInterface;
