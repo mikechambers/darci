@@ -7,6 +7,8 @@ import { Mode, Moment } from "shared";
 import { DESTINY_API_KEY } from "../consts";
 import PlayerProfile from "./player_profile";
 
+import { fetchApi } from "./load";
+
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 
@@ -70,7 +72,7 @@ export const useFetchManifest = () => {
 };
 
 export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment = Moment.WEEK) => {
-    const [activityStats, setActivityStats] = useState(null);
+    const [activityStats, setActivityStats] = useState([]);
     const { global, dispatchGlobal } = useContext(AppContext);
     const manifest = global.manifest;
 
@@ -103,32 +105,45 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
     return activityStats;
 }
 
+const reducer = (initial, type, payload) => {
+    let out = { ...initial };
+    out[type] = payload;
+    return out;
+}
+
 export const useFetchPlayers = () => {
 
-    const [players, setPlayers] = useState([]);
+    //return is [players, isLoading, error]
+    const [status, setStatus] = useState(
+        { players: [], error: undefined, isLoading: true }
+    );
+
     useEffect(() => {
 
-        async function fetchData() {
-            let response;
+        async function f() {
+
+            let s = reducer(status, "isLoading", false);
             let data;
             try {
-                response = await fetch('/api/players/');
-                data = await response.json()
-            } catch (e) {
-                console.log("useFetchPlayers Error:", e);
-                return;
+                data = await fetchApi('/api/players/');
+            } catch (err) {
+                s = reducer(s, "error", err);
             }
 
-            setPlayers(data.response.players);
+            if (data) {
+                s = reducer(s, "players", data.players);
+            }
+            setStatus(s);
         };
 
-        fetchData();
+        f();
     }, []);
 
-    return players;
+    return [status.players, status.isLoading, status.error];
 }
 
 export const useFetchPlayerProfile = (memberId, platformId) => {
+
     const [profile, setProfile] = useState();
     const { global, dispatchGlobal } = useContext(AppContext);
     const manifest = global.manifest;

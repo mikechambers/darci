@@ -1,22 +1,24 @@
 import {
+    ApiResponseError,
     ServerResponseError,
     DestinyApiResponseError,
     NetworkError, JSONParsingError
 } from "./errors"
 
+import { SERVER_RESPONSE_SUCCESS } from "shared/packages/consts";
+
 export const fetchUrl = async (url, options) => {
 
     let response;
     try {
-        let response = await fetch(url, options);
+        response = await fetch(url, options);
     } catch (err) {
         throw NetworkError(`Could not fetch url : ${url}`, { cause: err });
     }
 
     if (!response.ok) {
         throw ServerResponseError(
-            `Failed status code [${response.status}] from server url : ${url}`,
-            { cause: err }
+            `Failed status code [${response.status}] from server url : ${url}`
         );
     }
 
@@ -28,7 +30,7 @@ export const fetchUrl = async (url, options) => {
 export const fetchJson = async (url, options) => {
     let data;
     try {
-        data = await fetchData(url, options);
+        data = await fetchUrl(url, options);
     } catch (err) {
         throw err;
     }
@@ -75,8 +77,9 @@ export const fetchApi = async (url, options) => {
     } catch (err) {
         throw err;
     }
+
     //todo:move to shared
-    if (json.status != "success") {
+    if (json.status != SERVER_RESPONSE_SUCCESS) {
 
         let msg;
         let name;
@@ -86,7 +89,7 @@ export const fetchApi = async (url, options) => {
             name = json.error.name;
         }
 
-        throw ApiResponseError(`Error calling API. ${name} : ${msg}`);
+        throw new ApiResponseError(`Error calling API. ${name} : ${msg}`);
     }
 
     return json.response;

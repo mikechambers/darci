@@ -1,4 +1,5 @@
 const { CharacterClassSelection, Mode, Moment, ServerError } = require('shared');
+const { SERVER_RESPONSE_SUCCESS, SERVER_RESPONSE_ERROR } = require('shared/packages/consts');
 const {
     SERVER_PORT,
     SERVER_HOSTNAME,
@@ -123,13 +124,10 @@ app.get("/manifest/:version/", (req, res, next) => {
 });
 
 
-const SUCCESS_STATUS = "succes";
-const ERROR_STATUS = "error";
-
 const sendJsonResponse = (res, data) => {
     const out = {
         response: data,
-        status: SUCCESS_STATUS,
+        status: SERVER_RESPONSE_SUCCESS,
     }
 
     res.json(out);
@@ -150,7 +148,7 @@ app.use(function (err, req, res, next) {
 
     const out = {
         response: undefined,
-        status: ERROR_STATUS,
+        status: SERVER_RESPONSE_ERROR,
         error: {
             message: msg,
             name: name,
