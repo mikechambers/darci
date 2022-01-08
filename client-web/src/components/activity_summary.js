@@ -4,9 +4,11 @@ const ActivitySummary = (props) => {
 
     let activityStats = props.activityStats;
 
-    if (!activityStats) {
-        return "";
+    if (props.isLoading) {
+        return "<div>Loading...</div>";
     }
+
+
     let summary = activityStats.summary;
 
     return (

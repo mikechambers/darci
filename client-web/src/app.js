@@ -10,30 +10,36 @@ export const AppContext = React.createContext();
 
 const App = (props) => {
   const [global, dispatchGlobal] = useReducer(reducer, initialState);
-
   const manifest = global.manifest;
-  const m = useFetchManifest();
 
-  useEffect(() => {
-    if (m) {
-      setTimeout(
-        () => {
-          dispatchGlobal(new Action(MANIFEST_UPDATED, m));
-        }, 10); //we add 1 second so we dont get a quick flash of items switching
+  const [m, isLoading, error] = useFetchManifest();
 
-    }
-  }, [m]);
+  if (m && !manifest) {
+    dispatchGlobal(new Action(MANIFEST_UPDATED, m));
+  }
+
+  console.log("----------App-----------");
+
+  let initializingContent;
+  if (error) {
+    initializingContent = "<div>Error loading manifest</div>";
+  } else if (isLoading) {
+    initializingContent = "<div>Initializing Manifest</div>";
+  }
 
   return (
     <AppContext.Provider value={{ global, dispatchGlobal }}>
       <div>
-        <h2>Site Headers</h2>
-        <div>
-          <Link to='/'>main</Link>
-        </div>
-        {!manifest
-          ? <div>Loading Manifest...</div>
-          : <Outlet />
+        {initializingContent
+          ? initializingContent
+          : (
+            <div>
+              <h2>Site Headers</h2>
+              <div>
+                <Link to='/'>main</Link>
+              </div>
+              <Outlet /></div>
+          )
         }
 
       </div>

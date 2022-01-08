@@ -6,7 +6,14 @@ import { CompletionReason } from 'shared';
 const ActivityList = (props) => {
 
     let activityStats = props.activityStats;
-    let activities = (activityStats) ? activityStats.activities : [];
+
+    if (props.isLoading) {
+        return "<div>Loading...</div>";
+    }
+
+    let activities = activityStats.activities;
+
+    //todo: need to test when an error is thrown
 
     return (
         <table>

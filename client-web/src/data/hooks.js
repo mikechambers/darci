@@ -14,7 +14,11 @@ const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 
 export const useFetchManifest = () => {
 
-    const [manifest, setManifest] = useState(null);
+    const [status, setStatus] = useState({
+        manifest: null,
+        isLoading: true,
+        error: null,
+    });
 
     useEffect(() => {
 
@@ -24,55 +28,72 @@ export const useFetchManifest = () => {
 
         let version = "check";
         if (rawStoredData) {
-            storedData = JSON.parse(rawStoredData);
-            //need to json this
-            version = encodeURIComponent(storedData.version);
+
+            try {
+                storedData = JSON.parse(rawStoredData);
+                version = encodeURIComponent(storedData.version);
+            } catch (err) {
+                let e = new Error("Error parsing locally stored manifest JSON.", { cause: err });
+                let s = reducer(status, "error", e);
+                s = reducer(s, "isLoading", false);
+                return;
+            }
         }
 
         const f = async () => {
-            let response;
-            let rawData;
-            let remoteData;
-            let updated = false;
+
+            let s = reducer(status, "isLoading", false);
+            let data;
+            let error;
             try {
-                response = await fetch(`/manifest/${version}/`);
-                rawData = await response.text();
+                data = await fetchApi(`/manifest/${version}/`);
 
-                remoteData = JSON.parse(rawData);
-                updated = remoteData.response.updated;
-            } catch (e) {
-                //todo: if we cant load data, we just return undefined for everything
+            } catch (err) {
+                error = new Error("Error fetching manifest data from server.",
+                    { cause: err }
+                );
+            }
 
-                console.log("Error checking manifest version", e);
+            let manifest;
+            if (error) {
 
-                if (!storedData) {
-                    setManifest(new Manifest());
-                    return;
+                //if error occured and we have stored data, then use the stored data
+                if (storedData) {
+                    manifest = new Manifest(storedData);
+                    console.log("Error loading manifest data. Used stored manifest",
+                        error
+                    );
+                    error = null;
+                }
+            } else {
+                if (data.updated) {
+                    storage.setItem(STORAGE_MANIFEST_DATA_KEY, JSON.stringify(data));
+                    manifest = new Manifest(data);
+                } else {
+                    manifest = new Manifest(storedData);
                 }
             }
 
-            let out;
-            if (updated) {
-                out = new Manifest(remoteData.response);
+            s = reducer(s, "manifest", manifest);
+            s = reducer(s, "error", error);
 
-                console.log("MANIFEST: new manifest data found");
-                storage.setItem(STORAGE_MANIFEST_DATA_KEY, rawData);
-
-            } else if (storedData) {
-                console.log("MANIFEST: using stored manifest data");
-                out = new Manifest(storedData);
-            }
-            setManifest(out);
-        };
+            setStatus(s);
+        }
 
         f();
     }, []);
 
-    return manifest;
+    return [status.manifest, status.isLoading, status.error];
 };
 
 export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment = Moment.WEEK) => {
-    const [activityStats, setActivityStats] = useState([]);
+
+    const [status, setStatus] = useState({
+        activityStats: [],
+        isLoading: true,
+        error: undefined,
+    });
+
     const { global, dispatchGlobal } = useContext(AppContext);
     const manifest = global.manifest;
 
@@ -82,33 +103,24 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
             return;
         }
 
-        const load = async () => {
-            console.log("useFetchPlayerActivities : loading data");
+        const f = async () => {
 
-            let response;
-            let data;
+            let s = reducer(status, "isLoading", false);
             try {
-                response = await fetch(`/api/player/${memberId}/all/${mode.toString()}/${moment.toString()}/`);
-                data = await response.json();
-            } catch (e) {
-                console.log("useFetchPlayerActivities Error", e);
-                return;
+                const data = await fetchApi(`/api/player/${memberId}/all/${mode.toString()}/${moment.toString()}/`);
+                const as = new ActivityStats(data, manifest);
+                s = reducer(s, "activityStats", as);
+            } catch (err) {
+                s = reducer(s, "error", err);
             }
-            console.log(data);
-            const activityStats = new ActivityStats(data.response, manifest);
-            setActivityStats(activityStats);
+
+            setStatus(s);
         };
 
-        load();
+        f();
     }, []);
 
-    return activityStats;
-}
-
-const reducer = (initial, type, payload) => {
-    let out = { ...initial };
-    out[type] = payload;
-    return out;
+    return [status.activityStats, status.isLoading, status.error];
 }
 
 export const useFetchPlayers = () => {
@@ -123,16 +135,13 @@ export const useFetchPlayers = () => {
         async function f() {
 
             let s = reducer(status, "isLoading", false);
-            let data;
             try {
-                data = await fetchApi('/api/players/');
+                const data = await fetchApi('/api/players/');
+                s = reducer(s, "players", data.players);
             } catch (err) {
                 s = reducer(s, "error", err);
             }
 
-            if (data) {
-                s = reducer(s, "players", data.players);
-            }
             setStatus(s);
         };
 
@@ -191,4 +200,10 @@ export const useFetchPlayerProfile = (memberId, platformId) => {
     }, []);
 
     return profile;
+}
+
+const reducer = (initial, type, payload) => {
+    let out = { ...initial };
+    out[type] = payload;
+    return out;
 }
