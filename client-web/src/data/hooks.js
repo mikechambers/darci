@@ -4,17 +4,15 @@ import ActivityStats from "./activity_stats"
 import { useState, useContext, useEffect } from "react";
 import Manifest from "../manifest";
 import { Mode, Moment } from "shared";
-import { DESTINY_API_KEY } from "../consts";
 import PlayerProfile from "./player_profile";
 
-import { fetchApi } from "./load";
+import { fetchApi, fetchDestinyApi } from "./load";
 
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
-
 export const useFetchManifest = () => {
 
-    const [status, setStatus] = useState({
+    const [output, setOutput] = useState({
         manifest: null,
         isLoading: true,
         error: null,
@@ -34,7 +32,7 @@ export const useFetchManifest = () => {
                 version = encodeURIComponent(storedData.version);
             } catch (err) {
                 let e = new Error("Error parsing locally stored manifest JSON.", { cause: err });
-                let s = reducer(status, "error", e);
+                let s = reducer(output, "error", e);
                 s = reducer(s, "isLoading", false);
                 return;
             }
@@ -42,7 +40,7 @@ export const useFetchManifest = () => {
 
         const f = async () => {
 
-            let s = reducer(status, "isLoading", false);
+            let s = reducer(output, "isLoading", false);
             let data;
             let error;
             try {
@@ -77,18 +75,18 @@ export const useFetchManifest = () => {
             s = reducer(s, "manifest", manifest);
             s = reducer(s, "error", error);
 
-            setStatus(s);
+            setOutput(s);
         }
 
         f();
     }, []);
 
-    return [status.manifest, status.isLoading, status.error];
+    return [output.manifest, output.isLoading, output.error];
 };
 
 export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment = Moment.WEEK) => {
 
-    const [status, setStatus] = useState({
+    const [output, setOutput] = useState({
         activityStats: [],
         isLoading: true,
         error: undefined,
@@ -105,7 +103,7 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
 
         const f = async () => {
 
-            let s = reducer(status, "isLoading", false);
+            let s = reducer(output, "isLoading", false);
             try {
                 const data = await fetchApi(`/api/player/${memberId}/all/${mode.toString()}/${moment.toString()}/`);
                 const as = new ActivityStats(data, manifest);
@@ -114,19 +112,19 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
                 s = reducer(s, "error", err);
             }
 
-            setStatus(s);
+            setOutput(s);
         };
 
         f();
     }, []);
 
-    return [status.activityStats, status.isLoading, status.error];
+    return [output.activityStats, output.isLoading, output.error];
 }
 
 export const useFetchPlayers = () => {
 
     //return is [players, isLoading, error]
-    const [status, setStatus] = useState(
+    const [output, setOutput] = useState(
         { players: [], error: undefined, isLoading: true }
     );
 
@@ -134,7 +132,7 @@ export const useFetchPlayers = () => {
 
         async function f() {
 
-            let s = reducer(status, "isLoading", false);
+            let s = reducer(output, "isLoading", false);
             try {
                 const data = await fetchApi('/api/players/');
                 s = reducer(s, "players", data.players);
@@ -142,64 +140,49 @@ export const useFetchPlayers = () => {
                 s = reducer(s, "error", err);
             }
 
-            setStatus(s);
+            setOutput(s);
         };
 
         f();
     }, []);
 
-    return [status.players, status.isLoading, status.error];
+    return [output.players, output.isLoading, output.error];
 }
 
 export const useFetchPlayerProfile = (memberId, platformId) => {
 
-    const [profile, setProfile] = useState();
+    const [output, setOutput] = useState({
+        profile: null,
+        isLoading: true,
+        error: null,
+    });
+
     const { global, dispatchGlobal } = useContext(AppContext);
     const manifest = global.manifest;
 
     useEffect(() => {
 
-        async function fetchData() {
-            console.log("useFetchPlayerProfile : loading");
-
-            let response;
-            let data;
-            let args = {
-                headers: { 'X-API-Key': `${DESTINY_API_KEY}` }
-            };
-
+        const f = async () => {
+            let s = reducer(output, "isLoading", false);
             try {
-                let rnd = new Date().getTime();
-                response = await fetch(
-                    `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=100,200,202&rnd=${rnd}`,
-                    args
-                );
-                data = await response.json()
-            } catch (e) {
-                console.log("useFetchPlayerProfile Error", e);
-                return;
+                const data = await fetchDestinyApi(
+                    `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=100,200,202`);
+
+                let profile = PlayerProfile(data, manifest);
+                s = reducer(s, "profile", profile);
+
+            } catch (err) {
+                s = reducer(s, "error", err);
             }
 
-            /*            ​
-                ErrorCode: 7  ​
-                ErrorStatus: "ParameterParseFailure"
-                Message: "Unable to parse your parameters.  Please correct them, and try again."
-            */
-            if (data.ErrorCode !== 1) {
-                //TODO: Need to handle this
-                console.log("Bungie API Error");
-                console.log("ErrorCode : ", data.ErrorCode);
-                console.log("ErrorMessage : ", data.Message);
-            }
-
-            let p = new PlayerProfile(data.Response, manifest);
-            setProfile(p);
+            setOutput(s);
         };
 
-        fetchData();
+        f();
+
     }, []);
 
-    return profile;
+    return [output.profile, output.isLoading, output.error];
 }
 
 const reducer = (initial, type, payload) => {

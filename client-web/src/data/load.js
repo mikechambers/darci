@@ -3,7 +3,9 @@ import {
     ServerResponseError,
     DestinyApiResponseError,
     NetworkError, JSONParsingError
-} from "./errors"
+} from "./errors";
+
+import { DESTINY_API_KEY } from "../consts";
 
 import { SERVER_RESPONSE_SUCCESS } from "shared/packages/consts";
 
@@ -45,12 +47,16 @@ export const fetchJson = async (url, options) => {
     return out;
 }
 
+
+const destinyApiRequestOptions = {
+    headers: { 'X-API-Key': `${DESTINY_API_KEY}` }
+};
+
 export const fetchDestinyApi = async (url) => {
     let json;
 
     try {
-        //headers
-        json = await fetchJson(url);
+        json = await fetchJson(url, destinyApiRequestOptions);
     } catch (err) {
         throw err;
     }

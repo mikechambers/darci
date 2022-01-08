@@ -17,9 +17,9 @@ const PlayerSummaryView = () => {
     let mode = Mode.fromString(params.mode);
     let moment = Moment.fromString(params.moment);
 
-    let profile = useFetchPlayerProfile(params.memberId, params.platformId);
+    let [profile, isProfileLoading, profileLoadError] = useFetchPlayerProfile(params.memberId, params.platformId);
 
-    let [activityStats, isLoading, error] = useFetchPlayerActivities(params.memberId, mode, moment);
+    let [activityStats, isActivitiesLoading, activitiesLoadError] = useFetchPlayerActivities(params.memberId, mode, moment);
 
     //forces the component to reload every N seconds, so we can reload data
     useInterval(() => {
@@ -33,8 +33,8 @@ const PlayerSummaryView = () => {
             <h2>Player</h2>
             <PlayerHeader />
             <PlayerExperience />
-            <ActivitySummary activityStats={activityStats} isLoading={isLoading} />
-            <ActivityList activityStats={activityStats} isLoading={isLoading} />
+            <ActivitySummary activityStats={activityStats} isLoading={isActivitiesLoading} />
+            <ActivityList activityStats={activityStats} isLoading={isActivitiesLoading} />
         </main>
     );
 
