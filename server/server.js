@@ -77,6 +77,9 @@ app.get("/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/", (re
         activities.splice(MAX_ACTIVITIES_PAGE_LIMIT);
     }
 
+    //TODO: right now, we return medal and weapon data for each activity, but dont use it
+    //we could delete it here, so we dont have to send the data.
+
     const out = {
         query: query,
         player: player,
