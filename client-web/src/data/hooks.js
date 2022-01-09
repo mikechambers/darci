@@ -117,7 +117,7 @@ export const useFetchPlayerActivities = (refresh, memberId, mode = Mode.ALL_PVP,
             setOutput(s);
 
             if (refresh) {
-                return initInterval(f);
+                return initTimeout(f);
             }
         };
 
@@ -184,7 +184,7 @@ export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
             setOutput(s);
 
             if (refresh) {
-                return initInterval(f);
+                return initTimeout(f);
             }
         };
 
@@ -195,14 +195,14 @@ export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
     return [output.profile, output.isLoading, output.error];
 }
 
-const initInterval = (f) => {
+const initTimeout = (f) => {
 
-    const interval = setInterval(() => {
+    const id = setTimeout(() => {
         f();
     }, DATA_REFRESH_INTERVAL);
 
     return () => {
-        clearInterval(interval);
+        clearInterval(id);
     };
 
 }

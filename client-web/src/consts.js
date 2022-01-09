@@ -1,6 +1,6 @@
 const FLOAT_DECIMAL_PRECISION = 2;
 const DESTINY_API_KEY = process.env.REACT_APP_DESTINY_API_KEY;
-const DATA_REFRESH_INTERVAL = 60 * 1000; //1  minute
+const DATA_REFRESH_INTERVAL = 30 * 1000; //Every 30 seconds
 
 export {
     FLOAT_DECIMAL_PRECISION,
