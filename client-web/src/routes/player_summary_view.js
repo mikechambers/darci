@@ -10,23 +10,15 @@ import { Mode, Moment } from "shared";
 import { DATA_REFRESH_INTERVAL } from '../consts';
 
 const PlayerSummaryView = () => {
-    const [_, forceUpdate] = useReducer((x) => x + 1, 0);
 
     let params = useParams();
 
     let mode = Mode.fromString(params.mode);
     let moment = Moment.fromString(params.moment);
 
-    let [profile, isProfileLoading, profileLoadError] = useFetchPlayerProfile(params.memberId, params.platformId);
+    let [profile, isProfileLoading, profileLoadError] = useFetchPlayerProfile(true, params.memberId, params.platformId);
 
-    let [activityStats, isActivitiesLoading, activitiesLoadError] = useFetchPlayerActivities(params.memberId, mode, moment);
-
-    //forces the component to reload every N seconds, so we can reload data
-    useInterval(() => {
-        if (activityStats) {
-            forceUpdate(_);
-        }
-    }, DATA_REFRESH_INTERVAL);
+    let [activityStats, isActivitiesLoading, activitiesLoadError] = useFetchPlayerActivities(true, params.memberId, mode, moment);
 
     return (
         <main style={{ padding: "1rem 0" }}>

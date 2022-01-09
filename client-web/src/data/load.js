@@ -13,6 +13,7 @@ export const fetchUrl = async (url, options) => {
 
     let response;
     try {
+        console.log(url);
         response = await fetch(url, options);
     } catch (err) {
         throw NetworkError(`Could not fetch url : ${url}`, { cause: err });

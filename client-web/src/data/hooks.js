@@ -6,8 +6,9 @@ import Manifest from "../manifest";
 import { Mode, Moment } from "shared";
 import PlayerProfile from "./player_profile";
 
-import { fetchApi, fetchDestinyApi } from "./load";
+import { DATA_REFRESH_INTERVAL } from "../consts";
 
+import { fetchApi, fetchDestinyApi } from "./load";
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 export const useFetchManifest = () => {
@@ -84,7 +85,7 @@ export const useFetchManifest = () => {
     return [output.manifest, output.isLoading, output.error];
 };
 
-export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment = Moment.WEEK) => {
+export const useFetchPlayerActivities = (refresh, memberId, mode = Mode.ALL_PVP, moment = Moment.WEEK) => {
 
     const [output, setOutput] = useState({
         activityStats: [],
@@ -101,6 +102,7 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
             return;
         }
 
+        let interval;
         const f = async () => {
 
             let s = reducer(output, "isLoading", false);
@@ -113,6 +115,10 @@ export const useFetchPlayerActivities = (memberId, mode = Mode.ALL_PVP, moment =
             }
 
             setOutput(s);
+
+            if (refresh) {
+                return initInterval(f);
+            }
         };
 
         f();
@@ -149,7 +155,7 @@ export const useFetchPlayers = () => {
     return [output.players, output.isLoading, output.error];
 }
 
-export const useFetchPlayerProfile = (memberId, platformId) => {
+export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
 
     const [output, setOutput] = useState({
         profile: null,
@@ -176,6 +182,10 @@ export const useFetchPlayerProfile = (memberId, platformId) => {
             }
 
             setOutput(s);
+
+            if (refresh) {
+                return initInterval(f);
+            }
         };
 
         f();
@@ -183,6 +193,18 @@ export const useFetchPlayerProfile = (memberId, platformId) => {
     }, []);
 
     return [output.profile, output.isLoading, output.error];
+}
+
+const initInterval = (f) => {
+
+    const interval = setInterval(() => {
+        f();
+    }, DATA_REFRESH_INTERVAL);
+
+    return () => {
+        clearInterval(interval);
+    };
+
 }
 
 const reducer = (initial, type, payload) => {
