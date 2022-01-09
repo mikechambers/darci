@@ -12,7 +12,12 @@ code {
     monospace;
 }
 
-
+.error{
+	position:absolute;
+top:10;
+right:15;
+background-color: khaki;
+}
 
 /* below is temp table styling from
 https://gist.github.com/brennowilliam/75f5f910e5ba8fc64279
