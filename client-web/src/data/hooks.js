@@ -30,7 +30,7 @@ export const useFetchManifest = () => {
 
         //if we checked (without an error) within the last N amount of time
         //then abort check
-        if (lastCheckTimeStamp) {
+        if (output.manifest && lastCheckTimeStamp) {
             if (now - lastCheckTimeStamp < MANIFEST_CHECK_INTERVAL) {
                 return;
             }
@@ -216,12 +216,12 @@ const initTimeout = (f) => {
         f();
     }, DATA_REFRESH_INTERVAL);
 
+    console.log("setTimeout", id);
     return () => {
         console.log("clearTimeout", id);
         clearInterval(id);
     };
 
-    console.log("setTimeout", id);
 
 }
 
