@@ -6,11 +6,12 @@ import Manifest from "../manifest";
 import { Mode, Moment } from "shared";
 import PlayerProfile from "./player_profile";
 
-import { DATA_REFRESH_INTERVAL } from "../consts";
+import { DATA_REFRESH_INTERVAL, MANIFEST_CHECK_INTERVAL } from "../consts";
 
 import { fetchApi, fetchDestinyApi } from "./load";
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
+const STORAGE_MANIFEST_LAST_CHECK_KEY = "STORAGE_MANIFEST_LAST_CHECK_KEY";
 export const useFetchManifest = () => {
 
     const [output, setOutput] = useState({
@@ -22,6 +23,19 @@ export const useFetchManifest = () => {
     useEffect(() => {
 
         const storage = window.localStorage;
+
+        let lastCheckTimeStamp = storage.getItem(STORAGE_MANIFEST_LAST_CHECK_KEY);
+
+        let now = (new Date()).getTime();
+
+        //if we checked (without an error) within the last N amount of time
+        //then abort check
+        if (lastCheckTimeStamp) {
+            if (now - lastCheckTimeStamp < MANIFEST_CHECK_INTERVAL) {
+                return;
+            }
+        }
+
         let rawStoredData = storage.getItem(STORAGE_MANIFEST_DATA_KEY);
         let storedData;
 
@@ -55,7 +69,6 @@ export const useFetchManifest = () => {
 
             let manifest;
             if (error) {
-
                 //if error occured and we have stored data, then use the stored data
                 if (storedData) {
                     manifest = new Manifest(storedData);
@@ -71,6 +84,8 @@ export const useFetchManifest = () => {
                 } else {
                     manifest = new Manifest(storedData);
                 }
+
+                storage.setItem(STORAGE_MANIFEST_LAST_CHECK_KEY, now);
             }
 
             s = reducer(s, "manifest", manifest);
@@ -202,8 +217,11 @@ const initTimeout = (f) => {
     }, DATA_REFRESH_INTERVAL);
 
     return () => {
+        console.log("clearTimeout", id);
         clearInterval(id);
     };
+
+    console.log("setTimeout", id);
 
 }
 
