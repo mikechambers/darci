@@ -26,12 +26,20 @@ ReactDOM.render(
               </Route>
             </Route>
           </Route>
-          <Route path="activity" element={<ActivityDetailView />}>
-            <Route path=":activityId" element={<ActivityDetailView />}>
-              <Route path=":memberId" element={<ActivityDetailView />} />
-            </Route>
+          <Route path="activity/:activityId/" element={<ActivityDetailView />}>
+            <Route path=":memberId" element={<ActivityDetailView />} />
           </Route>
         </Route>
+
+        <Route
+          path="*"
+          element={
+            <main style={{ padding: "1rem" }}>
+              <p>There's nothing here!</p>
+            </main>
+          }
+        />
+
 
       </Routes>
     </BrowserRouter>
