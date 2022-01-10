@@ -130,14 +130,12 @@ export const useFetchPlayerActivities = (refresh, memberId, mode = Mode.ALL_PVP,
             }
 
             setOutput(s);
-
-            if (refresh) {
-                return initTimeout(f);
-            }
+            m.startTimer();
         };
+        const m = new UseEffectTimerManager(f, refresh);
+        return m.run().getCleanup();
 
-        f();
-    }, []);
+    }, [memberId]);
 
     return [output.activityStats, output.isLoading, output.error];
 }
@@ -198,32 +196,70 @@ export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
 
             setOutput(s);
 
-            if (refresh) {
-                return initTimeout(f);
-            }
+            m.startTimer();
         };
 
-        f();
+        const m = new UseEffectTimerManager(f, refresh);
+        return m.run().getCleanup();
 
     }, []);
 
     return [output.profile, output.isLoading, output.error];
 }
 
-const initTimeout = (f) => {
 
-    const id = setTimeout(() => {
-        f();
-    }, DATA_REFRESH_INTERVAL);
+//TODO: does it make sense to use setInterval? or will that cause loops?
+//maybe remove for now, since we dont need it
+//make sure the ID gets update on runs also
+class UseEffectTimerManager {
 
-    console.log("setTimeout", id);
-    return () => {
-        console.log("clearTimeout", id);
-        clearInterval(id);
-    };
+    #id;
+    #f;
+    #doop;
 
+    /***
+     * func function to be run
+     * doAction Whether the calls should be executed
+     */
+    constructor(func, doAction) {
+        this.#doop = doAction;
+        this.#f = func;
 
-}
+    }
+    startTimer() {
+
+        if (!this.#doop) {
+            return;
+        }
+
+        this.#id = setTimeout(() => {
+            console.log("calling setTimeout : ", this.#id);
+            this.#f();
+        }, DATA_REFRESH_INTERVAL);
+
+        console.log("startTimer", this.#id);
+    }
+
+    run() {
+        this.#f();
+        return this;
+    }
+
+    getCleanup() {
+
+        if (!this.#doop) {
+            return;
+        }
+
+        return () => {
+            if (!this.#id) {
+                return;
+            }
+            console.log("clearTimeout", this.#id);
+            clearTimeout(this.id);
+        };
+    }
+};
 
 const reducer = (initial, type, payload) => {
     let out = { ...initial };
