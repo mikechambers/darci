@@ -117,7 +117,6 @@ export const useFetchPlayerActivities = (refresh, memberId, mode = Mode.ALL_PVP,
             return;
         }
 
-        let interval;
         const f = async () => {
 
             let s = reducer(output, "isLoading", false);
@@ -130,15 +129,22 @@ export const useFetchPlayerActivities = (refresh, memberId, mode = Mode.ALL_PVP,
             }
 
             setOutput(s);
-            m.startTimer();
+
+            timeoutId = startTimeout(f, refresh);
         };
-        const m = new UseEffectTimerManager(f, refresh);
-        return m.run().getCleanup();
+
+        f();
+
+        let timeoutId;
+        return () => {
+            cleanUpTimeout(timeoutId);
+        }
 
     }, [memberId]);
 
     return [output.activityStats, output.isLoading, output.error];
 }
+
 
 export const useFetchPlayers = () => {
 
@@ -196,72 +202,39 @@ export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
 
             setOutput(s);
 
-
-            m.startTimer();
+            timeoutId = startTimeout(f, refresh);
         };
 
-        const m = new UseEffectTimerManager(f, refresh);
-        return m.run().getCleanup();
+        f();
+
+        let timeoutId;
+        return () => {
+            cleanUpTimeout(timeoutId);
+        }
 
     }, []);
 
     return [output.profile, output.isLoading, output.error];
 }
 
-
-//TODO: does it make sense to use setInterval? or will that cause loops?
-//maybe remove for now, since we dont need it
-//make sure the ID gets update on runs also
-class UseEffectTimerManager {
-
-    #id;
-    #f;
-    #doop;
-
-    /***
-     * func function to be run
-     * doAction Whether the calls should be executed
-     */
-    constructor(func, doAction) {
-        this.#doop = doAction;
-        this.#f = func;
-
-    }
-    startTimer() {
-
-        if (!this.#doop) {
-            return;
-        }
-
-        this.#id = setTimeout(() => {
-            console.log("calling setTimeout : ", this.#id);
-            this.#f();
-        }, DATA_REFRESH_INTERVAL);
-
-        console.log("startTimer", this.#id);
+//note, we wrap these to make it easier to log, debug in a single place
+//and also remove some boiler plate code on whether they should run (refresh)
+const startTimeout = (f, shouldRunTimer) => {
+    if (!shouldRunTimer) {
+        return;
     }
 
-    run() {
-        this.#f();
-        return this;
+    const id = setTimeout(f, DATA_REFRESH_INTERVAL);
+    console.log("start timeout", id);
+    return id;
+}
+
+const cleanUpTimeout = (id) => {
+    console.log("cleanUpTimeout", id);
+    if (id) {
+        clearTimeout(id);
     }
-
-    getCleanup() {
-
-        if (!this.#doop) {
-            return;
-        }
-
-        return () => {
-            if (!this.#id) {
-                return;
-            }
-            console.log("clearTimeout", this.#id);
-            clearTimeout(this.#id);
-        };
-    }
-};
-
+}
 
 const reducer = (initial, type, payload) => {
     let out = { ...initial };
