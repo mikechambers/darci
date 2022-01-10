@@ -5,7 +5,7 @@ const ActivitySummary = (props) => {
     let activityStats = props.activityStats;
 
     if (props.isLoading) {
-        return "<div>Loading...</div>";
+        return <div>Loading...</div>;
     }
 
 

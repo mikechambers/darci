@@ -22,9 +22,9 @@ const App = (props) => {
 
   let initializingContent;
   if (error) {
-    initializingContent = "<div>Error loading manifest</div>";
+    initializingContent = <div>Error loading manifest</div>;
   } else if (isLoading) {
-    initializingContent = "<div>Initializing Manifest</div>";
+    initializingContent = <div>Initializing Manifest</div>;
   }
 
   return (
