@@ -196,6 +196,7 @@ export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
 
             setOutput(s);
 
+
             m.startTimer();
         };
 
@@ -256,10 +257,11 @@ class UseEffectTimerManager {
                 return;
             }
             console.log("clearTimeout", this.#id);
-            clearTimeout(this.id);
+            clearTimeout(this.#id);
         };
     }
 };
+
 
 const reducer = (initial, type, payload) => {
     let out = { ...initial };
