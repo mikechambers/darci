@@ -3,7 +3,7 @@ import {
     ServerResponseError,
     DestinyApiResponseError,
     NetworkError, JSONParsingError
-} from "./errors";
+} from "../errors";
 
 import { DESTINY_API_KEY } from "../consts";
 

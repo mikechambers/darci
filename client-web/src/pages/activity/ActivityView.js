@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-const ActivityDetailView = (props) => {
+const ActivityView = (props) => {
 
     const params = useParams();
     const activityId = params.activityId;
@@ -19,4 +19,4 @@ const ActivityDetailView = (props) => {
 }
 
 
-export default ActivityDetailView;
+export default ActivityView;

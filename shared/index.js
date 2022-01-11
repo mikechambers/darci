@@ -1,11 +1,10 @@
-const Mode = require("./packages/mode");
-const Moment = require("./packages/moment");
-const CharacterClass = require("./packages/character_class");
-const EnumBase = require("./packages/enum_base");
-const CharacterClassSelection = require("./packages/character_class_selection");
-const Standing = require("./packages/standing");
-const CompletionReason = require("./packages/completion_reason");
-const ServerError = require("./packages/server_error");
+const Mode = require("./packages/enums/mode");
+const Moment = require("./packages/enums/moment");
+const CharacterClass = require("./packages/enums/character_class");
+const EnumBase = require("./packages/enums/enum_base");
+const CharacterClassSelection = require("./packages/enums/character_class_selection");
+const Standing = require("./packages/enums/standing");
+const CompletionReason = require("./packages/enums/completion_reason");
 
 const { calculateEfficiency,
     calculateKillsDeathsRatio,
@@ -19,7 +18,6 @@ module.exports = {
     CharacterClassSelection: CharacterClassSelection,
     Standing: Standing,
     CompletionReason: CompletionReason,
-    ServerError: ServerError,
     calculateEfficiency,
     calculateKillsDeathsRatio,
     calculateKillsDeathsAssists

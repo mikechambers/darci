@@ -11,8 +11,8 @@ const {
 
 const express = require("express");
 
-const ActivityStoreInterface = require("./activity_store_interface.js");
-const ManifestInterface = require('./manifest_interface.js');
+const ActivityStoreInterface = require("./interfaces/ActivityStoreInterface");
+const ManifestInterface = require('./interfaces/ManifestInterface');
 
 const activityStore = new ActivityStoreInterface(DB_PATH);
 const manifestInterface = new ManifestInterface(MANIFEST_DB_PATH, MANIFEST_INFO_PATH, MANIFEST_CHECK_INTERVAL_MS);

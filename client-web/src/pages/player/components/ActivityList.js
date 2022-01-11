@@ -1,5 +1,3 @@
-import { calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } from "../utils";
-import { FLOAT_DECIMAL_PRECISION } from '../consts';
 import { Link } from "react-router-dom";
 import { CompletionReason } from 'shared';
 

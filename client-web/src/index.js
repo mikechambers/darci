@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
-import App from './app';
+import App from './App';
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import PlayerSummaryView from "./routes/player_summary_view";
-import ActivityDetailView from "./routes/activity_detail_view";
-import HomeView from "./routes/home_view";
+import PlayerView from "./pages/player/PlayerView";
+import ActivityView from "./pages/activity/ActivityView";
+import HomeView from "./pages/home/HomeView";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,20 +14,20 @@ ReactDOM.render(
       <Routes>
         <Route path="/" element={<App />} >
           <Route index path="/" element={<HomeView />} />
-          <Route path="player" element={<PlayerSummaryView />}>
-            <Route path=":memberId" element={<PlayerSummaryView />}>
-              <Route path=":platformId" element={<PlayerSummaryView />}>
-                <Route path=":classType" element={<PlayerSummaryView />}>
-                  <Route path=":mode" element={<PlayerSummaryView />}>
-                    <Route path=":moment" element={<PlayerSummaryView />} />
+          <Route path="player" element={<PlayerView />}>
+            <Route path=":memberId" element={<PlayerView />}>
+              <Route path=":platformId" element={<PlayerView />}>
+                <Route path=":classType" element={<PlayerView />}>
+                  <Route path=":mode" element={<PlayerView />}>
+                    <Route path=":moment" element={<PlayerView />} />
                     <Route />
                   </Route>
                 </Route>
               </Route>
             </Route>
           </Route>
-          <Route path="activity/:activityId/" element={<ActivityDetailView />}>
-            <Route path=":memberId" element={<ActivityDetailView />} />
+          <Route path="activity/:activityId/" element={<ActivityView />}>
+            <Route path=":memberId" element={<ActivityView />} />
           </Route>
         </Route>
 

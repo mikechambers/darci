@@ -1,21 +1,19 @@
 import React, { Component, useState, useEffect, useReducer } from 'react';
 import { Outlet } from "react-router-dom";
-import Manifest from './manifest';
-import reducer, { initialState } from "./app_state/reducer";
 import { Link } from "react-router-dom";
-import Action, { MANIFEST_UPDATED } from './app_state/action';
-import { useFetchManifest } from './data/hooks';
+import { useFetchManifest } from './hooks/remote';
 
-export const AppContext = React.createContext();
+import { GlobalContext, useGlobalContext, GlobalAction } from './contexts/GlobalContext';
+
 
 const App = (props) => {
-  const [global, dispatchGlobal] = useReducer(reducer, initialState);
+  const [global, dispatchGlobal] = useGlobalContext();
   const manifest = global.manifest;
 
   const [m, isLoading, error] = useFetchManifest();
 
   if (m && !manifest) {
-    dispatchGlobal(new Action(MANIFEST_UPDATED, m));
+    dispatchGlobal(new GlobalAction(GlobalAction.MANIFEST_UPDATED, m));
   }
 
   console.log("----------App-----------");
@@ -28,7 +26,7 @@ const App = (props) => {
   }
 
   return (
-    <AppContext.Provider value={{ global, dispatchGlobal }}>
+    <GlobalContext.Provider value={{ global, dispatchGlobal }}>
       <div>
         {initializingContent
           ? initializingContent
@@ -43,7 +41,7 @@ const App = (props) => {
         }
 
       </div>
-    </AppContext.Provider>
+    </GlobalContext.Provider>
   );
 };
 

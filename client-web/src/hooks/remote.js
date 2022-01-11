@@ -1,14 +1,14 @@
-import { AppContext } from "../app";
-import ActivityStats from "./activity_stats"
+import { GlobalContext } from "../contexts/GlobalContext";
+import ActivityStats from "../data/ActivityStats"
+import PlayerProfile from "../data/PlayerProfile";
 
 import { useState, useContext, useEffect } from "react";
-import Manifest from "../manifest";
+import Manifest from "../data/manifest";
 import { Mode, Moment } from "shared";
-import PlayerProfile from "./player_profile";
 
 import { DATA_REFRESH_INTERVAL, MANIFEST_CHECK_INTERVAL } from "../consts";
+import { fetchApi, fetchDestinyApi } from "../utils/remote";
 
-import { fetchApi, fetchDestinyApi } from "./load";
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 const STORAGE_MANIFEST_LAST_CHECK_KEY = "STORAGE_MANIFEST_LAST_CHECK_KEY";
@@ -108,7 +108,7 @@ export const useFetchPlayerActivities = (refresh, memberId, mode = Mode.ALL_PVP,
         error: undefined,
     });
 
-    const { global, dispatchGlobal } = useContext(AppContext);
+    const { global, dispatchGlobal } = useContext(GlobalContext);
     const manifest = global.manifest;
 
     useEffect(() => {
@@ -182,7 +182,7 @@ export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
         error: null,
     });
 
-    const { global, dispatchGlobal } = useContext(AppContext);
+    const { global, dispatchGlobal } = useContext(GlobalContext);
     const manifest = global.manifest;
 
     useEffect(() => {

@@ -1,5 +1,5 @@
 
-import { PlayerListContainer } from "../components/player_list"
+import { PlayerListContainer } from "./components/PlayerList"
 
 const HomeView = (props) => {
     return (

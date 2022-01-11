@@ -1,4 +1,4 @@
-import Manifest from "../manifest";
+import Manifest from "./manifest";
 
 const { CompletionReason, Mode, Standing } = require("shared");
 //const Standing = require("shared/packages/standing");

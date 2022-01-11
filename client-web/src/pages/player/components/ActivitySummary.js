@@ -1,4 +1,4 @@
-import { calculateAverage, calculatePercent } from "../utils";
+import { calculateAverage, calculatePercent } from "../../../utils";
 
 const ActivitySummary = (props) => {
 

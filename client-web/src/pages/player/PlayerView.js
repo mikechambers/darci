@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
-import ActivityList from "../components/activity_list"
-import ActivitySummary from "../components/activity_summary";
-import PlayerExperience from "../components/player_experience";
-import PlayerHeader from "../components/player_header";
-import { useFetchPlayerActivities, useFetchPlayerProfile } from "../data/hooks";
+import ActivityList from "./components/ActivityList"
+import ActivitySummary from "./components/ActivitySummary";
+import PlayerExperience from "./components/PlayerExperience";
+import PlayerHeader from "./components/PlayerHeader";
+import { useFetchPlayerActivities, useFetchPlayerProfile } from "../../hooks/remote";
 import { Mode, Moment } from "shared";
-import ErrorView from "../components/error_view";
+import ErrorView from "../../components/ErrorView";
 
 
-const PlayerSummaryView = () => {
+const PlayerView = () => {
 
     let params = useParams();
 
@@ -32,4 +32,4 @@ const PlayerSummaryView = () => {
 
 };
 
-export default PlayerSummaryView;
+export default PlayerView;
