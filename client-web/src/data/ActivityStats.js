@@ -1,7 +1,7 @@
-import Manifest from "./manifest";
+import Manifest from "./Manifest";
 
 const { CompletionReason, Mode, Standing } = require("shared");
-//const Standing = require("shared/packages/standing");
+
 const {
     calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("../utils");
 

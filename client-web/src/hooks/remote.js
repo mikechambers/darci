@@ -3,7 +3,7 @@ import ActivityStats from "../data/ActivityStats"
 import PlayerProfile from "../data/PlayerProfile";
 
 import { useState, useContext, useEffect } from "react";
-import Manifest from "../data/manifest";
+import Manifest from "../data/Manifest";
 import { Mode, Moment } from "shared";
 
 import { DATA_REFRESH_INTERVAL, MANIFEST_CHECK_INTERVAL } from "../consts";
