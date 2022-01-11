@@ -1,4 +1,4 @@
-const { CharacterClassSelection, Mode, Moment, ServerError } = require('shared');
+const { CharacterClassSelection, Mode, Moment } = require('shared');
 const { SERVER_RESPONSE_SUCCESS, SERVER_RESPONSE_ERROR } = require('shared/packages/consts');
 const {
     SERVER_PORT,
@@ -8,6 +8,8 @@ const {
     DB_PATH,
     MANIFEST_DB_PATH,
     MANIFEST_INFO_PATH } = require('./config');
+
+const { ServerError } = require('./errors');
 
 const express = require("express");
 
@@ -25,6 +27,15 @@ const hostname = SERVER_HOSTNAME;
 app.get("/", (req, res, next) => {
     sendJsonResponse(res, {});
 });
+
+app.get("/api/activity/:activityId/", (req, res, next) => {
+    let activityId = req.params.activityId;
+
+    let out = activityStore.retrieveActivity(activityId);
+
+    sendJsonResponse(res, out);
+});
+
 
 ///player/member_id/class/mode/moment/end-moment/
 //can append regex to each one : https://expressjs.com/en/guide/routing.html

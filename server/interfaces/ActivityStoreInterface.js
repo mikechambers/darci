@@ -1,5 +1,8 @@
 
 const Database = require('better-sqlite3');
+
+const NO_TEAMS_INDEX = 253;
+
 const {
     CharacterClassSelection, Mode, Standing, CompletionReason,
     calculateEfficiency, calculateKillsDeathsAssists,
@@ -15,6 +18,9 @@ class ActivityStoreInterface {
     #select_weapon_stats;
     #select_medals;
     #select_member;
+    #select_activity;
+    #select_teams;
+    #select_character_activity_stats_for_activity;
 
     constructor(dbPath) {
         this.#dbPath = dbPath;
@@ -60,7 +66,7 @@ class ActivityStoreInterface {
             `SELECT
                     *,
                     activity.mode as activity_mode,
-                    activity.id as activity_index_id,
+                    activity.id as activity_row_id,
                     character_activity_stats.id as character_activity_stats_index  
                 FROM
                     character_activity_stats
@@ -99,6 +105,49 @@ class ActivityStoreInterface {
         `);
 
         this.#select_member = this.#db.prepare(`select * from member where member_id = @memberId`);
+
+        this.#select_activity = this.#db.prepare(`
+            SELECT
+                activity.id as activity_row_id,
+                activity.activity_id,
+                activity.period,
+                activity.mode as activity_mode,
+                activity.director_activity_hash,
+                activity.reference_id,
+                activity.platform
+            FROM
+                activity
+            INNER JOIN
+                character_activity_stats on character_activity_stats.activity = activity.id,
+                character on character_activity_stats.character = character.id,
+                member on character.member = member.id
+            WHERE
+                activity.activity_id = @activityId
+            ORDER BY
+                period DESC LIMIT 1
+        `);
+
+        this.#select_teams = this.#db.prepare(`
+            SELECT
+                *
+            FROM
+                team_result
+            WHERE
+                activity = @activityRowId
+        `);
+
+        this.#select_character_activity_stats_for_activity = this.#db.prepare(`
+            SELECT
+                *,
+                character_activity_stats.id as character_activity_stats_index
+            FROM
+                character_activity_stats
+            INNER JOIN
+                character on character_activity_stats.character = character.id,
+                member on character.member = member.id
+            WHERE
+                activity = @activityRowId
+        `);
 
     }
 
@@ -144,19 +193,11 @@ class ActivityStoreInterface {
         for (let r of rows) {
             let stats = this.parseCrucibleStats(r);
 
-            let player = {
-                classType: r.class,
-                characterId: r.character_id,
-                memberId: memberId
-            };
+            let player = this.parsePlayer(r);
+            let activity = this.parseActivity(r);
 
             let details = {
-                period: r.period,
-                activityId: r.activity_id,
-                mode: r.mode,
-                platform: r.platform,
-                directorActivityHash: r.director_activity_hash,
-                referenceId: r.reference_id,
+                activity: activity,
                 player: player,
                 stats: stats,
             };
@@ -167,6 +208,90 @@ class ActivityStoreInterface {
 
 
         return activities;
+    }
+
+    parseActivity(data) {
+        return {
+            period: data.period,
+            activityId: data.activity_id,
+            mode: data.activity_mode,
+            platform: data.platform,
+            directorActivityHash: data.director_activity_hash,
+            referenceId: data.reference_id,
+        };
+    }
+
+    retrieveActivity(activityId) {
+        const row = this.#select_activity.get({ activityId: activityId });
+
+        let activity = this.parseActivity(row);
+
+        let activityRowId = row.activity_row_id;
+        let mode = Mode.fromId(row.activity_mode);
+
+        let teamsMap = new Map();
+
+        let teamRows = this.#select_teams.all({ activityRowId: activityRowId });
+
+        let hasTeams = true;
+        if (teamRows && teamRows.length) {
+            for (let t of teamRows) {
+                teamsMap.set(t.team_id, {
+                    id: t.team_id,
+                    standing: t.standing,
+                    score: t.score,
+                    players: [],
+                    name: "",
+                });
+            }
+        } else {
+            hasTeams = false;
+            //Occurs for rumble
+            teamsMap.set(NO_TEAMS_INDEX, {
+                id: -1,
+                standing: Standing.UNKNOWN.id,
+                score: 0,
+                players: [],
+                name: "",
+            });
+        }
+
+        let charStatsRows = this.#select_character_activity_stats_for_activity.all(
+            { activityRowId: row.activity_row_id }
+        );
+
+        for (let cRow of charStatsRows) {
+            let stats = this.parseCrucibleStats(cRow);
+            let player = this.parsePlayer(cRow);
+
+            let teamIndex = (hasTeams) ? stats.team : NO_TEAMS_INDEX;
+
+            let t = teamsMap.get(teamIndex);
+
+            if (!t) {
+                console.log(`Invalid team id [${t}]. Skipping`);
+            }
+
+            t.players.push({
+                player: player,
+                stats: stats,
+            });
+        }
+
+        let teams = mapElementsToArray(teamsMap);
+
+        return { activity: activity, teams: teams };
+    }
+
+    //TODO: use this everywhere
+    parsePlayer(data) {
+        return {
+            memberId: data.member_id,
+            bungieDisplayName: data.bungie_display_name,
+            bungieDisplayNameCode: data.bungie_display_name_code,
+            platformId: data.platform_id,
+            characterId: data.character_id,
+        };
     }
 
     parseCrucibleStats(activityRow) {
@@ -191,8 +316,8 @@ class ActivityStoreInterface {
             score: activityRow.score,
             kills: activityRow.kills,
             deaths: activityRow.deaths,
-            averageScorePerKill: activityRow.average_score_per_kill,
-            averageScoreRerLife: activityRow.average_score_per_life,
+            //averageScorePerKill: activityRow.average_score_per_kill,
+            //averageScorePerLife: activityRow.average_score_per_life,
             completed: activityRow.completed === 1,
             opponentsDefeated: activityRow.opponents_defeated,
 
@@ -399,12 +524,17 @@ class ActivityStoreInterface {
 
         let out = [];
         for (let row of rows) {
+            let p = this.parsePlayer(row);
+
+            /*
             out.push({
                 memberId: row.member_id,
                 bungieDisplayName: row.bungie_display_name,
                 bungieDisplayNameCode: row.bungie_display_name_code,
                 platformId: row.platform_id,
             });
+            */
+            out.push(p);
         }
 
         return out;
@@ -414,12 +544,7 @@ class ActivityStoreInterface {
 
         let row = this.#select_member.get({ memberId: memberId });
 
-        let out = {
-            memberId: row.member_id,
-            bungieDisplayName: row.bungie_display_name,
-            bungieDisplayNameCode: row.bungie_display_name_code,
-            platform: row.platform_id,
-        }
+        let out = this.parsePlayer(row);
 
         return out;
     }
