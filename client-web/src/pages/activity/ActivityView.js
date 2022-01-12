@@ -17,8 +17,6 @@ const ActivityView = (props) => {
         return <div>An error occured <br />{error.toString()}<br />{error.stack}</div>
     }
 
-    console.log(activity);
-
     return (
         <main style={{ padding: "1rem 0" }}>
             <h2>Activity</h2>

@@ -42,15 +42,6 @@ class ActivityStats {
             let completionReason = CompletionReason.fromId(a.stats.completionReason);
             a.stats.completionReason = completionReason;
         }
-
-        /*
-        this.#summary.efficiency = calculateEfficiency(
-            this.#summary.kills, this.#summary.deaths, this.#summary.assists);
-        this.#summary.killsDeathsRatio = calculateKillsDeathsRatio(this.#summary.kills, this.#summary.deaths);
-        this.#summary.killsDeathsAssists = calculateKillsDeathsAssists(
-            this.#summary.kills, this.#summary.deaths, this.#summary.assists);
-            */
-
     }
 
     get totalActivities() {

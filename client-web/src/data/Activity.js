@@ -1,5 +1,11 @@
 import { CompletionReason, Standing, Mode } from "shared";
 
+
+const TEAM_NAMES = ["Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot",
+    "Golf", "Hotel", "India", "Juliett", "Kilo", "Lima", "Mike", "November",
+    "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor",
+    "Whiskey", "X-ray", "Yankee", "Zulu"];
+
 export default class Activity {
 
     #data;
@@ -15,8 +21,6 @@ export default class Activity {
 
         let activity = this.#data.activity;
 
-        //TODO: what 
-        //change property to map, not map name (in other api call also)
         let map = this.#manifest.getActivityDefinition(activity.referenceId);
         activity.map = map;
 
@@ -26,14 +30,13 @@ export default class Activity {
         let mode = Mode.fromId(activity.mode);
         activity.mode = mode;
 
-        let teams = this.teams;
-
-        for (const team of teams) {
+        this.teams.forEach((team, index) => {
+            team.name = TEAM_NAMES[index];
             for (const player of team.players) {
                 player.stats.standing = Standing.fromId(player.stats.standing);
                 player.stats.completionReason = Standing.fromId(player.stats.completionReason);
             }
-        }
+        });
     }
 
     getCompletionReason(memberId = undefined) {
