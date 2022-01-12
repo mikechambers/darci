@@ -25,19 +25,22 @@ class ActivityStats {
 
     #update() {
 
-        for (let activity of this.#activities) {
+        for (const a of this.#activities) {
 
-            let mapName = this.#manifest.getActivityDefinition(activity.referenceId).name;
-            activity.mapName = this.#manifest.getActivityDefinition(activity.referenceId).name;
+            let map = this.#manifest.getActivityDefinition(a.activity.referenceId);
+            a.activity.map = map;
 
-            let mode = Mode.fromId(activity.mode);
-            activity.stats.mode = mode;
+            let modeInfo = this.#manifest.getActivityDefinition(a.activity.directorActivityHash);
+            a.activity.modeInfo = modeInfo;
 
-            let standing = Standing.fromIdAndMode(activity.stats.standing, mode);
-            activity.stats.standing = standing;
+            let mode = Mode.fromId(a.activity.mode);
+            a.activity.mode = mode;
 
-            let completionReason = CompletionReason.fromId(activity.stats.completionReason);
-            activity.stats.completionReason = completionReason;
+            let standing = Standing.fromIdAndMode(a.stats.standing, mode);
+            a.stats.standing = standing;
+
+            let completionReason = CompletionReason.fromId(a.stats.completionReason);
+            a.stats.completionReason = completionReason;
         }
 
         /*

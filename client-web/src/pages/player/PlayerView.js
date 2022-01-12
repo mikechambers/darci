@@ -19,6 +19,13 @@ const PlayerView = () => {
 
     let [activityStats, isActivitiesLoading, activitiesLoadError] = useFetchPlayerActivities(true, params.memberId, mode, moment);
 
+    if (profileLoadError) {
+        return <div>An error occured (profileLoadError) <br />{profileLoadError.toString()}<br />{profileLoadError.stack}</div>
+    }
+    if (activitiesLoadError) {
+        return <div>An error occured (activitiesLoadError) <br />{activitiesLoadError.toString()}<br />{activitiesLoadError.stack}</div>
+    }
+
     return (
         <main style={{ padding: "1rem 0" }}>
             <h2>Player</h2>

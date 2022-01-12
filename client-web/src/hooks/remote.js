@@ -1,6 +1,7 @@
 import { GlobalContext } from "../contexts/GlobalContext";
 import ActivityStats from "../data/ActivityStats"
 import PlayerProfile from "../data/PlayerProfile";
+import Activity from "../data/Activity";
 
 import { useState, useContext, useEffect } from "react";
 import Manifest from "../data/Manifest";
@@ -100,10 +101,49 @@ export const useFetchManifest = () => {
     return [output.manifest, output.isLoading, output.error];
 };
 
+export const useFetchActivity = (activityId) => {
+    const [output, setOutput] = useState({
+        activity: undefined,
+        isLoading: true,
+        error: undefined,
+    });
+
+    const { global, dispatchGlobal } = useContext(GlobalContext);
+    const manifest = global.manifest;
+
+    useEffect(() => {
+
+        if (!manifest) {
+            return;
+        }
+
+        const f = async () => {
+
+            let s = reducer(output, "isLoading", false);
+            try {
+                const data = await fetchApi(`/api/activity/${activityId}/`);
+                const a = new Activity(data, manifest);
+                s = reducer(s, "activity", a);
+            } catch (err) {
+                s = reducer(s, "error", err);
+            }
+
+            setOutput(s);
+
+        };
+
+        f();
+
+    }, [activityId]);
+
+    return [output.activity, output.isLoading, output.error];
+
+};
+
 export const useFetchPlayerActivities = (refresh, memberId, mode = Mode.ALL_PVP, moment = Moment.WEEK) => {
 
     const [output, setOutput] = useState({
-        activityStats: [],
+        activityStats: undefined,
         isLoading: true,
         error: undefined,
     });
@@ -193,7 +233,7 @@ export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
                 const data = await fetchDestinyApi(
                     `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=100,200,202`);
 
-                let profile = PlayerProfile(data, manifest);
+                let profile = new PlayerProfile(data, manifest);
                 s = reducer(s, "profile", profile);
 
             } catch (err) {

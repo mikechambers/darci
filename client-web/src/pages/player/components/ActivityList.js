@@ -34,28 +34,26 @@ const ActivityList = (props) => {
                 </tr>
             </thead>
             <tbody>
-                {activities.map((activity, index) => {
+                {activities.map((a, index) => {
 
-
-
-                    return (<tr key={activity.activityId}>
+                    return (<tr key={a.activity.activityId}>
                         <td>
-                            <Link to={`/activity/${activity.activityId}/${activity.player.memberId}`}>{activity.mapName}</Link>
+                            <Link to={`/activity/${a.activity.activityId}/${a.player.memberId}`}>{a.activity.map.name}</Link>
 
                         </td>
-                        <td>{activity.stats.mode.toString()}</td>
-                        <td>{activity.stats.standing.toString()}</td>
-                        <td>{activity.stats.kills}</td>
-                        <td>{activity.stats.assists}</td>
-                        <td>{activity.stats.opponentsDefeated}</td>
-                        <td>{activity.stats.deaths}</td>
-                        <td>{activity.stats.killsDeathsRatio.toFixed(2)}</td>
-                        <td>{activity.stats.killsDeathsAssists.toFixed(2)}</td>
-                        <td>{activity.stats.efficiency.toFixed(2)}</td>
-                        <td>{activity.stats.extended.superKills}</td>
-                        <td>{activity.stats.extended.grenadeKills}</td>
-                        <td>{activity.stats.extended.meleeKills}</td>
-                        <td>{(activity.stats.completionReason === CompletionReason.MERCY ? "TRUE" : "")}</td>
+                        <td>{a.activity.mode.label}</td>
+                        <td>{a.stats.standing.toString()}</td>
+                        <td>{a.stats.kills}</td>
+                        <td>{a.stats.assists}</td>
+                        <td>{a.stats.opponentsDefeated}</td>
+                        <td>{a.stats.deaths}</td>
+                        <td>{a.stats.killsDeathsRatio.toFixed(2)}</td>
+                        <td>{a.stats.killsDeathsAssists.toFixed(2)}</td>
+                        <td>{a.stats.efficiency.toFixed(2)}</td>
+                        <td>{a.stats.extended.superKills}</td>
+                        <td>{a.stats.extended.grenadeKills}</td>
+                        <td>{a.stats.extended.meleeKills}</td>
+                        <td>{(a.stats.completionReason === CompletionReason.MERCY ? "TRUE" : "")}</td>
                     </tr>);
                 })}
             </tbody></table>

@@ -14,8 +14,9 @@ class ManifestInterface {
 
     #select_activity_definitions;
     #select_inventory_item_definitions;
-    #select_historical_stats_definition;
+    #select_historical_stats_definitions;
     #select_trials_inventory_item_definitions;
+    #select_activity_mode_definitions;
 
     #manifestDbPath;
     #manifestInfoPath;
@@ -105,7 +106,7 @@ class ManifestInterface {
                 json like '%"placeHash":4088006058%'`
         );
 
-        this.#select_historical_stats_definition = this.#db.prepare(`
+        this.#select_historical_stats_definitions = this.#db.prepare(`
             SELECT
                 *
             FROM
@@ -113,6 +114,15 @@ class ManifestInterface {
             WHERE
                 json like '%medalTierIdentifier%'
         `);
+
+        this.#select_activity_mode_definitions = this.#db.prepare(`
+        SELECT
+            *
+        FROM
+        DestinyActivityModeDefinition
+        WHERE
+            json like '%"activityModeCategory":2%'
+    `);
 
     }
 
@@ -143,6 +153,8 @@ class ManifestInterface {
             let out = {
                 name: d.displayProperties.name,
                 image: d.pgcrImage,
+                description: d.displayProperties.description,
+                activityModeHash: d.directActivityModeHash,
             };
 
             activityDefinition[id] = out;
@@ -156,7 +168,7 @@ class ManifestInterface {
             const id = idToHash(row.id);
 
             let out = {
-                //description: d.displayProperties.description,
+                description: d.displayProperties.description,
                 name: d.displayProperties.name,
                 itemType: d.itemType,
                 itemSubType: d.itemSubType,
@@ -182,7 +194,7 @@ class ManifestInterface {
             trialsPassageItemDefinitions[id] = out;
         }
 
-        rows = this.#select_historical_stats_definition.all();
+        rows = this.#select_historical_stats_definitions.all();
 
         let historicalStatsDefinition = {};
         for (let row of rows) {
@@ -203,6 +215,24 @@ class ManifestInterface {
             historicalStatsDefinition[key] = out;
         }
 
+        rows = this.#select_activity_mode_definitions.all();
+
+        let activityModeDefinitions = {};
+        for (let row of rows) {
+
+            let d = JSON.parse(row.json);
+            const id = idToHash(row.id);
+
+            let out = {
+                name: d.displayProperties.name,
+                description: d.displayProperties.description,
+                icon: d.displayProperties.icon,
+                image: d.pgcrImage,
+            };
+
+            activityModeDefinitions[id] = out;
+        }
+
         this.#manifest = {
             version: this.#version,
             data: {
@@ -210,6 +240,7 @@ class ManifestInterface {
                 inventoryItemDefinition: inventoryItemDefinition,
                 historicalStatsDefinition: historicalStatsDefinition,
                 trialsPassageItemDefinitions: trialsPassageItemDefinitions,
+                activityModeDefinitions: activityModeDefinitions
             }
         };
     }

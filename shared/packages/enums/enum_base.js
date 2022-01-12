@@ -61,7 +61,8 @@ class EnumBase {
         return undefined;
     }
 
-    toLabel() {
+    get label() {
+
         if (!this._label) {
             return this._type;
         }

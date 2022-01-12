@@ -2,6 +2,7 @@
 const Database = require('better-sqlite3');
 
 const NO_TEAMS_INDEX = 253;
+const PLAYER_START_BUFFER = require('../config');
 
 const {
     CharacterClassSelection, Mode, Standing, CompletionReason,
@@ -311,6 +312,7 @@ class ActivityStoreInterface {
             medals: medals,
         };
 
+        const completed = activityRow.completed === 1;
         let stats = {
             assists: activityRow.assists,
             score: activityRow.score,
@@ -318,7 +320,7 @@ class ActivityStoreInterface {
             deaths: activityRow.deaths,
             //averageScorePerKill: activityRow.average_score_per_kill,
             //averageScorePerLife: activityRow.average_score_per_life,
-            completed: activityRow.completed === 1,
+            completed: completed,
             opponentsDefeated: activityRow.opponents_defeated,
 
             efficiency: calculateEfficiency(activityRow.kills, activityRow.deaths, activityRow.assists),
@@ -334,6 +336,8 @@ class ActivityStoreInterface {
             timePlayedSeconds: activityRow.time_played_seconds,
             playerCount: activityRow.player_count,
             teamScore: activityRow.team_score,
+            leftEarly: !completed,
+            joinedLate: (activityRow.start_seconds > PLAYER_START_BUFFER),
             extended: extended,
         };
 
@@ -525,15 +529,6 @@ class ActivityStoreInterface {
         let out = [];
         for (let row of rows) {
             let p = this.parsePlayer(row);
-
-            /*
-            out.push({
-                memberId: row.member_id,
-                bungieDisplayName: row.bungie_display_name,
-                bungieDisplayNameCode: row.bungie_display_name_code,
-                platformId: row.platform_id,
-            });
-            */
             out.push(p);
         }
 

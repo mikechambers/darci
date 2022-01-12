@@ -3,6 +3,8 @@ const SERVER_HOSTNAME = "127.0.0.1";
 const MANIFEST_CHECK_INTERVAL_MS = 1000 * 60 * 60; //check once an hour
 const MAX_ACTIVITIES_PAGE_LIMIT = 100;
 
+const PLAYER_START_BUFFER = 30;//seconds
+
 const DB_PATH = process.env.DCLI_DB_PATH;
 const MANIFEST_DB_PATH = process.env.MANIFEST_DB_PATH;
 const MANIFEST_INFO_PATH = process.env.MANIFEST_INFO_PATH;

@@ -1,11 +1,23 @@
 import { useParams } from "react-router-dom";
+import { useFetchActivity } from "../../hooks/remote";
 
 const ActivityView = (props) => {
 
     const params = useParams();
-    const activityId = params.activityId;
     const memberId = params.memberId;
+    const activityId = params.activityId;
 
+    const [activity, isLoading, error] = useFetchActivity(activityId);
+
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
+
+    if (error) {
+        return <div>An error occured <br />{error.toString()}<br />{error.stack}</div>
+    }
+
+    console.log(activity);
 
     return (
         <main style={{ padding: "1rem 0" }}>

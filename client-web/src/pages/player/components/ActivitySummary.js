@@ -2,11 +2,16 @@ import { calculateAverage, calculatePercent } from "../../../utils";
 
 const ActivitySummary = (props) => {
 
-    let activityStats = props.activityStats;
 
     if (props.isLoading) {
         return <div>Loading...</div>;
     }
+
+    let activityStats = props.activityStats;
+
+    console.log("isLoading", props.isLoading);
+    console.log("activityStats", activityStats);
+    console.log("error", props.isLoading);
 
 
     let summary = activityStats.summary;
