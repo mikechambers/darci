@@ -4,6 +4,7 @@ const MANIFEST_CHECK_INTERVAL_MS = 1000 * 60 * 60; //check once an hour
 const MAX_ACTIVITIES_PAGE_LIMIT = 100;
 
 const PLAYER_START_BUFFER = 30;//seconds
+const DB_SCHEMA_VERSION = 9;
 
 const DB_PATH = process.env.DCLI_DB_PATH;
 const MANIFEST_DB_PATH = process.env.MANIFEST_DB_PATH;
@@ -16,5 +17,7 @@ module.exports = {
     MAX_ACTIVITIES_PAGE_LIMIT,
     DB_PATH,
     MANIFEST_DB_PATH,
-    MANIFEST_INFO_PATH
+    MANIFEST_INFO_PATH,
+    PLAYER_START_BUFFER,
+    DB_SCHEMA_VERSION
 };

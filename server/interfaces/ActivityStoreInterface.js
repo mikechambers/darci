@@ -2,7 +2,7 @@
 const Database = require('better-sqlite3');
 
 const NO_TEAMS_INDEX = 253;
-const PLAYER_START_BUFFER = require('../config');
+const { PLAYER_START_BUFFER, DB_SCHEMA_VERSION } = require('../config');
 
 const {
     CharacterClassSelection, Mode, Standing, CompletionReason,
@@ -22,6 +22,7 @@ class ActivityStoreInterface {
     #select_activity;
     #select_teams;
     #select_character_activity_stats_for_activity;
+    #select_version;
 
     constructor(dbPath) {
         this.#dbPath = dbPath;
@@ -38,6 +39,16 @@ class ActivityStoreInterface {
         console.log(`Using data store at: ${this.#dbPath}`);
         this.#db = new Database(this.#dbPath, { readonly: true });
         this.#initStatements();
+    }
+
+    checkVersion() {
+        let row = this.#select_version.get();
+
+        if (row.version !== DB_SCHEMA_VERSION) {
+            throw Error(
+                `DB Scheme Version mismatch. Expected [${DB_SCHEMA_VERSION}] found [${row.version}]`
+            );
+        }
     }
 
     #initStatements() {
@@ -149,6 +160,10 @@ class ActivityStoreInterface {
             WHERE
                 activity = @activityRowId
         `);
+
+        this.#select_version = this.#db.prepare(`
+        SELECT version from version
+    `);
 
     }
 

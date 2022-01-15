@@ -174,6 +174,10 @@ const init = async () => {
     console.log("Initializing Manifest");
     await manifestInterface.init();
 
+    //will throw if there is a version mismatch between what is expected
+    //and what is in db
+    activityStore.checkVersion();
+
     app.listen(port, () => {
         console.log(`Server running at http://${hostname}:${port}/`);
     });
