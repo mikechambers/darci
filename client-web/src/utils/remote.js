@@ -20,7 +20,7 @@ export const fetchUrl = async (url, options) => {
     }
 
     if (!response.ok) {
-        throw ServerResponseError(
+        throw new ServerResponseError(
             `Failed status code [${response.status}] from server url : ${url}`
         );
     }
