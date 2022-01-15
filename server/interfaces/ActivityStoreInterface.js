@@ -277,6 +277,7 @@ class ActivityStoreInterface {
         );
 
         for (let cRow of charStatsRows) {
+            console.log(cRow);
             let stats = this.parseCrucibleStats(cRow);
             let player = this.parsePlayer(cRow);
 
@@ -305,6 +306,7 @@ class ActivityStoreInterface {
             memberId: data.member_id,
             bungieDisplayName: data.bungie_display_name,
             bungieDisplayNameCode: data.bungie_display_name_code,
+            displayName: data.display_name,
             platformId: data.platform_id,
             characterId: data.character_id,
         };
@@ -351,6 +353,8 @@ class ActivityStoreInterface {
             timePlayedSeconds: activityRow.time_played_seconds,
             playerCount: activityRow.player_count,
             teamScore: activityRow.team_score,
+            emblemHash: activityRow.emblem_hash,
+            fireteamId: activityRow.fireteam_id,
             leftEarly: !completed,
             joinedLate: (activityRow.start_seconds > PLAYER_START_BUFFER),
             extended: extended,
