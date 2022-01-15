@@ -8,12 +8,6 @@ const ActivitySummary = (props) => {
     }
 
     let activityStats = props.activityStats;
-
-    console.log("isLoading", props.isLoading);
-    console.log("activityStats", activityStats);
-    console.log("error", props.isLoading);
-
-
     let summary = activityStats.summary;
 
     return (

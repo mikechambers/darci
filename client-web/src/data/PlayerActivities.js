@@ -1,18 +1,23 @@
 import Manifest from "./Manifest";
+import Player from "./Player";
 
-const { CompletionReason, Mode, Standing } = require("shared");
+const { Mode } = require("shared");
+const { calculateStats } = require("../utils/activity");
 
 const {
-    calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("../utils");
+    calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("shared");
 
-class ActivityStats {
+
+class PlayerActivities {
 
     #activities = [];
     #summary;
     #manifest;
+    #player;
     constructor(data, manifest) {
         this.#activities = data.activities;
         this.#summary = data.summary;
+        this.#player = new Player(data.player);
 
         //this is in case we cant load a manifest for some reason
         if (!manifest) {
@@ -27,6 +32,8 @@ class ActivityStats {
 
         for (const a of this.#activities) {
 
+            a.player = new Player(a.player);
+
             let map = this.#manifest.getActivityDefinition(a.activity.referenceId);
             a.activity.map = map;
 
@@ -36,12 +43,22 @@ class ActivityStats {
             let mode = Mode.fromId(a.activity.mode);
             a.activity.mode = mode;
 
-            let standing = Standing.fromIdAndMode(a.stats.standing, mode);
-            a.stats.standing = standing;
+            a.stats = calculateStats(a.stats, mode);
 
-            let completionReason = CompletionReason.fromId(a.stats.completionReason);
-            a.stats.completionReason = completionReason;
         }
+
+        let kills = this.#summary.kills;
+        let assists = this.#summary.assists;
+        let deaths = this.#summary.deaths;
+
+        this.#summary.opponentsDefeated = kills + assists;
+
+        this.#summary.efficiency = calculateEfficiency(kills, deaths, assists);
+        this.#summary.killsDeathsRatio = calculateKillsDeathsRatio(kills, deaths);
+        this.#summary.killsDeathsAssists = calculateKillsDeathsAssists(
+            kills, deaths, assists,
+        );
+
     }
 
     get totalActivities() {
@@ -55,6 +72,10 @@ class ActivityStats {
     get summary() {
         return this.#summary;
     }
+
+    get player() {
+        return this.#player;
+    }
 }
 
-export default ActivityStats;
+export default PlayerActivities;

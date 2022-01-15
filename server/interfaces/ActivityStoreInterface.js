@@ -277,7 +277,6 @@ class ActivityStoreInterface {
         );
 
         for (let cRow of charStatsRows) {
-            console.log(cRow);
             let stats = this.parseCrucibleStats(cRow);
             let player = this.parsePlayer(cRow);
 
@@ -308,7 +307,13 @@ class ActivityStoreInterface {
             bungieDisplayNameCode: data.bungie_display_name_code,
             displayName: data.display_name,
             platformId: data.platform_id,
-            characterId: data.character_id,
+
+            character: {
+                characterId: data.character_id,
+                classType: data.class,
+                emblem: { id: data.emblem_hash },
+                lightLevel: data.light_level
+            },
         };
     }
 
@@ -338,13 +343,14 @@ class ActivityStoreInterface {
             //averageScorePerKill: activityRow.average_score_per_kill,
             //averageScorePerLife: activityRow.average_score_per_life,
             completed: completed,
-            opponentsDefeated: activityRow.opponents_defeated,
+            //opponentsDefeated: activityRow.opponents_defeated,
 
-            efficiency: calculateEfficiency(activityRow.kills, activityRow.deaths, activityRow.assists),
-            killsDeathsRatio: calculateKillsDeathsRatio(activityRow.kills, activityRow.deaths),
-            killsDeathsAssists: calculateKillsDeathsAssists(
-                activityRow.kills, activityRow.deaths, activityRow.assists,
-            ),
+            //todo:could calculate this client side
+            //efficiency: calculateEfficiency(activityRow.kills, activityRow.deaths, activityRow.assists),
+            //killsDeathsRatio: calculateKillsDeathsRatio(activityRow.kills, activityRow.deaths),
+            //killsDeathsAssists: calculateKillsDeathsAssists(
+            //    activityRow.kills, activityRow.deaths, activityRow.assists,
+            //),
             activityDurationSeconds: activityRow.activity_duration_seconds,
             standing: activityRow.standing,
             team: activityRow.team,
@@ -353,7 +359,6 @@ class ActivityStoreInterface {
             timePlayedSeconds: activityRow.time_played_seconds,
             playerCount: activityRow.player_count,
             teamScore: activityRow.team_score,
-            emblemHash: activityRow.emblem_hash,
             fireteamId: activityRow.fireteam_id,
             leftEarly: !completed,
             joinedLate: (activityRow.start_seconds > PLAYER_START_BUFFER),
@@ -424,7 +429,7 @@ class ActivityStoreInterface {
             out.assists += activity.stats.assists;
             out.kills += activity.stats.kills;
             out.deaths += activity.stats.deaths;
-            out.opponentsDefeated += activity.stats.opponentsDefeated;
+            //out.opponentsDefeated += activity.stats.opponentsDefeated;
 
             out.timePlayedSeconds = activity.stats.timePlayedSeconds;
 
@@ -481,12 +486,13 @@ class ActivityStoreInterface {
         let medalArr = mapElementsToArray(medalMap);
         let weaponArr = mapElementsToArray(weaponMap);
 
+        /*
         out.efficiency = calculateEfficiency(
             out.kills, out.deaths, out.assists);
         out.killsDeathsRatio = calculateKillsDeathsRatio(out.kills, out.deaths);
         out.killsDeathsAssists = calculateKillsDeathsAssists(
             out.kills, out.deaths, out.assists);
-
+*/
         out.medals = medalArr;
         out.weapons = weaponArr;
         return out;

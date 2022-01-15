@@ -5,11 +5,6 @@ import { useFetchPlayers } from '../../../hooks/remote';
 const PlayerList = (props) => {
     let [players, isLoading, error] = useFetchPlayers();
 
-    console.log("---------PlayerList---------");
-    console.log("players", players);
-    console.log("isLoading", isLoading);
-    console.log("error", error);
-
     if (isLoading) {
         return <div>Loading players...</div>
     }
@@ -18,7 +13,7 @@ const PlayerList = (props) => {
         players.map((player, index) => {
             let to = `/player/${player.memberId}/${player.platformId}/all/allpvp/week/`;
             return (<div key={player.memberId}>
-                <Link to={to}>{player.bungieDisplayName}#{player.bungieDisplayNameCode}</Link>
+                <Link to={to}>{player.short_name}</Link>
             </div>);
         })
     );

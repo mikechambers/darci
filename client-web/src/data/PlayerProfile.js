@@ -25,12 +25,14 @@ class PlayerProfile {
     #data;
     #characters;
     #lastActiveCharacter;
+    #player;
+
     constructor(data, manifest) {
         this.#data = data;
 
         let lastActiveCharacter = undefined;
-
         this.#characters = [];
+
         for (const cId in data.characters.data) {
 
             let progressions = data.characterProgressions.data[cId].progressions;
@@ -73,7 +75,6 @@ class PlayerProfile {
                     let roundsWon;
                     let isFlawless;
 
-                    console.log(trialsData);
                     for (const obj of trialsData) {
                         switch (obj.objectiveHash) {
                             case TRIALS_WINS_ID:
@@ -102,8 +103,6 @@ class PlayerProfile {
                     };
                 }
 
-                console.log(currentCard);
-
                 trials = {
                     currentProgress: progressions[TRIALS_PROGRESSION_ID].currentProgress,
                     nextLevelAt: progressions[TRIALS_PROGRESSION_ID].nextLevelAt,
@@ -114,14 +113,16 @@ class PlayerProfile {
 
             let char = data.characters.data[cId];
 
-            let out = {
+            let character = {
                 characterId: char.characterId,
                 classType: CharacterClass.fromId(char.classType),
                 lightLevel: char.light,
+                emblem: { id: char.emblemHash },
                 dateLastPlayed: new Date(Date.parse(char.dateLastPlayed)),
-                emblem: {
-                    id: char.emblemHash
-                },
+            };
+
+            let out = {
+                character: character,
                 progressions: {
                     trials: trials,
                     valor: valor,
@@ -134,6 +135,8 @@ class PlayerProfile {
             if (!lastActiveCharacter || out.dateLastPlayed.getTime() > lastActiveCharacter.dateLastPlayed.getTime()) {
                 lastActiveCharacter = out;
             }
+
+
         }
 
         this.#lastActiveCharacter = lastActiveCharacter;

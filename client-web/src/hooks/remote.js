@@ -1,11 +1,12 @@
 import { GlobalContext } from "../contexts/GlobalContext";
-import ActivityStats from "../data/ActivityStats"
+import PlayerActivities from "../data/PlayerActivities"
 import PlayerProfile from "../data/PlayerProfile";
 import Activity from "../data/Activity";
 
 import { useState, useContext, useEffect } from "react";
 import Manifest from "../data/Manifest";
 import { Mode, Moment } from "shared";
+import Player from "../data/Player";
 
 import { DATA_REFRESH_INTERVAL, MANIFEST_CHECK_INTERVAL } from "../consts";
 import { fetchApi, fetchDestinyApi } from "../utils/remote";
@@ -162,7 +163,7 @@ export const useFetchPlayerActivities = (refresh, memberId, mode = Mode.ALL_PVP,
             let s = reducer(output, "isLoading", false);
             try {
                 const data = await fetchApi(`/api/player/${memberId}/all/${mode.toString()}/${moment.toString()}/`);
-                const as = new ActivityStats(data, manifest);
+                const as = new PlayerActivities(data, manifest);
                 s = reducer(s, "activityStats", as);
             } catch (err) {
                 s = reducer(s, "error", err);
@@ -200,7 +201,13 @@ export const useFetchPlayers = () => {
             let s = reducer(output, "isLoading", false);
             try {
                 const data = await fetchApi('/api/players/');
-                s = reducer(s, "players", data.players);
+
+                let players = [];
+                for (const p of data.players) {
+                    players.push(new Player(p));
+                }
+
+                s = reducer(s, "players", players);
             } catch (err) {
                 s = reducer(s, "error", err);
             }

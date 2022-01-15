@@ -1,5 +1,7 @@
 import { CompletionReason, Standing, Mode } from "shared";
+import Player from "./Player";
 
+const { calculateStats } = require("../utils/activity");
 
 const TEAM_NAMES = ["Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot",
     "Golf", "Hotel", "India", "Juliett", "Kilo", "Lima", "Mike", "November",
@@ -32,11 +34,18 @@ export default class Activity {
 
         this.teams.forEach((team, index) => {
             team.name = TEAM_NAMES[index];
-            for (const player of team.players) {
-                player.stats.standing = Standing.fromId(player.stats.standing);
-                player.stats.completionReason = Standing.fromId(player.stats.completionReason);
+            for (const p of team.players) {
+
+                p.player = new Player(p.player);
+                //p.stats.standing = Standing.fromId(p.stats.standing);
+                //p.stats.completionReason = Standing.fromId(p.stats.completionReason);
+
+                p.stats = calculateStats(p.stats, mode);
+                //TODO: get emblem from manifest and set here
             }
         });
+
+        console.log(this.#data);
     }
 
     getCompletionReason(memberId = undefined) {
