@@ -21,7 +21,7 @@ It is built around three main parts:
     * Set origin to `*`
     * Create two environment variables named DESTINY_API_KEY and REACT_APP_DESTINY_API_KEY both of which which contains the key. These will be needed for both syncing data using dci, as well as the web frontend.
 * Darci
-    * Download and install dcli
+    * Download and install dcli (requires v0.8.0)
     * place into path
     * run dclim
         * note data directory output

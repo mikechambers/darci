@@ -62,6 +62,39 @@ class Manifest {
         return this.#trialsPassageIds;
     }
 
+
+    /*
+                    name: d.displayProperties.name,
+                icon: d.displayProperties.icon,
+                secondaryIcon: d.secondaryIcon,
+                secondaryOverlay: d.secondaryOverlay,
+                secondarySpecial: d.secondarySpecial,
+    */
+    getEmblem(id) {
+        let out = {
+            id: id,
+            name: "Unknown",
+            icon: undefined,
+            secondaryIcon: undefined,
+            secondaryOverlay: undefined,
+            secondarySpecial: undefined,
+        };
+
+        let e = this.#manifestData.emblemDefinitions[id];
+
+        if (!e) {
+            return out;
+        }
+
+        out.name = e.name;
+        out.icon = createResourceUrl(e.icon);
+        out.secondaryIcon = createResourceUrl(e.secondaryIcon);
+        out.secondaryOverlay = createResourceUrl(e.secondaryOverlay);
+        out.secondarySpecial = createResourceUrl(e.secondarySpecial);
+
+        return out;
+    }
+
     getModeInfo(referenceId) {
         let out = {
             name: "Unknown",
@@ -93,6 +126,10 @@ class Manifest {
 }
 
 const createResourceUrl = (path) => {
+    if (!path) {
+        return undefined;
+    }
+
     return `${API_RESOURCE_BASE_URL}${path}`;
 }
 

@@ -17,6 +17,7 @@ class ManifestInterface {
     #select_historical_stats_definitions;
     #select_trials_inventory_item_definitions;
     #select_activity_mode_definitions;
+    #select_emblem_definitions;
 
     #manifestDbPath;
     #manifestInfoPath;
@@ -124,6 +125,17 @@ class ManifestInterface {
             json like '%"activityModeCategory":2%'
     `);
 
+        this.#select_emblem_definitions = this.#db.prepare(`
+    SELECT
+        *
+    FROM
+    DestinyInventoryItemDefinition
+    WHERE
+        json like '%"itemType":14,%'`
+        );
+
+
+        //"itemTypeDisplayName": "Emblem",
     }
 
     async #getSystemManifestVersion() {
@@ -233,6 +245,24 @@ class ManifestInterface {
             activityModeDefinitions[id] = out;
         }
 
+        rows = this.#select_emblem_definitions.all();
+
+        let emblemDefinitions = {};
+        for (let row of rows) {
+            let d = JSON.parse(row.json);
+            const id = idToHash(row.id);
+
+            let out = {
+                name: d.displayProperties.name,
+                icon: d.displayProperties.icon,
+                secondaryIcon: d.secondaryIcon,
+                secondaryOverlay: d.secondaryOverlay,
+                secondarySpecial: d.secondarySpecial,
+            }
+
+            emblemDefinitions[id] = out;
+        }
+
         this.#manifest = {
             version: this.#version,
             data: {
@@ -240,7 +270,8 @@ class ManifestInterface {
                 inventoryItemDefinition: inventoryItemDefinition,
                 historicalStatsDefinition: historicalStatsDefinition,
                 trialsPassageItemDefinitions: trialsPassageItemDefinitions,
-                activityModeDefinitions: activityModeDefinitions
+                activityModeDefinitions: activityModeDefinitions,
+                emblemDefinitions: emblemDefinitions,
             }
         };
     }

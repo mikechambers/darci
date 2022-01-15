@@ -299,24 +299,6 @@ class ActivityStoreInterface {
         return { activity: activity, teams: teams };
     }
 
-    //TODO: use this everywhere
-    parsePlayer(data) {
-        return {
-            memberId: data.member_id,
-            bungieDisplayName: data.bungie_display_name,
-            bungieDisplayNameCode: data.bungie_display_name_code,
-            displayName: data.display_name,
-            platformId: data.platform_id,
-
-            character: {
-                characterId: data.character_id,
-                classType: data.class,
-                emblem: { id: data.emblem_hash },
-                lightLevel: data.light_level
-            },
-        };
-    }
-
     parseCrucibleStats(activityRow) {
 
         let weapons = this.retrieveWeapons(activityRow.character_activity_stats_index);

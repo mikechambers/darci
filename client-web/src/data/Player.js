@@ -1,3 +1,5 @@
+import { parsePlayer } from "../utils/activity";
+
 export default class Player {
 
     memberId;
@@ -5,15 +7,22 @@ export default class Player {
     bungieDisplayNameCode;
     displayName;
     platformId;
-    characterId;
+    character;
 
-    constructor(data) {
-        this.memberId = data.memberId;
-        this.bungieDisplayName = data.bungieDisplayName;
-        this.bungieDisplayNameCode = data.bungieDisplayNameCode;
-        this.displayName = data.displayName;
-        this.platformId = data.platformId;
-        this.characterId = data.characterId;
+    constructor(data, manifest) {
+
+        let p = parsePlayer(data);
+        this.memberId = p.memberId;
+        this.bungieDisplayName = p.bungieDisplayName;
+        this.bungieDisplayNameCode = p.bungieDisplayNameCode;
+        this.displayName = p.displayName;
+        this.platformId = p.platformId;
+
+        this.character = p.character;
+
+        //todo:need to put in correct format, and generate emblem
+
+        //this.characterId = data.characterId;
     }
 
     get has_full_bungie_name() {

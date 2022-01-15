@@ -117,7 +117,7 @@ class PlayerProfile {
                 characterId: char.characterId,
                 classType: CharacterClass.fromId(char.classType),
                 lightLevel: char.light,
-                emblem: { id: char.emblemHash },
+                emblem: manifest.getEmblem(char.emblemHash),
                 dateLastPlayed: new Date(Date.parse(char.dateLastPlayed)),
             };
 
