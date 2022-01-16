@@ -1,4 +1,5 @@
 import { CharacterClass } from "shared";
+import { parseCharacter } from "../utils/activity";
 
 const GLORY_PROGRESSION_ID = "1647151960";
 
@@ -23,15 +24,14 @@ const TRIALS_FLAWLESS_ID = 2211480687;
 class PlayerProfile {
 
     #data;
-    #characters;
-    #lastActiveCharacter;
-    #player;
+    #characterProfiles;
+    #lastActiveCharacterProfile;
 
     constructor(data, manifest) {
         this.#data = data;
 
-        let lastActiveCharacter = undefined;
-        this.#characters = [];
+        let lastActiveCharacterProfile = undefined;
+        this.#characterProfiles = [];
 
         for (const cId in data.characters.data) {
 
@@ -113,13 +113,10 @@ class PlayerProfile {
 
             let char = data.characters.data[cId];
 
-            let character = {
-                characterId: char.characterId,
-                classType: CharacterClass.fromId(char.classType),
-                lightLevel: char.light,
-                emblem: manifest.getEmblem(char.emblemHash),
-                dateLastPlayed: new Date(Date.parse(char.dateLastPlayed)),
-            };
+
+
+            let character = parseCharacter(char, manifest);
+            character.dateLastPlayed = new Date(Date.parse(char.dateLastPlayed));
 
             let out = {
                 character: character,
@@ -130,24 +127,24 @@ class PlayerProfile {
                 }
             };
 
-            this.#characters.push(out);
+            this.#characterProfiles.push(out);
 
-            if (!lastActiveCharacter || out.character.dateLastPlayed.getTime() > lastActiveCharacter.character.dateLastPlayed.getTime()) {
-                lastActiveCharacter = out;
+            if (!lastActiveCharacterProfile || out.character.dateLastPlayed.getTime() > lastActiveCharacterProfile.character.dateLastPlayed.getTime()) {
+                lastActiveCharacterProfile = out;
             }
 
 
         }
 
-        this.#lastActiveCharacter = lastActiveCharacter;
+        this.#lastActiveCharacterProfile = lastActiveCharacterProfile;
     }
 
-    get lastActiveCharacter() {
-        return this.#lastActiveCharacter;
+    get lastActiveCharacterProfile() {
+        return this.#lastActiveCharacterProfile;
     }
 
-    get characters() {
-        return this.#characters;
+    get charactersProfiles() {
+        return this.#characterProfiles;
     }
 
     get member() {

@@ -44,8 +44,6 @@ export default class Activity {
                 //TODO: get emblem from manifest and set here
             }
         });
-
-        console.log(this.#data);
     }
 
     getCompletionReason(memberId = undefined) {

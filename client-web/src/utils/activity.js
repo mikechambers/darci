@@ -16,9 +16,8 @@ export const parseCharacter = (data, manifest) => {
     let character = {
         characterId: data.characterId,
         classType: CharacterClass.fromId(data.classType),
-        lightLevel: data.light,
+        lightLevel: data.lightLevel,
         emblem: emblem,
-        dateLastPlayed: new Date(Date.parse(data.dateLastPlayed)),
     };
 
     return character;
@@ -26,14 +25,19 @@ export const parseCharacter = (data, manifest) => {
 
 export const parsePlayer = (data, manifest) => {
 
+    let chars = [];
+    for (const c of data.characters) {
+        chars.push(parseCharacter(c, manifest));
+    }
+
     let out = {
         memberId: data.memberId,
-        bungieDisplayName: data.bungie_displayName,
-        bungieDisplayNameCode: data.bungie_displayNameCode,
+        bungieDisplayName: data.bungieDisplayName,
+        bungieDisplayNameCode: data.bungieDisplayNameCode,
         displayName: data.displayName,
         platformId: data.platformId,
 
-        character: parseCharacter(data, manifest),
+        characters: chars,
     };
 
     return out;

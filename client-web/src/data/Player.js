@@ -19,7 +19,10 @@ export default class Player {
         this.displayName = p.displayName;
         this.platformId = p.platformId;
 
-        this.character = p.character;
+        this.character = p.characters[0];
+
+
+
 
         //todo:need to put in correct format, and generate emblem
 

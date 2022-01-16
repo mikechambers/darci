@@ -307,9 +307,9 @@ class ActivityStoreInterface {
         };
 
         let character = {
-            characterId: data.characterId,
-            classType: data.classType,
-            lightLevel: data.light,
+            characterId: data.character_id,
+            classType: data.class,
+            lightLevel: data.light_level,
             emblem: emblem,
         };
 
@@ -324,7 +324,7 @@ class ActivityStoreInterface {
             displayName: data.display_name,
             platformId: data.platform_id,
 
-            character: this.parseCharacter(data),
+            characters: [this.parseCharacter(data)],
         };
     }
 
