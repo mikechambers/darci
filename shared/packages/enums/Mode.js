@@ -1,4 +1,4 @@
-const EnumBase = require('./enum_base');
+const EnumBase = require('./EnumBase');
 
 class Mode extends EnumBase {
     static UNKNOWN = new Mode("Unknown", -1);

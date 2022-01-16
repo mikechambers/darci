@@ -1,5 +1,5 @@
-const Mode = require('./mode');
-const EnumBase = require('./enum_base');
+const Mode = require('./Mode');
+const EnumBase = require('./EnumBase');
 
 
 //todo: this doesnt really handle draws correctly right now

@@ -1,5 +1,5 @@
-const EnumBase = require('./enum_base');
-const CharacterClass = require('./character_class');
+const EnumBase = require('./EnumBase');
+const CharacterClass = require('./CharacterClass');
 
 
 class CharacterClassSelection extends EnumBase {

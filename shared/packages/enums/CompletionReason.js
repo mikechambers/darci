@@ -1,4 +1,4 @@
-const EnumBase = require('./enum_base');
+const EnumBase = require('./EnumBase');
 
 class CompletionReason extends EnumBase {
     static OBJECTIVE_COMPLETE = new CompletionReason("ObjectiveComplete", 0, "Objective Complete");

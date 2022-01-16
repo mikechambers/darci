@@ -1,4 +1,4 @@
-const EnumBase = require('./enum_base');
+const EnumBase = require('./EnumBase');
 
 class ItemSubType extends EnumBase {
     static UNKNOWN = new ItemSubType("Unknown", -1);
