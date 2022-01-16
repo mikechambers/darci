@@ -13,7 +13,7 @@ class ManifestInterface {
     #manifestCheckIntervalId;
 
     #select_activity_definitions;
-    #select_inventory_item_definitions;
+    #select_weapon_item_definitions;
     #select_historical_stats_definitions;
     #select_trials_inventory_item_definitions;
     #select_activity_mode_definitions;
@@ -80,7 +80,7 @@ class ManifestInterface {
     }
 
     #initStatements() {
-        this.#select_inventory_item_definitions = this.#db.prepare(`
+        this.#select_weapon_item_definitions = this.#db.prepare(`
         SELECT
             *
         FROM
@@ -172,21 +172,24 @@ class ManifestInterface {
             activityDefinition[id] = out;
         }
 
-        rows = this.#select_inventory_item_definitions.all();
+        rows = this.#select_weapon_item_definitions.all();
 
-        let inventoryItemDefinition = {};
+        let weaponItemDefinition = {};
         for (let row of rows) {
             let d = JSON.parse(row.json);
             const id = idToHash(row.id);
 
             let out = {
-                description: d.displayProperties.description,
+                //description: d.displayProperties.description,
                 name: d.displayProperties.name,
+                icon: d.displayProperties.icon,
+                screenshot: d.screenshot,
                 itemType: d.itemType,
                 itemSubType: d.itemSubType,
+                id: id,
             }
 
-            inventoryItemDefinition[id] = out;
+            weaponItemDefinition[id] = out;
         }
 
         rows = this.#select_trials_inventory_item_definitions.all();
@@ -267,7 +270,7 @@ class ManifestInterface {
             version: this.#version,
             data: {
                 activityDefinition: activityDefinition,
-                inventoryItemDefinition: inventoryItemDefinition,
+                weaponItemDefinition: weaponItemDefinition,
                 historicalStatsDefinition: historicalStatsDefinition,
                 trialsPassageItemDefinitions: trialsPassageItemDefinitions,
                 activityModeDefinitions: activityModeDefinitions,

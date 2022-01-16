@@ -5,6 +5,7 @@ const EnumBase = require("./packages/enums/enum_base");
 const CharacterClassSelection = require("./packages/enums/character_class_selection");
 const Standing = require("./packages/enums/standing");
 const CompletionReason = require("./packages/enums/completion_reason");
+const ItemSubType = require("./packages/enums/ItemSubType");
 
 const { calculateEfficiency,
     calculateKillsDeathsRatio,
@@ -20,5 +21,6 @@ module.exports = {
     CompletionReason: CompletionReason,
     calculateEfficiency,
     calculateKillsDeathsRatio,
-    calculateKillsDeathsAssists
+    calculateKillsDeathsAssists,
+    ItemSubType: ItemSubType,
 };

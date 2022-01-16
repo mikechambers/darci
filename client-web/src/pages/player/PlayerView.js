@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import ActivityList from "./components/ActivityList"
 import ActivitySummary from "./components/ActivitySummary";
 import PlayerExperience from "./components/PlayerExperience";
+import WeaponView from "./components/WeaponView";
 import PlayerHeader from "./components/PlayerHeader";
 import { useFetchPlayerActivities, useFetchPlayerProfile } from "../../hooks/remote";
 import { Mode, Moment } from "shared";
@@ -29,12 +30,21 @@ const PlayerView = () => {
         return <div>An error occured (activitiesLoadError) <br />{activitiesLoadError.toString()}<br />{activitiesLoadError.stack}</div>
     }
 
+    let summary;
+    let weapons;
+
+    if (activityStats) {
+        summary = activityStats.summary;
+        weapons = summary.weapons;
+    }
+
     return (
         <main style={{ padding: "1rem 0" }}>
             <h2>Player</h2>
             <PlayerHeader />
             <PlayerExperience />
-            <ActivitySummary activityStats={activityStats} isLoading={isActivitiesLoading} />
+            <WeaponView weapons={weapons} maxCount={5} />
+            <ActivitySummary summary={summary} isLoading={isActivitiesLoading} />
             <ActivityList activityStats={activityStats} isLoading={isActivitiesLoading} />
             <ErrorView error={[activitiesLoadError, profileLoadError]} />
         </main>

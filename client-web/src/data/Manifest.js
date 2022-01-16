@@ -1,3 +1,4 @@
+const { ItemSubType } = require("shared");
 
 const API_RESOURCE_BASE_URL = "https://www.bungie.net";
 class Manifest {
@@ -18,6 +19,37 @@ class Manifest {
 
         //todo: setup map with mode# as index
         //add getModeInfo() method that combines description
+    }
+
+    getWeaponDefinition(id) {
+        let out = {
+            name: undefined,
+            itemType: undefined,
+            itemSubType: undefined,
+            id: id,
+            icon: undefined,
+            screenshot: undefined,
+        };
+
+
+        if (!this.#manifestData) {
+            return out;
+        }
+
+        let d = this.#manifestData.data.weaponItemDefinition[id];
+
+        if (!d) {
+            return out;
+        }
+
+        out.name = d.name;
+        out.itemType = d.itemType;
+        out.itemSubType = ItemSubType.fromId(d.itemSubType);
+        out.id = id;
+        out.icon = createResourceUrl(d.icon);
+        out.screenshot = createResourceUrl(d.screenshot);
+
+        return out;
     }
 
     getActivityDefinition(id) {

@@ -59,6 +59,10 @@ class PlayerActivities {
             kills, deaths, assists,
         );
 
+        for (const w of this.#summary.weapons) {
+            let item = this.#manifest.getWeaponDefinition(w.id);
+            w.item = item;
+        }
     }
 
     get totalActivities() {

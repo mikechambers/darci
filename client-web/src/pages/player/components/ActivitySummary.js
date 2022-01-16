@@ -7,8 +7,7 @@ const ActivitySummary = (props) => {
         return <div>Loading...</div>;
     }
 
-    let activityStats = props.activityStats;
-    let summary = activityStats.summary;
+    let summary = props.summary;
 
     return (
         <table>
