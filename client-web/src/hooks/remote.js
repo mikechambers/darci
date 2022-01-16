@@ -6,10 +6,10 @@ import Activity from "../data/Activity";
 import { useState, useContext, useEffect } from "react";
 import Manifest from "../data/Manifest";
 import { Mode, Moment } from "shared";
-import Player from "../data/Player";
 
 import { DATA_REFRESH_INTERVAL, MANIFEST_CHECK_INTERVAL } from "../consts";
 import { fetchApi, fetchDestinyApi } from "../utils/remote";
+import { parsePlayerFromServer } from "../utils/player";
 
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
@@ -207,7 +207,8 @@ export const useFetchPlayers = () => {
 
                 let players = [];
                 for (const p of data.players) {
-                    players.push(new Player(p, manifest));
+
+                    players.push(parsePlayerFromServer(p, manifest));
                 }
 
                 s = reducer(s, "players", players);

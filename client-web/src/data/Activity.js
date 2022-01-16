@@ -1,8 +1,8 @@
 import { CompletionReason, Standing, Mode } from "shared";
-import Player from "./Player";
 
 const { calculateStats } = require("../utils/activity");
 
+const { parsePlayerFromServer } = require("../utils/player");
 const TEAM_NAMES = ["Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot",
     "Golf", "Hotel", "India", "Juliett", "Kilo", "Lima", "Mike", "November",
     "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor",
@@ -36,7 +36,8 @@ export default class Activity {
             team.name = TEAM_NAMES[index];
             for (const p of team.players) {
 
-                p.player = new Player(p.player);
+                p.player = parsePlayerFromServer(p.player, this.#manifest);
+
                 //p.stats.standing = Standing.fromId(p.stats.standing);
                 //p.stats.completionReason = Standing.fromId(p.stats.completionReason);
 

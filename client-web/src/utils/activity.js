@@ -1,47 +1,9 @@
-const { CompletionReason, Standing, CharacterClass } = require("shared");
+const { CompletionReason, Standing } = require("shared");
 
 const {
     calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("shared");
 
-export const parseCharacterFromServer = (data, manifest) => {
 
-    let emblem = {
-        id: data.emblemHash,
-    };
-
-    if (manifest) {
-        emblem = manifest.getEmblem(data.emblemHash);
-    }
-
-    let character = {
-        characterId: data.characterId,
-        classType: CharacterClass.fromId(data.classType),
-        lightLevel: data.lightLevel,
-        emblem: emblem,
-    };
-
-    return character;
-}
-
-export const parsePlayerFromServer = (data, manifest) => {
-
-    let chars = [];
-    for (const c of data.characters) {
-        chars.push(parseCharacterFromServer(c, manifest));
-    }
-
-    let out = {
-        memberId: data.memberId,
-        bungieDisplayName: data.bungieDisplayName,
-        bungieDisplayNameCode: data.bungieDisplayNameCode,
-        displayName: data.displayName,
-        platformId: data.platformId,
-
-        characters: chars,
-    };
-
-    return out;
-}
 
 //note this modifies the passed in reference (to save memory / cpu)
 export const calculateStats = (stats, mode) => {

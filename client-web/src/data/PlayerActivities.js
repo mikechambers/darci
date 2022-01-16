@@ -1,7 +1,7 @@
 import Manifest from "./Manifest";
-import Player from "./Player";
 
 const { Mode } = require("shared");
+const { parsePlayerFromServer } = require("../utils/player");
 const { calculateStats } = require("../utils/activity");
 
 const {
@@ -17,7 +17,8 @@ class PlayerActivities {
     constructor(data, manifest) {
         this.#activities = data.activities;
         this.#summary = data.summary;
-        this.#player = new Player(data.player);
+        //this.#player = new Player(data.player);
+        this.#player = parsePlayerFromServer(data.player, manifest);
 
         //this is in case we cant load a manifest for some reason
         if (!manifest) {
@@ -32,7 +33,8 @@ class PlayerActivities {
 
         for (const a of this.#activities) {
 
-            a.player = new Player(a.player);
+            //a.player = new Player(a.player);
+            a.player = parsePlayerFromServer(a.player, this.#manifest);
 
             let map = this.#manifest.getActivityDefinition(a.activity.referenceId);
             a.activity.map = map;
