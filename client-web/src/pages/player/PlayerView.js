@@ -2,7 +2,8 @@ import { useParams } from "react-router-dom";
 import ActivityList from "./components/ActivityList"
 import ActivitySummary from "./components/ActivitySummary";
 import PlayerExperience from "./components/PlayerExperience";
-import WeaponView from "./components/WeaponView";
+import WeaponsView from "./components/WeaponsView";
+import MedalsView from "./components/MedalsView";
 import PlayerHeader from "./components/PlayerHeader";
 import { useFetchPlayerActivities, useFetchPlayerProfile } from "../../hooks/remote";
 import { Mode, Moment } from "shared";
@@ -32,10 +33,12 @@ const PlayerView = () => {
 
     let summary;
     let weapons;
+    let medals;
 
     if (activityStats) {
         summary = activityStats.summary;
         weapons = summary.weapons;
+        medals = summary.medals;
     }
 
     return (
@@ -43,7 +46,8 @@ const PlayerView = () => {
             <h2>Player</h2>
             <PlayerHeader />
             <PlayerExperience />
-            <WeaponView weapons={weapons} maxCount={5} />
+            <WeaponsView weapons={weapons} maxCount={5} />
+            <MedalsView medals={medals} maxCount={5} />
             <ActivitySummary summary={summary} isLoading={isActivitiesLoading} />
             <ActivityList activityStats={activityStats} isLoading={isActivitiesLoading} />
             <ErrorView error={[activitiesLoadError, profileLoadError]} />

@@ -23,7 +23,7 @@ const TRIALS_FLAWLESS_ID = 2211480687;
 
 const parseCharacterFromProfile = (data, manifest) => {
 
-    let emblem = manifest.getEmblem(data.emblemHash)
+    let emblem = manifest.getEmblemDefinition(data.emblemHash)
 
     let character = {
         characterId: data.characterId,

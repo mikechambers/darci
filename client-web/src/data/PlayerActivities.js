@@ -1,8 +1,8 @@
 import Manifest from "./Manifest";
 
 const { Mode } = require("shared");
-const { parsePlayerFromServer } = require("../utils/player");
-const { calculateStats } = require("../utils/activity");
+const { parsePlayerFromServer, parseMedalsFromServer, parseWeaponsFromServer } = require("../utils/data");
+const { calculateStats, parseWeapons } = require("../utils/activity");
 
 const {
     calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("shared");
@@ -61,10 +61,10 @@ class PlayerActivities {
             kills, deaths, assists,
         );
 
-        for (const w of this.#summary.weapons) {
-            let item = this.#manifest.getWeaponDefinition(w.id);
-            w.item = item;
-        }
+        this.#summary.weapons = parseWeaponsFromServer(this.#summary.weapons, this.#manifest);
+        this.#summary.medals = parseMedalsFromServer(this.#summary.medals, this.#manifest);
+
+        console.log(this.#summary);
     }
 
     get totalActivities() {

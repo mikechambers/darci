@@ -4,7 +4,6 @@ const {
     calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("shared");
 
 
-
 //note this modifies the passed in reference (to save memory / cpu)
 export const calculateStats = (stats, mode) => {
 

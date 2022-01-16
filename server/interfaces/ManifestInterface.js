@@ -14,7 +14,7 @@ class ManifestInterface {
 
     #select_activity_definitions;
     #select_weapon_item_definitions;
-    #select_historical_stats_definitions;
+    #select_medal_definitions;
     #select_trials_inventory_item_definitions;
     #select_activity_mode_definitions;
     #select_emblem_definitions;
@@ -107,7 +107,7 @@ class ManifestInterface {
                 json like '%"placeHash":4088006058%'`
         );
 
-        this.#select_historical_stats_definitions = this.#db.prepare(`
+        this.#select_medal_definitions = this.#db.prepare(`
             SELECT
                 *
             FROM
@@ -209,9 +209,9 @@ class ManifestInterface {
             trialsPassageItemDefinitions[id] = out;
         }
 
-        rows = this.#select_historical_stats_definitions.all();
+        rows = this.#select_medal_definitions.all();
 
-        let historicalStatsDefinition = {};
+        let medalDefinitions = {};
         for (let row of rows) {
             let d = JSON.parse(row.json);
             let key = row.key;
@@ -224,10 +224,39 @@ class ManifestInterface {
             let out = {
                 name: d.statName,
                 description: d.statDescription,
-                iconImage: d.iconImage,
+                icon: d.iconImage,
+                isGold: false,
+                id: key,
             };
 
-            historicalStatsDefinition[key] = out;
+            if (out.id === "Medals_pvp_medal_streak_extra_absurd_b"
+                || out.id === "medalStreak7x"
+                || out.id === "medalMatchUndefeated"
+                || out.id === "medalMultiEntireTeam"
+                || out.id === "medalStreakAbsurd"
+                || out.id === "Medals_pvp_medal_streak_no_damage"
+                || out.id === "medalControlPowerPlayWipe"
+                || out.id === "medalCountdownPerfect"
+                || out.id === "medalMayhemKillStreak"
+                || out.id === "Medals_pvp_medal_lockdown_3a"
+                || out.id === "medalRumbleBetterThanAllCombined"
+                || out.id === "medalShowdownUndefeated"
+                || out.id === "medalSupremacyPerfectSecureRate"
+                || out.id === "medalSurvivalTeamUndefeated"
+
+                //iron banner
+                || out.id === "Medals_pvp_medal_ib_streak_lg"
+                || out.id === "Medals_pvp_medal_ib_control_3b"
+                || out.id === "Medals_pvp_medal_ib_multi_entire_team"
+                || out.id === "Medals_pvp_medal_ib_multi_7x"
+                || out.id === "Medals_pvp_medal_ib_match_undefeated"
+                || out.id === "Medals_pvp_medal_ib_streak_shutdown_large"
+                || out.id === "Medals_pvp_medal_ib_streak_huge"
+                || out.id === "Medals_pvp_medal_ib_streak_no_damage") {
+                out.isGold = true;
+            }
+
+            medalDefinitions[key] = out;
         }
 
         rows = this.#select_activity_mode_definitions.all();
@@ -271,7 +300,7 @@ class ManifestInterface {
             data: {
                 activityDefinition: activityDefinition,
                 weaponItemDefinition: weaponItemDefinition,
-                historicalStatsDefinition: historicalStatsDefinition,
+                medalDefinitions: medalDefinitions,
                 trialsPassageItemDefinitions: trialsPassageItemDefinitions,
                 activityModeDefinitions: activityModeDefinitions,
                 emblemDefinitions: emblemDefinitions,

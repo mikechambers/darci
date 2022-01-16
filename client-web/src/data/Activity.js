@@ -2,7 +2,7 @@ import { CompletionReason, Standing, Mode } from "shared";
 
 const { calculateStats } = require("../utils/activity");
 
-const { parsePlayerFromServer } = require("../utils/player");
+const { parsePlayerFromServer } = require("../utils/data");
 const TEAM_NAMES = ["Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot",
     "Golf", "Hotel", "India", "Juliett", "Kilo", "Lima", "Mike", "November",
     "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor",

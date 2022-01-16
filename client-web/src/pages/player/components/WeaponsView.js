@@ -1,9 +1,9 @@
 import { calculatePercent, calculateAverage } from "../../../utils/index";
 
-const WeaponView = (props) => {
+const WeaponsView = (props) => {
 
     let weapons = (props.weapons) ? props.weapons : [];
-    let maxCount = props.maxCount;
+    let maxCount = (props.maxCount) ? props.maxCount : 5;
 
     weapons.sort((a, b) => {
         return b.kills - a.kills;
@@ -41,4 +41,4 @@ const WeaponView = (props) => {
     );
 }
 
-export default WeaponView;
+export default WeaponsView;

@@ -9,7 +9,7 @@ import { Mode, Moment } from "shared";
 
 import { DATA_REFRESH_INTERVAL, MANIFEST_CHECK_INTERVAL } from "../consts";
 import { fetchApi, fetchDestinyApi } from "../utils/remote";
-import { parsePlayerFromServer } from "../utils/player";
+import { parsePlayerFromServer } from "../utils/data";
 
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";

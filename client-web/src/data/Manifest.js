@@ -16,9 +16,6 @@ class Manifest {
                 this.#trialsPassageIds.push(value.id);
             }
         }
-
-        //todo: setup map with mode# as index
-        //add getModeInfo() method that combines description
     }
 
     getWeaponDefinition(id) {
@@ -32,7 +29,7 @@ class Manifest {
         };
 
 
-        if (!this.#manifestData) {
+        if (!this.#manifestData.data.weaponItemDefinition) {
             return out;
         }
 
@@ -42,12 +39,11 @@ class Manifest {
             return out;
         }
 
-        out.name = d.name;
-        out.itemType = d.itemType;
+        Object.assign(out, d);
         out.itemSubType = ItemSubType.fromId(d.itemSubType);
-        out.id = id;
         out.icon = createResourceUrl(d.icon);
         out.screenshot = createResourceUrl(d.screenshot);
+
 
         return out;
     }
@@ -61,15 +57,20 @@ class Manifest {
             id: id,
         };
 
-        if (!this.#manifestData) {
+        if (!this.#manifestData.data.activityDefinition) {
             return out;
         }
 
         let d = this.#manifestData.data.activityDefinition[id];
 
-        d.image = createResourceUrl(d.image);
+        if (!d) {
+            return out;
+        }
 
-        return (!d) ? out : d;
+        Object.assign(out, d);
+        out.image = createResourceUrl(d.image);
+
+        return out;
     }
 
     getTrialsPassageDefinition(id) {
@@ -80,12 +81,14 @@ class Manifest {
             id: id,
         }
 
-        if (!this.#manifestData) {
+        if (!this.#manifestData.data.trialsPassageItemDefinitions) {
             return out;
         }
 
         let d = this.#manifestData.data.trialsPassageItemDefinitions[id];
-        d.icon = createResourceUrl(d.icon);
+
+        Object.assign(out, d);
+        out.icon = createResourceUrl(d.icon);
 
         return (!d) ? out : d;
     }
@@ -94,15 +97,7 @@ class Manifest {
         return this.#trialsPassageIds;
     }
 
-
-    /*
-                    name: d.displayProperties.name,
-                icon: d.displayProperties.icon,
-                secondaryIcon: d.secondaryIcon,
-                secondaryOverlay: d.secondaryOverlay,
-                secondarySpecial: d.secondarySpecial,
-    */
-    getEmblem(id) {
+    getEmblemDefinition(id) {
 
         let out = {
             id: id,
@@ -113,18 +108,17 @@ class Manifest {
             secondarySpecial: undefined,
         };
 
-        let e;
-        try {
-            e = this.#manifestData.data.emblemDefinitions[id];
-        } catch (err) {
-            console.log(err);
+        if (!this.#manifestData.data.emblemDefinitions) {
+            return out;
         }
+
+        let e = this.#manifestData.data.emblemDefinitions[id]
 
         if (!e) {
             return out;
         }
 
-        out.name = e.name;
+        Object.assign(out, e);
         out.icon = createResourceUrl(e.icon);
         out.secondaryIcon = createResourceUrl(e.secondaryIcon);
         out.secondaryOverlay = createResourceUrl(e.secondaryOverlay);
@@ -133,17 +127,22 @@ class Manifest {
         return out;
     }
 
-    getModeInfo(referenceId) {
+    getModeInfo(id) {
         let out = {
             name: "Unknown",
             description: undefined,
             icon: undefined,
             image: undefined,
+            id: id,
         }
 
-        let a = this.getActivityDefinition(referenceId);
+        let a = this.getActivityDefinition(id);
         if (!a) {
-            console.log(`Manifest.getModeInfo : Could not find activity definition [${referenceId}]`);
+            console.log(`Manifest.getModeInfo : Could not find activity definition [${id}]`);
+            return out;
+        }
+
+        if (!this.#manifestData.data.activityModeDefinitions) {
             return out;
         }
 
@@ -153,11 +152,34 @@ class Manifest {
             return out;
         }
 
-        out.name = m.name;
-        out.description = a.description;
+        Object.assign(out, m);
         out.icon = createResourceUrl(m.icon);
         out.image = createResourceUrl(m.image);
-        out.id = referenceId;
+
+        return out;
+    }
+
+    getMedalDefinition(id) {
+        let out = {
+            name: "Unknown",
+            description: undefined,
+            icon: undefined,
+            isGold: false,
+            id: id,
+        };
+
+        if (!this.#manifestData.data.medalDefinitions) {
+            return out;
+        }
+
+        let m = this.#manifestData.data.medalDefinitions[id];
+
+        if (!m) {
+            return out;
+        }
+
+        Object.assign(out, m);
+        out.icon = createResourceUrl(m.icon);
 
         return out;
     }
