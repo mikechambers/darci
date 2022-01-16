@@ -11,7 +11,8 @@ export default class Player {
 
     constructor(data, manifest) {
 
-        let p = parsePlayer(data);
+        let p = parsePlayer(data, manifest);
+
         this.memberId = p.memberId;
         this.bungieDisplayName = p.bungieDisplayName;
         this.bungieDisplayNameCode = p.bungieDisplayNameCode;

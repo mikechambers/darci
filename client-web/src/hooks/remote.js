@@ -189,6 +189,9 @@ export const useFetchPlayerActivities = (refresh, memberId, mode = Mode.ALL_PVP,
 
 export const useFetchPlayers = () => {
 
+    const { global, dispatchGlobal } = useContext(GlobalContext);
+    const manifest = global.manifest;
+
     //return is [players, isLoading, error]
     const [output, setOutput] = useState(
         { players: [], error: undefined, isLoading: true }
@@ -204,7 +207,7 @@ export const useFetchPlayers = () => {
 
                 let players = [];
                 for (const p of data.players) {
-                    players.push(new Player(p));
+                    players.push(new Player(p, manifest));
                 }
 
                 s = reducer(s, "players", players);

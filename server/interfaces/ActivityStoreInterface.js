@@ -286,6 +286,7 @@ class ActivityStoreInterface {
 
             if (!t) {
                 console.log(`Invalid team id [${t}]. Skipping`);
+                continue;
             }
 
             t.players.push({
@@ -297,6 +298,34 @@ class ActivityStoreInterface {
         let teams = mapElementsToArray(teamsMap);
 
         return { activity: activity, teams: teams };
+    }
+
+    parseCharacter(data) {
+
+        let emblem = {
+            id: data.emblem_hash,
+        };
+
+        let character = {
+            characterId: data.characterId,
+            classType: data.classType,
+            lightLevel: data.light,
+            emblem: emblem,
+        };
+
+        return character;
+    }
+
+    parsePlayer(data) {
+        return {
+            memberId: data.member_id,
+            bungieDisplayName: data.bungie_display_name,
+            bungieDisplayNameCode: data.bungie_display_name_code,
+            displayName: data.display_name,
+            platformId: data.platform_id,
+
+            character: this.parseCharacter(data),
+        };
     }
 
     parseCrucibleStats(activityRow) {

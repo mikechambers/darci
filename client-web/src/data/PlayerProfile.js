@@ -132,7 +132,7 @@ class PlayerProfile {
 
             this.#characters.push(out);
 
-            if (!lastActiveCharacter || out.dateLastPlayed.getTime() > lastActiveCharacter.dateLastPlayed.getTime()) {
+            if (!lastActiveCharacter || out.character.dateLastPlayed.getTime() > lastActiveCharacter.character.dateLastPlayed.getTime()) {
                 lastActiveCharacter = out;
             }
 

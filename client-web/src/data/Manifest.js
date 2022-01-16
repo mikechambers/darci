@@ -71,6 +71,7 @@ class Manifest {
                 secondarySpecial: d.secondarySpecial,
     */
     getEmblem(id) {
+
         let out = {
             id: id,
             name: "Unknown",
@@ -80,7 +81,12 @@ class Manifest {
             secondarySpecial: undefined,
         };
 
-        let e = this.#manifestData.emblemDefinitions[id];
+        let e;
+        try {
+            e = this.#manifestData.data.emblemDefinitions[id];
+        } catch (err) {
+            console.log(err);
+        }
 
         if (!e) {
             return out;

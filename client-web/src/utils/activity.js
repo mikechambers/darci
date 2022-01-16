@@ -25,15 +25,18 @@ export const parseCharacter = (data, manifest) => {
 }
 
 export const parsePlayer = (data, manifest) => {
-    return {
-        memberId: data.member_id,
-        bungieDisplayName: data.bungie_display_name,
-        bungieDisplayNameCode: data.bungie_display_name_code,
-        displayName: data.display_name,
-        platformId: data.platform_id,
 
-        character: this.parseCharacter(data, manifest),
+    let out = {
+        memberId: data.memberId,
+        bungieDisplayName: data.bungie_displayName,
+        bungieDisplayNameCode: data.bungie_displayNameCode,
+        displayName: data.displayName,
+        platformId: data.platformId,
+
+        character: parseCharacter(data, manifest),
     };
+
+    return out;
 }
 
 //note this modifies the passed in reference (to save memory / cpu)
