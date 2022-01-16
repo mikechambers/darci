@@ -1,7 +1,7 @@
 const SERVER_PORT = 3001;
 const SERVER_HOSTNAME = "127.0.0.1";
 const MANIFEST_CHECK_INTERVAL_MS = 1000 * 60 * 60; //check once an hour
-const MAX_ACTIVITIES_PAGE_LIMIT = 100;
+const MAX_ACTIVITIES_PAGE_LIMIT = 50;
 
 const PLAYER_START_BUFFER = 30;//seconds
 const DB_SCHEMA_VERSION = 9;

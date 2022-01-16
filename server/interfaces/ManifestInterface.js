@@ -18,6 +18,7 @@ class ManifestInterface {
     #select_trials_inventory_item_definitions;
     #select_activity_mode_definitions;
     #select_emblem_definitions;
+    #select_medal_record_definition;
 
     #manifestDbPath;
     #manifestInfoPath;
@@ -123,19 +124,27 @@ class ManifestInterface {
         DestinyActivityModeDefinition
         WHERE
             json like '%"activityModeCategory":2%'
-    `);
+    `   );
 
         this.#select_emblem_definitions = this.#db.prepare(`
-    SELECT
-        *
-    FROM
-    DestinyInventoryItemDefinition
-    WHERE
-        json like '%"itemType":14,%'`
+        SELECT
+            *
+        FROM
+            DestinyInventoryItemDefinition
+        WHERE
+            json like '%"itemType":14,%'`
         );
 
 
-        //"itemTypeDisplayName": "Emblem",
+        this.#select_medal_record_definition = this.#db.prepare(`
+        SELECT
+        *
+        FROM
+        DestinyRecordDefinition
+        WHERE
+        
+        json like @medalNameSearch
+            `);
     }
 
     async #getSystemManifestVersion() {
@@ -221,9 +230,24 @@ class ManifestInterface {
                 continue;
             }
 
+            //IB Medals dont have a description, so we have
+            //to get it from their record definition searching by name.
+            let search = `%"name":"${d.statName}"%`
+            const record = this.#select_medal_record_definition.get({ medalNameSearch: search });
+
+            let description = d.statDescription;
+            if (record) {
+                let r = JSON.parse(record.json);
+
+                if (r.displayProperties) {
+                    description = r.displayProperties.description;
+                }
+
+            }
+
             let out = {
                 name: d.statName,
-                description: d.statDescription,
+                description: description,
                 icon: d.iconImage,
                 isGold: false,
                 id: key,
