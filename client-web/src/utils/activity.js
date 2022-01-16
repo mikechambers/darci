@@ -3,7 +3,7 @@ const { CompletionReason, Standing, CharacterClass } = require("shared");
 const {
     calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("shared");
 
-export const parseCharacter = (data, manifest) => {
+export const parseCharacterFromServer = (data, manifest) => {
 
     let emblem = {
         id: data.emblemHash,
@@ -23,11 +23,11 @@ export const parseCharacter = (data, manifest) => {
     return character;
 }
 
-export const parsePlayer = (data, manifest) => {
+export const parsePlayerFromServer = (data, manifest) => {
 
     let chars = [];
     for (const c of data.characters) {
-        chars.push(parseCharacter(c, manifest));
+        chars.push(parseCharacterFromServer(c, manifest));
     }
 
     let out = {

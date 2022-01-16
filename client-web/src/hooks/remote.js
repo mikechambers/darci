@@ -247,6 +247,7 @@ export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
                 s = reducer(s, "profile", profile);
 
             } catch (err) {
+                console.log("err", err);
                 s = reducer(s, "error", err);
             }
 

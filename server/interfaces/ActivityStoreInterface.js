@@ -433,16 +433,16 @@ class ActivityStoreInterface {
             if (activity.stats.extended.meleeKills > out.highestMeleeKills) { out.highestMeleeKills = activity.stats.extended.meleeKills };
             if (activity.stats.extended.superKills > out.highestSuperKills) { out.highestSuperKills = activity.stats.extended.superKills };
 
-            out.grenadeKills = activity.stats.extended.grenadeKills;
-            out.superKills = activity.stats.extended.superKills;
-            out.meleeKills = activity.stats.extended.meleeKills;
+            out.grenadeKills += activity.stats.extended.grenadeKills;
+            out.superKills += activity.stats.extended.superKills;
+            out.meleeKills += activity.stats.extended.meleeKills;
 
             out.assists += activity.stats.assists;
             out.kills += activity.stats.kills;
             out.deaths += activity.stats.deaths;
             //out.opponentsDefeated += activity.stats.opponentsDefeated;
 
-            out.timePlayedSeconds = activity.stats.timePlayedSeconds;
+            out.timePlayedSeconds += activity.stats.timePlayedSeconds;
 
             let mode = Mode.fromId(activity.mode);
             let standing = Standing.fromIdAndMode(activity.stats.standing, mode);

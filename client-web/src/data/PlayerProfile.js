@@ -1,5 +1,5 @@
 import { CharacterClass } from "shared";
-import { parseCharacter } from "../utils/activity";
+import { parseCharacterFromServer } from "../utils/activity";
 
 const GLORY_PROGRESSION_ID = "1647151960";
 
@@ -20,6 +20,21 @@ const TRIALS_WINS_ID = 1586211619;
 const TRIALS_LOSSES_ID = 2369244651;
 const TRIALS_ROUNDS_WON_ID = 984122744;
 const TRIALS_FLAWLESS_ID = 2211480687;
+
+const parseCharacterFromProfile = (data, manifest) => {
+
+    let emblem = manifest.getEmblem(data.emblemHash)
+
+    let character = {
+        characterId: data.characterId,
+        classType: CharacterClass.fromId(data.classType),
+        lightLevel: data.lightLevel,
+        dateLastPlayed: new Date(Date.parse(data.dateLastPlayed)),
+        emblem: emblem,
+    };
+
+    return character;
+}
 
 class PlayerProfile {
 
@@ -113,10 +128,7 @@ class PlayerProfile {
 
             let char = data.characters.data[cId];
 
-
-
-            let character = parseCharacter(char, manifest);
-            character.dateLastPlayed = new Date(Date.parse(char.dateLastPlayed));
+            let character = parseCharacterFromProfile(char, manifest);
 
             let out = {
                 character: character,
@@ -132,8 +144,6 @@ class PlayerProfile {
             if (!lastActiveCharacterProfile || out.character.dateLastPlayed.getTime() > lastActiveCharacterProfile.character.dateLastPlayed.getTime()) {
                 lastActiveCharacterProfile = out;
             }
-
-
         }
 
         this.#lastActiveCharacterProfile = lastActiveCharacterProfile;

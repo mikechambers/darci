@@ -1,4 +1,4 @@
-import { parsePlayer } from "../utils/activity";
+import { parsePlayerFromServer } from "../utils/activity";
 
 export default class Player {
 
@@ -11,7 +11,7 @@ export default class Player {
 
     constructor(data, manifest) {
 
-        let p = parsePlayer(data, manifest);
+        let p = parsePlayerFromServer(data, manifest);
 
         this.memberId = p.memberId;
         this.bungieDisplayName = p.bungieDisplayName;
