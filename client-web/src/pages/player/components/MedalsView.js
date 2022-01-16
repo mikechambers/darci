@@ -19,6 +19,10 @@ const MedalsView = (props) => {
         return -1;
     });
 
+    if (medals.length > maxCount) {
+        medals = medals.slice(0, maxCount);
+    }
+
     return (
         <table>
             <thead>
@@ -33,9 +37,6 @@ const MedalsView = (props) => {
             </thead>
             <tbody>
                 {medals.map((m, index) => {
-                    if (index >= maxCount) {
-                        return;
-                    }
 
                     return (<tr key={m.id}>
                         <td><img height="40" src={m.info.icon} /></td>

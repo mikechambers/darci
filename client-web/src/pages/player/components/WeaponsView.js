@@ -9,10 +9,15 @@ const WeaponsView = (props) => {
         return b.kills - a.kills;
     });
 
+    if (weapons.length > maxCount) {
+        weapons = weapons.slice(0, maxCount);
+    }
+
     return (
         <table>
             <thead>
                 <tr>
+                    <th></th>
                     <th>WEAPON</th>
                     <th>TYPE</th>
                     <th>GAMES</th>
@@ -23,11 +28,10 @@ const WeaponsView = (props) => {
             </thead>
             <tbody>
                 {weapons.map((w, index) => {
-                    if (index >= maxCount) {
-                        return;
-                    }
-
                     return (<tr key={w.id}>
+                        <td><div
+                            style={{ width: 40, height: 40, borderRadius: "50%", border: "solid black 2px", backgroundSize: "cover", backgroundImage: `url(${w.item.icon})`, backgroundSize: "cover" }}>
+                        </div></td>
                         <td>{w.item.name}</td>
                         <td>{w.item.itemSubType.toString()}</td>
                         <td>{w.activityCount}</td>
