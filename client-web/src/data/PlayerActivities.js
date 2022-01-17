@@ -14,6 +14,7 @@ class PlayerActivities {
     #manifest;
     #player;
     constructor(data, manifest) {
+
         this.#activities = data.activities;
         this.#summary = data.summary;
         //this.#player = new Player(data.player);
@@ -29,6 +30,7 @@ class PlayerActivities {
     }
 
     #update() {
+
 
         for (const a of this.#activities) {
 
@@ -60,10 +62,9 @@ class PlayerActivities {
             kills, deaths, assists,
         );
 
+
         this.#summary.weapons = parseWeaponsFromServer(this.#summary.weapons, this.#manifest);
         this.#summary.medals = parseMedalsFromServer(this.#summary.medals, this.#manifest);
-
-        console.log(this.#summary);
     }
 
     get totalActivities() {
