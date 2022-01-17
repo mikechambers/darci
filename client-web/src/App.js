@@ -4,9 +4,20 @@ import { Link } from "react-router-dom";
 import { useFetchManifest } from './hooks/remote';
 
 import { GlobalContext, useGlobalContext, GlobalAction } from './contexts/GlobalContext';
-
+const { useQuery } = require("./hooks/browser");
 
 const App = (props) => {
+
+  let query = useQuery();
+
+  let clearStorage = query.get("clearstorage");
+  useEffect(() => {
+    if (clearStorage === "true") {
+      console.log("clear");
+      window.localStorage.clear();
+    }
+  }, [clearStorage]);
+
   const [global, dispatchGlobal] = useGlobalContext();
   const manifest = global.manifest;
 

@@ -480,16 +480,27 @@ class ActivityStoreInterface {
             for (const weapon of activity.stats.extended.weapons) {
                 let item = weaponMap.get(weapon.id);
 
+                const k = activity.stats.kills;
+                const d = activity.stats.deaths;
+                const a = activity.stats.assists;
                 if (!item) {
                     item = {
                         ...weapon,
                         activityCount: 1,
+                        totalGameKills: k,
+                        totalGameDeaths: d,
+                        totalGameAssists: a,
                     };
                 } else {
                     item.activityCount++;
                     item.kills += weapon.kills;
                     item.precisionKills += weapon.precisionKills;
+
+                    item.totalGameKills += k;
+                    item.totalGameDeaths += d;
+                    item.totalGameAssists += a;
                 }
+
                 weaponMap.set(weapon.id, item);
             }
         }

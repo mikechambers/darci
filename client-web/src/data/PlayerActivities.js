@@ -7,7 +7,6 @@ const { calculateStats, parseWeapons } = require("../utils/activity");
 const {
     calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("shared");
 
-
 class PlayerActivities {
 
     #activities = [];

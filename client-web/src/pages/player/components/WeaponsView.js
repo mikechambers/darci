@@ -1,3 +1,4 @@
+import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 import { calculatePercent, calculateAverage } from "../../../utils/index";
 
 const WeaponsView = (props) => {
@@ -23,7 +24,10 @@ const WeaponsView = (props) => {
                     <th>GAMES</th>
                     <th>KILLS</th>
                     <th>KILLS / GAME</th>
+
                     <th>PRECISION</th>
+                    <th>K/D</th>
+                    <th>EFF</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,6 +42,8 @@ const WeaponsView = (props) => {
                         <td>{w.kills}</td>
                         <td>{calculateAverage(w.kills, w.activityCount).toFixed(2)}</td>
                         <td>{calculatePercent(w.precisionKills, w.kills).toFixed(2)}%</td>
+                        <td>{calculateKillsDeathsRatio(w.totalGameKills, w.totalGameDeaths).toFixed(2)}</td>
+                        <td>{calculateEfficiency(w.totalGameKills, w.totalGameAssists, w.totalGameDeaths).toFixed(2)}</td>
                     </tr>);
                 })}
             </tbody>

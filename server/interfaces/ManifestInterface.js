@@ -143,8 +143,6 @@ class ManifestInterface {
             DestinyRecordDefinition
         WHERE
             json like @medalNameSearch
-        AND
-            json like '%1525346030%'
             `);
     }
 
@@ -238,10 +236,49 @@ class ManifestInterface {
 
             let description = d.statDescription;
             if (record) {
-                let r = JSON.parse(record.json);
 
-                if (r.displayProperties) {
-                    description = r.displayProperties.description;
+                //There are a couple of medals which have the same name as other
+                //records, and there is no way to differentiate between the two.
+                //So we have to hard code the descriptions for those.
+                switch (d.statName) {
+                    case "Lights Out": {
+                        description = "Rapidly defeat 4 opposing Guardians.";
+                        break;
+                    }
+                    case "Not on My Watch": {
+                        description = "Land a final blow on an opponent who has damaged an ally.";
+                        break;
+                    }
+                    case "From the Jaws of Defeat": {
+                        description = "Win a match after having trailed by a significant margin.";
+                        break;
+                    }
+                    case "Thunderstruck": {
+                        description = "efeat an opponent with Landfall while casting Stormtrance.";
+                        break;
+                    }
+                    case "Regent": {
+                        description = "Defeat two opponents with a sword without switching weapons.";
+                        break;
+                    }
+                    case "Pyrotechnics": {
+                        description = "Countdown: Set a charge that successfully detonates.";
+                        break;
+                    }
+                    case "Usurper": {
+                        description = "Shut down an opponent's streak of 20 or more.";
+                        break;
+                    }
+                    case "From the Front": {
+                        description = "Win an Iron Banner match in which your team never trailed.";
+                        break;
+                    }
+                    default: {
+                        let r = JSON.parse(record.json);
+                        if (r.displayProperties) {
+                            description = r.displayProperties.description;
+                        }
+                    }
                 }
 
             }

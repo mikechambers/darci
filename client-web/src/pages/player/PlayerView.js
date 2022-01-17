@@ -8,7 +8,7 @@ import PlayerHeader from "./components/PlayerHeader";
 import { useFetchPlayerActivities, useFetchPlayerProfile } from "../../hooks/remote";
 import { Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
-
+const { useQuery } = require("../../hooks/browser");
 
 const PlayerView = () => {
 
@@ -20,6 +20,11 @@ const PlayerView = () => {
     let [profile, isProfileLoading, profileLoadError] = useFetchPlayerProfile(true, params.memberId, params.platformId);
 
     let [activityStats, isActivitiesLoading, activitiesLoadError] = useFetchPlayerActivities(true, params.memberId, mode, moment);
+
+    let query = useQuery();
+    let weaponCount = (query.get("weaponcount")) ? query.get("weaponcount") : 5;
+    let medalCount = (query.get("medalcount")) ? query.get("medalcount") : 5;
+
 
     /*
     if (profileLoadError) {
@@ -46,8 +51,8 @@ const PlayerView = () => {
             <h2>Player</h2>
             <PlayerHeader />
             <PlayerExperience />
-            <WeaponsView weapons={weapons} maxCount={5} />
-            <MedalsView medals={medals} maxCount={5} />
+            <WeaponsView weapons={weapons} maxCount={weaponCount} />
+            <MedalsView medals={medals} maxCount={medalCount} />
             <ActivitySummary summary={summary} isLoading={isActivitiesLoading} />
             <ActivityList activityStats={activityStats} isLoading={isActivitiesLoading} />
             <ErrorView error={[activitiesLoadError, profileLoadError]} />
