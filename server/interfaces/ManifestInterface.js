@@ -140,10 +140,11 @@ class ManifestInterface {
         SELECT
         *
         FROM
-        DestinyRecordDefinition
+            DestinyRecordDefinition
         WHERE
-        
-        json like @medalNameSearch
+            json like @medalNameSearch
+        AND
+            json like '%1525346030%'
             `);
     }
 
