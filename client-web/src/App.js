@@ -10,10 +10,10 @@ const App = (props) => {
 
   let query = useQuery();
 
-  let clearStorage = query.get("clearstorage");
+  let clearStorage = (query.get("clearstorage") !== undefined);
   useEffect(() => {
-    if (clearStorage === "true") {
-      console.log("clear");
+    if (clearStorage === true) {
+      console.log("Clearing local storage.");
       window.localStorage.clear();
     }
   }, [clearStorage]);
