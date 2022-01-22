@@ -72,10 +72,12 @@ table th {
   );
   background: -moz-linear-gradient(top, #ededed, #ebebeb);
 }
+
 table th:first-child {
   text-align: left;
   padding-left: 20px;
 }
+
 table tr:first-child th:first-child {
   -moz-border-radius-topleft: 3px;
   -webkit-border-top-left-radius: 3px;
@@ -87,9 +89,17 @@ table tr:first-child th:last-child {
   border-top-right-radius: 3px;
 }
 table tr {
-  text-align: center;
+  text-align: right;
   padding-left: 20px;
 }
+
+table td.left {
+  text-align: left;
+}
+table th.left {
+  text-align: left;
+}
+
 table td:first-child {
   text-align: left;
   padding-left: 20px;

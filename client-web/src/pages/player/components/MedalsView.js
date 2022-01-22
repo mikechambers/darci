@@ -28,10 +28,10 @@ const MedalsView = (props) => {
             <thead>
                 <tr>
                     <th></th>
-                    <th>MEDAL</th>
+                    <th class="left">MEDAL</th>
                     <th></th>
                     <th>COUNT</th>
-                    <th>DESCRIPTION</th>
+                    <th class="left">DESCRIPTION</th>
 
                 </tr>
             </thead>
@@ -40,10 +40,10 @@ const MedalsView = (props) => {
 
                     return (<tr key={m.id}>
                         <td><img height="25" width="25" alt={m.info.description} src={m.info.icon} /></td>
-                        <td>{m.info.name}</td>
+                        <td class="left">{m.info.name}</td>
                         <td>{(m.info.isGold) ? "GOLD" : ""}</td>
                         <td>{m.count}</td>
-                        <td>{m.info.description}</td>
+                        <td class="left">{m.info.description}</td>
                     </tr>);
                 })}
             </tbody>

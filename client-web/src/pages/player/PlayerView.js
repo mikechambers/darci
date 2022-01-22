@@ -51,7 +51,7 @@ const PlayerView = () => {
             <h2>Player</h2>
             <PlayerHeader />
             <PlayerExperience />
-            <div style={{ display: "flex", alignItems: "baseline", justifyContent: "start",
+            <div style={{ display: "flex", alignItems: "start", justifyContent: "start",
 
             }}>
             <WeaponsView weapons={weapons} maxCount={weaponCount} />

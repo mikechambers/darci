@@ -19,8 +19,8 @@ const WeaponsView = (props) => {
             <thead>
                 <tr>
                     <th></th>
-                    <th>WEAPON</th>
-                    <th>TYPE</th>
+                    <th class="left">WEAPON</th>
+                    <th class="left">TYPE</th>
                     <th>GAMES</th>
                     <th>KILLS</th>
                     <th>KILLS / GAME</th>
@@ -36,8 +36,8 @@ const WeaponsView = (props) => {
                         <td><div
                             style={{ width: 25, height: 25, borderRadius: "50%", border: "solid black 2px", backgroundSize: "cover", backgroundImage: `url(${w.item.icon})`}}>
                         </div></td>
-                        <td>{w.item.name}</td>
-                        <td>{w.item.itemSubType.toString()}</td>
+                        <td class="left">{w.item.name}</td>
+                        <td class="left">{w.item.itemSubType.toString()}</td>
                         <td>{w.activityCount}</td>
                         <td>{w.kills}</td>
                         <td>{calculateAverage(w.kills, w.activityCount).toFixed(2)}</td>
