@@ -34,7 +34,7 @@ const WeaponsView = (props) => {
                 {weapons.map((w, index) => {
                     return (<tr key={w.id}>
                         <td><div
-                            style={{ width: 40, height: 40, borderRadius: "50%", border: "solid black 2px", backgroundSize: "cover", backgroundImage: `url(${w.item.icon})`, backgroundSize: "cover" }}>
+                            style={{ width: 25, height: 25, borderRadius: "50%", border: "solid black 2px", backgroundSize: "cover", backgroundImage: `url(${w.item.icon})`}}>
                         </div></td>
                         <td>{w.item.name}</td>
                         <td>{w.item.itemSubType.toString()}</td>

@@ -55,11 +55,11 @@ export default class Activity {
 
                 //if memberId is not specified, and the completion reason is known
                 //return the completion reason
-                if (!memberId && player.stats.completionReason != CompletionReason.UNKNOWN) {
+                if (!memberId && player.stats.completionReason !== CompletionReason.UNKNOWN) {
                     return player.stats.completionReason;
                 }
 
-                if (player.player.memberId == memberId) {
+                if (player.player.memberId === memberId) {
                     return player.stats.standing;
                 }
             }
@@ -74,7 +74,7 @@ export default class Activity {
 
         for (const team of teams) {
             for (const player of team.players) {
-                if (player.player.memberId == memberId) {
+                if (player.player.memberId === memberId) {
                     return player.stats.standing;
                 }
             }

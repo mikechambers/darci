@@ -47,16 +47,20 @@ const PlayerView = () => {
     }
 
     return (
-        <main style={{ padding: "1rem 0" }}>
+        <div style={{ padding: "1rem 0" }}>
             <h2>Player</h2>
             <PlayerHeader />
             <PlayerExperience />
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "start",
+
+            }}>
             <WeaponsView weapons={weapons} maxCount={weaponCount} />
             <MedalsView medals={medals} maxCount={medalCount} />
+            </div>
             <ActivitySummary summary={summary} isLoading={isActivitiesLoading} />
             <ActivityList activityStats={activityStats} isLoading={isActivitiesLoading} />
             <ErrorView error={[activitiesLoadError, profileLoadError]} />
-        </main>
+        </div>
     );
 
 };

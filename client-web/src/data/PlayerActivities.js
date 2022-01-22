@@ -2,7 +2,7 @@ import Manifest from "./Manifest";
 
 const { Mode } = require("shared");
 const { parsePlayerFromServer, parseMedalsFromServer, parseWeaponsFromServer } = require("../utils/data");
-const { calculateStats, parseWeapons } = require("../utils/activity");
+const { calculateStats } = require("../utils/activity");
 
 const {
     calculateEfficiency, calculateKillsDeathsRatio, calculateKillsDeathsAssists } = require("shared");

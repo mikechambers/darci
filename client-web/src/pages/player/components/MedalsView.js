@@ -39,7 +39,7 @@ const MedalsView = (props) => {
                 {medals.map((m, index) => {
 
                     return (<tr key={m.id}>
-                        <td><img height="40" src={m.info.icon} /></td>
+                        <td><img height="25" width="25" alt={m.info.description} src={m.info.icon} /></td>
                         <td>{m.info.name}</td>
                         <td>{(m.info.isGold) ? "GOLD" : ""}</td>
                         <td>{m.count}</td>

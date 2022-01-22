@@ -14,7 +14,7 @@ const ActivityList = (props) => {
     //todo: need to test when an error is thrown
 
     return (
-        <table>
+        <table style={{width:1000}}>
             <thead>
                 <tr>
                     <th>MAP</th>

@@ -51,6 +51,8 @@ export const useFetchManifest = () => {
                 let e = new Error("Error parsing locally stored manifest JSON.", { cause: err });
                 let s = reducer(output, "error", e);
                 s = reducer(s, "isLoading", false);
+                console.log(e);
+                setOutput(s);
                 return;
             }
         }

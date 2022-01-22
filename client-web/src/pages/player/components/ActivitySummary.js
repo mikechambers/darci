@@ -10,7 +10,7 @@ const ActivitySummary = (props) => {
     let summary = props.summary;
 
     return (
-        <table>
+        <table style={{width:1000}}>
             <thead>
                 <tr>
                     <th></th>
