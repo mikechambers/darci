@@ -5,7 +5,7 @@ const EnumBase = require('./EnumBase');
 //todo: this doesnt really handle draws correctly right now
 class Standing extends EnumBase {
     static VICTORY = new Standing("Victory", 0);
-    static DEFEAT = new Standing("Deafeat", 1);
+    static DEFEAT = new Standing("Defeat", 1);
     static UNKNOWN = new Standing("Unknown", 2325);
 
     constructor(type, id, label = undefined) {
