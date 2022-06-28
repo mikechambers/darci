@@ -32,8 +32,9 @@ It is built around three main parts:
   - install nodejs
 - DARCI SERVER
   - Create DCLI_DB_PATH, MANIFEST_DB_PATH, MANIFEST_INFO_PATH that point to the appropriate files.
+  - `npm install nodemon --global`
   - `server/$ npm install`
-  - `server/$ npm start`
+  - `server/$ nodemon server.js`
 - DARCI CLIENT-WEB
   - create `.env.local` file in `src/client-web` folder
   - add `REACT_APP_DESTINY_API_KEY=YOUR_BUNGIE_API_KEY_HERE`
