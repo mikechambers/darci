@@ -7,20 +7,24 @@ const Standing = require("./packages/enums/Standing");
 const CompletionReason = require("./packages/enums/CompletionReason");
 const ItemSubType = require("./packages/enums/ItemSubType");
 
-const { calculateEfficiency,
-    calculateKillsDeathsRatio,
-    calculateKillsDeathsAssists } = require('./packages/utils');
+const {
+  calculateEfficiency,
+  calculateKillsDeathsRatio,
+  calculateKillsDeathsAssists,
+  calculateRatio,
+} = require("./packages/utils");
 
 module.exports = {
-    EnumBase: EnumBase,
-    Mode: Mode,
-    Moment: Moment,
-    CharacterClass: CharacterClass,
-    CharacterClassSelection: CharacterClassSelection,
-    Standing: Standing,
-    CompletionReason: CompletionReason,
-    calculateEfficiency,
-    calculateKillsDeathsRatio,
-    calculateKillsDeathsAssists,
-    ItemSubType: ItemSubType,
+  EnumBase: EnumBase,
+  Mode: Mode,
+  Moment: Moment,
+  CharacterClass: CharacterClass,
+  CharacterClassSelection: CharacterClassSelection,
+  Standing: Standing,
+  CompletionReason: CompletionReason,
+  calculateEfficiency,
+  calculateKillsDeathsRatio,
+  calculateKillsDeathsAssists,
+  calculateRatio,
+  ItemSubType: ItemSubType,
 };

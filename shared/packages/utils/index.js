@@ -1,18 +1,23 @@
 const calculateKillsDeathsRatio = function (kills, deaths) {
-    return (deaths !== 0) ? kills / deaths : kills;
-}
+  return calculateRatio(kills, deaths);
+};
 
 const calculateKillsDeathsAssists = function (kills, deaths, assists) {
-    let t = kills + (assists / 2);
-    return (deaths !== 0) ? t / deaths : t;
-}
+  let t = kills + assists / 2;
+  return deaths !== 0 ? t / deaths : t;
+};
 
 const calculateEfficiency = function (kills, deaths, assists) {
-    return (deaths !== 0) ? (kills + assists) / deaths : 0;
-}
+  return deaths !== 0 ? (kills + assists) / deaths : 0;
+};
+
+const calculateRatio = function (n, d) {
+  return d !== 0 ? n / d : n;
+};
 
 module.exports = {
-    calculateEfficiency,
-    calculateKillsDeathsRatio,
-    calculateKillsDeathsAssists
+  calculateEfficiency,
+  calculateKillsDeathsRatio,
+  calculateKillsDeathsAssists,
+  calculateRatio,
 };
