@@ -12,14 +12,6 @@ const MetaView = (props) => {
     meta = meta.slice(0, maxCount);
   }
 
-  //todo: kills per usage
-  //get rid of precision?
-  //change count to players
-  //remove kd / eff from weapons (and remove from server)
-  //change medals to only show gold medals
-  //move summary to top
-  //make design clean
-
   return (
     <table>
       <thead>
