@@ -33,7 +33,7 @@ const MedalsView = (props) => {
         <tr>
           <th></th>
           <th class="left">MEDAL</th>
-          <th></th>
+
           <th>COUNT</th>
           <th class="left">DESCRIPTION</th>
         </tr>
@@ -51,7 +51,7 @@ const MedalsView = (props) => {
                 />
               </td>
               <td class="left">{m.info.name}</td>
-              <td>{m.info.isGold ? "GOLD" : ""}</td>
+
               <td>{m.count}</td>
               <td class="left">{m.info.description}</td>
             </tr>
