@@ -12,6 +12,7 @@ import {
 } from "../../hooks/remote";
 import { Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
+
 const { useQuery } = require("../../hooks/browser");
 
 const PlayerView = () => {

@@ -6,7 +6,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #fbfbfb;
-  background-color: #333333;
+  background-color: #111111;
 }
 
 code {
@@ -16,6 +16,15 @@ code {
 
 a {
   color: #fbfbfb;
+}
+
+table {
+  background-color: #333333;
+  margin: 1em;
+}
+
+td, th {
+  text-align: right;
 }
 
 .error {
