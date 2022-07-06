@@ -20,9 +20,12 @@ class PlayerActivities {
   #meta;
   #manifest;
   #player;
+  #query;
   constructor(data, manifest) {
     this.#activities = data.activities;
     this.#summary = data.summary;
+    this.#query = data.query;
+
     //this.#player = new Player(data.player);
     this.#player = parsePlayerFromServer(data.player, manifest);
 
@@ -100,6 +103,10 @@ class PlayerActivities {
 
   get meta() {
     return this.#meta;
+  }
+
+  get query() {
+    return this.#query;
   }
 }
 

@@ -25,7 +25,6 @@ const MetaView = (props) => {
   };
 
   const sort = (sortConfig) => {
-    console.log("sort", sortConfig);
     let direction = sortConfig.direction;
     let key = sortConfig.key;
 

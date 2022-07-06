@@ -56,19 +56,33 @@ const PlayerView = () => {
   let weapons;
   let medals;
   let meta;
+  let playerName = "";
+  let playerNameCode = "";
+  let modeDescription = "";
+  let momentDescription = "";
+  let charactersSelection = "";
 
   if (activityStats) {
     summary = activityStats.summary;
     weapons = summary.weapons;
     medals = summary.medals;
     meta = activityStats.meta;
+    playerName = activityStats.player.bungieDisplayName;
+    playerNameCode = `#${activityStats.player.bungieDisplayNameCode}`;
+    charactersSelection = activityStats.query.classSelection;
+    modeDescription = activityStats.query.mode;
+    momentDescription = `${activityStats.query.startMoment} (${activityStats.query.startDate})`;
   }
 
   return (
-    <div style={{ padding: "1rem 0" }}>
-      <h2>Player</h2>
-      <PlayerHeader />
-      <PlayerExperience />
+    <div>
+      <div class="player_view_header">
+        <span>{playerName}</span>
+        <span>{playerNameCode}</span> &nbsp;&gt;&nbsp;
+        <span>{charactersSelection}</span>&nbsp;&gt;&nbsp;
+        <span>{modeDescription}</span>&nbsp;&gt;&nbsp;
+        <span>{momentDescription}</span>
+      </div>
       <h2>SUMMARY</h2>
       <ActivitySummary summary={summary} isLoading={isActivitiesLoading} />
 
