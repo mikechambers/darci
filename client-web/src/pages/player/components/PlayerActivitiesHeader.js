@@ -1,8 +1,6 @@
 import { Mode, Moment } from "shared";
 
 const PlayerActivitiesHeader = (props) => {
-  console.log(props);
-
   let playerName = props.playerName;
   let playerNameCode = props.playerNameCode;
   let classSelection = props.classSelection;
