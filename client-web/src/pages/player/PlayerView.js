@@ -11,6 +11,8 @@ import {
 } from "../../hooks/remote";
 import { Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
+import HeadlineStat from "./components/HeadlineStat";
+import { calculatePercent } from "../../utils";
 
 const { useQuery } = require("../../hooks/browser");
 
@@ -51,42 +53,42 @@ const PlayerView = () => {
     );
   }
 
-  let summary;
-  let weapons;
-  let medals;
-  let meta;
-
-  let playerName = "";
-  let playerNameCode = "";
-  let classSelection = "";
-  let momentDate = "";
-
-  if (activityStats) {
-    summary = activityStats.summary;
-    weapons = summary.weapons;
-    medals = summary.medals;
-    meta = activityStats.meta;
-
-    mode = Mode.fromString(activityStats.query.mode);
-    moment = Moment.fromString(activityStats.query.startMoment);
-
-    playerName = activityStats.player.bungieDisplayName;
-    playerNameCode = activityStats.player.bungieDisplayNameCode;
-    classSelection = activityStats.query.classSelection;
-    momentDate = activityStats.query.startDate;
+  if (!activityStats) {
+    return "";
   }
+
+  let summary = activityStats.summary;
+  let weapons = summary.weapons;
+  let medals = summary.medals;
+  let meta = activityStats.meta;
+
+  mode = Mode.fromString(activityStats.query.mode);
+  moment = Moment.fromString(activityStats.query.startMoment);
 
   return (
     <div>
       <PlayerActivitiesHeader
-        playerName={playerName}
-        playerNameCode={playerNameCode}
-        classSelection={classSelection}
+        playerName={activityStats.player.bungieDisplayName}
+        playerNameCode={activityStats.player.bungieDisplayNameCode}
+        classSelection={activityStats.query.classSelection}
         modeName={mode.toString()}
         momentName={moment.toString()}
-        momentDate={momentDate}
+        momentDate={activityStats.query.startDate}
       />
       <h2>SUMMARY</h2>
+
+      <div className="headline_stat_container">
+        <HeadlineStat
+          label="win%"
+          value={`${calculatePercent(
+            summary.wins,
+            summary.activityCount
+          ).toFixed()}%`}
+        />
+        <HeadlineStat label="KD" value={summary.killsDeathsRatio.toFixed(2)} />
+        <HeadlineStat label="EFF" value={summary.efficiency.toFixed(2)} />
+      </div>
+
       <ActivitySummary summary={summary} isLoading={isActivitiesLoading} />
 
       <div

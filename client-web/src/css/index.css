@@ -38,3 +38,27 @@ td, th {
 .player_view_header {
   font-weight: 400;
 }
+
+/* instead of setting padding, we could set overall width for container
+and then distribute in flex box */
+.headline_stat_container {
+  display: flex;
+}
+
+.headline_stat {
+  text-align: right;
+  width: min-content;
+  padding-right: 100px;
+}
+
+.headline_stat_label {
+  font-weight: 400;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: #FFFFFF66;
+}
+
+.headline_stat_value {
+  font-weight: 500;
+  font-size: 64px;
+}
