@@ -32,10 +32,10 @@ const MedalsView = (props) => {
       <thead>
         <tr>
           <th></th>
-          <th class="left">MEDAL</th>
+          <th className="left">MEDAL</th>
 
           <th>COUNT</th>
-          <th class="left">DESCRIPTION</th>
+          <th className="left">DESCRIPTION</th>
         </tr>
       </thead>
       <tbody>
@@ -50,10 +50,10 @@ const MedalsView = (props) => {
                   src={m.info.icon}
                 />
               </td>
-              <td class="left">{m.info.name}</td>
+              <td className="left">{m.info.name}</td>
 
               <td>{m.count}</td>
-              <td class="left">{m.info.description}</td>
+              <td className="left">{m.info.description}</td>
             </tr>
           );
         })}

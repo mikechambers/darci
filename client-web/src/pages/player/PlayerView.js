@@ -1,11 +1,10 @@
 import { useParams } from "react-router-dom";
 import ActivityList from "./components/ActivityList";
 import ActivitySummary from "./components/ActivitySummary";
-import PlayerExperience from "./components/PlayerExperience";
 import WeaponsView from "./components/WeaponsView";
 import MetaView from "./components/MetaView";
 import MedalsView from "./components/MedalsView";
-import PlayerHeader from "./components/PlayerHeader";
+import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
 import {
   useFetchPlayerActivities,
   useFetchPlayerProfile,
@@ -56,33 +55,37 @@ const PlayerView = () => {
   let weapons;
   let medals;
   let meta;
+
   let playerName = "";
   let playerNameCode = "";
-  let modeDescription = "";
-  let momentDescription = "";
-  let charactersSelection = "";
+  let classSelection = "";
+  let momentDate = "";
 
   if (activityStats) {
     summary = activityStats.summary;
     weapons = summary.weapons;
     medals = summary.medals;
     meta = activityStats.meta;
+
+    mode = Mode.fromString(activityStats.query.mode);
+    moment = Moment.fromString(activityStats.query.startMoment);
+
     playerName = activityStats.player.bungieDisplayName;
-    playerNameCode = `#${activityStats.player.bungieDisplayNameCode}`;
-    charactersSelection = activityStats.query.classSelection;
-    modeDescription = activityStats.query.mode;
-    momentDescription = `${activityStats.query.startMoment} (${activityStats.query.startDate})`;
+    playerNameCode = activityStats.player.bungieDisplayNameCode;
+    classSelection = activityStats.query.classSelection;
+    momentDate = activityStats.query.startDate;
   }
 
   return (
     <div>
-      <div class="player_view_header">
-        <span>{playerName}</span>
-        <span>{playerNameCode}</span> &nbsp;&gt;&nbsp;
-        <span>{charactersSelection}</span>&nbsp;&gt;&nbsp;
-        <span>{modeDescription}</span>&nbsp;&gt;&nbsp;
-        <span>{momentDescription}</span>
-      </div>
+      <PlayerActivitiesHeader
+        playerName={playerName}
+        playerNameCode={playerNameCode}
+        classSelection={classSelection}
+        modeName={mode.toString()}
+        momentName={moment.toString()}
+        momentDate={momentDate}
+      />
       <h2>SUMMARY</h2>
       <ActivitySummary summary={summary} isLoading={isActivitiesLoading} />
 

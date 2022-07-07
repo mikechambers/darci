@@ -18,8 +18,8 @@ const WeaponsView = (props) => {
       <thead>
         <tr>
           <th></th>
-          <th class="left">WEAPON</th>
-          <th class="left">TYPE</th>
+          <th className="left">WEAPON</th>
+          <th className="left">TYPE</th>
           <th>GAMES</th>
           <th>KILLS</th>
           <th>KILLS / GAME</th>
@@ -42,8 +42,8 @@ const WeaponsView = (props) => {
                   }}
                 ></div>
               </td>
-              <td class="left">{w.item.name}</td>
-              <td class="left">{w.item.itemSubType.toString()}</td>
+              <td className="left">{w.item.name}</td>
+              <td className="left">{w.item.itemSubType.toString()}</td>
               <td>{w.activityCount}</td>
               <td>{w.kills}</td>
               <td>{calculateAverage(w.kills, w.activityCount).toFixed(2)}</td>

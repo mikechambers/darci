@@ -65,8 +65,8 @@ const MetaView = (props) => {
       <thead>
         <tr>
           <th></th>
-          <th class="left">WEAPON</th>
-          <th class="left">TYPE</th>
+          <th className="left">WEAPON</th>
+          <th className="left">TYPE</th>
           <th>
             <button type="button" onClick={() => requestSort(COUNT_SORT)}>
               PLAYERS
@@ -103,8 +103,8 @@ const MetaView = (props) => {
                   }}
                 ></div>
               </td>
-              <td class="left">{w.item.name}</td>
-              <td class="left">{w.item.itemSubType.toString()}</td>
+              <td className="left">{w.item.name}</td>
+              <td className="left">{w.item.itemSubType.toString()}</td>
               <td>{w.count}</td>
               <td>{w.kills}</td>
               <td>{calculateRatio(w.kills, w.count).toFixed(2)}</td>
