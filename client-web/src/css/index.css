@@ -45,10 +45,15 @@ and then distribute in flex box */
   display: flex;
 }
 
+#headline_stat > * {
+  padding: 0px;
+}
+
 .headline_stat {
   text-align: right;
   width: min-content;
   padding-right: 100px;
+  line-height: 1.0;
 }
 
 .headline_stat_label {
