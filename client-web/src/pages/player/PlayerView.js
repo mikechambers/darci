@@ -3,13 +3,12 @@ import ActivityList from "./components/ActivityList";
 import WeaponsView from "./components/WeaponsView";
 import MetaView from "./components/MetaView";
 import MedalsView from "./components/MedalsView";
-import Test from "./components/Test";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
 import {
   useFetchPlayerActivities,
   useFetchPlayerProfile,
 } from "../../hooks/remote";
-import { Mode, Moment } from "shared";
+import { CharacterClassSelection, Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
 import StatHighlight from "./components/StatHighlight";
 import StatDetail from "./components/StatDetail";
@@ -30,6 +29,7 @@ const PlayerView = () => {
 
   let mode = Mode.fromString(params.mode);
   let moment = Moment.fromString(params.moment);
+  let classSelection = CharacterClassSelection.fromString(params.classType);
 
   let [profile, isProfileLoading, profileLoadError] = useFetchPlayerProfile(
     true,
@@ -38,7 +38,13 @@ const PlayerView = () => {
   );
 
   let [activityStats, isActivitiesLoading, activitiesLoadError] =
-    useFetchPlayerActivities(true, params.memberId, mode, moment);
+    useFetchPlayerActivities(
+      true,
+      params.memberId,
+      mode,
+      moment,
+      classSelection
+    );
 
   let query = useQuery();
   let weaponCount = query.get("weaponcount") ? query.get("weaponcount") : 5;

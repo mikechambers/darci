@@ -8,12 +8,6 @@ const GamesDetail = (props) => {
   let mercies = props.mercies;
   let activityCount = props.activity_count;
 
-  console.log(
-    mercies,
-    activityCount,
-    calculatePercent(mercies, activityCount).toFixed()
-  );
-
   return (
     <StatDetailBase
       title="Games"
