@@ -154,7 +154,7 @@ const PlayerView = () => {
           justifyContent: "start",
         }}
       >
-        <MedalsView medals={medals} maxCount={medalCount} />
+        <MedalsView medals={medals} max={medalCount} />
       </div>
 
       <div
