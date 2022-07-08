@@ -45,7 +45,7 @@ and then distribute in flex box */
   display: flex;
 }
 
-#headline_stat > * {
+.headline_stat > * {
   padding: 0px;
 }
 
@@ -66,4 +66,53 @@ and then distribute in flex box */
 .headline_stat_value {
   font-weight: 500;
   font-size: 64px;
+}
+
+
+.stat_detail_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+
+  grid-template-areas: 
+  "header header header"
+  "avg_value high_value total_value"
+  "avg_title high_title total_title"
+  ;
+
+  width: 200px;
+  border: 1px solid white;
+}
+
+.stat_detail_container > * {
+
+  border: 1px solid white;
+}
+
+.stat_detail_title {
+  grid-area: header;
+}
+
+.stat_detail_avg_title {
+  grid-area: avg_title;
+}
+
+.stat_detail_avg_value {
+  grid-area: avg_value;
+}
+
+.stat_detail_high_title {
+  grid-area: high_title;
+}
+
+.stat_detail_high_value {
+  grid-area: high_value;
+}
+
+.stat_detail_total_title {
+  grid-area: total_title;
+}
+
+.stat_detail_total_value {
+  grid-area: total_value;
 }

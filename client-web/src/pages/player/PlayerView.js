@@ -12,6 +12,7 @@ import {
 import { Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
 import HeadlineStat from "./components/HeadlineStat";
+import StatDetail from "./components/StatDetail";
 import { calculatePercent } from "../../utils";
 
 const { useQuery } = require("../../hooks/browser");
@@ -88,6 +89,7 @@ const PlayerView = () => {
         <HeadlineStat label="KD" value={summary.killsDeathsRatio.toFixed(2)} />
         <HeadlineStat label="EFF" value={summary.efficiency.toFixed(2)} />
       </div>
+      <StatDetail />
 
       <ActivitySummary summary={summary} isLoading={isActivitiesLoading} />
 
