@@ -82,7 +82,7 @@ const MetaView = (props) => {
               type="button"
               onClick={() => requestSort(KILLS_PLAYER_SORT)}
             >
-              KILLS / PLAYER
+              KILLS / P
             </button>
           </th>
           <th className="right">TYPE</th>

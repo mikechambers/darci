@@ -3,6 +3,7 @@ import ActivityList from "./components/ActivityList";
 import WeaponsView from "./components/WeaponsView";
 import MetaView from "./components/MetaView";
 import MedalsView from "./components/MedalsView";
+import Test from "./components/Test";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
 import {
   useFetchPlayerActivities,
@@ -97,7 +98,7 @@ const PlayerView = () => {
         <StatHighlight label="EFF" value={summary.efficiency.toFixed(2)} />
       </div>
 
-      <div>&nbsp;</div>
+      <h2>Overview</h2>
 
       <GamesDetail
         wins={summary.wins}
@@ -158,17 +159,17 @@ const PlayerView = () => {
       </div>
 
       <div>
-        <h2>WEAPONS</h2>
+        <h2>Weapons</h2>
         <WeaponsView weapons={weapons} max={weaponCount} />
       </div>
 
       <div>
-        <h2>META</h2>
+        <h2>Meta</h2>
         <MetaView meta={meta} max={metaCount} />
       </div>
 
       <div>
-        <h2>GAMES</h2>
+        <h2>Games</h2>
         <ActivityList
           activityStats={activityStats}
           isLoading={isActivitiesLoading}
