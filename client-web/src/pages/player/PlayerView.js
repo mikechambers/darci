@@ -157,28 +157,24 @@ const PlayerView = () => {
         <MedalsView medals={medals} max={medalCount} />
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "start",
-          justifyContent: "start",
-        }}
-      >
-        <div>
-          <h2>WEAPONS</h2>
-          <WeaponsView weapons={weapons} maxCount={weaponCount} />
-        </div>
-
-        <div>
-          <h2>META</h2>
-          <MetaView meta={meta} maxCount={metaCount} />
-        </div>
+      <div>
+        <h2>WEAPONS</h2>
+        <WeaponsView weapons={weapons} max={weaponCount} />
       </div>
 
-      <ActivityList
-        activityStats={activityStats}
-        isLoading={isActivitiesLoading}
-      />
+      <div>
+        <h2>META</h2>
+        <MetaView meta={meta} max={metaCount} />
+      </div>
+
+      <div>
+        <h2>GAMES</h2>
+        <ActivityList
+          activityStats={activityStats}
+          isLoading={isActivitiesLoading}
+        />
+      </div>
+
       <ErrorView error={[activitiesLoadError, profileLoadError]} />
     </div>
   );

@@ -12,6 +12,9 @@
   --data-title-weight:700;
 
   --underline: 1px solid #FFFFFF;
+
+  /* t, r, b, l */
+  --table-cell-padding: 4px 0px 0px 16px
 }
 
 body {
@@ -28,12 +31,37 @@ a {
 }
 
 table {
-  background-color: #333333;
-  margin: 1em;
+  border-collapse: collapse;
 }
 
-td, th {
+th {
+  font-weight: var(--data-title-weight);
+  text-transform: uppercase;
+  padding: var(--table-cell-padding);
+}
+
+thead {
+  border-bottom: var(--underline);
+}
+
+td {
+  padding: var(--table-cell-padding);
+}
+
+.weapon_icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: solid black 2px;
+  background-size: cover;
+}
+
+.right {
   text-align: right;
+}
+
+.left {
+  text-align:left;
 }
 
 .error {

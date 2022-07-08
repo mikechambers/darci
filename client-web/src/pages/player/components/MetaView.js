@@ -14,7 +14,7 @@ const MetaView = (props) => {
   });
 
   let meta = props.meta ? props.meta : [];
-  let maxCount = props.maxCount ? props.maxCount : 5;
+  let maxCount = props.max ? props.max : 5;
 
   const requestSort = (key) => {
     let direction = ASCENDING;
@@ -66,18 +66,18 @@ const MetaView = (props) => {
         <tr>
           <th></th>
           <th className="left">WEAPON</th>
-          <th className="left">TYPE</th>
-          <th>
+
+          <th className="right">
             <button type="button" onClick={() => requestSort(COUNT_SORT)}>
               PLAYERS
             </button>
           </th>
-          <th>
+          <th className="right">
             <button type="button" onClick={() => requestSort(KILLS_SORT)}>
               KILLS
             </button>
           </th>
-          <th>
+          <th className="right">
             <button
               type="button"
               onClick={() => requestSort(KILLS_PLAYER_SORT)}
@@ -85,6 +85,7 @@ const MetaView = (props) => {
               KILLS / PLAYER
             </button>
           </th>
+          <th className="right">TYPE</th>
         </tr>
       </thead>
       <tbody>
@@ -93,21 +94,20 @@ const MetaView = (props) => {
             <tr key={w.id}>
               <td>
                 <div
+                  className="weapon_icon"
                   style={{
-                    width: 25,
-                    height: 25,
-                    borderRadius: "50%",
-                    border: "solid black 2px",
-                    backgroundSize: "cover",
                     backgroundImage: `url(${w.item.icon})`,
                   }}
                 ></div>
               </td>
               <td className="left">{w.item.name}</td>
-              <td className="left">{w.item.itemSubType.toString()}</td>
-              <td>{w.count}</td>
-              <td>{w.kills}</td>
-              <td>{calculateRatio(w.kills, w.count).toFixed(2)}</td>
+
+              <td className="right">{w.count}</td>
+              <td className="right">{w.kills}</td>
+              <td className="right">
+                {calculateRatio(w.kills, w.count).toFixed(2)}
+              </td>
+              <td className="right">{w.item.itemSubType.toString()}</td>
             </tr>
           );
         })}

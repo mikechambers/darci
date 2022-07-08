@@ -16,40 +16,40 @@ const ActivityList = (props) => {
     <table style={{ width: 1000 }}>
       <thead>
         <tr>
-          <th>MAP</th>
-          <th>MODE</th>
-          <th>W/L</th>
-          <th>KILLS</th>
-          <th>ASSISTS</th>
-          <th>K+A</th>
-          <th>DEATHS</th>
-          <th>KD</th>
-          <th>KD/A</th>
-          <th>EFF</th>
-          <th>MERCY</th>
+          <th className="left">MAP</th>
+          <th className="left">MODE</th>
+          <th className="left">W/L</th>
+          <th className="right">KILLS</th>
+          <th className="right">ASSISTS</th>
+          <th className="right">K+A</th>
+          <th className="right">DEATHS</th>
+          <th className="right">KD</th>
+          <th className="right">KD/A</th>
+          <th className="right">EFF</th>
+          <th className="right">MERCY</th>
         </tr>
       </thead>
       <tbody>
         {activities.map((a, index) => {
           return (
             <tr key={a.activity.activityId}>
-              <td>
+              <td className="left">
                 <Link
                   to={`/activity/${a.activity.activityId}/${a.player.memberId}`}
                 >
                   {a.activity.map.name}
                 </Link>
               </td>
-              <td>{a.activity.mode.label}</td>
-              <td>{a.stats.standing.toString()}</td>
-              <td>{a.stats.kills}</td>
-              <td>{a.stats.assists}</td>
-              <td>{a.stats.opponentsDefeated}</td>
-              <td>{a.stats.deaths}</td>
-              <td>{a.stats.killsDeathsRatio.toFixed(2)}</td>
-              <td>{a.stats.killsDeathsAssists.toFixed(2)}</td>
-              <td>{a.stats.efficiency.toFixed(2)}</td>
-              <td>
+              <td className="left">{a.activity.mode.label}</td>
+              <td className="left">{a.stats.standing.toString()}</td>
+              <td className="right">{a.stats.kills}</td>
+              <td className="right">{a.stats.assists}</td>
+              <td className="right">{a.stats.opponentsDefeated}</td>
+              <td className="right">{a.stats.deaths}</td>
+              <td className="right">{a.stats.killsDeathsRatio.toFixed(2)}</td>
+              <td className="right">{a.stats.killsDeathsAssists.toFixed(2)}</td>
+              <td className="right">{a.stats.efficiency.toFixed(2)}</td>
+              <td className="right">
                 {a.stats.completionReason === CompletionReason.MERCY
                   ? "TRUE"
                   : ""}
