@@ -1,16 +1,19 @@
-import React, { Component, useState, useEffect, useReducer } from 'react';
+import React, { Component, useState, useEffect, useReducer } from "react";
 import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useFetchManifest } from './hooks/remote';
+import { useFetchManifest } from "./hooks/remote";
 
-import { GlobalContext, useGlobalContext, GlobalAction } from './contexts/GlobalContext';
+import {
+  GlobalContext,
+  useGlobalContext,
+  GlobalAction,
+} from "./contexts/GlobalContext";
 const { useQuery } = require("./hooks/browser");
 
 const App = (props) => {
-
   let query = useQuery();
 
-  let clearStorage = (query.get("clearstorage") !== undefined);
+  let clearStorage = query.get("clearstorage") !== undefined;
   useEffect(() => {
     if (clearStorage === true) {
       console.log("Clearing local storage.");
@@ -39,18 +42,16 @@ const App = (props) => {
   return (
     <GlobalContext.Provider value={{ global, dispatchGlobal }}>
       <div>
-        {initializingContent
-          ? initializingContent
-          : (
+        {initializingContent ? (
+          initializingContent
+        ) : (
+          <div>
             <div>
-              <h2>Site Headers</h2>
-              <div>
-                <Link to='/'>main</Link>
-              </div>
-              <Outlet /></div>
-          )
-        }
-
+              <Link to="/">&lt;main</Link>
+            </div>
+            <Outlet />
+          </div>
+        )}
       </div>
     </GlobalContext.Provider>
   );
