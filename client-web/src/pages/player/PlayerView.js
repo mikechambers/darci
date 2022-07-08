@@ -13,7 +13,7 @@ import { Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
 import HeadlineStat from "./components/HeadlineStat";
 import StatDetail from "./components/StatDetail";
-import { calculatePercent } from "../../utils";
+import { calculatePercent, calculateAverage } from "../../utils";
 
 const { useQuery } = require("../../hooks/browser");
 
@@ -89,7 +89,45 @@ const PlayerView = () => {
         <HeadlineStat label="KD" value={summary.killsDeathsRatio.toFixed(2)} />
         <HeadlineStat label="EFF" value={summary.efficiency.toFixed(2)} />
       </div>
-      <StatDetail />
+
+      <div className="stat_detail_container">
+        <StatDetail
+          avg={calculateAverage(summary.kills, summary.activityCount).toFixed(
+            2
+          )}
+          total={summary.kills}
+          high={summary.highestKills}
+          title="kills"
+        />
+
+        <StatDetail
+          avg={calculateAverage(summary.assists, summary.activityCount).toFixed(
+            2
+          )}
+          total={summary.assists}
+          high={summary.highestAssists}
+          title="assists"
+        />
+
+        <StatDetail
+          avg={calculateAverage(
+            summary.opponentsDefeated,
+            summary.activityCount
+          ).toFixed(2)}
+          total={summary.opponentsDefeated}
+          high={summary.highestOpponentsDefeated}
+          title="defeats"
+        />
+
+        <StatDetail
+          avg={calculateAverage(summary.deaths, summary.activityCount).toFixed(
+            2
+          )}
+          total={summary.deaths}
+          high={summary.highestDeaths}
+          title="deaths"
+        />
+      </div>
 
       <ActivitySummary summary={summary} isLoading={isActivitiesLoading} />
 

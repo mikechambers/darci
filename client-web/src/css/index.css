@@ -75,21 +75,25 @@ and then distribute in flex box */
   "avg_title high_title total_title"
   ;
 
-  width: 200px;
-  border: 1px solid white;
+  width: 160px;
+  padding:10px 10px 10px 0px;
 }
 
 .stat_detail_container > * {
-
-  border: 1px solid white;
+  /*border: 1px solid white;*/
 }
 
 .stat_detail_title {
   grid-area: header;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-bottom: 1px solid #FFFFFF;
 }
 
 .stat_detail_avg_title {
   grid-area: avg_title;
+  text-transform: uppercase;
+  color: #FFFFFF66;
 }
 
 .stat_detail_avg_value {
@@ -98,16 +102,24 @@ and then distribute in flex box */
 
 .stat_detail_high_title {
   grid-area: high_title;
+  text-align: right;
+  text-transform: uppercase;
+  color: #FFFFFF66;
 }
 
 .stat_detail_high_value {
   grid-area: high_value;
+  text-align: right;
 }
 
 .stat_detail_total_title {
   grid-area: total_title;
+  text-align: right;
+  text-transform: uppercase;
+  color: #FFFFFF66;
 }
 
 .stat_detail_total_value {
   grid-area: total_value;
+  text-align: right;
 }
