@@ -1,11 +1,26 @@
 import { calculateRatio } from "shared";
 import { useState } from "react";
+import MarkdownView from "./MarkdownView";
 
 const COUNT_SORT = "COUNT";
 const KILLS_SORT = "KILLS";
 const KILLS_PLAYER_SORT = "KILLSPLAYER";
 const ASCENDING = "ascending";
 const DESCENDING = "descending";
+
+const generateMarkdown = function (data) {
+  let out =
+    "| WEAPON | PLAYERS | KILLS | KILLS / PLAYER | TYPE |\n| -------- | ----: | ----: | ----: | -----: |\n";
+
+  for (const m of data) {
+    out += `| ${m.item.name} | ${m.count} | ${m.kills} | ${calculateRatio(
+      m.kills,
+      m.count
+    ).toFixed(2)} | ${m.item.itemSubType.toString()} |\n`;
+  }
+
+  return out;
+};
 
 const MetaView = (props) => {
   const [sortConfig, setSortConfig] = useState({
@@ -60,59 +75,64 @@ const MetaView = (props) => {
     meta = meta.slice(0, maxCount);
   }
 
+  let markdown = generateMarkdown(meta);
+
   return (
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th className="left">WEAPON</th>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th className="left">WEAPON</th>
 
-          <th className="right">
-            <button type="button" onClick={() => requestSort(COUNT_SORT)}>
-              PLAYERS
-            </button>
-          </th>
-          <th className="right">
-            <button type="button" onClick={() => requestSort(KILLS_SORT)}>
-              KILLS
-            </button>
-          </th>
-          <th className="right">
-            <button
-              type="button"
-              onClick={() => requestSort(KILLS_PLAYER_SORT)}
-            >
-              KILLS / P
-            </button>
-          </th>
-          <th className="right">TYPE</th>
-        </tr>
-      </thead>
-      <tbody>
-        {meta.map((w, index) => {
-          return (
-            <tr key={w.id}>
-              <td>
-                <div
-                  className="weapon_icon"
-                  style={{
-                    backgroundImage: `url(${w.item.icon})`,
-                  }}
-                ></div>
-              </td>
-              <td className="left">{w.item.name}</td>
+            <th className="right">
+              <button type="button" onClick={() => requestSort(COUNT_SORT)}>
+                PLAYERS
+              </button>
+            </th>
+            <th className="right">
+              <button type="button" onClick={() => requestSort(KILLS_SORT)}>
+                KILLS
+              </button>
+            </th>
+            <th className="right">
+              <button
+                type="button"
+                onClick={() => requestSort(KILLS_PLAYER_SORT)}
+              >
+                KILLS / P
+              </button>
+            </th>
+            <th className="right">TYPE</th>
+          </tr>
+        </thead>
+        <tbody>
+          {meta.map((w, index) => {
+            return (
+              <tr key={w.id}>
+                <td>
+                  <div
+                    className="weapon_icon"
+                    style={{
+                      backgroundImage: `url(${w.item.icon})`,
+                    }}
+                  ></div>
+                </td>
+                <td className="left">{w.item.name}</td>
 
-              <td className="right">{w.count}</td>
-              <td className="right">{w.kills}</td>
-              <td className="right">
-                {calculateRatio(w.kills, w.count).toFixed(2)}
-              </td>
-              <td className="right">{w.item.itemSubType.toString()}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+                <td className="right">{w.count}</td>
+                <td className="right">{w.kills}</td>
+                <td className="right">
+                  {calculateRatio(w.kills, w.count).toFixed(2)}
+                </td>
+                <td className="right">{w.item.itemSubType.toString()}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+      <MarkdownView id="meta" markdown={markdown} />
+    </div>
   );
 };
 
