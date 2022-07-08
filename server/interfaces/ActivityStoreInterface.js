@@ -408,7 +408,7 @@ class ActivityStoreInterface {
       //averageScorePerKill: activityRow.average_score_per_kill,
       //averageScorePerLife: activityRow.average_score_per_life,
       completed: completed,
-      //opponentsDefeated: activityRow.opponents_defeated,
+      opponentsDefeated: activityRow.opponents_defeated,
 
       //todo:could calculate this client side
       //efficiency: calculateEfficiency(activityRow.kills, activityRow.deaths, activityRow.assists),
@@ -512,7 +512,7 @@ class ActivityStoreInterface {
       out.assists += activity.stats.assists;
       out.kills += activity.stats.kills;
       out.deaths += activity.stats.deaths;
-      //out.opponentsDefeated += activity.stats.opponentsDefeated;
+      out.opponentsDefeated += activity.stats.opponentsDefeated;
 
       out.timePlayedSeconds += activity.stats.timePlayedSeconds;
 
