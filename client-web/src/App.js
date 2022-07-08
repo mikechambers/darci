@@ -13,7 +13,8 @@ const { useQuery } = require("./hooks/browser");
 const App = (props) => {
   let query = useQuery();
 
-  let clearStorage = query.get("clearstorage") !== undefined;
+  let clearStorage = query.get("clearstorage") !== null;
+
   useEffect(() => {
     if (clearStorage === true) {
       console.log("Clearing local storage.");
