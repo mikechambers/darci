@@ -1,11 +1,11 @@
 const StatDetail = (props) => {
   let title = props.title;
-  let avg = props.avg;
-  let high = props.high;
-  let total = props.total;
+  let avg = props.avg.toLocaleString();
+  let high = props.high.toLocaleString();
+  let total = props.total.toLocaleString();
 
   return (
-    <div className="stat_detail_container">
+    <div className="stat_detail">
       <div className="stat_detail_title">{title}</div>
       <div className="stat_detail_avg_title">Avg</div>
       <div className="stat_detail_avg_value">{avg}</div>

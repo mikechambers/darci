@@ -11,7 +11,7 @@ import {
 } from "../../hooks/remote";
 import { Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
-import HeadlineStat from "./components/HeadlineStat";
+import StatHighlight from "./components/StatHighlight";
 import StatDetail from "./components/StatDetail";
 import { calculatePercent, calculateAverage } from "../../utils";
 
@@ -78,16 +78,16 @@ const PlayerView = () => {
       />
       <h2>SUMMARY</h2>
 
-      <div className="headline_stat_container">
-        <HeadlineStat
+      <div className="stat_highlight_container">
+        <StatHighlight
           label="win%"
           value={`${calculatePercent(
             summary.wins,
             summary.activityCount
           ).toFixed()}%`}
         />
-        <HeadlineStat label="KD" value={summary.killsDeathsRatio.toFixed(2)} />
-        <HeadlineStat label="EFF" value={summary.efficiency.toFixed(2)} />
+        <StatHighlight label="KD" value={summary.killsDeathsRatio.toFixed(2)} />
+        <StatHighlight label="EFF" value={summary.efficiency.toFixed(2)} />
       </div>
 
       <div className="stat_detail_container">

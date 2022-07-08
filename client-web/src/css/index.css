@@ -36,35 +36,24 @@ td, th {
 
 /* instead of setting padding, we could set overall width for container
 and then distribute in flex box */
-.headline_stat_container {
+.stat_highlight_container {
   display: flex;
 }
 
-.headline_stat > * {
-  padding: 0px !important;;
-  text-align: right;
-}
-
-.headline_stat {
-  width: min-content;
-  padding-right: 100px;
-  line-height: 1.0;
-}
-
-.headline_stat_label {
+.stat_highlight_label {
   font-weight: 400;
   font-size: 20px;
   text-transform: uppercase;
   color: #FFFFFF66;
 }
 
-.headline_stat_value {
+.stat_highlight_value {
   font-weight: 700;
   font-size: 64px;
 }
 
 
-.stat_detail_container {
+.stat_detail {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -76,11 +65,17 @@ and then distribute in flex box */
   ;
 
   width: 160px;
-  padding:10px 20px 10px 0px;
+  /*padding:10px 20px 10px 0px;*/
 }
 
-.stat_detail_container > * {
-  /*border: 1px solid white;*/
+.stat_detail_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+
+  grid-template-areas: 
+  "kills assists defeats deaths"
+  ;
 }
 
 .stat_detail_title {

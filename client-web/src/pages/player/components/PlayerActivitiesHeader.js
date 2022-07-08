@@ -10,11 +10,15 @@ const PlayerActivitiesHeader = (props) => {
 
   return (
     <div className="player_view_header">
-      <span>{playerName}</span>#<span>{playerNameCode}</span> &nbsp;&gt;&nbsp;
-      <span>{classSelection}</span>&nbsp;&gt;&nbsp;
-      <span>{mode.label}</span>&nbsp;&gt;&nbsp;
-      <span>{moment.label}</span>
-      <span> ({momentDate.toString()})</span>
+      <div>
+        <span>{playerName}</span>#<span>{playerNameCode}</span>{" "}
+      </div>
+      <div>
+        &#47;&#47;&nbsp;<span>{classSelection}</span>&nbsp;&#47;&nbsp;
+        <span>{mode.label}</span>&nbsp;&#47;&nbsp;
+        <span>{moment.label}</span>
+        &nbsp;&#47;<span> ({momentDate.toString()})</span>
+      </div>
     </div>
   );
 };
