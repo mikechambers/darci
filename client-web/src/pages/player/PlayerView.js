@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import ActivityList from "./components/ActivityList";
-import ActivitySummary from "./components/ActivitySummary";
 import WeaponsView from "./components/WeaponsView";
 import MetaView from "./components/MetaView";
 import MedalsView from "./components/MedalsView";
@@ -13,11 +12,19 @@ import { Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
 import StatHighlight from "./components/StatHighlight";
 import StatDetail from "./components/StatDetail";
+import GamesDetail from "./components/GamesDetail";
 import { calculatePercent, calculateAverage } from "../../utils";
 
 const { useQuery } = require("../../hooks/browser");
 
 const PlayerView = () => {
+  let stat_detail_container_style = {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr 1fr",
+    gridTemplateRows: "1fr",
+    gridTemplateAreas: `"kills assists defeats deaths"`,
+  };
+
   let params = useParams();
 
   let mode = Mode.fromString(params.mode);
@@ -76,8 +83,8 @@ const PlayerView = () => {
         momentName={moment.toString()}
         momentDate={activityStats.query.startDate}
       />
-      <h2>SUMMARY</h2>
 
+      <div>&nbsp;</div>
       <div className="stat_highlight_container">
         <StatHighlight
           label="win%"
@@ -90,7 +97,16 @@ const PlayerView = () => {
         <StatHighlight label="EFF" value={summary.efficiency.toFixed(2)} />
       </div>
 
-      <div className="stat_detail_container">
+      <div>&nbsp;</div>
+
+      <GamesDetail
+        wins={summary.wins}
+        losses={summary.losses}
+        mercies={summary.mercies}
+        activity_count={summary.activityCount}
+      />
+
+      <div style={stat_detail_container_style}>
         <StatDetail
           avg={calculateAverage(summary.kills, summary.activityCount).toFixed(
             2
@@ -129,7 +145,7 @@ const PlayerView = () => {
         />
       </div>
 
-      <ActivitySummary summary={summary} isLoading={isActivitiesLoading} />
+      <div>&nbsp;</div>
 
       <div
         style={{

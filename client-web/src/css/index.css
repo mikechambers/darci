@@ -71,17 +71,6 @@ and then distribute in flex box */
   font-size: 64px;
 }
 
-
-.stat_detail_container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr;
-
-  grid-template-areas: 
-  "kills assists defeats deaths"
-  ;
-}
-
 .stat_detail_title {
   border-bottom: var(--underline);
 }
