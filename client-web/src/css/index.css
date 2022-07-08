@@ -2,16 +2,11 @@
 
 body {
   margin: 4;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto Condensed', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #eeeeee;
   background-color: #222222;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
 }
 
 a {
@@ -46,11 +41,11 @@ and then distribute in flex box */
 }
 
 .headline_stat > * {
-  padding: 0px;
+  padding: 0px !important;;
+  text-align: right;
 }
 
 .headline_stat {
-  text-align: right;
   width: min-content;
   padding-right: 100px;
   line-height: 1.0;
@@ -64,7 +59,7 @@ and then distribute in flex box */
 }
 
 .headline_stat_value {
-  font-weight: 500;
+  font-weight: 700;
   font-size: 64px;
 }
 
