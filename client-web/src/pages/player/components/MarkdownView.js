@@ -9,10 +9,10 @@ const MarkdownView = (props) => {
     let display = p.style.display;
 
     let newDisplay = "none";
-    let buttonLabel = "Hide Markdown";
+    let buttonLabel = "View Markdown";
     if (display === "none") {
       newDisplay = "block";
-      buttonLabel = "View Markdown";
+      buttonLabel = "Hide Markdown";
     }
 
     p.style.display = newDisplay;
