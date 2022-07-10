@@ -131,7 +131,7 @@ const MetaView = (props) => {
           })}
         </tbody>
       </table>
-      <MarkdownView id="meta" markdown={markdown} />
+      <MarkdownView markdown={markdown} />
     </div>
   );
 };

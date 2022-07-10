@@ -1,4 +1,12 @@
 import { calculatePercent, calculateAverage } from "../../../utils/index";
+import {
+  DataTable,
+  RIGHT_ALIGN,
+  LEFT_ALIGN,
+  DATA_TYPE,
+  generateHeader,
+  generateData,
+} from "./DataTable";
 
 const MapsView = (props) => {
   let maps = props.maps ? props.maps : [];
@@ -7,77 +15,104 @@ const MapsView = (props) => {
     return b.summary.activityCount - a.summary.activityCount;
   });
 
-  console.log(maps);
+  let headers = [
+    generateHeader("name", "name", LEFT_ALIGN),
+    generateHeader("games", "games", RIGHT_ALIGN),
+    generateHeader("wins", "wins", RIGHT_ALIGN),
+    generateHeader("kills", "kills", RIGHT_ALIGN),
+    generateHeader("assists", "assists", RIGHT_ALIGN),
+    generateHeader("defeats", "defeats", RIGHT_ALIGN),
+    generateHeader("deaths", "deaths", RIGHT_ALIGN),
+    generateHeader("kd", "kd", RIGHT_ALIGN),
+    generateHeader("eff", "eff", RIGHT_ALIGN),
+    generateHeader("mercies", "mercies", RIGHT_ALIGN),
+    generateHeader("completed", "completed", RIGHT_ALIGN),
+  ];
 
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th className="left">NAME</th>
-          <th className="right">GAMES</th>
-          <th className="right">WINS</th>
-          <th className="right">KILLS</th>
-          <th className="right">ASSISTS</th>
-          <th className="right">DEFEATS</th>
-          <th className="right">DEATHS</th>
-          <th className="right">KD</th>
-          <th className="right">EFF</th>
-          <th className="right">MERCIES</th>
-          <th className="right">COMPLETED</th>
-        </tr>
-      </thead>
-      <tbody>
-        {maps.map((m, index) => {
-          return (
-            <tr key={m.referenceId}>
-              <td className="left">{m.map.name}</td>
-              <td className="right">
-                {m.summary.wins}-{m.summary.losses}{" "}
-              </td>
-              <td className="right">{`${calculatePercent(
-                m.summary.wins,
-                m.summary.activityCount
-              ).toFixed()}%`}</td>
-              <td className="right">
-                {calculateAverage(
-                  m.summary.kills,
-                  m.summary.activityCount
-                ).toFixed(2)}
-              </td>
-              <td className="right">
-                {calculateAverage(
-                  m.summary.assists,
-                  m.summary.activityCount
-                ).toFixed(2)}
-              </td>
-              <td className="right">
-                {calculateAverage(
-                  m.summary.opponentsDefeated,
-                  m.summary.activityCount
-                ).toFixed(2)}
-              </td>
-              <td className="right">
-                {calculateAverage(
-                  m.summary.deaths,
-                  m.summary.activityCount
-                ).toFixed(2)}
-              </td>
-              <td className="right">{m.summary.killsDeathsRatio.toFixed(2)}</td>
-              <td className="right">{m.summary.efficiency.toFixed(2)}</td>
-              <td className="right">{`${calculatePercent(
-                m.summary.mercies,
-                m.summary.activityCount
-              ).toFixed()}%`}</td>
-              <td className="right">{`${calculatePercent(
-                m.summary.completed,
-                m.summary.activityCount
-              ).toFixed()}%`}</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
+  let data = [];
+
+  for (const m of maps) {
+    let row = [];
+    row.push(generateData(m.map.name, DATA_TYPE, LEFT_ALIGN));
+    row.push(
+      generateData(m.summary.wins - m.summary.losses, DATA_TYPE, RIGHT_ALIGN)
+    );
+    row.push(
+      generateData(
+        `${calculatePercent(
+          m.summary.wins,
+          m.summary.activityCount
+        ).toFixed()}%`,
+        DATA_TYPE,
+        RIGHT_ALIGN
+      )
+    );
+    row.push(
+      generateData(
+        calculateAverage(m.summary.kills, m.summary.activityCount).toFixed(2),
+        DATA_TYPE,
+        RIGHT_ALIGN
+      )
+    );
+    row.push(
+      generateData(
+        calculateAverage(m.summary.assists, m.summary.activityCount).toFixed(2),
+        DATA_TYPE,
+        RIGHT_ALIGN
+      )
+    );
+    row.push(
+      generateData(
+        calculateAverage(
+          m.summary.opponentsDefeated,
+          m.summary.activityCount
+        ).toFixed(2),
+        DATA_TYPE,
+        RIGHT_ALIGN
+      )
+    );
+    row.push(
+      generateData(
+        calculateAverage(m.summary.deaths, m.summary.activityCount).toFixed(2),
+        DATA_TYPE,
+        RIGHT_ALIGN
+      )
+    );
+    row.push(
+      generateData(
+        m.summary.killsDeathsRatio.toFixed(2),
+        DATA_TYPE,
+        RIGHT_ALIGN
+      )
+    );
+    row.push(
+      generateData(m.summary.efficiency.toFixed(2), DATA_TYPE, RIGHT_ALIGN)
+    );
+    row.push(
+      generateData(
+        `${calculatePercent(
+          m.summary.mercies,
+          m.summary.activityCount
+        ).toFixed()}%`,
+        DATA_TYPE,
+        RIGHT_ALIGN
+      )
+    );
+    row.push(
+      generateData(
+        `${calculatePercent(
+          m.summary.completed,
+          m.summary.activityCount
+        ).toFixed()}%`,
+        DATA_TYPE,
+        RIGHT_ALIGN
+      )
+    );
+
+    data.push(row);
+  }
+
+  return <DataTable data={data} headers={headers} />;
 };
 
 export default MapsView;

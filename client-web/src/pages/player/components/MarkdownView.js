@@ -1,6 +1,6 @@
 const MarkdownView = (props) => {
   let markdown = props.markdown;
-  let id = `md_${props.id}`;
+  let id = "id" + Math.random().toString(16).slice(2);
   let button_id = `md_button_${props.id}`;
 
   let handleClick = function () {

@@ -547,7 +547,6 @@ class ActivityStoreInterface {
       out.superKills += activity.stats.extended.superKills;
       out.meleeKills += activity.stats.extended.meleeKills;
 
-      out.completed += activity.stats.completed;
       out.assists += activity.stats.assists;
       out.kills += activity.stats.kills;
       out.deaths += activity.stats.deaths;
