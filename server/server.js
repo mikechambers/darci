@@ -86,6 +86,7 @@ app.get(
     const meta = activityData.meta;
 
     const summary = activityStore.summarizeActivities(activities);
+    const maps = activityStore.summarizeMaps(activities);
 
     //query for name, and whether we have synced? maybe only if no activities have returned
 
@@ -117,6 +118,7 @@ app.get(
       activities: activities,
       meta: meta,
       summary: summary,
+      maps: maps,
       page: {
         total: length,
         index: 0,

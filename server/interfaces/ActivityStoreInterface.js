@@ -405,17 +405,23 @@ class ActivityStoreInterface {
       score: activityRow.score,
       kills: activityRow.kills,
       deaths: activityRow.deaths,
-      //averageScorePerKill: activityRow.average_score_per_kill,
-      //averageScorePerLife: activityRow.average_score_per_life,
       completed: completed,
       opponentsDefeated: activityRow.opponents_defeated,
 
-      //todo:could calculate this client side
-      //efficiency: calculateEfficiency(activityRow.kills, activityRow.deaths, activityRow.assists),
-      //killsDeathsRatio: calculateKillsDeathsRatio(activityRow.kills, activityRow.deaths),
-      //killsDeathsAssists: calculateKillsDeathsAssists(
-      //    activityRow.kills, activityRow.deaths, activityRow.assists,
-      //),
+      efficiency: calculateEfficiency(
+        activityRow.kills,
+        activityRow.deaths,
+        activityRow.assists
+      ),
+      killsDeathsRatio: calculateKillsDeathsRatio(
+        activityRow.kills,
+        activityRow.deaths
+      ),
+      killsDeathsAssists: calculateKillsDeathsAssists(
+        activityRow.kills,
+        activityRow.deaths,
+        activityRow.assists
+      ),
       activityDurationSeconds: activityRow.activity_duration_seconds,
       standing: activityRow.standing,
       team: activityRow.team,
@@ -433,6 +439,32 @@ class ActivityStoreInterface {
     return stats;
   }
 
+  summarizeMaps(activities) {
+    let map = new Map();
+
+    for (let a of activities) {
+      let id = a.activity.referenceId;
+      let m = map.get(id);
+
+      if (!m) {
+        m = [];
+      }
+
+      m.push(a);
+      map.set(id, m);
+    }
+
+    let out = new Map();
+
+    for (const [key, value] of map) {
+      let data = this.summarizeActivities(value);
+      out.set(key, { referenceId: key, summary: data });
+    }
+
+    //todo: we dont really need to return weapon / medal data here
+    return mapElementsToArray(out);
+  }
+
   summarizeActivities(activities) {
     const out = {
       activityCount: 0,
@@ -442,6 +474,7 @@ class ActivityStoreInterface {
       losses: 0,
       draws: 0,
       mercies: 0,
+      completed: 0,
 
       assists: 0,
       kills: 0,
@@ -509,6 +542,7 @@ class ActivityStoreInterface {
       out.superKills += activity.stats.extended.superKills;
       out.meleeKills += activity.stats.extended.meleeKills;
 
+      out.completed += activity.stats.completed;
       out.assists += activity.stats.assists;
       out.kills += activity.stats.kills;
       out.deaths += activity.stats.deaths;
@@ -529,6 +563,16 @@ class ActivityStoreInterface {
           out.draws++;
           break;
       }
+
+      out.efficiency = calculateEfficiency(out.kills, out.deaths, out.assists);
+
+      out.killsDeathsRatio = calculateKillsDeathsRatio(out.kills, out.deaths);
+
+      out.killsDeathsAssists = calculateKillsDeathsAssists(
+        out.kills,
+        out.deaths,
+        out.assists
+      );
 
       let completionReason = CompletionReason.fromId(
         activity.stats.completionReason

@@ -8,12 +8,6 @@ const {
 } = require("../utils/data");
 const { calculateStats } = require("../utils/activity");
 
-const {
-  calculateEfficiency,
-  calculateKillsDeathsRatio,
-  calculateKillsDeathsAssists,
-} = require("shared");
-
 class PlayerActivities {
   #activities = [];
   #summary;
@@ -21,6 +15,8 @@ class PlayerActivities {
   #manifest;
   #player;
   #query;
+  #maps;
+
   constructor(data, manifest) {
     this.#activities = data.activities;
     this.#summary = data.summary;
@@ -30,6 +26,7 @@ class PlayerActivities {
     this.#player = parsePlayerFromServer(data.player, manifest);
 
     this.#meta = data.meta;
+    this.#maps = data.maps;
 
     //this is in case we cant load a manifest for some reason
     if (!manifest) {
@@ -59,20 +56,6 @@ class PlayerActivities {
       a.stats = calculateStats(a.stats, mode);
     }
 
-    let kills = this.#summary.kills;
-    let assists = this.#summary.assists;
-    let deaths = this.#summary.deaths;
-
-    this.#summary.opponentsDefeated = kills + assists;
-
-    this.#summary.efficiency = calculateEfficiency(kills, deaths, assists);
-    this.#summary.killsDeathsRatio = calculateKillsDeathsRatio(kills, deaths);
-    this.#summary.killsDeathsAssists = calculateKillsDeathsAssists(
-      kills,
-      deaths,
-      assists
-    );
-
     this.#summary.weapons = parseWeaponsFromServer(
       this.#summary.weapons,
       this.#manifest
@@ -83,6 +66,11 @@ class PlayerActivities {
     );
 
     this.#meta = parseWeaponsFromServer(this.#meta, this.#manifest);
+
+    for (const m of this.#maps) {
+      let map = this.#manifest.getActivityDefinition(m.referenceId);
+      m.map = map;
+    }
   }
 
   get totalActivities() {
@@ -107,6 +95,10 @@ class PlayerActivities {
 
   get query() {
     return this.#query;
+  }
+
+  get maps() {
+    return this.#maps;
   }
 }
 

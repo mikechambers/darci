@@ -3,6 +3,7 @@ import ActivityList from "./components/ActivityList";
 import WeaponsView from "./components/WeaponsView";
 import MetaView from "./components/MetaView";
 import MedalsView from "./components/MedalsView";
+import MapsView from "./components/MapsView";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
 import {
   useFetchPlayerActivities,
@@ -76,6 +77,7 @@ const PlayerView = () => {
   let weapons = summary.weapons;
   let medals = summary.medals;
   let meta = activityStats.meta;
+  let maps = activityStats.maps;
 
   mode = Mode.fromString(activityStats.query.mode);
   moment = Moment.fromString(activityStats.query.startMoment);
@@ -172,6 +174,11 @@ const PlayerView = () => {
       <div>
         <h2>Meta</h2>
         <MetaView meta={meta} max={metaCount} />
+      </div>
+
+      <div>
+        <h2>Maps</h2>
+        <MapsView maps={maps} />
       </div>
 
       <div>
