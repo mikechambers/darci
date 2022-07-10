@@ -17,8 +17,8 @@ const MapsView = (props) => {
 
   let headers = [
     generateHeader("name", "name", LEFT_ALIGN),
-    generateHeader("games", "games", RIGHT_ALIGN),
-    generateHeader("wins", "wins", RIGHT_ALIGN),
+    generateHeader("games", "total", RIGHT_ALIGN),
+    generateHeader("win", "wins", RIGHT_ALIGN),
     generateHeader("kills", "kills", RIGHT_ALIGN),
     generateHeader("assists", "assists", RIGHT_ALIGN),
     generateHeader("defeats", "defeats", RIGHT_ALIGN),
@@ -35,7 +35,7 @@ const MapsView = (props) => {
     let row = [];
     row.push(generateData(m.map.name, DATA_TYPE, LEFT_ALIGN));
     row.push(
-      generateData(m.summary.wins - m.summary.losses, DATA_TYPE, RIGHT_ALIGN)
+      generateData(m.summary.wins + m.summary.losses, DATA_TYPE, RIGHT_ALIGN)
     );
     row.push(
       generateData(
