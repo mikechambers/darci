@@ -399,6 +399,8 @@ class ActivityStoreInterface {
       medals: medals,
     };
 
+    //TODO: whether they completed the activity
+    //todo: start_seconds (can use to figure out if they loaded in late.)
     const completed = activityRow.completed === 1;
     let stats = {
       assists: activityRow.assists,
@@ -431,7 +433,6 @@ class ActivityStoreInterface {
       playerCount: activityRow.player_count,
       teamScore: activityRow.team_score,
       fireteamId: activityRow.fireteam_id,
-      leftEarly: !completed,
       joinedLate: activityRow.start_seconds > PLAYER_START_BUFFER,
       extended: extended,
     };
@@ -536,6 +537,10 @@ class ActivityStoreInterface {
       }
       if (activity.stats.extended.superKills > out.highestSuperKills) {
         out.highestSuperKills = activity.stats.extended.superKills;
+      }
+
+      if (activity.stats.completed) {
+        out.completed++;
       }
 
       out.grenadeKills += activity.stats.extended.grenadeKills;
