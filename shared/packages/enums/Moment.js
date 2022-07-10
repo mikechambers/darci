@@ -73,7 +73,8 @@ class Moment extends EnumBase {
     "SeasonOfTheRisen",
     "Season of the Risen"
   );
-  static WITCH_QUEEN = new Moment("WITCH_QUEEN", "The Witch Queen");
+  static WITCH_QUEEN = new Moment("WitchQueen", "The Witch Queen");
+
   static SEASON_OF_THE_HAUNTED = new Moment(
     "SeasonOfTheHaunted",
     "Season of the Haunted"
