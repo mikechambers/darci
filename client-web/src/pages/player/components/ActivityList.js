@@ -24,8 +24,8 @@ const ActivityList = (props) => {
           <th className="right">K+A</th>
           <th className="right">DEATHS</th>
           <th className="right">KD</th>
-          <th className="right">KD/A</th>
           <th className="right">EFF</th>
+          <th className="right">COMPLETED</th>
           <th className="right">MERCY</th>
         </tr>
       </thead>
@@ -47,8 +47,8 @@ const ActivityList = (props) => {
               <td className="right">{a.stats.opponentsDefeated}</td>
               <td className="right">{a.stats.deaths}</td>
               <td className="right">{a.stats.killsDeathsRatio.toFixed(2)}</td>
-              <td className="right">{a.stats.killsDeathsAssists.toFixed(2)}</td>
               <td className="right">{a.stats.efficiency.toFixed(2)}</td>
+              <td className="right">{!a.stats.completed ? "FALSE" : ""}</td>
               <td className="right">
                 {a.stats.completionReason === CompletionReason.MERCY
                   ? "TRUE"
