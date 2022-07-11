@@ -31,12 +31,20 @@ const MapsView = (props) => {
 
   let data = [];
 
+  let totalGames = 0;
   for (const m of maps) {
+    totalGames += m.summary.activityCount;
+  }
+
+  for (const m of maps) {
+    let games = `${m.summary.activityCount} (${calculatePercent(
+      m.summary.activityCount,
+      totalGames
+    ).toFixed()}%)`;
+
     let row = [];
     row.push(generateCell(m.map.name, DATA_TYPE, LEFT_ALIGN));
-    row.push(
-      generateCell(m.summary.wins + m.summary.losses, DATA_TYPE, RIGHT_ALIGN)
-    );
+    row.push(generateCell(games, DATA_TYPE, RIGHT_ALIGN));
     row.push(
       generateCell(
         `${calculatePercent(

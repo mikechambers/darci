@@ -46,11 +46,11 @@ const StatDetailBase = (props) => {
     width: 60 * len,
   };
 
-  console.log(stat_detail_style.gridTemplateAreas);
-
+  let key = 0;
   return (
-    <div className="stat_detail" style={stat_detail_style}>
+    <div key={++key} className="stat_detail" style={stat_detail_style}>
       <div
+        key={++key}
         className="stat_detail_title data_title"
         style={{ gridArea: "header" }}
       >
@@ -62,12 +62,17 @@ const StatDetailBase = (props) => {
         return (
           <React.Fragment>
             <div
+              key={++key}
               className={`data_label ${align}`}
               style={{ gridArea: `label_${index}` }}
             >
               {v.label}
             </div>
-            <div className={align} style={{ gridArea: `value_${index}` }}>
+            <div
+              key={++key}
+              className={align}
+              style={{ gridArea: `value_${index}` }}
+            >
               {v.value}
             </div>
           </React.Fragment>
