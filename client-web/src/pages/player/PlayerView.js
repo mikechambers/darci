@@ -13,7 +13,7 @@ import { CharacterClassSelection, Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
 import StatHighlight from "./components/StatHighlight";
 import StatDetail from "./components/StatDetail";
-import StatDetailBase from "./components/StatDetailBase";
+import TimePlayedView from "./components/TimePlayedView";
 import GamesDetail from "./components/GamesDetail";
 import KillsDetail from "./components/KillsDetail";
 import { calculatePercent, calculateAverage } from "../../utils";
@@ -87,6 +87,8 @@ const PlayerView = () => {
         momentName={moment.toString()}
         momentDate={activityStats.query.startDate}
       />
+
+      <TimePlayedView seconds={summary.timePlayedSeconds} />
 
       <div>&nbsp;</div>
       <div className="stat_highlight_container">

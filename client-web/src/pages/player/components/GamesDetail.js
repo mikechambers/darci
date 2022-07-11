@@ -18,7 +18,7 @@ const GamesDetail = (props) => {
       label: "loss",
     },
     {
-      value: calculatePercent(mercies, activityCount).toFixed(),
+      value: calculatePercent(mercies, activityCount).toFixed() + "%",
       label: "mercy",
     },
   ];

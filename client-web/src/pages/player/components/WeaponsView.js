@@ -47,7 +47,7 @@ const WeaponsView = (props) => {
       generateCell(
         calculateAverage(w.kills, w.activityCount).toFixed(2),
         DATA_TYPE,
-        LEFT_ALIGN
+        RIGHT_ALIGN
       )
     );
     row.push(
