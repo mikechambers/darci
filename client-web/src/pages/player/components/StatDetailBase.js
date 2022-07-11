@@ -48,9 +48,8 @@ const StatDetailBase = (props) => {
 
   let key = 0;
   return (
-    <div key={++key} className="stat_detail" style={stat_detail_style}>
+    <div className="stat_detail" style={stat_detail_style}>
       <div
-        key={++key}
         className="stat_detail_title data_title"
         style={{ gridArea: "header" }}
       >
@@ -60,19 +59,14 @@ const StatDetailBase = (props) => {
         let align = index ? "right" : "left";
 
         return (
-          <React.Fragment>
+          <React.Fragment key={key++}>
             <div
-              key={++key}
               className={`data_label ${align}`}
               style={{ gridArea: `label_${index}` }}
             >
               {v.label}
             </div>
-            <div
-              key={++key}
-              className={align}
-              style={{ gridArea: `value_${index}` }}
-            >
+            <div className={align} style={{ gridArea: `value_${index}` }}>
               {v.value}
             </div>
           </React.Fragment>

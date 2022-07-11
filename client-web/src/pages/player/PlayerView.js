@@ -127,25 +127,6 @@ const PlayerView = () => {
           title="kills"
         />
 
-        <StatDetailBase
-          title="Kills %"
-          col_1_value={`${calculatePercent(
-            summary.weaponKills,
-            summary.kills
-          ).toFixed()}%`}
-          col_1_label="weap"
-          col_2_value={`${calculatePercent(
-            summary.superKills,
-            summary.kills
-          ).toFixed()}%`}
-          col_2_label="sup"
-          col_3_value={`${calculatePercent(
-            summary.meleeKills,
-            summary.kills
-          ).toFixed()}%`}
-          col_3_label="mel"
-        />
-
         <StatDetail
           avg={calculateAverage(summary.assists, summary.activityCount).toFixed(
             2
