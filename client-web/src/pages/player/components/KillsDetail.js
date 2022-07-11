@@ -23,7 +23,7 @@ const KillsDetail = (props) => {
     },
   ];
 
-  return <StatDetailBase title="Kills %" values={values} />;
+  return <StatDetailBase title="Kills Breakdown" values={values} />;
 };
 
 export default KillsDetail;

@@ -111,13 +111,6 @@ const PlayerView = () => {
           activity_count={summary.activityCount}
         />
 
-        <KillsDetail
-          total={summary.kills}
-          weapons={summary.weaponKills}
-          supers={summary.superKills}
-          melees={summary.meleeKills}
-        />
-
         <StatDetail
           avg={calculateAverage(summary.kills, summary.activityCount).toFixed(
             2
@@ -125,6 +118,13 @@ const PlayerView = () => {
           total={summary.kills}
           high={summary.highestKills}
           title="kills"
+        />
+
+        <KillsDetail
+          total={summary.kills}
+          weapons={summary.weaponKills}
+          supers={summary.superKills}
+          melees={summary.meleeKills}
         />
 
         <StatDetail

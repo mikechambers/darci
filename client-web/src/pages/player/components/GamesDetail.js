@@ -11,15 +11,15 @@ const GamesDetail = (props) => {
   let values = [
     {
       value: wins,
-      label: "wins",
+      label: "win",
     },
     {
       value: losses,
-      label: "losses",
+      label: "loss",
     },
     {
       value: calculatePercent(mercies, activityCount).toFixed(),
-      label: "mercies",
+      label: "mercy",
     },
   ];
 

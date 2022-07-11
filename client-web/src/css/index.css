@@ -52,12 +52,14 @@ td {
   padding: var(--table-cell-padding);
 }
 
-.weapon_icon {
+.data_cell_icon {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: solid black 2px;
+  
   background-size: cover;
+  padding: 0px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 1);
 }
 
 .right {

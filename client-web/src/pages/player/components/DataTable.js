@@ -69,9 +69,22 @@ export const DataTable = (props) => {
             return (
               <tr key={index}>
                 {d.map((rd, index) => {
+                  let value = rd.value;
+                  let style = {};
+                  let className = [rd.align];
+                  if (rd.type === ICON_TYPE) {
+                    value = "";
+                    style = { backgroundImage: `url(${rd.value})` };
+                    className.push("data_cell_icon");
+                  }
+
                   return (
-                    <td key={index} className={rd.align}>
-                      {rd.value}
+                    <td
+                      key={index}
+                      style={style}
+                      className={className.join(" ")}
+                    >
+                      {value}
                     </td>
                   );
                 })}
