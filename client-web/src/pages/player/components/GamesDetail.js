@@ -8,17 +8,22 @@ const GamesDetail = (props) => {
   let mercies = props.mercies;
   let activityCount = props.activity_count;
 
-  return (
-    <StatDetailBase
-      title="Games"
-      col_1_value={wins}
-      col_1_label="win"
-      col_2_value={losses}
-      col_2_label="loss"
-      col_3_value={`${calculatePercent(mercies, activityCount).toFixed()}%`}
-      col_3_label="mercy"
-    />
-  );
+  let values = [
+    {
+      value: wins,
+      label: "wins",
+    },
+    {
+      value: losses,
+      label: "losses",
+    },
+    {
+      value: calculatePercent(mercies, activityCount).toFixed(),
+      label: "mercies",
+    },
+  ];
+
+  return <StatDetailBase title="Games" values={values} />;
 };
 
 export default GamesDetail;

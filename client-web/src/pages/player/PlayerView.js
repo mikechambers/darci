@@ -13,19 +13,14 @@ import { CharacterClassSelection, Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
 import StatHighlight from "./components/StatHighlight";
 import StatDetail from "./components/StatDetail";
+import StatDetailBase from "./components/StatDetailBase";
 import GamesDetail from "./components/GamesDetail";
+import KillsDetail from "./components/KillsDetail";
 import { calculatePercent, calculateAverage } from "../../utils";
 
 const { useQuery } = require("../../hooks/browser");
 
 const PlayerView = () => {
-  let stat_detail_container_style = {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr",
-    gridTemplateRows: "1fr",
-    gridTemplateAreas: `"kills assists defeats deaths"`,
-  };
-
   let params = useParams();
 
   let mode = Mode.fromString(params.mode);
@@ -108,14 +103,21 @@ const PlayerView = () => {
 
       <h2>Overview</h2>
 
-      <GamesDetail
-        wins={summary.wins}
-        losses={summary.losses}
-        mercies={summary.mercies}
-        activity_count={summary.activityCount}
-      />
+      <div className="stat_detail_container">
+        <GamesDetail
+          wins={summary.wins}
+          losses={summary.losses}
+          mercies={summary.mercies}
+          activity_count={summary.activityCount}
+        />
 
-      <div style={stat_detail_container_style}>
+        <KillsDetail
+          total={summary.kills}
+          weapons={summary.weaponKills}
+          supers={summary.superKills}
+          melees={summary.meleeKills}
+        />
+
         <StatDetail
           avg={calculateAverage(summary.kills, summary.activityCount).toFixed(
             2
@@ -123,6 +125,25 @@ const PlayerView = () => {
           total={summary.kills}
           high={summary.highestKills}
           title="kills"
+        />
+
+        <StatDetailBase
+          title="Kills %"
+          col_1_value={`${calculatePercent(
+            summary.weaponKills,
+            summary.kills
+          ).toFixed()}%`}
+          col_1_label="weap"
+          col_2_value={`${calculatePercent(
+            summary.superKills,
+            summary.kills
+          ).toFixed()}%`}
+          col_2_label="sup"
+          col_3_value={`${calculatePercent(
+            summary.meleeKills,
+            summary.kills
+          ).toFixed()}%`}
+          col_3_label="mel"
         />
 
         <StatDetail

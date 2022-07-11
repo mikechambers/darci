@@ -5,11 +5,11 @@ export const LEFT_ALIGN = "left";
 export const DATA_TYPE = 0;
 export const ICON_TYPE = 1;
 
-export const generateHeader = function (title, key, align = LEFT_ALIGN) {
-  return { title: title, key: key, align: align };
+export const generateHeader = function (title, align = LEFT_ALIGN) {
+  return { title: title, align: align };
 };
 
-export const generateData = function (
+export const generateCell = function (
   value,
   type = DATA_TYPE,
   align = LEFT_ALIGN

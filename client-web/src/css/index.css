@@ -84,6 +84,16 @@ td {
 and then distribute in flex box */
 .stat_highlight_container {
   display: flex;
+  flex-wrap:wrap;
+}
+
+.stat_detail_container {
+  display: flex;
+  flex-wrap:wrap;
+}
+
+.stat_detail_container > * {
+  padding: 0px 20px 20px 0px;
 }
 
 .data_label {

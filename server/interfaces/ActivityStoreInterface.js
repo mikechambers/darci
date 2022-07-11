@@ -487,6 +487,7 @@ class ActivityStoreInterface {
       grenadeKills: 0,
       meleeKills: 0,
       superKills: 0,
+      abilityKills: 0,
 
       highestAssists: 0,
       highestKills: 0,
@@ -498,6 +499,8 @@ class ActivityStoreInterface {
       highestGrenadeKills: 0,
       highestMeleeKills: 0,
       highestSuperKills: 0,
+      highestAbilityKills: 0,
+      weaponKills: 0,
     };
 
     out.activityCount = activities.length;
@@ -539,6 +542,10 @@ class ActivityStoreInterface {
         out.highestSuperKills = activity.stats.extended.superKills;
       }
 
+      if (activity.stats.extended.abilityKills > out.highestAbilityKills) {
+        out.highestAbilityKills = activity.stats.extended.abilityKills;
+      }
+
       if (activity.stats.completed) {
         out.completed++;
       }
@@ -546,6 +553,7 @@ class ActivityStoreInterface {
       out.grenadeKills += activity.stats.extended.grenadeKills;
       out.superKills += activity.stats.extended.superKills;
       out.meleeKills += activity.stats.extended.meleeKills;
+      out.abilityKills += activity.stats.extended.abilityKills;
 
       out.assists += activity.stats.assists;
       out.kills += activity.stats.kills;
@@ -612,6 +620,8 @@ class ActivityStoreInterface {
           item.kills += weapon.kills;
           item.precisionKills += weapon.precisionKills;
         }
+
+        out.weaponKills += weapon.kills;
 
         weaponMap.set(weapon.id, item);
       }

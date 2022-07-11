@@ -5,7 +5,7 @@ import {
   LEFT_ALIGN,
   DATA_TYPE,
   generateHeader,
-  generateData,
+  generateCell,
 } from "./DataTable";
 
 const MapsView = (props) => {
@@ -16,29 +16,29 @@ const MapsView = (props) => {
   });
 
   let headers = [
-    generateHeader("name", "name", LEFT_ALIGN),
-    generateHeader("games", "total", RIGHT_ALIGN),
-    generateHeader("win", "wins", RIGHT_ALIGN),
-    generateHeader("kills", "kills", RIGHT_ALIGN),
-    generateHeader("assists", "assists", RIGHT_ALIGN),
-    generateHeader("defeats", "defeats", RIGHT_ALIGN),
-    generateHeader("deaths", "deaths", RIGHT_ALIGN),
-    generateHeader("kd", "kd", RIGHT_ALIGN),
-    generateHeader("eff", "eff", RIGHT_ALIGN),
-    generateHeader("mercies", "mercies", RIGHT_ALIGN),
-    generateHeader("completed", "completed", RIGHT_ALIGN),
+    generateHeader("name", LEFT_ALIGN),
+    generateHeader("games", RIGHT_ALIGN),
+    generateHeader("win", RIGHT_ALIGN),
+    generateHeader("kills", RIGHT_ALIGN),
+    generateHeader("assists", RIGHT_ALIGN),
+    generateHeader("defeats", RIGHT_ALIGN),
+    generateHeader("deaths", RIGHT_ALIGN),
+    generateHeader("kd", RIGHT_ALIGN),
+    generateHeader("eff", RIGHT_ALIGN),
+    generateHeader("mercies", RIGHT_ALIGN),
+    generateHeader("completed", RIGHT_ALIGN),
   ];
 
   let data = [];
 
   for (const m of maps) {
     let row = [];
-    row.push(generateData(m.map.name, DATA_TYPE, LEFT_ALIGN));
+    row.push(generateCell(m.map.name, DATA_TYPE, LEFT_ALIGN));
     row.push(
-      generateData(m.summary.wins + m.summary.losses, DATA_TYPE, RIGHT_ALIGN)
+      generateCell(m.summary.wins + m.summary.losses, DATA_TYPE, RIGHT_ALIGN)
     );
     row.push(
-      generateData(
+      generateCell(
         `${calculatePercent(
           m.summary.wins,
           m.summary.activityCount
@@ -48,21 +48,21 @@ const MapsView = (props) => {
       )
     );
     row.push(
-      generateData(
+      generateCell(
         calculateAverage(m.summary.kills, m.summary.activityCount).toFixed(2),
         DATA_TYPE,
         RIGHT_ALIGN
       )
     );
     row.push(
-      generateData(
+      generateCell(
         calculateAverage(m.summary.assists, m.summary.activityCount).toFixed(2),
         DATA_TYPE,
         RIGHT_ALIGN
       )
     );
     row.push(
-      generateData(
+      generateCell(
         calculateAverage(
           m.summary.opponentsDefeated,
           m.summary.activityCount
@@ -72,24 +72,24 @@ const MapsView = (props) => {
       )
     );
     row.push(
-      generateData(
+      generateCell(
         calculateAverage(m.summary.deaths, m.summary.activityCount).toFixed(2),
         DATA_TYPE,
         RIGHT_ALIGN
       )
     );
     row.push(
-      generateData(
+      generateCell(
         m.summary.killsDeathsRatio.toFixed(2),
         DATA_TYPE,
         RIGHT_ALIGN
       )
     );
     row.push(
-      generateData(m.summary.efficiency.toFixed(2), DATA_TYPE, RIGHT_ALIGN)
+      generateCell(m.summary.efficiency.toFixed(2), DATA_TYPE, RIGHT_ALIGN)
     );
     row.push(
-      generateData(
+      generateCell(
         `${calculatePercent(
           m.summary.mercies,
           m.summary.activityCount
@@ -99,7 +99,7 @@ const MapsView = (props) => {
       )
     );
     row.push(
-      generateData(
+      generateCell(
         `${calculatePercent(
           m.summary.completed,
           m.summary.activityCount
