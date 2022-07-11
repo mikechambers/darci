@@ -85,7 +85,7 @@ const PlayerView = () => {
         classSelection={activityStats.query.classSelection}
         modeName={mode.toString()}
         momentName={moment.toString()}
-        momentDate={activityStats.query.startDate}
+        momentDate={new Date(activityStats.query.startDate)}
       />
 
       <TimePlayedView seconds={summary.timePlayedSeconds} />

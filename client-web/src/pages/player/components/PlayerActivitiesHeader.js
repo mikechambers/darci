@@ -1,7 +1,8 @@
-import { CharacterClassSelection, Mode, Moment as Mom } from "shared";
-import Moment from "react-moment";
+import { CharacterClassSelection, Mode, Moment } from "shared";
 import { dateIsToday, dateIsWithinLastWeek } from "../../../utils/date";
 import React from "react";
+
+import { DateTime } from "luxon";
 
 const formatCharacterClass = function (classSelection) {
   let charClass = CharacterClassSelection.fromString(classSelection);
@@ -16,11 +17,11 @@ const formatCharacterClass = function (classSelection) {
 };
 
 const format = function (d) {
-  let out = "dddd [at] LT";
+  let out = "cccc 'at' t";
   if (dateIsToday(d)) {
-    out = "[Today at] LT";
+    out = "'Today at' t";
   } else if (dateIsWithinLastWeek(d)) {
-    out = "LL";
+    out = "DDD";
   }
 
   return out;
@@ -31,8 +32,12 @@ const PlayerActivitiesHeader = (props) => {
   let playerNameCode = props.playerNameCode;
   let classSelection = formatCharacterClass(props.classSelection);
   let mode = Mode.fromString(props.modeName);
-  let moment = Mom.fromString(props.momentName);
-  let momentDate = new Date(props.momentDate);
+  let moment = Moment.fromString(props.momentName);
+
+  let momentDate = DateTime.fromJSDate(props.momentDate);
+
+  let f = format(props.momentDate);
+  let humandMoment = momentDate.toFormat(f);
 
   return (
     <div className="player_view_header">
@@ -43,7 +48,7 @@ const PlayerActivitiesHeader = (props) => {
         &#47;&#47;&nbsp;<span>{classSelection}</span>&nbsp;&#47;&nbsp;
         <span>{mode.label}</span>&nbsp;&#47;&nbsp;
         <span>{moment.label}</span>
-        &nbsp;(<Moment format={format(momentDate)}>{momentDate}</Moment>)
+        &nbsp;({humandMoment})
       </div>
     </div>
   );
