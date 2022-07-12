@@ -41,8 +41,8 @@ const WeaponsDetail = (props) => {
 
     row.push(generateCell(w.item.icon, ICON_TYPE, LEFT_ALIGN));
     row.push(generateCell(w.item.name, DATA_TYPE, RIGHT_ALIGN));
-    row.push(generateCell(w.kills, DATA_TYPE, RIGHT_ALIGN));
     row.push(generateCell(w.activityCount, DATA_TYPE, RIGHT_ALIGN));
+    row.push(generateCell(w.kills, DATA_TYPE, RIGHT_ALIGN));
     row.push(
       generateCell(
         calculateAverage(w.kills, w.activityCount).toFixed(2),
