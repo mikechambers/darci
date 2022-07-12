@@ -11,7 +11,7 @@ const PlayerList = (props) => {
 
     return (
         players.map((player, index) => {
-            let to = `/player/${player.memberId}/${player.platformId}/all/allpvp/week/`;
+            let to = `/player/${player.memberId}/${player.platformId}/all/allpvp/weekly/`;
             return (<div key={player.memberId}>
                 <Link to={to}>{player.getShortName()}</Link>
             </div>);
