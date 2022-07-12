@@ -5,11 +5,10 @@ import React from "react";
 import { DateTime } from "luxon";
 
 const formatCharacterClass = function (classSelection) {
-  let charClass = CharacterClassSelection.fromString(classSelection);
 
-  let out = charClass.label;
+  let out = classSelection.label;
 
-  if (charClass === CharacterClassSelection.ALL) {
+  if (classSelection === CharacterClassSelection.ALL) {
     out = "All Classes";
   }
 
@@ -27,10 +26,11 @@ const format = function (d) {
   return out;
 };
 
-const PlayerActivitiesHeader = (props) => {
+const PlayerActivitiesOverview = (props) => {
   let playerName = props.playerName;
   let playerNameCode = props.playerNameCode;
-  let classSelection = formatCharacterClass(props.classSelection);
+  let classSelection = props.classSelection;
+
   let mode = Mode.fromString(props.modeName);
   let moment = Moment.fromString(props.momentName);
 
@@ -45,7 +45,7 @@ const PlayerActivitiesHeader = (props) => {
         <span>{playerName}</span>#<span>{playerNameCode}</span>{" "}
       </div>
       <div>
-        &#47;&#47;&nbsp;<span>{classSelection}</span>&nbsp;&#47;&nbsp;
+        &#47;&#47;&nbsp;<span>{formatCharacterClass(classSelection)}</span>&nbsp;&#47;&nbsp;
         <span>{mode.label}</span>&nbsp;&#47;&nbsp;
         <span>{moment.label}</span>
         &nbsp;({humandMoment})
@@ -54,4 +54,4 @@ const PlayerActivitiesHeader = (props) => {
   );
 };
 
-export default PlayerActivitiesHeader;
+export default PlayerActivitiesOverview;

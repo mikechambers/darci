@@ -8,7 +8,7 @@ import {
   generateCell,
 } from "./DataTable";
 
-const MapsView = (props) => {
+const MapsDetail = (props) => {
   let maps = props.maps ? props.maps : [];
 
   maps.sort((a, b) => {
@@ -123,4 +123,4 @@ const MapsView = (props) => {
   return <DataTable data={data} headers={headers} />;
 };
 
-export default MapsView;
+export default MapsDetail;

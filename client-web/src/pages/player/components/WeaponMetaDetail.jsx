@@ -1,4 +1,4 @@
-import { calculatePercent, calculateAverage } from "../../../utils/index";
+import { calculateRatio } from "shared";
 
 import {
   DataTable,
@@ -10,54 +10,45 @@ import {
   generateCell,
 } from "./DataTable";
 
-const WeaponsView = (props) => {
-  let weapons = props.weapons ? props.weapons : [];
+const WeaponMetaDetail = (props) => {
+  let meta = props.meta ? props.meta : [];
   let maxCount = props.max ? props.max : 5;
 
-  weapons.sort((a, b) => {
-    return b.kills - a.kills;
+  meta.sort((a, b) => {
+    return b.count - a.count;
   });
-
-  if (weapons.length > maxCount) {
-    weapons = weapons.slice(0, maxCount);
-  }
 
   let headers = [
     generateHeader("", LEFT_ALIGN),
     generateHeader("weapon", RIGHT_ALIGN),
-    generateHeader("games", RIGHT_ALIGN),
+    generateHeader("players", RIGHT_ALIGN),
     generateHeader("kills", RIGHT_ALIGN),
-    generateHeader("kills/g", RIGHT_ALIGN),
-    generateHeader("precision", RIGHT_ALIGN),
+    generateHeader("kills/p", RIGHT_ALIGN),
     generateHeader("type", RIGHT_ALIGN),
   ];
 
+  if (meta.length > maxCount) {
+    meta = meta.slice(0, maxCount);
+  }
+
   let data = [];
 
-  for (const w of weapons) {
+  for (const w of meta) {
     let row = [];
 
     data.push(row);
 
     row.push(generateCell(w.item.icon, ICON_TYPE, LEFT_ALIGN));
     row.push(generateCell(w.item.name, DATA_TYPE, RIGHT_ALIGN));
+    row.push(generateCell(w.count, DATA_TYPE, RIGHT_ALIGN));
     row.push(generateCell(w.kills, DATA_TYPE, RIGHT_ALIGN));
-    row.push(generateCell(w.activityCount, DATA_TYPE, RIGHT_ALIGN));
     row.push(
       generateCell(
-        calculateAverage(w.kills, w.activityCount).toFixed(2),
+        calculateRatio(w.kills, w.count).toFixed(2),
         DATA_TYPE,
         RIGHT_ALIGN
       )
     );
-    row.push(
-      generateCell(
-        calculatePercent(w.precisionKills, w.kills).toFixed(2) + "%",
-        DATA_TYPE,
-        RIGHT_ALIGN
-      )
-    );
-
     row.push(
       generateCell(w.item.itemSubType.toString(), DATA_TYPE, RIGHT_ALIGN)
     );
@@ -66,4 +57,4 @@ const WeaponsView = (props) => {
   return <DataTable data={data} headers={headers} />;
 };
 
-export default WeaponsView;
+export default WeaponMetaDetail;

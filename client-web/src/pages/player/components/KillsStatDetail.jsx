@@ -2,7 +2,7 @@ import { calculatePercent } from "../../../utils";
 
 import StatDetailBase from "./StatDetailBase";
 
-const KillsDetail = (props) => {
+const KillsStatDetail = (props) => {
   let total = props.total;
   let weapons = props.weapons;
   let melees = props.melees;
@@ -26,4 +26,4 @@ const KillsDetail = (props) => {
   return <StatDetailBase title="Kills Breakdown" values={values} />;
 };
 
-export default KillsDetail;
+export default KillsStatDetail;

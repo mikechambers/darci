@@ -1,4 +1,4 @@
-const MarkdownView = (props) => {
+const Export = (props) => {
   let markdown = props.markdown;
   let id = "id" + Math.random().toString(16).slice(2);
   let button_id = `md_button_${props.id}`;
@@ -38,4 +38,4 @@ const MarkdownView = (props) => {
   );
 };
 
-export default MarkdownView;
+export default Export;

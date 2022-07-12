@@ -1,7 +1,7 @@
 import React from "react";
 import { humandDuration } from "../../../utils/date";
 
-const TimePlayedView = (props) => {
+const TimePlayed = (props) => {
   let seconds = props.seconds;
 
   if (!seconds) {
@@ -13,4 +13,4 @@ const TimePlayedView = (props) => {
   return <div>Total time played is {human}</div>;
 };
 
-export default TimePlayedView;
+export default TimePlayed;

@@ -1,4 +1,4 @@
-const MedalsView = (props) => {
+const MedalHighlights = (props) => {
   let container_style = {
     display: "flex",
     alignContent: "flex-start",
@@ -58,4 +58,4 @@ const MedalsView = (props) => {
   );
 };
 
-export default MedalsView;
+export default MedalHighlights;

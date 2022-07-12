@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import ActivityList from "./components/ActivityList";
-import WeaponsView from "./components/WeaponsView";
-import MetaView from "./components/MetaView";
-import MedalsView from "./components/MedalsView";
-import MapsView from "./components/MapsView";
-import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
+import ActivitiesDetail from "./components/ActivitiesDetail";
+import WeaponsDetail from "./components/WeaponsDetail";
+import WeaponMetaDetail from "./components/WeaponMetaDetail";
+import MedalHighlights from "./components/MedalHighlights";
+import MapsDetail from "./components/MapsDetail";
+import PlayerActivitiesOverview from "./components/PlayerViewOverview";
 import {
   useFetchPlayerActivities,
   useFetchPlayerProfile,
@@ -13,10 +13,11 @@ import { CharacterClassSelection, Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
 import StatHighlight from "./components/StatHighlight";
 import StatDetail from "./components/StatDetail";
-import TimePlayedView from "./components/TimePlayedView";
+import TimePlayed from "./components/TimePlayed";
 import GamesDetail from "./components/GamesDetail";
-import KillsDetail from "./components/KillsDetail";
+import KillsStatDetail from "./components/KillsStatDetail";
 import { calculatePercent, calculateAverage } from "../../utils";
+import PlayerViewConfig from "./components/PlayerViewConfig";
 
 const { useQuery } = require("../../hooks/browser");
 
@@ -73,22 +74,25 @@ const PlayerView = () => {
   let medals = summary.medals;
   let meta = activityStats.meta;
   let maps = activityStats.maps;
+  let player = activityStats.player;
 
   mode = Mode.fromString(activityStats.query.mode);
   moment = Moment.fromString(activityStats.query.startMoment);
+  classSelection = CharacterClassSelection.fromString(activityStats.query.classSelection);
 
   return (
     <div>
-      <PlayerActivitiesHeader
+      <PlayerViewConfig mode={mode} moment={moment} classSelection={classSelection} player={player}/>
+      <PlayerActivitiesOverview
         playerName={activityStats.player.bungieDisplayName}
         playerNameCode={activityStats.player.bungieDisplayNameCode}
-        classSelection={activityStats.query.classSelection}
+        classSelection={classSelection}
         modeName={mode.toString()}
         momentName={moment.toString()}
         momentDate={new Date(activityStats.query.startDate)}
       />
 
-      <TimePlayedView seconds={summary.timePlayedSeconds} />
+      <TimePlayed seconds={summary.timePlayedSeconds} />
 
       <div>&nbsp;</div>
       <div className="stat_highlight_container">
@@ -122,7 +126,7 @@ const PlayerView = () => {
           title="kills"
         />
 
-        <KillsDetail
+        <KillsStatDetail
           total={summary.kills}
           weapons={summary.weaponKills}
           supers={summary.superKills}
@@ -167,28 +171,28 @@ const PlayerView = () => {
           justifyContent: "start",
         }}
       >
-        <MedalsView medals={medals} max={medalCount} />
+        <MedalHighlights medals={medals} max={medalCount} />
       </div>
 
       <div>
         <h2>Weapons</h2>
-        <WeaponsView weapons={weapons} max={weaponCount} />
+        <WeaponsDetail weapons={weapons} max={weaponCount} />
       </div>
 
       <div>
         <h2>Meta</h2>
-        <MetaView meta={meta} max={metaCount} />
+        <WeaponMetaDetail meta={meta} max={metaCount} />
       </div>
 
       <div>
         <h2>Maps</h2>
-        <MapsView maps={maps} />
+        <MapsDetail maps={maps} />
       </div>
 
       <div>
         <h2>Games</h2>
-        <ActivityList
-          activityStats={activityStats}
+        <ActivitiesDetail
+          activities={activityStats.activities}
           isLoading={isActivitiesLoading}
         />
       </div>

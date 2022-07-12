@@ -1,4 +1,4 @@
-import MarkdownView from "./MarkdownView";
+import Export from "./Export";
 
 export const RIGHT_ALIGN = "right";
 export const LEFT_ALIGN = "left";
@@ -12,9 +12,10 @@ export const generateHeader = function (title, align = LEFT_ALIGN) {
 export const generateCell = function (
   value,
   type = DATA_TYPE,
-  align = LEFT_ALIGN
+  align = LEFT_ALIGN,
+  link = undefined
 ) {
-  return { value: value, align: align, type: type };
+  return { value: value, align: align, type: type, link: link };
 };
 
 const generateMarkdown = function (headers, data) {
@@ -36,7 +37,9 @@ const generateMarkdown = function (headers, data) {
   for (const row of data) {
     out += "|";
     for (const dc of row) {
-      out += `${dc.value} |`;
+      let v = dc.type === DATA_TYPE ? dc.value : "";
+
+      out += `${v} |`;
     }
 
     out += "\n";
@@ -78,13 +81,20 @@ export const DataTable = (props) => {
                     className.push("data_cell_icon");
                   }
 
+                  let tag;
+                  if (rd.link) {
+                    tag = <a href={rd.link}>{value}</a>;
+                  } else {
+                    tag = value;
+                  }
+
                   return (
                     <td
                       key={index}
                       style={style}
                       className={className.join(" ")}
                     >
-                      {value}
+                      {tag}
                     </td>
                   );
                 })}
@@ -93,7 +103,7 @@ export const DataTable = (props) => {
           })}
         </tbody>
       </table>
-      <MarkdownView id="meta" markdown={markdown} />
+      <Export id="meta" markdown={markdown} />
     </div>
   );
 };
