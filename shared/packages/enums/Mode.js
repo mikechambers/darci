@@ -33,7 +33,7 @@ class Mode extends EnumBase {
   static PRIVATE_MATCHES_ALL = new Mode(
     "PrivateMatchesAll",
     32,
-    "Private Matches All"
+    "Private Matches"
   );
   static SURVIVAL = new Mode("Survival", 37);
   static COUNTDOWN = new Mode("Countdown", 38);

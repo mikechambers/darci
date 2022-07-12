@@ -226,9 +226,13 @@ class ActivityStoreInterface {
     //begin parsing weapon meta data for activity set
     let weaponMap = new Map();
     for (let r of rows) {
+      //For Private matches, everyone is in the same fireteam
+      //so we included all fireteam members here.
+      let fireteamId = mode.isPrivate() ? -1 : r.fireteam_id;
+
       let weaponRows = this.#select_weapon_meta_for_activity.all({
         activityId: r.activity,
-        fireteamId: r.fireteam_id,
+        fireteamId: fireteamId,
       });
 
       for (let wRow of weaponRows) {

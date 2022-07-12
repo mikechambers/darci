@@ -6,7 +6,9 @@ const ModeSelect = (props) => {
     let modes = [
         Mode.PVP_QUICKPLAY,
         Mode.PVP_COMPETITIVE,
-        Mode.TRIALS_OF_OSIRIS
+        Mode.TRIALS_OF_OSIRIS,
+        Mode.PRIVATE_MATCHES_ALL,
+        Mode.ALL_PVP
     ];
 
     let selected = (props.selected)?props.selected:Mode.PVP_QUICKPLAY;

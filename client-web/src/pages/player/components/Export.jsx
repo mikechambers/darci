@@ -9,10 +9,10 @@ const Export = (props) => {
     let display = p.style.display;
 
     let newDisplay = "none";
-    let buttonLabel = "View Markdown";
+    let buttonLabel = "Export";
     if (display === "none") {
       newDisplay = "block";
-      buttonLabel = "Hide Markdown";
+      buttonLabel = "Close";
     }
 
     p.style.display = newDisplay;
@@ -24,7 +24,7 @@ const Export = (props) => {
   return (
     <div>
       <button id={button_id} onClick={handleClick}>
-        View Markdown
+        Export
       </button>
       <textarea
         readOnly

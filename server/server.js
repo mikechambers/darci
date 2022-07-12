@@ -63,6 +63,7 @@ app.get(
 
     let mode = Mode.fromString(req.params.mode);
 
+    //todo: error out if mode or moment are unknown
     if (mode === Mode.UNKNOWN) {
       mode = Mode.ALL_PVP;
     }
