@@ -5,9 +5,29 @@ const GLORY_PROGRESSION_ID = "1647151960";
 
 const VALOR_PROGRESSION_ID = "2083746873";
 const TRIALS_PROGRESSION_ID = "2755675426";
+const IRON_BANNER_PROGRESSION_ID = "599071390";
 
 const GLORY_STREAK_ID = "2572719399";
 const VALOR_STREAK_ID = "2203850209";
+
+//IB streak? 4271189086
+
+/*
+                        "599071390": {
+                            "progressionHash": 599071390,
+                            "dailyProgress": 669,
+                            "dailyLimit": 0,
+                            "weeklyProgress": 669,
+                            "weeklyLimit": 0,
+                            "currentProgress": 3722,
+                            "level": 9,
+                            "levelCap": 16,
+                            "stepIndex": 9,
+                            "progressToNextLevel": 372,
+                            "nextLevelAt": 525,
+                            "currentResetCount": 2
+                        },
+*/
 
 /*
 const TRIALS_WINS_ID = "1062449239";
@@ -22,144 +42,159 @@ const TRIALS_ROUNDS_WON_ID = 984122744;
 const TRIALS_FLAWLESS_ID = 2211480687;
 
 const parseCharacterFromProfile = (data, manifest) => {
+  let emblem = manifest.getEmblemDefinition(data.emblemHash);
 
-    let emblem = manifest.getEmblemDefinition(data.emblemHash)
+  let character = {
+    characterId: data.characterId,
+    classType: CharacterClass.fromId(data.classType),
+    lightLevel: data.lightLevel,
+    dateLastPlayed: new Date(Date.parse(data.dateLastPlayed)),
+    emblem: emblem,
+  };
 
-    let character = {
-        characterId: data.characterId,
-        classType: CharacterClass.fromId(data.classType),
-        lightLevel: data.lightLevel,
-        dateLastPlayed: new Date(Date.parse(data.dateLastPlayed)),
-        emblem: emblem,
-    };
-
-    return character;
-}
+  return character;
+};
 
 class PlayerProfile {
+  //#data;
+  #characterProfiles;
+  #lastActiveCharacterProfile;
 
-    #data;
-    #characterProfiles;
-    #lastActiveCharacterProfile;
+  constructor(data, manifest) {
+    //this.#data = data;
 
-    constructor(data, manifest) {
-        this.#data = data;
+    let lastActiveCharacterProfile = undefined;
+    this.#characterProfiles = [];
 
-        let lastActiveCharacterProfile = undefined;
-        this.#characterProfiles = [];
+    for (const cId in data.characters.data) {
+      let progressions = data.characterProgressions.data[cId].progressions;
 
-        for (const cId in data.characters.data) {
+      let valor = {};
+      let glory = {};
+      let ironBanner = {};
+      let trials = {};
 
-            let progressions = data.characterProgressions.data[cId].progressions;
+      if (progressions) {
+        valor = {
+          currentProgress: progressions[VALOR_PROGRESSION_ID].currentProgress,
+          nextLevelAt: progressions[VALOR_PROGRESSION_ID].nextLevelAt,
+          progressToNextLevel:
+            progressions[VALOR_PROGRESSION_ID].progressToNextLevel,
+          streak: progressions[VALOR_STREAK_ID].currentProgress,
+          currentResetCount: progressions[VALOR_STREAK_ID].currentResetCount,
+        };
 
-            let valor = {};
-            let glory = {};
-            let trials = {};
+        glory = {
+          currentProgress: progressions[GLORY_PROGRESSION_ID].currentProgress,
+          nextLevelAt: progressions[GLORY_PROGRESSION_ID].nextLevelAt,
+          progressToNextLevel:
+            progressions[GLORY_PROGRESSION_ID].progressToNextLevel,
+          streak: progressions[GLORY_STREAK_ID].currentProgress,
+        };
 
-            if (progressions) {
+        ironBanner = {
+          currentProgress:
+            progressions[IRON_BANNER_PROGRESSION_ID].currentProgress,
+          nextLevelAt: progressions[IRON_BANNER_PROGRESSION_ID].nextLevelAt,
+          progressToNextLevel:
+            progressions[IRON_BANNER_PROGRESSION_ID].progressToNextLevel,
+          streak: progressions[IRON_BANNER_PROGRESSION_ID].currentProgress,
+          currentResetCount:
+            progressions[IRON_BANNER_PROGRESSION_ID].currentResetCount,
+        };
 
-                valor = {
-                    currentProgress: progressions[VALOR_PROGRESSION_ID].currentProgress,
-                    nextLevelAt: progressions[VALOR_PROGRESSION_ID].nextLevelAt,
-                    progressToNextLevel: progressions[VALOR_PROGRESSION_ID].progressToNextLevel,
-                    streak: progressions[VALOR_STREAK_ID].currentProgress,
-                };
+        let trialsPassageIds = manifest.trialsPassageIds;
 
-                glory = {
-                    currentProgress: progressions[GLORY_PROGRESSION_ID].currentProgress,
-                    nextLevelAt: progressions[GLORY_PROGRESSION_ID].nextLevelAt,
-                    progressToNextLevel: progressions[GLORY_PROGRESSION_ID].progressToNextLevel,
-                    streak: progressions[GLORY_STREAK_ID].currentProgress,
-                };
+        let currentCard;
+        const uninstancedItemObjectives =
+          data.characterProgressions.data[cId]["uninstancedItemObjectives"];
+        for (const id of trialsPassageIds) {
+          //This is an Array of objects
+          let trialsData = uninstancedItemObjectives[id];
+          if (!uninstancedItemObjectives[id]) {
+            continue;
+          }
 
+          let wins;
+          let losses;
+          let roundsWon;
+          let isFlawless;
 
-                let trialsPassageIds = manifest.trialsPassageIds;
-
-                let currentCard;
-                const uninstancedItemObjectives = data.characterProgressions.data[cId]["uninstancedItemObjectives"];
-                for (const id of trialsPassageIds) {
-
-                    //This is an Array of objects
-                    let trialsData = uninstancedItemObjectives[id];
-                    if (!uninstancedItemObjectives[id]) {
-                        continue;
-                    }
-
-                    let wins;
-                    let losses;
-                    let roundsWon;
-                    let isFlawless;
-
-                    for (const obj of trialsData) {
-                        switch (obj.objectiveHash) {
-                            case TRIALS_WINS_ID:
-                                wins = obj.progress;
-                                break;
-                            case TRIALS_LOSSES_ID:
-                                losses = obj.progress;
-                                break;
-                            case TRIALS_ROUNDS_WON_ID:
-                                roundsWon = obj.progress;
-                                break;
-                            case TRIALS_FLAWLESS_ID:
-                                isFlawless = (obj.progress == 1);
-                                break;
-                        }
-                    }
-
-
-                    const passage = manifest.getTrialsPassageDefinition(id);
-                    currentCard = {
-                        wins: wins,
-                        losses: losses,
-                        roundsWon: roundsWon,
-                        isFlawless: isFlawless,
-                        passage: passage,
-                    };
-                }
-
-                trials = {
-                    currentProgress: progressions[TRIALS_PROGRESSION_ID].currentProgress,
-                    nextLevelAt: progressions[TRIALS_PROGRESSION_ID].nextLevelAt,
-                    progressToNextLevel: progressions[TRIALS_PROGRESSION_ID].progressToNextLevel,
-                    currentCard: currentCard,
-                };
+          for (const obj of trialsData) {
+            switch (obj.objectiveHash) {
+              case TRIALS_WINS_ID:
+                wins = obj.progress;
+                break;
+              case TRIALS_LOSSES_ID:
+                losses = obj.progress;
+                break;
+              case TRIALS_ROUNDS_WON_ID:
+                roundsWon = obj.progress;
+                break;
+              case TRIALS_FLAWLESS_ID:
+                isFlawless = obj.progress == 1;
+                break;
             }
+          }
 
-            let char = data.characters.data[cId];
-
-            let character = parseCharacterFromProfile(char, manifest);
-
-            let out = {
-                character: character,
-                progressions: {
-                    trials: trials,
-                    valor: valor,
-                    glory: glory,
-                }
-            };
-
-            this.#characterProfiles.push(out);
-
-            if (!lastActiveCharacterProfile || out.character.dateLastPlayed.getTime() > lastActiveCharacterProfile.character.dateLastPlayed.getTime()) {
-                lastActiveCharacterProfile = out;
-            }
+          const passage = manifest.getTrialsPassageDefinition(id);
+          currentCard = {
+            wins: wins,
+            losses: losses,
+            roundsWon: roundsWon,
+            isFlawless: isFlawless,
+            passage: passage,
+          };
         }
 
-        this.#lastActiveCharacterProfile = lastActiveCharacterProfile;
+        trials = {
+          currentProgress: progressions[TRIALS_PROGRESSION_ID].currentProgress,
+          nextLevelAt: progressions[TRIALS_PROGRESSION_ID].nextLevelAt,
+          progressToNextLevel:
+            progressions[TRIALS_PROGRESSION_ID].progressToNextLevel,
+          currentCard: currentCard,
+        };
+      }
+
+      let char = data.characters.data[cId];
+
+      let character = parseCharacterFromProfile(char, manifest);
+
+      let out = {
+        character: character,
+        progressions: {
+          trials: trials,
+          valor: valor,
+          glory: glory,
+          ironBanner: ironBanner,
+        },
+      };
+
+      this.#characterProfiles.push(out);
+
+      if (
+        !lastActiveCharacterProfile ||
+        out.character.dateLastPlayed.getTime() >
+          lastActiveCharacterProfile.character.dateLastPlayed.getTime()
+      ) {
+        lastActiveCharacterProfile = out;
+      }
     }
 
-    get lastActiveCharacterProfile() {
-        return this.#lastActiveCharacterProfile;
-    }
+    this.#lastActiveCharacterProfile = lastActiveCharacterProfile;
+  }
 
-    get charactersProfiles() {
-        return this.#characterProfiles;
-    }
+  get lastActiveCharacterProfile() {
+    return this.#lastActiveCharacterProfile;
+  }
 
-    get member() {
-        return undefined;
-    }
+  get charactersProfiles() {
+    return this.#characterProfiles;
+  }
+
+  get member() {
+    return undefined;
+  }
 }
 
 export default PlayerProfile;
