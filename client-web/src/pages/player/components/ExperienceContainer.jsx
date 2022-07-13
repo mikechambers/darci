@@ -8,7 +8,10 @@ const ExperienceContainer = (props) => {
         return "";
     }
 
-    let valor = profile.lastActiveCharacterProfile.progressions.valor;
+    //int nextLvl = rank == null ? null : rank.currentProgress + rank.nextLevelAt - rank.progressToNextLevel;
+
+    let valor = profile.lastActiveCharacterProfile.progressions;
+    console.log(valor);
     return (
         <div>
             <ValorExperience valor={valor} />

@@ -1,9 +1,11 @@
+import ProgressBar from "./ProgessBar";
 import ProgressDetail from "./ProgressDetail";
 
 
 const ValorExperience = (props) => {
 
     let valor = props.valor;
+    console.log(valor)
 
     const style = {
         width:"250px",
@@ -24,7 +26,9 @@ const ValorExperience = (props) => {
             <div id="tier" style={{gridArea:"tier"}}>Mythic</div>
 
             <div id="label_total" style={{gridArea:"label_total"}}>Total</div>
-            <div id="bar_total" style={{gridArea:"bar_total"}}>BAR</div>
+            <div id="bar_total" style={{gridArea:"bar_total"}}>
+                <ProgressBar progress={valor.progress} total={valor.total}/>
+            </div>
             <div id="experience_total" style={{gridArea:"experience_total"}}>
                 <ProgressDetail progress="9735" total="10000" />
             </div>

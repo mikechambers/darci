@@ -11,9 +11,9 @@ const ProgressDetail = (props) => {
 
     return (
         <div style={style}>
-            <div>{progress}</div>
-            <div>/</div>
-            <div>{total}</div>
+            <div style={{width:"45px", textAlign:"right"}}>{progress}</div>
+            <div style={{width:"10px", textAlign:"center"}}>/</div>
+            <div style={{width:"45px", textAlign:"left"}}>{total}</div>
         </div>
     );
 
