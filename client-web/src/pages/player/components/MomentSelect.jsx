@@ -7,7 +7,11 @@ const MomentSelect = (props) => {
     let moments = [
         Moment.DAILY,
         Moment.WEEKLY,
-        Moment.WEEKEND
+        Moment.WEEKEND,
+        Moment.DAY,
+        Moment.WEEK,
+        Moment.MONTH,
+        Moment.SEASON_OF_THE_HAUNTED
     ];
 
     let selected = (props.selected)?props.selected:Moment.DAILY;

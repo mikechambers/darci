@@ -18,6 +18,8 @@ import GamesDetail from "./components/GamesDetail";
 import KillsStatDetail from "./components/KillsStatDetail";
 import { calculatePercent, calculateAverage } from "../../utils";
 import PlayerViewConfig from "./components/PlayerViewConfig";
+import ExperienceContainer from "./components/ExperienceContainer";
+import PlayerProfile from "../../data/PlayerProfile";
 
 const { useQuery } = require("../../hooks/browser");
 
@@ -161,6 +163,7 @@ const PlayerView = () => {
           title="deaths"
         />
       </div>
+      <ExperienceContainer profile={profile}/>
 
       <div>&nbsp;</div>
 
