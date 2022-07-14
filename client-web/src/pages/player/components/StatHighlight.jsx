@@ -19,7 +19,7 @@ const StatHighlight = (props) => {
         {value}
       </div>
       <div
-        className="stat_highlight_label data_label"
+        className="label"
         style={stat_highlight_child_style}
       >
         {label}

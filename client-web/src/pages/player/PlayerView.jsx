@@ -93,6 +93,10 @@ const PlayerView = () => {
         momentName={moment.toString()}
         momentDate={new Date(activityStats.query.startDate)}
       />
+    
+        
+
+
 
       <TimePlayed seconds={summary.timePlayedSeconds} />
 
@@ -125,7 +129,7 @@ const PlayerView = () => {
           )}
           total={summary.kills}
           high={summary.highestKills}
-          title="kills"
+          title="Kills"
         />
 
         <KillsStatDetail
@@ -141,7 +145,7 @@ const PlayerView = () => {
           )}
           total={summary.assists}
           high={summary.highestAssists}
-          title="assists"
+          title="Assists"
         />
 
         <StatDetail
@@ -151,7 +155,7 @@ const PlayerView = () => {
           ).toFixed(2)}
           total={summary.opponentsDefeated}
           high={summary.highestOpponentsDefeated}
-          title="defeats"
+          title="Defeats"
         />
 
         <StatDetail
@@ -160,7 +164,7 @@ const PlayerView = () => {
           )}
           total={summary.deaths}
           high={summary.highestDeaths}
-          title="deaths"
+          title="Deaths"
         />
       </div>
       <ExperienceContainer profile={profile}/>

@@ -10,13 +10,6 @@ const StatDetailBase = (props) => {
 
   let len = values ? values.length : 0;
 
-  //let col_1_value = props.col_1_value;
-  //let col_1_label = props.col_1_label;
-  //let col_2_value = props.col_2_value;
-  //let col_2_label = props.col_2_label;
-  //let col_3_value = props.col_3_value;
-  //let col_3_label = props.col_3_label;
-
   let gridTemplateColumns = `repeat(${len}, 1fr)`;
   let gridTemplateRows = `repeat(${len}, 1fr)`;
   let gridTemplateAreas = "";
@@ -50,7 +43,7 @@ const StatDetailBase = (props) => {
   return (
     <div className="stat_detail" style={stat_detail_style}>
       <div
-        className="stat_detail_title data_title"
+        className="stat_detail_title subsection_header"
         style={{ gridArea: "header" }}
       >
         {title}
@@ -61,7 +54,7 @@ const StatDetailBase = (props) => {
         return (
           <React.Fragment key={key++}>
             <div
-              className={`data_label ${align}`}
+              className={`label ${align}`}
               style={{ gridArea: `label_${index}` }}
             >
               {v.label}

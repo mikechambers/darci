@@ -1,15 +1,32 @@
-/*font-family: 'Roboto', sans-serif;*/
+/*
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Mono', monospace;
+*/
+
+
 
 
 :root {
-  --base-font-color:#eeeeee;
+
+  --bungie-name-code-color:#58ccff;
+
   --link-color:#fbfbfb;
 
+  --base-font-color:#ffffff;
   --data-label-color:#FFFFFF66;
   --data-label-weight:400;
   --data-label-font-size:16px;
-
   --data-title-weight:700;
+
+  --font: 400 16px 'Roboto', sans-serif;
+  --font-page-title: 500 32px 'Roboto', sans-serif;
+  --font-page-subtitle: 300 23px 'Roboto', sans-serif;
+  --font-section-header: 500 16px 'Roboto', sans-serif;
+  --font-subsection-header: 400 16px 'Roboto', sans-serif;
+  --font-label: 400 12px 'Roboto', sans-serif;
+  --font-data : var(--font);
+  --font-data-highlight: 500 36px 'Roboto', sans-serif;
+  --font-table-header:400 16px 'Roboto', sans-serif;
 
   --underline: 1px solid #FFFFFF;
 
@@ -19,7 +36,7 @@
 
 body {
   margin: 4;
-  font-family: 'Roboto Condensed', sans-serif;
+  font:var(--font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--base-font-color);
@@ -27,8 +44,40 @@ body {
   background: linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(136,136,136,1) 100%);
 }
 
-h2 {
+.bungie_name_code {
+  color:var(--bungie-name-code-color);
+}
+
+.page_title {
+  font: var(--font-page-title);
+}
+
+.page_subtitle {
+  font:var(--font-page-subtitle);
+}
+
+h2, .section_header {
+  color: rgba(255, 255, 255, .5);
+  font:var(--font-section-header);
   text-transform: uppercase;
+}
+
+.subsection_header {
+  font:var(--font-subsection-header);
+}
+
+.label {
+  color: rgba(255, 255, 255, .4);
+  text-transform: uppercase;
+  font:var(--font-label);
+}
+
+.data {
+  font:var(--font-data);
+}
+
+.data_highlight {
+  font:var(--font-data-highlight);
 }
 
 a {
@@ -40,7 +89,7 @@ table {
 }
 
 th {
-  font-weight: var(--data-title-weight);
+  font:var(--font-table-header);
   text-transform: uppercase;
   padding: var(--table-cell-padding);
 }
@@ -78,11 +127,6 @@ td {
   background-color: khaki;
 }
 
-
-.player_view_header {
-  font-weight: 400;
-}
-
 /* instead of setting padding, we could set overall width for container
 and then distribute in flex box */
 .stat_highlight_container {
@@ -97,23 +141,6 @@ and then distribute in flex box */
 
 .stat_detail_container > * {
   padding: 0px 20px 20px 0px;
-}
-
-.data_label {
-  text-transform: uppercase;
-  font-size: var(--data-label-font-size);
-  color: var(--data-label-color);
-  font-weight: var(--data-label-weight);
-}
-
-.data_title {
-  font-weight: var(--data-title-weight);
-  text-transform: uppercase;
-}
-
-.data_highlight {
-  font-weight: 700;
-  font-size: 64px;
 }
 
 .stat_detail_title {

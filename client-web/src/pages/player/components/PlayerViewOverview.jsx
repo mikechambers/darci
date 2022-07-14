@@ -40,11 +40,11 @@ const PlayerActivitiesOverview = (props) => {
   let humandMoment = momentDate.toFormat(f);
 
   return (
-    <div className="player_view_header">
-      <div>
-        <span>{playerName}</span>#<span>{playerNameCode}</span>{" "}
+    <div>
+      <div className="page_title">
+        <span>{playerName}</span><span class="bungie_name_code">#{playerNameCode}</span>{" "}
       </div>
-      <div>
+      <div className="page_subtitle">
         &#47;&#47;&nbsp;<span>{formatCharacterClass(classSelection)}</span>&nbsp;&#47;&nbsp;
         <span>{mode.label}</span>&nbsp;&#47;&nbsp;
         <span>{moment.label}</span>
