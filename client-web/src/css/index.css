@@ -23,7 +23,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--base-font-color);
-  background-color: #222222;
+  background: rgb(34,34,34);
+  background: linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(136,136,136,1) 100%);
 }
 
 h2 {
