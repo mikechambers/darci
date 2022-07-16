@@ -32,8 +32,8 @@
 
   --font-page-title: 500 32px 'Roboto', sans-serif;
   --font-page-subtitle: 300 20px 'Roboto', sans-serif;
-  --font-section-header: 500 16px 'Roboto', sans-serif;
-  --font-subsection-header: 400 16px 'Roboto', sans-serif;
+  --font-section-header: 500 18px 'Roboto', sans-serif;
+  --font-subsection-header: 500 16px 'Roboto', sans-serif;
   --font-label: 400 12px 'Roboto', sans-serif;
   --font-data : var(--font);
 
@@ -55,7 +55,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: var(--base-font-color);
   background: rgb(34,34,34);
-  background: linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(136,136,136,1) 100%);
+  /*background: linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(136,136,136,1) 100%);*/
 
   margin:0px;
   padding:0px;
@@ -97,6 +97,10 @@ hr {
 
 .page_title {
   font: var(--font-page-title);
+}
+
+.medal {
+  color:#ECEFF1;
 }
 
 .page_subtitle {
@@ -188,8 +192,3 @@ td {
 .stat_detail_container > * {
   padding: 0px 20px 20px 0px;
 }
-
-.stat_detail_title {
-  border-bottom: var(--underline);
-}
-

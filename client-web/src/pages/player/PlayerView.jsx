@@ -40,7 +40,7 @@ const playerOverviewStyle = {
 
 const playerHeaderStyle = {
   padding: "var(--content-padding)",
-  height: "265px",
+  height: "200px",
   display:"flex",
   alignItems: "center",
 };
@@ -106,17 +106,13 @@ const PlayerView = () => {
 
   return (
     <div id="player_overview_view">
-      <PlayerViewConfig mode={mode} moment={moment} classSelection={classSelection} player={player}/>
-
+      
       <div id="player_overview_header" style={playerHeaderStyle}>
-        <PlayerActivitiesHeader
-          
-          playerName={activityStats.player.bungieDisplayName}
-          playerNameCode={activityStats.player.bungieDisplayNameCode}
+        <PlayerActivitiesHeader 
+          player={activityStats.player}
           classSelection={classSelection}
-          modeName={mode.toString()}
-          momentName={moment.toString()}
-          momentDate={new Date(activityStats.query.startDate)}
+          mode={mode}
+          moment={moment}
       />
       </div>
     
@@ -128,7 +124,7 @@ const PlayerView = () => {
       </div>
 
       
-
+      <PlayerViewConfig mode={mode} moment={moment} classSelection={classSelection} player={player}/>
       <div>
         <h2>Weapons</h2>
         <WeaponsDetail weapons={weapons} max={weaponCount} />

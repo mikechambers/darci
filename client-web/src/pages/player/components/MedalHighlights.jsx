@@ -49,10 +49,10 @@ const MedalHighlights = (props) => {
     <div style={style}>
       {medals.map((m, index) => {
         return (
-          <div style={medal_style} key={m.id}>
+          <div style={medal_style} className="medal" key={m.id}>
             <img
-              height="25"
-              width="25"
+              height="32"
+              width="32"
               alt={m.info.description}
               src={m.info.icon}
             />{" "}

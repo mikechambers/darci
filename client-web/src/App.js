@@ -40,6 +40,11 @@ const App = (props) => {
     initializingContent = <div>Initializing Manifest</div>;
   }
 
+  const style = {
+    padding: "var(--content-padding)",
+    borderBottom: "1px solid #FFFFFF66",
+  };
+
   return (
     <GlobalContext.Provider value={{ global, dispatchGlobal }}>
       <React.Fragment>
@@ -47,7 +52,7 @@ const App = (props) => {
           initializingContent
         ) : (
           <React.Fragment>
-            <div id="nav_bar">
+            <div id="nav_bar" style={style}>
               <Link to="/">darci</Link>
             </div>
             <div id="current_view">

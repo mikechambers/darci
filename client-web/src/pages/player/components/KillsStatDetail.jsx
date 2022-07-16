@@ -11,15 +11,15 @@ const KillsStatDetail = (props) => {
   let values = [
     {
       value: calculatePercent(weapons, total).toFixed() + "%",
-      label: "weap",
+      label: "weapon",
     },
     {
       value: calculatePercent(melees, total).toFixed() + "%",
-      label: "mel",
+      label: "melee",
     },
     {
       value: calculatePercent(supers, total).toFixed() + "%",
-      label: "sup",
+      label: "super",
     },
   ];
 

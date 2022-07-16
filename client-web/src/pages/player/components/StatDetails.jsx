@@ -6,7 +6,8 @@ import { calculateAverage } from "../../../utils";
 
 const style = {
     display:"flex",
-    flexWrap:"wrap"
+    flexWrap:"wrap",
+    columnGap:"40px",
 };
 
 const StatDetails = (props) => {
@@ -30,13 +31,6 @@ const StatDetails = (props) => {
           total={summary.kills}
           high={summary.highestKills}
           title="Kills"
-        />
-
-        <KillsStatDetail
-          total={summary.kills}
-          weapons={summary.weaponKills}
-          supers={summary.superKills}
-          melees={summary.meleeKills}
         />
 
         <StatDetail
@@ -67,6 +61,12 @@ const StatDetails = (props) => {
           title="Deaths"
         />
 
+        <KillsStatDetail
+          total={summary.kills}
+          weapons={summary.weaponKills}
+          supers={summary.superKills}
+          melees={summary.meleeKills}
+        />
 
         </div>
     );
