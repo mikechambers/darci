@@ -42,18 +42,20 @@ const App = (props) => {
 
   return (
     <GlobalContext.Provider value={{ global, dispatchGlobal }}>
-      <div>
+      <React.Fragment>
         {initializingContent ? (
           initializingContent
         ) : (
-          <div>
-            <div>
-              <Link to="/">&lt;main</Link>
+          <React.Fragment>
+            <div id="nav_bar">
+              <Link to="/">darci</Link>
             </div>
-            <Outlet />
-          </div>
+            <div id="outlet_body">
+              <Outlet />
+            </div>
+          </React.Fragment>
         )}
-      </div>
+      </React.Fragment>
     </GlobalContext.Provider>
   );
 };
