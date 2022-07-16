@@ -4,24 +4,46 @@ import WeaponsDetail from "./components/WeaponsDetail";
 import WeaponMetaDetail from "./components/WeaponMetaDetail";
 import MedalHighlights from "./components/MedalHighlights";
 import MapsDetail from "./components/MapsDetail";
-import PlayerActivitiesOverview from "./components/PlayerViewOverview";
+import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
 import {
   useFetchPlayerActivities,
   useFetchPlayerProfile,
 } from "../../hooks/remote";
 import { CharacterClassSelection, Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
-import StatHighlight from "./components/StatHighlight";
-import StatDetail from "./components/StatDetail";
+
 import TimePlayed from "./components/TimePlayed";
-import GamesDetail from "./components/GamesDetail";
-import KillsStatDetail from "./components/KillsStatDetail";
-import { calculatePercent, calculateAverage } from "../../utils";
+
+
 import PlayerViewConfig from "./components/PlayerViewConfig";
-import ExperienceContainer from "./components/ExperienceContainer";
-import PlayerProfile from "../../data/PlayerProfile";
+
+import StatDetails from "./components/StatDetails";
+import StatHighlights from "./components/StatHighlights";
+import PlayerOverviewBackgroundImage from "./images/player_overview_background.png";
+
 
 const { useQuery } = require("../../hooks/browser");
+
+
+
+const playerOverviewStyle = {
+    padding: "var(--content-padding)",
+    height: "500px",
+    display:"flex",
+    flexDirection: "column",
+    justifyContent:"space-around",
+  
+    backgroundImage: `url(${PlayerOverviewBackgroundImage})`,
+    backgroundRepeat: "repeat",
+
+};
+
+const playerHeaderStyle = {
+  padding: "var(--content-padding)",
+  height: "265px",
+  display:"flex",
+  alignItems: "center",
+};
 
 const PlayerView = () => {
   let params = useParams();
@@ -83,104 +105,28 @@ const PlayerView = () => {
   classSelection = CharacterClassSelection.fromString(activityStats.query.classSelection);
 
   return (
-    <div>
+    <div id="player_overview_view">
       <PlayerViewConfig mode={mode} moment={moment} classSelection={classSelection} player={player}/>
-      <PlayerActivitiesOverview
-        playerName={activityStats.player.bungieDisplayName}
-        playerNameCode={activityStats.player.bungieDisplayNameCode}
-        classSelection={classSelection}
-        modeName={mode.toString()}
-        momentName={moment.toString()}
-        momentDate={new Date(activityStats.query.startDate)}
+
+      <div id="player_overview_header" style={playerHeaderStyle}>
+        <PlayerActivitiesHeader
+          
+          playerName={activityStats.player.bungieDisplayName}
+          playerNameCode={activityStats.player.bungieDisplayNameCode}
+          classSelection={classSelection}
+          modeName={mode.toString()}
+          momentName={moment.toString()}
+          momentDate={new Date(activityStats.query.startDate)}
       />
+      </div>
     
-        
-
-
-      <div>&nbsp;</div>
-
-      <TimePlayed seconds={summary.timePlayedSeconds} />
-
-      <div>&nbsp;</div>
-      <div className="stat_highlight_container">
-        <StatHighlight
-          label="win%"
-          value={`${calculatePercent(
-            summary.wins,
-            summary.activityCount
-          ).toFixed()}%`}
-        />
-        <StatHighlight label="KD" value={summary.killsDeathsRatio.toFixed(2)} />
-        <StatHighlight label="EFF" value={summary.efficiency.toFixed(2)} />
-      </div>
-
-      <h2>Overview</h2>
-
-      <div className="stat_detail_container">
-        <GamesDetail
-          wins={summary.wins}
-          losses={summary.losses}
-          mercies={summary.mercies}
-          activity_count={summary.activityCount}
-        />
-
-        <StatDetail
-          avg={calculateAverage(summary.kills, summary.activityCount).toFixed(
-            2
-          )}
-          total={summary.kills}
-          high={summary.highestKills}
-          title="Kills"
-        />
-
-        <KillsStatDetail
-          total={summary.kills}
-          weapons={summary.weaponKills}
-          supers={summary.superKills}
-          melees={summary.meleeKills}
-        />
-
-        <StatDetail
-          avg={calculateAverage(summary.assists, summary.activityCount).toFixed(
-            2
-          )}
-          total={summary.assists}
-          high={summary.highestAssists}
-          title="Assists"
-        />
-
-        <StatDetail
-          avg={calculateAverage(
-            summary.opponentsDefeated,
-            summary.activityCount
-          ).toFixed(2)}
-          total={summary.opponentsDefeated}
-          high={summary.highestOpponentsDefeated}
-          title="Defeats"
-        />
-
-        <StatDetail
-          avg={calculateAverage(summary.deaths, summary.activityCount).toFixed(
-            2
-          )}
-          total={summary.deaths}
-          high={summary.highestDeaths}
-          title="Deaths"
-        />
-      </div>
-      <ExperienceContainer profile={profile}/>
-
-      <div>&nbsp;</div>
-
-      <div
-        style={{
-          display: "flex",
-          alignItems: "start",
-          justifyContent: "start",
-        }}
-      >
+      <div style={playerOverviewStyle}>
+        <StatHighlights summary={summary} />
+        <StatDetails summary={summary} />
         <MedalHighlights medals={medals} max={medalCount} />
+        <TimePlayed seconds={summary.timePlayedSeconds} />
       </div>
+
       
 
       <div>

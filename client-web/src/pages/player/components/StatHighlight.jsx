@@ -14,12 +14,12 @@ const StatHighlight = (props) => {
   };
 
   return (
-    <div className="stat_highlight" style={stat_highlight_style}>
+    <div style={stat_highlight_style}>
       <div className="data_highlight" style={stat_highlight_child_style}>
         {value}
       </div>
       <div
-        className="label"
+        className="label_highlight"
         style={stat_highlight_child_style}
       >
         {label}

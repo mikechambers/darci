@@ -9,7 +9,7 @@ const formatCharacterClass = function (classSelection) {
   let out = classSelection.label;
 
   if (classSelection === CharacterClassSelection.ALL) {
-    out = "All Classes";
+    out = "all classes";
   }
 
   return out;
@@ -42,13 +42,14 @@ const PlayerActivitiesOverview = (props) => {
   return (
     <div>
       <div className="page_title">
-        <span>{playerName}</span><span class="bungie_name_code">#{playerNameCode}</span>{" "}
+        <span>{playerName}</span><span className="bungie_name_code">#{playerNameCode}</span>{" "}
       </div>
+      <hr />
       <div className="page_subtitle">
-        &#47;&#47;&nbsp;<span>{formatCharacterClass(classSelection)}</span>&nbsp;&#47;&nbsp;
-        <span>{mode.label}</span>&nbsp;&#47;&nbsp;
-        <span>{moment.label}</span>
-        &nbsp;({humandMoment})
+
+      {mode.label} stats for {formatCharacterClass(classSelection)} since {moment.label} ({humandMoment})
+
+ 
       </div>
     </div>
   );

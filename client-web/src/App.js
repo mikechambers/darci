@@ -50,7 +50,7 @@ const App = (props) => {
             <div id="nav_bar">
               <Link to="/">darci</Link>
             </div>
-            <div id="outlet_body">
+            <div id="current_view">
               <Outlet />
             </div>
           </React.Fragment>

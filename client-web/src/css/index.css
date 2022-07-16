@@ -19,8 +19,12 @@
   --data-title-weight:700;
 
 
+  --light:300;
   --regular:400;
   --medium:500;
+  --bold:700;
+
+  --content-padding:  0px 30px;
 
   --font: 400 16px 'Roboto', sans-serif;
 
@@ -32,7 +36,10 @@
   --font-subsection-header: 400 16px 'Roboto', sans-serif;
   --font-label: 400 12px 'Roboto', sans-serif;
   --font-data : var(--font);
-  --font-data-highlight: 500 36px 'Roboto', sans-serif;
+
+  --font-data-highlight: 700 42px 'Roboto', sans-serif;
+  --font-label-highlight: 500 17px 'Roboto', sans-serif;
+
   --font-table-header:400 16px 'Roboto', sans-serif;
 
   --underline: 1px solid #FFFFFF;
@@ -56,9 +63,15 @@ body {
   width:100%;
 }
 
+hr {
+  border-top: 1px solid #FFFFFF;
+}
+
+/**************** main layout *********************/
+
 #root {
   /*background-color: #58ccff;*/
-  margin:0px 8px;
+  margin:0px 0px;
 }
 
 #nav_bar {
@@ -71,9 +84,11 @@ body {
   align-items: center;
 }
 
-#outlet_body {
-  background-color: #00ff00;
+#current_view {
+  /*background-color: #00ff00;*/
 }
+
+/***************** player activity overview layout ****************/
 
 
 .bungie_name_code {
@@ -99,7 +114,7 @@ h2, .section_header {
 }
 
 .label {
-  color: rgba(255, 255, 255, .4);
+  color: rgba(255, 255, 255, .5);
   text-transform: uppercase;
   font:var(--font-label);
 }
@@ -110,6 +125,12 @@ h2, .section_header {
 
 .data_highlight {
   font:var(--font-data-highlight);
+}
+
+.label_highlight {
+  font: var(--font-label-highlight);
+  color: rgba(255, 255, 255, .5);
+  text-transform: uppercase;
 }
 
 a {
@@ -157,13 +178,6 @@ td {
   top: 10;
   right: 15;
   background-color: khaki;
-}
-
-/* instead of setting padding, we could set overall width for container
-and then distribute in flex box */
-.stat_highlight_container {
-  display: flex;
-  flex-wrap:wrap;
 }
 
 .stat_detail_container {

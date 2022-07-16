@@ -1,3 +1,10 @@
+
+let style={
+    display: "flex",
+    alignItems: "start",
+    justifyContent: "start",
+};
+
 const MedalHighlights = (props) => {
   let container_style = {
     display: "flex",
@@ -39,7 +46,7 @@ const MedalHighlights = (props) => {
   }
 
   return (
-    <div style={container_style}>
+    <div style={style}>
       {medals.map((m, index) => {
         return (
           <div style={medal_style} key={m.id}>
