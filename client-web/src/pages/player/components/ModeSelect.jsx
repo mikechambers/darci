@@ -7,6 +7,7 @@ const ModeSelect = (props) => {
         Mode.PVP_QUICKPLAY,
         Mode.PVP_COMPETITIVE,
         Mode.TRIALS_OF_OSIRIS,
+        Mode.IRON_BANNER,
         Mode.PRIVATE_MATCHES_ALL,
         Mode.ALL_PVP
     ];

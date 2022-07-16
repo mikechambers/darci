@@ -12,7 +12,7 @@ import {
 
 const WeaponsDetail = (props) => {
   let weapons = props.weapons ? props.weapons : [];
-  let maxCount = props.max ? props.max : 5;
+  let maxCount = props.max ? props.max : 10;
 
   weapons.sort((a, b) => {
     return b.kills - a.kills;

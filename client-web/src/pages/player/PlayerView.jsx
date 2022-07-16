@@ -97,6 +97,7 @@ const PlayerView = () => {
         
 
 
+      <div>&nbsp;</div>
 
       <TimePlayed seconds={summary.timePlayedSeconds} />
 
@@ -180,16 +181,18 @@ const PlayerView = () => {
       >
         <MedalHighlights medals={medals} max={medalCount} />
       </div>
+      
 
       <div>
         <h2>Weapons</h2>
         <WeaponsDetail weapons={weapons} max={weaponCount} />
       </div>
-
+  
       <div>
         <h2>Meta</h2>
         <WeaponMetaDetail meta={meta} max={metaCount} />
       </div>
+  
 
       <div>
         <h2>Maps</h2>

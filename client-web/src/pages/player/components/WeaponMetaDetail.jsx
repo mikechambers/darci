@@ -12,7 +12,7 @@ import {
 
 const WeaponMetaDetail = (props) => {
   let meta = props.meta ? props.meta : [];
-  let maxCount = props.max ? props.max : 5;
+  let maxCount = props.max ? props.max : 10;
 
   meta.sort((a, b) => {
     return b.count - a.count;

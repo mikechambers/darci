@@ -144,6 +144,9 @@ class Mode extends EnumBase {
   //static TITAN = new Mode("Sundial", 83);
   static TRIALS_OF_OSIRIS = new Mode("TrialsOfOsiris", 84, "Trials of Osiris");
   //static TITAN = new Mode("Dares", 85);
+  static RIFT = new Mode("Rift", 88, "Rift");
+  static ZONE_CONTROL = new Mode("ZoneControl", 89, "Zone Control");
+  static IRON_BANNER_RIFT = new Mode("IronBannerRift", 90, "Iron Banner Rift");
 
   constructor(type, id, label = undefined) {
     super(type, id, label);
