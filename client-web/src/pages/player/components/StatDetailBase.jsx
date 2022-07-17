@@ -13,7 +13,6 @@ const StatDetailBase = (props) => {
     return "";
   }
 
-  let key = 0;
   return (
     <div className="stat_detail">
       <div

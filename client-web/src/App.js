@@ -2,6 +2,9 @@ import React, { Component, useState, useEffect, useReducer } from "react";
 import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useFetchManifest } from "./hooks/remote";
+import { useParams } from "react-router-dom";
+import { CharacterClassSelection, Mode, Moment } from "shared";
+import PlayerViewConfig from "./components/PlayerViewConfig";
 
 import {
   GlobalContext,
@@ -12,6 +15,19 @@ const { useQuery } = require("./hooks/browser");
 
 const App = (props) => {
   let query = useQuery();
+
+  let params = useParams();
+
+  let mode = params.mode ? Mode.fromString(params.mode) : undefined;
+  let moment = params.moment ? Moment.fromString(params.moment) : undefined;
+  let classSelection = params.classType
+    ? CharacterClassSelection.fromString(params.classType)
+    : undefined;
+
+  let player = {
+    memberId: params.memberId,
+    platformId: parseInt(params.platformId),
+  };
 
   let clearStorage = query.get("clearstorage") !== null;
 
@@ -43,6 +59,9 @@ const App = (props) => {
   const style = {
     padding: "var(--content-padding)",
     borderBottom: "1px solid #FFFFFF66",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
   };
 
   return (
@@ -54,6 +73,12 @@ const App = (props) => {
           <React.Fragment>
             <div id="nav_bar" style={style}>
               <Link to="/">darci</Link>
+              <PlayerViewConfig
+                mode={mode}
+                moment={moment}
+                classSelection={classSelection}
+                player={player}
+              />
             </div>
             <div id="current_view">
               <Outlet />

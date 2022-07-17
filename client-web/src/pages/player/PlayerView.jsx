@@ -14,9 +14,6 @@ import ErrorView from "../../components/ErrorView";
 
 import TimePlayed from "./components/TimePlayed";
 
-
-import PlayerViewConfig from "./components/PlayerViewConfig";
-
 import StatDetails from "./components/StatDetails";
 import StatHighlights from "./components/StatHighlights";
 import PlayerOverviewBackgroundImage from "./images/player_overview_background.png";
@@ -98,7 +95,6 @@ const PlayerView = () => {
   let medals = summary.medals;
   let meta = activityStats.meta;
   let maps = activityStats.maps;
-  let player = activityStats.player;
 
   mode = Mode.fromString(activityStats.query.mode);
   moment = Moment.fromString(activityStats.query.startMoment);
@@ -123,8 +119,6 @@ const PlayerView = () => {
         <TimePlayed seconds={summary.timePlayedSeconds} />
       </div>
 
-      
-      <PlayerViewConfig mode={mode} moment={moment} classSelection={classSelection} player={player}/>
       <div>
         <h2>Weapons</h2>
         <WeaponsDetail weapons={weapons} max={weaponCount} />

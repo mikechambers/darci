@@ -68,25 +68,52 @@ hr {
 }
 
 /**************** main layout *********************/
+html {
+  height:100%;
+}
 
 #root {
   /*background-color: #58ccff;*/
   margin:0px 0px;
+  height: 100%;
 }
 
 #nav_bar {
   /*background-color: #ffee00;*/
   height: 65px;
-
   font:var(--font-nav);
-
-  display: flex;
-  align-items: center;
 }
 
 #current_view {
   /*background-color: #00ff00;*/
+  height: 100%;
 }
+
+/************ select box styling *****************/
+
+/*
+select {
+  border: 0px solid #ccc;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  font: var(--font);
+  color: #000000;
+  background-color: rgb(255,255,255, 0.8);
+  text-align-last: right;
+  direction: rtl; 
+}
+*/
+
+select {
+  text-align-last: right;
+  direction: rtl;
+}
+
+
+
+option { direction: rtl; }
+
 
 /***************** player activity overview layout ****************/
 
