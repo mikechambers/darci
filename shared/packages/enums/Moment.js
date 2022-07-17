@@ -195,10 +195,10 @@ class Moment extends EnumBase {
     return out;
   }
 
-  static subtractMonthsFromDate(moment, days) {
+  static subtractMonthsFromDate(moment, months) {
     let out = new Date();
     out.setTime(moment.getTime());
-    out.setDate(out.getMonth() - days);
+    out.setMonth(out.getMonth() - months);
     return out;
   }
 
