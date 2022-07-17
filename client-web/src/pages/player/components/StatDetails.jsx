@@ -8,6 +8,10 @@ const style = {
     display:"flex",
     flexWrap:"wrap",
     columnGap:"40px",
+    backgroundColor:"rgba(0,0,0,0.1)",
+    padding:"10px",
+    borderRadius:"4px",
+    width:"max-content",
 };
 
 const StatDetails = (props) => {
