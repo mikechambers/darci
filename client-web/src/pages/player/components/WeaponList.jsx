@@ -82,7 +82,7 @@ const WeaponList = (props) => {
                       index === item.items.length - 1 ? "right" : "left";
                     return (
                       <Stat
-                        value={stat.value}
+                        value={stat.value.toLocaleString()}
                         label={stat.label}
                         align={align}
                         key={index}
