@@ -31,6 +31,11 @@ const playerOverviewStyle = {
   backgroundRepeat: "repeat",
 };
 
+const weaponsStyle = {
+  paddingTop: "24px",
+  display: "flex",
+};
+
 const playerHeaderStyle = {
   padding: "var(--content-padding)",
   height: "200px",
@@ -116,13 +121,9 @@ const PlayerView = () => {
         <TimePlayed seconds={summary.timePlayedSeconds} />
       </div>
 
-      <div>
+      <div style={weaponsStyle}>
         <WeaponsDetail weapons={weapons} max={weaponCount} />
-      </div>
-
-      <div>
-        <h2>Meta</h2>
-        <WeaponMetaDetail meta={meta} max={metaCount} />
+        <WeaponMetaDetail weapons={meta} max={weaponCount} />
       </div>
 
       <div>

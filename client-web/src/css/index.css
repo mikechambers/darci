@@ -127,6 +127,10 @@ option {
 /***************** player activity overview layout ****************/
 
 
+.export {
+  font:var(--font-label);
+}
+
 .bungie_name_code {
   color:var(--bungie-name-code-color);
 }

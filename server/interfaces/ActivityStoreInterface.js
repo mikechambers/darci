@@ -247,14 +247,14 @@ class ActivityStoreInterface {
             id: id,
             count: 1,
             kills: kills,
-            precision: precision,
+            precisionKills: precision,
           };
         } else {
           item = {
             ...item,
             count: item.count + 1,
             kills: item.kills + kills,
-            precision: item.precision + precision,
+            precisionKills: item.precisionKills + precision,
           };
         }
 

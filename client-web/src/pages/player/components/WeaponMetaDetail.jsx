@@ -1,60 +1,44 @@
-import { calculateRatio } from "shared";
+import { calculatePercent, calculateAverage } from "../../../utils/index";
+import WeaponList from "./WeaponList";
 
-import {
-  DataTable,
-  RIGHT_ALIGN,
-  LEFT_ALIGN,
-  DATA_TYPE,
-  ICON_TYPE,
-  generateHeader,
-  generateCell,
-} from "./DataTable";
+const WeaponsDetail = (props) => {
+  let weapons = props.weapons ? props.weapons : [];
+  let maxCount = props.max ? props.max : 5;
 
-const WeaponMetaDetail = (props) => {
-  let meta = props.meta ? props.meta : [];
-  let maxCount = props.max ? props.max : 10;
-
-  meta.sort((a, b) => {
-    return b.count - a.count;
+  weapons.sort((a, b) => {
+    return b.kills - a.kills;
   });
 
-  let headers = [
-    generateHeader("", LEFT_ALIGN),
-    generateHeader("weapon", RIGHT_ALIGN),
-    generateHeader("players", RIGHT_ALIGN),
-    generateHeader("kills", RIGHT_ALIGN),
-    generateHeader("kills/p", RIGHT_ALIGN),
-    generateHeader("type", RIGHT_ALIGN),
-  ];
-
-  if (meta.length > maxCount) {
-    meta = meta.slice(0, maxCount);
-  }
-
   let data = [];
+  for (const w of weapons) {
+    let items = [
+      {
+        label: "Player",
+        value: w.count,
+      },
+      {
+        label: "Kills",
+        value: w.kills,
+      },
+      {
+        label: "Kills/p",
+        value: calculateAverage(w.kills, w.count).toFixed(2),
+      },
+      {
+        label: "Precision",
+        value: calculatePercent(w.precisionKills, w.kills).toFixed(2) + "%",
+      },
+    ];
 
-  for (const w of meta) {
-    let row = [];
-
-    data.push(row);
-
-    row.push(generateCell(w.item.icon, ICON_TYPE, LEFT_ALIGN));
-    row.push(generateCell(w.item.name, DATA_TYPE, RIGHT_ALIGN));
-    row.push(generateCell(w.count, DATA_TYPE, RIGHT_ALIGN));
-    row.push(generateCell(w.kills, DATA_TYPE, RIGHT_ALIGN));
-    row.push(
-      generateCell(
-        calculateRatio(w.kills, w.count).toFixed(2),
-        DATA_TYPE,
-        RIGHT_ALIGN
-      )
-    );
-    row.push(
-      generateCell(w.item.itemSubType.toString(), DATA_TYPE, RIGHT_ALIGN)
-    );
+    data.push({
+      title: w.item.name,
+      subtitle: w.item.itemSubType.toString(),
+      icon: w.item.icon,
+      items: items,
+    });
   }
 
-  return <DataTable data={data} headers={headers} />;
+  return <WeaponList weapons={data} title="Weapon Meta" maxCount={maxCount} />;
 };
 
-export default WeaponMetaDetail;
+export default WeaponsDetail;
