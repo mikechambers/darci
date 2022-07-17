@@ -18,27 +18,23 @@ import StatDetails from "./components/StatDetails";
 import StatHighlights from "./components/StatHighlights";
 import PlayerOverviewBackgroundImage from "./images/player_overview_background.png";
 
-
 const { useQuery } = require("../../hooks/browser");
 
-
-
 const playerOverviewStyle = {
-    padding: "var(--content-padding)",
-    height: "500px",
-    display:"flex",
-    flexDirection: "column",
-    justifyContent:"space-around",
-  
-    backgroundImage: `url(${PlayerOverviewBackgroundImage})`,
-    backgroundRepeat: "repeat",
+  padding: "var(--content-padding)",
+  height: "500px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-around",
 
+  backgroundImage: `url(${PlayerOverviewBackgroundImage})`,
+  backgroundRepeat: "repeat",
 };
 
 const playerHeaderStyle = {
   padding: "var(--content-padding)",
   height: "200px",
-  display:"flex",
+  display: "flex",
   alignItems: "center",
 };
 
@@ -98,20 +94,21 @@ const PlayerView = () => {
 
   mode = Mode.fromString(activityStats.query.mode);
   moment = Moment.fromString(activityStats.query.startMoment);
-  classSelection = CharacterClassSelection.fromString(activityStats.query.classSelection);
+  classSelection = CharacterClassSelection.fromString(
+    activityStats.query.classSelection
+  );
 
   return (
     <div id="player_overview_view">
-      
       <div id="player_overview_header" style={playerHeaderStyle}>
-        <PlayerActivitiesHeader 
+        <PlayerActivitiesHeader
           player={activityStats.player}
           classSelection={classSelection}
           mode={mode}
           moment={moment}
-      />
+        />
       </div>
-    
+
       <div style={playerOverviewStyle}>
         <StatHighlights summary={summary} />
         <StatDetails summary={summary} />
@@ -120,15 +117,13 @@ const PlayerView = () => {
       </div>
 
       <div>
-        <h2>Weapons</h2>
         <WeaponsDetail weapons={weapons} max={weaponCount} />
       </div>
-  
+
       <div>
         <h2>Meta</h2>
         <WeaponMetaDetail meta={meta} max={metaCount} />
       </div>
-  
 
       <div>
         <h2>Maps</h2>

@@ -153,6 +153,20 @@ h2, .section_header {
   font:var(--font-subsection-header);
 }
 
+.weapon_title {
+  font:var(--font);
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.weapon_subtitle {
+  font:var(--font);
+  font-weight: var(--bold);
+  font-size: 12px;
+  text-transform: uppercase;
+  color:#BFBFBF;
+}
+
 .label {
   color: rgba(255, 255, 255, .5);
   text-transform: uppercase;
@@ -175,6 +189,16 @@ h2, .section_header {
 
 a {
   color: var(--link-color);
+}
+
+.weapon_list_icon{
+  width: 64px;
+  height: 64px;
+  border-radius: 10px;
+  
+  background-size: cover;
+  padding: 0px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 1);
 }
 
 table {
