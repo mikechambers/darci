@@ -100,6 +100,8 @@ button {
   border:1px solid white;
   cursor: pointer;
   border-radius: 6px;
+  padding: 1px 10px;
+  margin-left: 10px;
 }
 
 select, option {
