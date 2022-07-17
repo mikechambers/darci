@@ -30,6 +30,8 @@
 
   --font-nav: 400 18px 'Roboto', sans-serif;
 
+  --font-controls: 300 14px 'Roboto', sans-serif;;
+
   --font-page-title: 500 32px 'Roboto', sans-serif;
   --font-page-subtitle: 300 20px 'Roboto', sans-serif;
   --font-section-header: 500 18px 'Roboto', sans-serif;
@@ -91,28 +93,33 @@ html {
 
 /************ select box styling *****************/
 
-/*
-select {
-  border: 0px solid #ccc;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  font: var(--font);
-  color: #000000;
-  background-color: rgb(255,255,255, 0.8);
-  text-align-last: right;
-  direction: rtl; 
+button {
+  font:var(--font-controls);
+  background: #FFFFFF00;
+  color:white;
+  border:1px solid white;
+  cursor: pointer;
+  border-radius: 6px;
 }
-*/
 
-select {
+select, option {
+  font:var(--font-controls);
+
+  background: #FFFFFF00;
+  color:white;
+  border:0px;
+
   text-align-last: right;
+
+  /*
+  this remove the arrow
+  appearance:none;*/
+}
+
+option {
+  /* right align options */
   direction: rtl;
 }
-
-
-
-option { direction: rtl; }
 
 
 /***************** player activity overview layout ****************/
