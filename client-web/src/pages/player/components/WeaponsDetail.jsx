@@ -5,6 +5,8 @@ const WeaponsDetail = (props) => {
   let weapons = props.weapons ? props.weapons : [];
   let maxCount = props.max ? props.max : 5;
 
+  let description = "Weapons you have used ordered by kills.";
+
   weapons.sort((a, b) => {
     return b.kills - a.kills;
   });
@@ -38,7 +40,14 @@ const WeaponsDetail = (props) => {
     });
   }
 
-  return <WeaponList weapons={data} title="weapons" maxCount={maxCount} />;
+  return (
+    <WeaponList
+      weapons={data}
+      title="weapons"
+      maxCount={maxCount}
+      description={description}
+    />
+  );
 };
 
 export default WeaponsDetail;

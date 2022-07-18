@@ -5,6 +5,10 @@ const WeaponsDetail = (props) => {
   let weapons = props.weapons ? props.weapons : [];
   let maxCount = props.max ? props.max : 5;
 
+  let description = `Top weapons in your games ordered by number of players using the weapon.
+
+You and your fireteam's weapons are not included.`;
+
   weapons.sort((a, b) => {
     return b.kills - a.kills;
   });
@@ -38,7 +42,14 @@ const WeaponsDetail = (props) => {
     });
   }
 
-  return <WeaponList weapons={data} title="Weapon Meta" maxCount={maxCount} />;
+  return (
+    <WeaponList
+      weapons={data}
+      title="Weapon Meta"
+      maxCount={maxCount}
+      description={description}
+    />
+  );
 };
 
 export default WeaponsDetail;

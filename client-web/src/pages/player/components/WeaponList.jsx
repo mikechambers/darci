@@ -2,6 +2,7 @@ import React from "react";
 import Stat from "./Stat";
 import { useState } from "react";
 import PageController from "../../../components/PageController";
+import ToolTip from "../../../components/Tooltip";
 
 const containterStyle = {
   display: "flex",
@@ -52,6 +53,7 @@ const WeaponList = (props) => {
   let weapons = props.weapons;
   let title = props.title;
   let maxCount = props.maxCount ? props.maxCount : 10;
+  let description = props.description ? props.description : "";
 
   //need to account for smaller than max
   let end = maxCount < weapons.length ? maxCount : weapons.length;
@@ -64,7 +66,9 @@ const WeaponList = (props) => {
   return (
     <div style={elementStyle}>
       <div style={elementHeaderStyle}>
-        <div className="section_header">{title}</div>
+        <div className="section_header">
+          {title} <ToolTip text={description} />
+        </div>
         <div className="export">Export Data</div>
       </div>
       <div style={wrapperStyle}>
