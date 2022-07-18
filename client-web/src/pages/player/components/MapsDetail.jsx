@@ -120,7 +120,56 @@ const MapsDetail = (props) => {
     data.push(row);
   }
 
-  return <DataTable data={data} headers={headers} />;
+  let containterStyle = {
+    width: "725px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px", //todo: move this to a css variable
+    padding: "var(--content-padding)",
+  };
+
+  let itemStyle = {
+    height: "70px",
+  };
+
+  let dataContainterStyle = {
+    height: "45px",
+
+    backgroundColor: "#2E2E2E",
+    borderRadius: "0px 0px 8px 8px",
+  };
+
+  let mapNameStyle = {
+    display: "inline-block",
+    alignSelf: "flex-end",
+  };
+
+  console.log(maps);
+  return (
+    <div style={containterStyle}>
+      {maps.map((map, index) => {
+        let mapStyle = {
+          display: "flex",
+          height: "25px",
+          backgroundImage: `url(${map.map.image})`,
+          backgroundPosition: "center",
+        };
+
+        return (
+          <div>
+            <div
+              className="map_detail_image weapon_title"
+              id="map_image"
+              style={mapStyle}
+            >
+              <span style={mapNameStyle}>{map.map.name}</span>
+            </div>
+            <div style={dataContainterStyle}>data</div>
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export default MapsDetail;

@@ -207,6 +207,13 @@ a {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 1);
 }
 
+.map_detail_image {
+  width: 725px;
+  height: 25px;
+  background-size: cover;
+  padding: 0px;
+}
+
 table {
   border-collapse: collapse;
 }
@@ -258,39 +265,3 @@ td {
 .stat_detail_container > * {
   padding: 0px 20px 20px 0px;
 }
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  top: -5px;
-  left: 110%;
-}
-
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: 100%;
-  margin-top: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent black transparent transparent;
-}
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-  
-

@@ -2,7 +2,7 @@ import React from "react";
 import Stat from "./Stat";
 import { useState } from "react";
 import PageController from "../../../components/PageController";
-import ToolTip from "../../../components/Tooltip";
+import InfoTip from "../../../components/InfoTip";
 
 const containterStyle = {
   display: "flex",
@@ -67,7 +67,7 @@ const WeaponList = (props) => {
     <div style={elementStyle}>
       <div style={elementHeaderStyle}>
         <div className="section_header">
-          {title} <ToolTip text={description} />
+          {title} <InfoTip text={description} />
         </div>
         <div className="export">Export Data</div>
       </div>
