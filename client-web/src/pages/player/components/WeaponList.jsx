@@ -1,57 +1,64 @@
+import React from "react";
 import Stat from "./Stat";
+import { useState } from "react";
+import PageController from "../../../components/PageController";
+
+const containterStyle = {
+  display: "flex",
+  backgroundColor: "#2E2E2E",
+  borderRadius: "8px",
+  padding: "12px",
+  gap: "12px",
+};
+
+const dataContainerStyle = {
+  width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+};
+
+const headerStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+  width: "100%",
+  alignItems: "flex-end",
+};
+
+const valuesStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+};
+
+const wrapperStyle = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "12px",
+};
+
+const elementStyle = {
+  padding: "var(--content-padding)",
+  width: "422px",
+};
+
+const elementHeaderStyle = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  alignItems: "flex-end",
+};
 
 const WeaponList = (props) => {
   let weapons = props.weapons;
   let title = props.title;
   let maxCount = props.maxCount ? props.maxCount : 10;
 
-  if (weapons.length > maxCount) {
-    weapons = weapons.slice(0, maxCount);
-  }
+  //need to account for smaller than max
+  let end = maxCount < weapons.length ? maxCount : weapons.length;
+  let [weaponsSlice, setWeaponsSlice] = useState(weapons.slice(0, end));
 
-  let containterStyle = {
-    display: "flex",
-    backgroundColor: "#2E2E2E",
-    borderRadius: "8px",
-    padding: "12px",
-    gap: "12px",
-  };
-
-  let dataContainerStyle = {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  };
-
-  let headerStyle = {
-    display: "flex",
-    justifyContent: "space-between",
-    width: "100%",
-    alignItems: "flex-end",
-  };
-
-  let valuesStyle = {
-    display: "flex",
-    justifyContent: "space-between",
-  };
-
-  let wrapperStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px",
-  };
-
-  let elementStyle = {
-    padding: "var(--content-padding)",
-    width: "422px",
-  };
-
-  let elementHeaderStyle = {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-end",
+  const onPageChange = function (items) {
+    setWeaponsSlice(items);
   };
 
   return (
@@ -61,7 +68,7 @@ const WeaponList = (props) => {
         <div className="export">Export Data</div>
       </div>
       <div style={wrapperStyle}>
-        {weapons.map((item, index) => {
+        {weaponsSlice.map((item, index) => {
           let iconStyle = {
             backgroundImage: `url(${item.icon})`,
             width: "64px",
@@ -94,6 +101,13 @@ const WeaponList = (props) => {
             </div>
           );
         })}
+      </div>
+      <div>
+        <PageController
+          items={weapons}
+          pageSize={maxCount}
+          onChange={onPageChange}
+        />
       </div>
     </div>
   );

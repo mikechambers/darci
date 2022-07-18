@@ -13,7 +13,7 @@ const WeaponsDetail = (props) => {
   for (const w of weapons) {
     let items = [
       {
-        label: "Player",
+        label: "Players",
         value: w.count,
       },
       {
