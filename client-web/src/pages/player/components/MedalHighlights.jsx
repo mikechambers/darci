@@ -1,22 +1,16 @@
+let style = {
+  display: "flex",
+  alignItems: "start",
+  justifyContent: "start",
+};
 
-let style={
-    display: "flex",
-    alignItems: "start",
-    justifyContent: "start",
+const medal_style = {
+  display: "flex",
+  alignItems: "center",
+  padding: "0px 20px 20px 0px",
 };
 
 const MedalHighlights = (props) => {
-  let container_style = {
-    display: "flex",
-    alignContent: "flex-start",
-  };
-
-  let medal_style = {
-    display: "flex",
-    alignItems: "center",
-    padding: "0px 20px 20px 0px",
-  };
-
   let medals = props.medals ? props.medals : [];
   let max = props.max ? props.max : 5;
 
@@ -53,6 +47,7 @@ const MedalHighlights = (props) => {
             <img
               height="32"
               width="32"
+              title={m.info.description}
               alt={m.info.description}
               src={m.info.icon}
             />{" "}
