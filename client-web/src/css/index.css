@@ -50,6 +50,13 @@
   --table-cell-padding: 4px 0px 0px 16px;
 
   --background-color:rgb(34,34,34);
+
+  /**gap between items in a list. Such as weapons / maps */
+  --list-item-gap: 12px;
+
+  /*2E2E2E*/
+  --list-item-background-color: rgba(0,0,0,0.25);
+  --list-item-border: 1px solid #ffffff33;
 }
 
 body {
@@ -159,13 +166,13 @@ h2, .section_header {
   font:var(--font-subsection-header);
 }
 
-.weapon_title {
+.list_title {
   font:var(--font);
   font-weight: 500;
   font-size: 15px;
 }
 
-.weapon_subtitle {
+.list_subtitle {
   font:var(--font);
   font-weight: var(--bold);
   font-size: 12px;
@@ -181,10 +188,12 @@ h2, .section_header {
 
 .data {
   font:var(--font-data);
+  text-shadow: 1px 1px 1px black;
 }
 
 .data_highlight {
   font:var(--font-data-highlight);
+  text-shadow: 1px 1px 1px black;
 }
 
 .label_highlight {
@@ -205,13 +214,6 @@ a {
   background-size: cover;
   padding: 0px;
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 1);
-}
-
-.map_detail_image {
-  width: 725px;
-  height: 25px;
-  background-size: cover;
-  padding: 0px;
 }
 
 table {

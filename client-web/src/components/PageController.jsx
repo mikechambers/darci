@@ -10,7 +10,7 @@ const buttonStyle = {
   padding: "0px",
 };
 
-const buttonContainterStyle = {
+const buttoncontainerStyle = {
   display: "flex",
   justifyContent: "center",
   alignItems: "flex-end",
@@ -62,7 +62,7 @@ const PageController = (props) => {
   };
 
   return (
-    <div style={buttonContainterStyle}>
+    <div style={buttoncontainerStyle}>
       <div>
         <button title="First Page" style={buttonStyle} onClick={onFirstClick}>
           <NavFirstIcon />

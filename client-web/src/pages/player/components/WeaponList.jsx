@@ -2,14 +2,15 @@ import React from "react";
 import Stat from "./Stat";
 import { useState } from "react";
 import PageController from "../../../components/PageController";
-import InfoTip from "../../../components/InfoTip";
+import GraphicListHeader from "../../../components/GraphicListHeader";
 
-const containterStyle = {
+const containerStyle = {
   display: "flex",
-  backgroundColor: "#2E2E2E",
+  backgroundColor: "var(--list-item-background-color)",
   borderRadius: "8px",
   padding: "12px",
-  gap: "12px",
+  gap: "var(--list-item-gap)",
+  border: "var(--list-item-border)",
 };
 
 const dataContainerStyle = {
@@ -34,19 +35,12 @@ const valuesStyle = {
 const wrapperStyle = {
   display: "flex",
   flexDirection: "column",
-  gap: "12px",
+  gap: "var(--list-item-gap)",
 };
 
 const elementStyle = {
   padding: "var(--content-padding)",
   width: "422px",
-};
-
-const elementHeaderStyle = {
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "flex-end",
 };
 
 const WeaponList = (props) => {
@@ -65,12 +59,7 @@ const WeaponList = (props) => {
 
   return (
     <div style={elementStyle}>
-      <div style={elementHeaderStyle}>
-        <div className="section_header">
-          {title} <InfoTip text={description} />
-        </div>
-        <div className="export">Export Data</div>
-      </div>
+      <GraphicListHeader title={title} description={description} />
       <div style={wrapperStyle}>
         {weaponsSlice.map((item, index) => {
           let iconStyle = {
@@ -80,12 +69,12 @@ const WeaponList = (props) => {
             flexShrink: "0",
           };
           return (
-            <div style={containterStyle} key={index}>
+            <div style={containerStyle} key={index}>
               <div className="weapon_list_icon" style={iconStyle}></div>
               <div id="data_container" style={dataContainerStyle}>
                 <div id="header_containter" style={headerStyle}>
-                  <div className="weapon_title">{item.title}</div>
-                  <div className="weapon_subtitle">{item.subtitle}</div>
+                  <div className="list_title">{item.title}</div>
+                  <div className="list_subtitle">{item.subtitle}</div>
                 </div>
                 <div id="values_containter" style={valuesStyle}>
                   {item.items.map((stat, index) => {

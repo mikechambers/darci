@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import ActivitiesDetail from "./components/ActivitiesDetail";
+import ActivityList from "./components/ActivityList";
 import WeaponsDetail from "./components/WeaponsDetail";
 import WeaponMetaDetail from "./components/WeaponMetaDetail";
 import MedalHighlights from "./components/MedalHighlights";
@@ -103,8 +103,16 @@ const PlayerView = () => {
     activityStats.query.classSelection
   );
 
+  const gappedStyle = {
+    display: "flex",
+    flexDirection: "column",
+    gap: "40px",
+    background:
+      "linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(54,54,54,1) 100%)",
+  };
+
   return (
-    <div id="player_overview_view">
+    <div>
       <div id="player_overview_header" style={playerHeaderStyle}>
         <PlayerActivitiesHeader
           player={activityStats.player}
@@ -114,32 +122,32 @@ const PlayerView = () => {
         />
       </div>
 
-      <div style={playerOverviewStyle}>
-        <StatHighlights summary={summary} />
-        <StatDetails summary={summary} />
-        <MedalHighlights medals={medals} max={medalCount} />
-        <TimePlayed seconds={summary.timePlayedSeconds} />
-      </div>
+      <div style={gappedStyle}>
+        <div style={playerOverviewStyle}>
+          <StatHighlights summary={summary} />
+          <StatDetails summary={summary} />
+          <MedalHighlights medals={medals} max={medalCount} />
+          <TimePlayed seconds={summary.timePlayedSeconds} />
+        </div>
 
-      <div style={weaponsStyle}>
-        <WeaponsDetail weapons={weapons} max={weaponCount} />
-        <WeaponMetaDetail weapons={meta} max={weaponCount} />
-      </div>
+        <div style={weaponsStyle}>
+          <WeaponsDetail weapons={weapons} max={weaponCount} />
+          <WeaponMetaDetail weapons={meta} max={weaponCount} />
+        </div>
 
-      <div>
-        <h2>Maps</h2>
-        <MapsDetail maps={maps} />
-      </div>
+        <div>
+          <MapsDetail maps={maps} />
+        </div>
 
-      <div>
-        <h2>Games</h2>
-        <ActivitiesDetail
-          activities={activityStats.activities}
-          isLoading={isActivitiesLoading}
-        />
-      </div>
+        <div>
+          <ActivityList
+            activities={activityStats.activities}
+            isLoading={isActivitiesLoading}
+          />
+        </div>
 
-      <ErrorView error={[activitiesLoadError, profileLoadError]} />
+        <ErrorView error={[activitiesLoadError, profileLoadError]} />
+      </div>
     </div>
   );
 };

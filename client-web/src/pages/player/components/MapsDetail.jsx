@@ -1,173 +1,193 @@
+import GraphicListHeader from "../../../components/GraphicListHeader";
 import { calculatePercent, calculateAverage } from "../../../utils/index";
-import {
-  DataTable,
-  RIGHT_ALIGN,
-  LEFT_ALIGN,
-  DATA_TYPE,
-  generateHeader,
-  generateCell,
-} from "./DataTable";
+import Stat from "./Stat";
+
+const WIDTH = 725;
+
+const containerStyle = {
+  width: `${WIDTH}px`,
+  display: "flex",
+  flexDirection: "column",
+  padding: "var(--content-padding)",
+};
+
+const datacontainerStyle = {
+  height: "45px",
+  backgroundColor: "var(--list-item-background-color)",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  padding: "0px 12px",
+  borderRadius: "0px 0px 8px 8px",
+};
+
+const mapNameStyle = {
+  display: "inline-block",
+  alignSelf: "flex-end",
+  padding: "0px 12px",
+};
+
+const wrapperStyle = {
+  display: "flex",
+  flexDirection: "column",
+  gap: "var(--list-item-gap)",
+};
+
+const headerStyle = {
+  display: "flex",
+  height: "25px",
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+};
+
+const mapBackgroundStyle = {
+  padding: "0px",
+  borderRadius: "0px 0px 8px 8px",
+};
+
+const elementStyle = {
+  borderRadius: "0px 0px 8px 8px",
+  border: "var(--list-item-border)",
+};
 
 const MapsDetail = (props) => {
   let maps = props.maps ? props.maps : [];
 
+  let description =
+    "Data aggregated by map. Ordered by number of times the map was";
+
   maps.sort((a, b) => {
     return b.summary.activityCount - a.summary.activityCount;
   });
-
-  let headers = [
-    generateHeader("name", LEFT_ALIGN),
-    generateHeader("games", RIGHT_ALIGN),
-    generateHeader("win", RIGHT_ALIGN),
-    generateHeader("kills", RIGHT_ALIGN),
-    generateHeader("assists", RIGHT_ALIGN),
-    generateHeader("defeats", RIGHT_ALIGN),
-    generateHeader("deaths", RIGHT_ALIGN),
-    generateHeader("kd", RIGHT_ALIGN),
-    generateHeader("eff", RIGHT_ALIGN),
-    generateHeader("mercies", RIGHT_ALIGN),
-    generateHeader("completed", RIGHT_ALIGN),
-  ];
-
-  let data = [];
 
   let totalGames = 0;
   for (const m of maps) {
     totalGames += m.summary.activityCount;
   }
 
+  let data = [];
   for (const m of maps) {
-    let games = `${m.summary.activityCount} (${calculatePercent(
-      m.summary.activityCount,
-      totalGames
-    ).toFixed()}%)`;
+    let games = m.summary.activityCount;
 
-    let row = [];
-    row.push(generateCell(m.map.name, DATA_TYPE, LEFT_ALIGN));
-    row.push(generateCell(games, DATA_TYPE, RIGHT_ALIGN));
-    row.push(
-      generateCell(
-        `${calculatePercent(
-          m.summary.wins,
-          m.summary.activityCount
-        ).toFixed()}%`,
-        DATA_TYPE,
-        RIGHT_ALIGN
-      )
-    );
-    row.push(
-      generateCell(
-        calculateAverage(m.summary.kills, m.summary.activityCount).toFixed(2),
-        DATA_TYPE,
-        RIGHT_ALIGN
-      )
-    );
-    row.push(
-      generateCell(
-        calculateAverage(m.summary.assists, m.summary.activityCount).toFixed(2),
-        DATA_TYPE,
-        RIGHT_ALIGN
-      )
-    );
-    row.push(
-      generateCell(
-        calculateAverage(
-          m.summary.opponentsDefeated,
-          m.summary.activityCount
-        ).toFixed(2),
-        DATA_TYPE,
-        RIGHT_ALIGN
-      )
-    );
-    row.push(
-      generateCell(
-        calculateAverage(m.summary.deaths, m.summary.activityCount).toFixed(2),
-        DATA_TYPE,
-        RIGHT_ALIGN
-      )
-    );
-    row.push(
-      generateCell(
-        m.summary.killsDeathsRatio.toFixed(2),
-        DATA_TYPE,
-        RIGHT_ALIGN
-      )
-    );
-    row.push(
-      generateCell(m.summary.efficiency.toFixed(2), DATA_TYPE, RIGHT_ALIGN)
-    );
-    row.push(
-      generateCell(
-        `${calculatePercent(
-          m.summary.mercies,
-          m.summary.activityCount
-        ).toFixed()}%`,
-        DATA_TYPE,
-        RIGHT_ALIGN
-      )
-    );
-    row.push(
-      generateCell(
-        `${calculatePercent(
-          m.summary.completed,
-          m.summary.activityCount
-        ).toFixed()}%`,
-        DATA_TYPE,
-        RIGHT_ALIGN
-      )
-    );
+    let d = [];
 
-    data.push(row);
+    d.push({
+      label: "games",
+      value: games,
+    });
+
+    d.push({
+      label: "total",
+      value: `${calculatePercent(
+        m.summary.activityCount,
+        totalGames
+      ).toFixed()}%`,
+    });
+
+    d.push({
+      label: "win",
+      value: `${calculatePercent(
+        m.summary.wins,
+        m.summary.activityCount
+      ).toFixed()}%`,
+    });
+
+    d.push({
+      label: "kills",
+      value: calculateAverage(m.summary.kills, m.summary.activityCount).toFixed(
+        2
+      ),
+    });
+
+    d.push({
+      label: "assists",
+      value: calculateAverage(
+        m.summary.assists,
+        m.summary.activityCount
+      ).toFixed(2),
+    });
+
+    d.push({
+      label: "defeats",
+      value: calculateAverage(
+        m.summary.opponentsDefeated,
+        m.summary.activityCount
+      ).toFixed(2),
+    });
+
+    d.push({
+      label: "deaths",
+      value: calculateAverage(
+        m.summary.deaths,
+        m.summary.activityCount
+      ).toFixed(2),
+    });
+
+    d.push({
+      label: "kd",
+      value: m.summary.killsDeathsRatio.toFixed(2),
+    });
+
+    d.push({
+      label: "eff",
+      value: m.summary.efficiency.toFixed(2),
+    });
+
+    d.push({
+      label: "mercies",
+      value: `${calculatePercent(
+        m.summary.mercies,
+        m.summary.activityCount
+      ).toFixed()}%`,
+    });
+
+    d.push({
+      label: "completed",
+      value: `${calculatePercent(
+        m.summary.completed,
+        m.summary.activityCount
+      ).toFixed()}%`,
+    });
+    data.push({
+      title: m.map.name,
+      image: m.map.image,
+      items: d,
+    });
   }
 
-  let containterStyle = {
-    width: "725px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "12px", //todo: move this to a css variable
-    padding: "var(--content-padding)",
-  };
-
-  let itemStyle = {
-    height: "70px",
-  };
-
-  let dataContainterStyle = {
-    height: "45px",
-
-    backgroundColor: "#2E2E2E",
-    borderRadius: "0px 0px 8px 8px",
-  };
-
-  let mapNameStyle = {
-    display: "inline-block",
-    alignSelf: "flex-end",
-  };
-
-  console.log(maps);
   return (
-    <div style={containterStyle}>
-      {maps.map((map, index) => {
-        let mapStyle = {
-          display: "flex",
-          height: "25px",
-          backgroundImage: `url(${map.map.image})`,
-          backgroundPosition: "center",
-        };
+    <div style={containerStyle}>
+      <GraphicListHeader description={description} title="Maps" />
 
-        return (
-          <div>
-            <div
-              className="map_detail_image weapon_title"
-              id="map_image"
-              style={mapStyle}
-            >
-              <span style={mapNameStyle}>{map.map.name}</span>
+      <div style={wrapperStyle}>
+        {data.map((map, index) => {
+          let h = {
+            ...headerStyle,
+            backgroundImage: `url(${map.image})`,
+          };
+
+          return (
+            <div key={index} style={elementStyle}>
+              <div className="list_title" style={h}>
+                <span style={mapNameStyle}>{map.title}</span>
+              </div>
+              <div style={datacontainerStyle}>
+                {map.items.map((item, i) => {
+                  let align = i === map.items.length - 1 ? "right" : "left";
+                  return (
+                    <Stat
+                      key={i}
+                      value={item.value}
+                      label={item.label}
+                      align={align}
+                    />
+                  );
+                })}
+              </div>
             </div>
-            <div style={dataContainterStyle}>data</div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };

@@ -54,6 +54,11 @@ class PlayerActivities {
       a.activity.mode = mode;
 
       a.stats = calculateStats(a.stats, mode);
+
+      a.stats.extended.medals = parseMedalsFromServer(
+        a.stats.extended.medals,
+        this.#manifest
+      );
     }
 
     this.#summary.weapons = parseWeaponsFromServer(
