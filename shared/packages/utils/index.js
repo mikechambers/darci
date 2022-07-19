@@ -8,7 +8,8 @@ const calculateKillsDeathsAssists = function (kills, deaths, assists) {
 };
 
 const calculateEfficiency = function (kills, deaths, assists) {
-  return deaths !== 0 ? (kills + assists) / deaths : 0;
+  let t = kills + assists;
+  return deaths !== 0 ? t / deaths : t;
 };
 
 const calculateRatio = function (n, d) {
