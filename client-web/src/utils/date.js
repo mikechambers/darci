@@ -16,7 +16,7 @@ export const dateIsWithinLastWeek = function (d) {
   return diffMs > weekMs;
 };
 
-export const humandDuration = function (ms) {
+export const humanDuration = function (ms, short = false) {
   var dur = Duration.fromMillis(ms)
     .shiftTo("years", "months", "days", "hours", "minutes", "seconds")
     .toObject();
@@ -28,7 +28,7 @@ export const humandDuration = function (ms) {
 
     let out = `${data} ${label}`;
 
-    if (data > 1) {
+    if (!short && data > 1) {
       out += "s";
     }
 
@@ -37,12 +37,15 @@ export const humandDuration = function (ms) {
   };
 
   let humanDurationParts = [];
-  humanDurationParts.push(f(dur.years, "year"));
-  humanDurationParts.push(f(dur.months, "month"));
-  humanDurationParts.push(f(dur.days, "day"));
-  humanDurationParts.push(f(dur.hours, "hour"));
-  humanDurationParts.push(f(dur.minutes, "minute"));
-  humanDurationParts.push(f(dur.seconds, "second"));
+  humanDurationParts.push(f(dur.years, short ? "y" : "year"));
+  humanDurationParts.push(f(dur.months, short ? "m" : "month"));
+  humanDurationParts.push(f(dur.days, short ? "d" : "day"));
+  humanDurationParts.push(f(dur.hours, short ? "h" : "hour"));
+  humanDurationParts.push(f(dur.minutes, short ? "m" : "minute"));
+
+  if (!short) {
+    humanDurationParts.push(f(dur.seconds, "second"));
+  }
 
   humanDurationParts = humanDurationParts.filter((entry) => entry !== null);
 
@@ -53,7 +56,9 @@ export const humandDuration = function (ms) {
       .slice(0, -1);
 
     humanDurationParts.splice(humanDurationParts.length - 1, 0, "and");
+  }
 
+  if (humanDurationParts.length) {
     humanDurationParts[humanDurationParts.length - 1] = humanDurationParts
       .at(-1)
       .slice(0, -1);

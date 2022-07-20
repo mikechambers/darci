@@ -1,13 +1,12 @@
 import React from "react";
-import { humandDuration } from "../../../utils/date";
+import { humanDuration } from "../../../utils/date";
 
 const TimePlayed = (props) => {
   let seconds = props.seconds;
 
-
   let out = "";
   if (seconds) {
-    let human = humandDuration(seconds * 1000);
+    let human = humanDuration(seconds * 1000);
     return `Total time played is ${human}`;
   }
 

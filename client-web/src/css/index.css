@@ -55,7 +55,7 @@
   --list-item-gap: 12px;
 
   /*2E2E2E*/
-  --list-item-background-color: rgba(0,0,0,0.25);
+  --list-item-background-color: #1C1C1C;
   --list-item-border: 1px solid #ffffff33;
 }
 
@@ -102,7 +102,8 @@ html {
 
 /************ select box styling *****************/
 
-button {
+
+.nav_button {
   font:var(--font-controls);
   background: #FFFFFF00;
   color:white;
@@ -114,7 +115,7 @@ button {
   width:70px;
 }
 
-select, option {
+.nav_select, .nav_option {
   font:var(--font-controls);
 
   background: var(--background-color);
@@ -128,7 +129,7 @@ select, option {
   appearance:none;*/
 }
 
-option {
+.nav_option {
   /* right align options */
   direction: rtl;
 }

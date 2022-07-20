@@ -41,7 +41,7 @@ const PlayerViewConfig = (props) => {
 
   let [players, isLoading, error] = useFetchPlayers();
   const [player, setPlayer] = useState();
-  const [buttonTitle, setButtonTitle] = useState("Go");
+  const [buttonTitle, setButtonTitle] = useState("Refresh");
 
   let selectedPlayer;
   for (const p of players) {
@@ -68,7 +68,7 @@ const PlayerViewConfig = (props) => {
   }, [players, props.player, selectedPlayer]);
 
   let updateButtonTitle = function () {
-    setButtonTitle("Refresh");
+    setButtonTitle("Go");
   };
 
   let classOnChange = function (e) {
@@ -126,7 +126,9 @@ const PlayerViewConfig = (props) => {
         selected={moment}
         label="moments"
       />
-      <button onClick={onClick}>{buttonTitle}</button>
+      <button className="nav_button" onClick={onClick}>
+        {buttonTitle}
+      </button>
     </div>
   );
 };

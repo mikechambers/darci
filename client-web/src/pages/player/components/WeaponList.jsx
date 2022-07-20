@@ -10,7 +10,7 @@ const containerStyle = {
   borderRadius: "8px",
   padding: "12px",
   gap: "var(--list-item-gap)",
-  border: "var(--list-item-border)",
+  //border: "var(--list-item-border)",
 };
 
 const dataContainerStyle = {

@@ -8,6 +8,7 @@ const buttonStyle = {
   border: "0px",
   margin: "0px 5px",
   padding: "0px",
+  background: "#FFFFFF00",
 };
 
 const buttoncontainerStyle = {
