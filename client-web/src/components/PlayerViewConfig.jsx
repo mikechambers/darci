@@ -41,7 +41,7 @@ const PlayerViewConfig = (props) => {
 
   let [players, isLoading, error] = useFetchPlayers();
   const [player, setPlayer] = useState();
-  const [buttonTitle, setButtonTitle] = useState("Refresh");
+  const [buttonTitle, setButtonTitle] = useState("Reload");
 
   let selectedPlayer;
   for (const p of players) {

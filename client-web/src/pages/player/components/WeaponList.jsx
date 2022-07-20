@@ -3,6 +3,7 @@ import Stat from "./Stat";
 import { useState } from "react";
 import PageController from "../../../components/PageController";
 import GraphicListHeader from "../../../components/GraphicListHeader";
+import ExportDataButton from "../../../components/ExportDataButton";
 
 const containerStyle = {
   display: "flex",
@@ -41,6 +42,11 @@ const wrapperStyle = {
 const elementStyle = {
   padding: "var(--content-padding)",
   width: "422px",
+};
+
+const footerStyle = {
+  display: "flex",
+  justifyContent: "space-between",
 };
 
 const WeaponList = (props) => {
@@ -95,7 +101,10 @@ const WeaponList = (props) => {
           );
         })}
       </div>
-      <div>
+      <div style={footerStyle}>
+        <div>
+          <ExportDataButton />
+        </div>
         <PageController
           items={weapons}
           pageSize={maxCount}

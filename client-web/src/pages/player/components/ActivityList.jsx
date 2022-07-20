@@ -1,4 +1,5 @@
 import { CompletionReason, Standing } from "shared";
+import ExportDataButton from "../../../components/ExportDataButton";
 import GraphicListHeader from "../../../components/GraphicListHeader";
 import JoinedLateIcon from "../../../components/JoinedLateIcon";
 import JoinedLeftIcon from "../../../components/JoinedLeftIcon";
@@ -78,6 +79,11 @@ const medalsStyle = {
   alignItems: "center",
   flexWrap: "wrap",
   columnGap: "4px",
+};
+
+const footerStyle = {
+  display: "flex",
+  justifyContent: "space-between",
 };
 
 const ActivityList = (props) => {
@@ -228,6 +234,11 @@ const ActivityList = (props) => {
             </div>
           );
         })}
+      </div>
+      <div style={footerStyle}>
+        <div>
+          <ExportDataButton />
+        </div>
       </div>
     </div>
   );

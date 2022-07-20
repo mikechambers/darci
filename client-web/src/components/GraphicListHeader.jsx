@@ -16,7 +16,6 @@ const GraphicListHeader = (props) => {
       <div className="section_header">
         {title} <InfoTip text={description} />
       </div>
-      <div className="export">Export Data</div>
     </div>
   );
 };

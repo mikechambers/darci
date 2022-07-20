@@ -13,7 +13,7 @@ const buttonStyle = {
 
 const buttoncontainerStyle = {
   display: "flex",
-  justifyContent: "center",
+  justifyContent: "flex-end",
   alignItems: "flex-end",
 };
 

@@ -1,4 +1,5 @@
 import React from "react";
+import ExportDataButton from "../../../components/ExportDataButton";
 import GraphicListHeader from "../../../components/GraphicListHeader";
 import { humanDuration } from "../../../utils/date";
 import { calculatePercent, calculateAverage } from "../../../utils/index";
@@ -81,11 +82,16 @@ const statContainerStyle = {
   gap: "16px",
 };
 
+const footerStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+};
+
 const MapsDetail = (props) => {
   let maps = props.maps ? props.maps : [];
 
   let description =
-    "Data aggregated by map.\n\nOrdered by number of times the map was played";
+    "Data aggregated by map.\n\nOrdered by number of times the map was played.";
 
   maps.sort((a, b) => {
     return b.summary.activityCount - a.summary.activityCount;
@@ -302,6 +308,11 @@ const MapsDetail = (props) => {
             </div>
           );
         })}
+      </div>
+      <div style={footerStyle}>
+        <div>
+          <ExportDataButton />
+        </div>
       </div>
     </div>
   );
