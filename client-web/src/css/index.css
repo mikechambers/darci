@@ -111,6 +111,7 @@ button {
   border-radius: 6px;
   padding: 1px 10px;
   margin-left: 10px;
+  width:70px;
 }
 
 select, option {

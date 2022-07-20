@@ -52,12 +52,15 @@ const gameTitleStyle = {
 };
 
 const statsStyle = {
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
+  //display: "flex",
+  //flexDirection: "row",
+  //justifyContent: "space-between",
   width: "480px",
 
   alignItems: "center",
+
+  display: "grid",
+  gridTemplateColumns: "repeat(6, 1fr)",
 };
 
 const statusStyle = {
@@ -79,6 +82,8 @@ const medalsStyle = {
 
 const ActivityList = (props) => {
   let activities = props.activities;
+  let summary = props.summary;
+
   let description =
     "List of most recent activities, displaying stats, highlights and game status.";
 
@@ -131,6 +136,30 @@ const ActivityList = (props) => {
             goldMedals = goldMedals.slice(0, 5);
           }
 
+          let title = "Highest Value";
+          let killsHighlight = game.stats.kills === summary.highestKills;
+          let killsTitle = killsHighlight ? title : "";
+
+          let assistsHighlight = game.stats.assists === summary.highestAssists;
+          let assistsTitle = assistsHighlight ? title : "";
+
+          let defeatsHighlight =
+            game.stats.opponenentsDefeated === summary.highestOpponentsDefeated;
+          let defeatsTitle = defeatsHighlight ? title : "";
+
+          let deathsHighlight = game.stats.deaths === summary.highestDeaths;
+          let deathsTitle = deathsHighlight ? title : "";
+
+          let kdHighlight =
+            game.stats.killsDeathsRatio.toFixed(2) ===
+            summary.highestKillsDeathsRatio.toFixed(2);
+          let kdTitle = kdHighlight ? title : "";
+
+          let effHighlight =
+            game.stats.efficiency.toFixed(2) ===
+            summary.highestEfficiency.toFixed(2);
+          let effTitle = effHighlight ? title : "";
+
           return (
             <div style={gameContainerStyle} id={index}>
               <div style={resultStyle}></div>
@@ -140,14 +169,42 @@ const ActivityList = (props) => {
               </div>
 
               <div style={statsStyle}>
-                <Stat label="kills" value={game.stats.kills} />
-                <Stat label="assists" value={game.stats.assists} />
-                <Stat label="defeats" value={game.stats.opponentsDefeated} />
+                <Stat
+                  label="kills"
+                  value={game.stats.kills}
+                  highlight={killsHighlight}
+                  title={killsTitle}
+                />
+                <Stat
+                  label="assists"
+                  value={game.stats.assists}
+                  highlight={assistsHighlight}
+                  title={assistsTitle}
+                />
+                <Stat
+                  label="defeats"
+                  value={game.stats.opponentsDefeated}
+                  highlight={defeatsHighlight}
+                  title={defeatsTitle}
+                />
+                <Stat
+                  label="deaths"
+                  value={game.stats.deaths}
+                  highlight={deathsHighlight}
+                  title={deathsTitle}
+                />
                 <Stat
                   label="kd"
                   value={game.stats.killsDeathsRatio.toFixed(2)}
+                  highlight={kdHighlight}
+                  title={kdTitle}
                 />
-                <Stat label="eff" value={game.stats.efficiency.toFixed(2)} />
+                <Stat
+                  label="eff"
+                  value={game.stats.efficiency.toFixed(2)}
+                  highlight={effHighlight}
+                  title={effTitle}
+                />
               </div>
 
               <div style={statusStyle}>

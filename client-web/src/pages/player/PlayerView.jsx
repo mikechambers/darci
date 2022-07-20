@@ -142,6 +142,7 @@ const PlayerView = () => {
         <div>
           <ActivityList
             activities={activityStats.activities}
+            summary={summary}
             isLoading={isActivitiesLoading}
           />
         </div>
