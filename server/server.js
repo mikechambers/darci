@@ -1,11 +1,11 @@
 const { CharacterClassSelection, Mode, Moment } = require("shared");
+const path = require("path");
 const {
   SERVER_RESPONSE_SUCCESS,
   SERVER_RESPONSE_ERROR,
 } = require("shared/packages/consts");
 const {
   SERVER_PORT,
-  SERVER_HOSTNAME,
   MANIFEST_CHECK_INTERVAL_MS,
   MAX_ACTIVITIES_PAGE_LIMIT,
   DB_PATH,
@@ -16,6 +16,7 @@ const {
 const { ServerError } = require("./errors");
 
 const express = require("express");
+var os = require("os");
 
 const ActivityStoreInterface = require("./interfaces/ActivityStoreInterface");
 const ManifestInterface = require("./interfaces/ManifestInterface");
@@ -30,11 +31,14 @@ const manifestInterface = new ManifestInterface(
 const app = express();
 
 const port = SERVER_PORT;
-const hostname = SERVER_HOSTNAME;
 
+var hostname = os.hostname();
+
+/*
 app.get("/", (req, res, next) => {
   sendJsonResponse(res, {});
 });
+*/
 
 app.get("/api/activity/:activityId/", (req, res, next) => {
   let activityId = req.params.activityId;
@@ -156,6 +160,12 @@ app.get("/manifest/:version/", (req, res, next) => {
   }
 
   sendJsonResponse(res, out);
+});
+
+app.use(express.static(path.join(__dirname, "../client-web/build/")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client-web/build/index.html"));
 });
 
 const sendJsonResponse = (res, data) => {
