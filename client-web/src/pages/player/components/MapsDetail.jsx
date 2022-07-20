@@ -13,8 +13,8 @@ const containerStyle = {
 const wrapperStyle = {
   display: "flex",
   flexDirection: "row",
-  //gap: "var(--list-item-gap)",
-  gap: "30px",
+  gap: "var(--list-item-gap)",
+  //gap: "20px",
   flexWrap: "wrap",
 };
 
@@ -41,7 +41,7 @@ const datacontainerStyle = {
   width: "100%",
 
   //backgroundColor: "var(--list-item-background-color)",
-  backgroundColor: "#1C1C1Cdd",
+  backgroundColor: "#1C1C1Cee",
   backdropFilter: "blur(8px)",
   borderRadius: "0px 0px 4px 4px",
 
@@ -58,14 +58,14 @@ const topContainerDataStyle = {
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
-  margin: "8px",
+  margin: "12px",
 };
 
 const bottomContainerDataStyle = {
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
-  margin: "8px",
+  margin: "12px",
 };
 
 const mapNameStyle = {
