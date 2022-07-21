@@ -40,3 +40,21 @@ It is built around three main parts:
   - add `REACT_APP_DESTINY_API_KEY=YOUR_BUNGIE_API_KEY_HERE`
   - `client-web/$ npm start`
     \*this should launch a brower with the app running, showing a page with all users who have been synced
+    
+    
+ 
+### Server Setup
+
+The following crontab entries will run dclim once an hour (to check for an udpated manifest), and log output to a log directory in the specified home directory.
+
+```
+#replace /home/mesh with your own home directory
+SHELL=/bin/bash
+BASH_ENV="/home/mesh/.profile"
+
+#check for new manifest at 5 minutes past the hour
+5 * * * * dclim >> /home/mesh/logs/cron.log
+
+#remove the log file once a day at 00:05
+5 0 * * * rm /home/mesh/logs/cron.log
+```
