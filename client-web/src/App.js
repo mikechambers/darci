@@ -24,10 +24,14 @@ const App = (props) => {
     ? CharacterClassSelection.fromString(params.classType)
     : undefined;
 
-  let player = {
-    memberId: params.memberId,
-    platformId: parseInt(params.platformId),
-  };
+  let player;
+
+  if (params.memberId) {
+    player = {
+      memberId: params.memberId,
+      platformId: parseInt(params.platformId),
+    };
+  }
 
   let clearStorage = query.get("clearstorage") !== null;
 
@@ -47,8 +51,6 @@ const App = (props) => {
     dispatchGlobal(new GlobalAction(GlobalAction.MANIFEST_UPDATED, m));
   }
 
-  console.log("----------App-----------");
-
   let initializingContent;
   if (error) {
     initializingContent = <div>Error loading manifest</div>;
@@ -64,10 +66,6 @@ const App = (props) => {
     justifyContent: "space-between",
   };
 
-  let navStyle = {
-    display: "flex",
-    flexDirection: "column",
-  };
   return (
     <GlobalContext.Provider value={{ global, dispatchGlobal }}>
       <React.Fragment>

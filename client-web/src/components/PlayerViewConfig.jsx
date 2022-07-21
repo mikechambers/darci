@@ -41,7 +41,6 @@ const PlayerViewConfig = (props) => {
 
   let [players, isLoading, error] = useFetchPlayers();
   const [player, setPlayer] = useState();
-  const [buttonTitle, setButtonTitle] = useState("Reload");
 
   let selectedPlayer;
   for (const p of players) {
@@ -60,6 +59,13 @@ const PlayerViewConfig = (props) => {
   //render loop
   useEffect(() => {
     let s = selectedPlayer;
+
+    if (!s) {
+      setMode(Mode.PVP_QUICKPLAY);
+      setClassSelection(CharacterClassSelection.ALL);
+      setMoment(Moment.WEEK);
+    }
+
     if (!s && players && players.length) {
       s = players[0];
     }
@@ -67,27 +73,19 @@ const PlayerViewConfig = (props) => {
     setPlayer(s);
   }, [players, props.player, selectedPlayer]);
 
-  let updateButtonTitle = function () {
-    setButtonTitle("Go");
-  };
-
   let classOnChange = function (e) {
-    updateButtonTitle();
     setClassSelection(e);
   };
 
   let modeOnChange = function (e) {
-    updateButtonTitle();
     setMode(e);
   };
 
   let momentOnChange = function (e) {
-    updateButtonTitle();
     setMoment(e);
   };
 
   let playerOnChange = function (e) {
-    updateButtonTitle();
     setPlayer(e);
   };
 
@@ -127,7 +125,7 @@ const PlayerViewConfig = (props) => {
         label="moments"
       />
       <button className="nav_button" onClick={onClick}>
-        {buttonTitle}
+        Go
       </button>
     </div>
   );

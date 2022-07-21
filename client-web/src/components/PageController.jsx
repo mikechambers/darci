@@ -27,7 +27,6 @@ const PageController = (props) => {
 
   let onChange = props.onChange;
   let totalPages = Math.ceil(items.length / pageSize);
-  console.log(totalPages);
 
   let [currentPage, setCurrentPage] = useState(0);
 

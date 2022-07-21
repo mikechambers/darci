@@ -49,7 +49,6 @@ export const useFetchManifest = () => {
         });
         let s = reducer(output, "error", e);
         s = reducer(s, "isLoading", false);
-        console.log(e);
         setOutput(s);
         return;
       }
@@ -269,12 +268,10 @@ const startTimeout = (f, shouldRunTimer) => {
   }
 
   const id = setTimeout(f, DATA_REFRESH_INTERVAL);
-  //console.log("start timeout", id);
   return id;
 };
 
 const cleanUpTimeout = (id) => {
-  console.log("cleanUpTimeout", id);
   if (id) {
     clearTimeout(id);
   }
