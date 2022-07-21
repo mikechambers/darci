@@ -43,7 +43,7 @@ const datacontainerStyle = {
 
   //backgroundColor: "var(--list-item-background-color)",
   backgroundColor: "#1C1C1Cee",
-  backdropFilter: "blur(8px)",
+  backdropFilter: "var(--background-blur)",
   borderRadius: "0px 0px 4px 4px",
 
   display: "flex",

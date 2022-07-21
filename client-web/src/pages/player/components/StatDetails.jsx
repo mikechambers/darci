@@ -13,6 +13,7 @@ const style = {
   borderRadius: "4px",
   width: "max-content",
   //border: "var(--list-item-border)",
+  backdropFilter: "var(--background-blur)",
 };
 
 const StatDetails = (props) => {
