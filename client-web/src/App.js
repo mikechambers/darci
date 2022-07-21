@@ -64,6 +64,10 @@ const App = (props) => {
     justifyContent: "space-between",
   };
 
+  let navStyle = {
+    display: "flex",
+    flexDirection: "column",
+  };
   return (
     <GlobalContext.Provider value={{ global, dispatchGlobal }}>
       <React.Fragment>
@@ -72,7 +76,9 @@ const App = (props) => {
         ) : (
           <React.Fragment>
             <div id="nav_bar" style={style}>
-              <Link to="/">darci</Link>
+              <div>
+                <Link to="/">darci</Link> | <Link to="/about">about</Link>
+              </div>
               <PlayerViewConfig
                 mode={mode}
                 moment={moment}

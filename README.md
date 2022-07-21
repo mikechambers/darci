@@ -1,6 +1,6 @@
 # darci
 
-Darci is a self hosted platform for aggregating, viewing and analysizing Destiny 2 PVP stats.
+Darci is a self hosted platform for aggregating, viewing and analyzing Destiny 2 PVP stats.
 
 > Thank you for using the Data Analysis, Reconnaissance and Cooperative Intelligence device. You may call me Darci.
 
