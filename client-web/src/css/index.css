@@ -46,6 +46,8 @@
 
   --underline: 1px solid #FFFFFF;
 
+  --text-shadow:1px 1px 1px black;
+
   /* t, r, b, l */
   --table-cell-padding: 4px 0px 0px 16px;
 
@@ -75,6 +77,7 @@ body {
   height:100%;
   width:100%;
 }
+
 
 hr {
   border-top: 1px solid #FFFFFF;
@@ -193,12 +196,12 @@ h2, .section_header {
 
 .data {
   font:var(--font-data);
-  text-shadow: 1px 1px 1px black;
+  text-shadow: var(--text-shadow)
 }
 
 .data_highlight {
   font:var(--font-data-highlight);
-  text-shadow: 1px 1px 1px black;
+  text-shadow: var(--text-shadow);
 }
 
 .label_highlight {

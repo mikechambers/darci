@@ -24,7 +24,7 @@ class Manifest {
       itemType: undefined,
       itemSubType: ItemSubType.UNKNOWN,
       id: id,
-      icon: "https://www.bungie.net/common/destiny2_content/icons/528d5264b28c155e1bba26afb427aba0.png",
+      icon: "https://www.bungie.net/common/destiny2_content/icons/f3c27772a3d98c91fef127ce32e9f1e0.png",
       screenshot: undefined,
     };
 

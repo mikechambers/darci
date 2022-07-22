@@ -8,6 +8,7 @@ import PlayerView from "./pages/player/PlayerView";
 import ActivityView from "./pages/activity/ActivityView";
 import HomeView from "./pages/home/HomeView";
 import AboutView from "./pages/about/AboutView";
+import NoMatchView from "./pages/404/NoMatchView";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -31,16 +32,8 @@ ReactDOM.render(
           <Route path="activity/:activityId/" element={<ActivityView />}>
             <Route path=":memberId" element={<ActivityView />} />
           </Route>
+          <Route path="*" element={<NoMatchView />} />
         </Route>
-
-        <Route
-          path="*"
-          element={
-            <main style={{ padding: "1rem" }}>
-              <p>There's nothing here!</p>
-            </main>
-          }
-        />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
