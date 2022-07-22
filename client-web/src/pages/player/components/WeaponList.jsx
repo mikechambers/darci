@@ -1,7 +1,5 @@
 import React from "react";
 import Stat from "./Stat";
-import { useState } from "react";
-import PageController from "../../../components/PageController";
 import GraphicListHeader from "../../../components/GraphicListHeader";
 import ExportDataButton from "../../../components/ExportDataButton";
 
@@ -11,7 +9,6 @@ const containerStyle = {
   borderRadius: "8px",
   padding: "12px",
   gap: "var(--list-item-gap)",
-  //border: "var(--list-item-border)",
 };
 
 const dataContainerStyle = {
@@ -37,6 +34,9 @@ const wrapperStyle = {
   display: "flex",
   flexDirection: "column",
   gap: "var(--list-item-gap)",
+
+  maxHeight: "488px",
+  overflow: "auto",
 };
 
 const elementStyle = {
@@ -52,22 +52,25 @@ const footerStyle = {
 const WeaponList = (props) => {
   let weapons = props.weapons;
   let title = props.title;
-  let maxCount = props.maxCount ? props.maxCount : 10;
+  //let maxCount = props.maxCount ? props.maxCount : 10;
+
+  let maxCount = 1000;
+
   let description = props.description ? props.description : "";
 
   //need to account for smaller than max
   let end = maxCount < weapons.length ? maxCount : weapons.length;
-  let [weaponsSlice, setWeaponsSlice] = useState(weapons.slice(0, end));
+  //let [weaponsSlice, setWeaponsSlice] = useState(weapons.slice(0, end));
 
   const onPageChange = function (items) {
-    setWeaponsSlice(items);
+    //setWeaponsSlice(items);
   };
 
   return (
     <div style={elementStyle}>
       <GraphicListHeader title={title} description={description} />
       <div style={wrapperStyle}>
-        {weaponsSlice.map((item, index) => {
+        {weapons.map((item, index) => {
           let iconStyle = {
             backgroundImage: `url(${item.icon})`,
             width: "64px",
@@ -105,11 +108,6 @@ const WeaponList = (props) => {
         <div>
           <ExportDataButton />
         </div>
-        <PageController
-          items={weapons}
-          pageSize={maxCount}
-          onChange={onPageChange}
-        />
       </div>
     </div>
   );
