@@ -68,7 +68,7 @@ export const fetchDestinyApi = async (url) => {
         Message: "Unable to parse your parameters.  Please correct them, and try again."
     */
 
-  if (json.ErrorCode != 1) {
+  if (json.ErrorCode !== 1) {
     throw new DestinyApiResponseError(
       `${json.ErrorStatus} [${json.ErrorCode}] : ${json.Message} : ${url}`
     );
@@ -87,7 +87,7 @@ export const fetchApi = async (url, options) => {
   }
 
   //todo:move to shared
-  if (json.status != SERVER_RESPONSE_SUCCESS) {
+  if (json.status !== SERVER_RESPONSE_SUCCESS) {
     let msg;
     let name;
 
