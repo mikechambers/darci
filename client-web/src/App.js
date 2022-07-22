@@ -5,6 +5,7 @@ import { useFetchManifest } from "./hooks/remote";
 import { useParams } from "react-router-dom";
 import { CharacterClassSelection, Mode, Moment } from "shared";
 import PlayerViewConfig from "./components/PlayerViewConfig";
+import { useFetchPlayers } from "./hooks/remote";
 
 import {
   GlobalContext,
@@ -24,14 +25,19 @@ const App = (props) => {
     ? CharacterClassSelection.fromString(params.classType)
     : undefined;
 
-  let player;
+  let [player, setPlayer] = useState();
 
-  if (params.memberId) {
-    player = {
-      memberId: params.memberId,
-      platformId: parseInt(params.platformId),
-    };
-  }
+  //console.log(params.memberId);
+  useEffect(() => {
+    let p;
+
+    if (params.memberId) {
+      p = {
+        memberId: params.memberId,
+      };
+      setPlayer(p);
+    }
+  }, [params.memberId]);
 
   let clearStorage = query.get("clearstorage") !== null;
 

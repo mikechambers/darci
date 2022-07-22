@@ -39,39 +39,28 @@ const PlayerViewConfig = (props) => {
     props.moment ? props.moment : Moment.WEEK
   );
 
-  let [players, isLoading, error] = useFetchPlayers();
+  const [loadedPlayers, isPlayersLoading, isPlayersError] = useFetchPlayers();
+  const [players, setPlayers] = useState();
   const [player, setPlayer] = useState();
 
-  let selectedPlayer;
-  for (const p of players) {
-    p.label = p.getFullName();
-    p.toString = () => p.label;
-    if (
-      props.player &&
-      props.player.memberId === p.memberId &&
-      props.player.platformId === p.platformId
-    ) {
-      selectedPlayer = p;
-    }
-  }
-
-  //call this after component is rendered, otherwise we get in infinite
-  //render loop
   useEffect(() => {
-    let s = selectedPlayer;
+    let selected = props.player;
+    for (const p of loadedPlayers) {
+      p.label = p.getFullName();
+      p.toString = () => p.label;
 
-    if (!s) {
-      setMode(Mode.PVP_QUICKPLAY);
-      setClassSelection(CharacterClassSelection.ALL);
-      setMoment(Moment.WEEK);
+      if (selected && p.memberId === selected.memberId) {
+        selected = p;
+        setPlayer(selected);
+      }
     }
 
-    if (!s && players && players.length) {
-      s = players[0];
+    if (loadedPlayers && loadedPlayers.length && !selected) {
+      setPlayer(loadedPlayers[0]);
     }
 
-    setPlayer(s);
-  }, [players, props.player, selectedPlayer]);
+    setPlayers(loadedPlayers);
+  }, [loadedPlayers, props.player]);
 
   let classOnChange = function (e) {
     setClassSelection(e);
@@ -106,6 +95,7 @@ const PlayerViewConfig = (props) => {
         selected={player}
         label="players"
       />
+
       <EnumSelectBase
         onChange={classOnChange}
         options={classes}
@@ -124,6 +114,7 @@ const PlayerViewConfig = (props) => {
         selected={moment}
         label="moments"
       />
+
       <button className="nav_button" onClick={onClick}>
         Go
       </button>

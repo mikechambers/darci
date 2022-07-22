@@ -10,6 +10,10 @@ const EnumSelectBase = (props) => {
     onChange(options[e.target.selectedIndex]);
   };
 
+  if (!options) {
+    options = [];
+  }
+
   return (
     <select
       className="nav_select"
