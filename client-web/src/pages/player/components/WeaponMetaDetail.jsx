@@ -3,7 +3,6 @@ import WeaponList from "./WeaponList";
 
 const WeaponsDetail = (props) => {
   let weapons = props.weapons ? props.weapons : [];
-  let maxCount = props.max ? props.max : 5;
 
   let description = `Top weapons in your games ordered by number of players using the weapon.
 
@@ -43,12 +42,7 @@ You and your fireteam's weapons are not included.`;
   }
 
   return (
-    <WeaponList
-      weapons={data}
-      title="Weapon Meta"
-      maxCount={maxCount}
-      description={description}
-    />
+    <WeaponList weapons={data} title="Weapon Meta" description={description} />
   );
 };
 

@@ -3,7 +3,6 @@ import WeaponList from "./WeaponList";
 
 const WeaponsDetail = (props) => {
   let weapons = props.weapons ? props.weapons : [];
-  let maxCount = props.max ? props.max : 5;
 
   let description = "Weapons you have used ordered by kills.";
 
@@ -41,12 +40,7 @@ const WeaponsDetail = (props) => {
   }
 
   return (
-    <WeaponList
-      weapons={data}
-      title="weapons"
-      maxCount={maxCount}
-      description={description}
-    />
+    <WeaponList weapons={data} title="weapons" description={description} />
   );
 };
 

@@ -52,19 +52,8 @@ const footerStyle = {
 const WeaponList = (props) => {
   let weapons = props.weapons;
   let title = props.title;
-  //let maxCount = props.maxCount ? props.maxCount : 10;
-
-  let maxCount = 1000;
 
   let description = props.description ? props.description : "";
-
-  //need to account for smaller than max
-  let end = maxCount < weapons.length ? maxCount : weapons.length;
-  //let [weaponsSlice, setWeaponsSlice] = useState(weapons.slice(0, end));
-
-  const onPageChange = function (items) {
-    //setWeaponsSlice(items);
-  };
 
   return (
     <div style={elementStyle}>

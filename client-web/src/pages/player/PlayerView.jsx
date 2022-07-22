@@ -5,10 +5,9 @@ import WeaponMetaDetail from "./components/WeaponMetaDetail";
 import MedalHighlights from "./components/MedalHighlights";
 import MapsDetail from "./components/MapsDetail";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
-import {
-  useFetchPlayerActivities,
-  useFetchPlayerProfile,
-} from "../../hooks/remote";
+
+import { useFetchPlayerActivities } from "../../hooks/remote";
+
 import { CharacterClassSelection, Mode, Moment } from "shared";
 import ErrorView from "../../components/ErrorView";
 
@@ -17,8 +16,6 @@ import TimePlayed from "./components/TimePlayed";
 import StatDetails from "./components/StatDetails";
 import StatHighlights from "./components/StatHighlights";
 import PlayerOverviewBackgroundImage from "./images/player_overview_background.png";
-
-const { useQuery } = require("../../hooks/browser");
 
 const playerOverviewStyle = {
   padding: "var(--content-padding)",
@@ -50,11 +47,13 @@ const PlayerView = () => {
   let moment = Moment.fromString(params.moment);
   let classSelection = CharacterClassSelection.fromString(params.classType);
 
+  /*
   let [profile, isProfileLoading, profileLoadError] = useFetchPlayerProfile(
     true,
     params.memberId,
     params.platformId
   );
+  */
 
   let [activityStats, isActivitiesLoading, activitiesLoadError] =
     useFetchPlayerActivities(
@@ -64,11 +63,6 @@ const PlayerView = () => {
       moment,
       classSelection
     );
-
-  let query = useQuery();
-  let weaponCount = query.get("weaponcount") ? query.get("weaponcount") : 5;
-  let medalCount = query.get("medalcount") ? query.get("medalcount") : 5;
-  let metaCount = query.get("metacount") ? query.get("metacount") : 5;
 
   /*
     if (profileLoadError) {
@@ -126,13 +120,13 @@ const PlayerView = () => {
         <div style={playerOverviewStyle}>
           <StatHighlights summary={summary} />
           <StatDetails summary={summary} />
-          <MedalHighlights medals={medals} max={medalCount} />
+          <MedalHighlights medals={medals} />
           <TimePlayed seconds={summary.timePlayedSeconds} />
         </div>
 
         <div style={weaponsStyle}>
-          <WeaponsDetail weapons={weapons} max={weaponCount} />
-          <WeaponMetaDetail weapons={meta} max={weaponCount} />
+          <WeaponsDetail weapons={weapons} />
+          <WeaponMetaDetail weapons={meta} />
         </div>
 
         <div>
@@ -147,7 +141,7 @@ const PlayerView = () => {
           />
         </div>
 
-        <ErrorView error={[activitiesLoadError, profileLoadError]} />
+        <ErrorView error={[activitiesLoadError]} />
       </div>
     </div>
   );
