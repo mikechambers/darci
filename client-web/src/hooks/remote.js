@@ -30,13 +30,11 @@ export const useFetchManifest = () => {
     //if we checked (without an error) within the last N amount of time
     //then abort check
 
-    /*
     if (output.manifest && lastCheckTimeStamp) {
       if (now - lastCheckTimeStamp < MANIFEST_CHECK_INTERVAL) {
         return;
       }
     }
-    */
 
     let rawStoredData = storage.getItem(STORAGE_MANIFEST_DATA_KEY);
     let storedData;
@@ -45,9 +43,8 @@ export const useFetchManifest = () => {
     if (rawStoredData) {
       try {
         storedData = JSON.parse(rawStoredData);
-        //version = encodeURIComponent(storedData.version);
+
         version = btoa(storedData.version);
-        console.log(version);
       } catch (err) {
         let e = new Error("Error parsing locally stored manifest JSON.", {
           cause: err,
