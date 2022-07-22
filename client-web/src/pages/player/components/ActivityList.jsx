@@ -167,7 +167,7 @@ const ActivityList = (props) => {
           let effTitle = effHighlight ? title : "";
 
           return (
-            <div style={gameContainerStyle} id={index}>
+            <div style={gameContainerStyle} key={index}>
               <div style={resultStyle}></div>
               <div style={gameTitleStyle}>
                 <div className="list_title">{game.activity.map.name}</div>
@@ -221,6 +221,7 @@ const ActivityList = (props) => {
                 {goldMedals.map((medal, index) => {
                   return (
                     <img
+                      key={index}
                       src={medal.icon}
                       alt={medal.description}
                       title={`${medal.name.toUpperCase()} - ${
