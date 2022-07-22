@@ -11,15 +11,21 @@ const {
   DB_PATH,
   MANIFEST_DB_PATH,
   MANIFEST_INFO_PATH,
+  PLAYERS_ROW_CACHE_LIFETIME,
 } = require("./config");
 
 const { ServerError } = require("./errors");
+
+const { Cache } = require("./data/Cache");
 
 const express = require("express");
 var os = require("os");
 
 const ActivityStoreInterface = require("./interfaces/ActivityStoreInterface");
 const ManifestInterface = require("./interfaces/ManifestInterface");
+const { timeStamp } = require("console");
+
+const cache = new Cache();
 
 const activityStore = new ActivityStoreInterface(DB_PATH);
 const manifestInterface = new ManifestInterface(
@@ -136,8 +142,14 @@ app.get(
   }
 );
 
+const PLAYERS_ROW_CACHE = "PLAYERS_ROW_CACHE";
 app.get("/api/players/", (req, res, next) => {
-  let rows = activityStore.retrieveSyncMembers();
+  let rows = cache.get(PLAYERS_ROW_CACHE);
+
+  if (!rows) {
+    rows = activityStore.retrieveSyncMembers();
+    cache.add(rows, PLAYERS_ROW_CACHE, PLAYERS_ROW_CACHE_LIFETIME);
+  }
 
   let out = {
     players: rows,
