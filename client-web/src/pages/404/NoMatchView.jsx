@@ -26,7 +26,7 @@ const NoMatchView = (props) => {
       <div title="404" className="not_found" style={s2}>
         unknown space
       </div>
-      <div style={s3}>The Nine have sent an Emissary to test Guardians.</div>
+      <div style={s3}>The Nine have sent an Emissary to test Guardians</div>
     </div>
   );
 };

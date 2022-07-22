@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Stat from "./Stat";
-import GraphicListHeader from "../../../components/GraphicListHeader";
 import ExportDataButton from "../../../components/ExportDataButton";
+import InfoTip from "../../../components/InfoTip";
 
 const containerStyle = {
   display: "flex",
@@ -49,15 +49,53 @@ const footerStyle = {
   justifyContent: "space-between",
 };
 
+const titleStyle = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+};
+
 const WeaponList = (props) => {
   let weapons = props.weapons;
   let title = props.title;
+  let sortLabels = props.sortLabels;
+  let defaultIndex = props.sortIndex ? props.sortIndex : 0;
 
   let description = props.description ? props.description : "";
+  let [sortIndex, setSortIndex] = useState(defaultIndex);
+
+  weapons.sort((a, b) => {
+    let key = "data";
+
+    if (!b.items[sortIndex][key]) {
+      key = "value";
+    }
+
+    return b.items[sortIndex][key] - a.items[sortIndex][key];
+  });
+
+  const onSortChange = function (e) {
+    setSortIndex(e.target.selectedIndex);
+  };
 
   return (
     <div style={elementStyle}>
-      <GraphicListHeader title={title} description={description} />
+      <div style={titleStyle}>
+        <div className="section_header">
+          {title} <InfoTip text={description} />
+        </div>
+        <div>
+          <select
+            className="nav_select"
+            value={sortIndex}
+            onChange={onSortChange}
+          >
+            {sortLabels.map((item, index) => {
+              return <option value={index}>{item}</option>;
+            })}
+          </select>
+        </div>
+      </div>
       <div style={wrapperStyle}>
         {weapons.map((item, index) => {
           let iconStyle = {

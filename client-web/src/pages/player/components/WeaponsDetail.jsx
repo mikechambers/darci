@@ -12,6 +12,7 @@ const WeaponsDetail = (props) => {
 
   let data = [];
   for (const w of weapons) {
+    let precision = calculatePercent(w.precisionKills, w.kills).toFixed(2);
     let items = [
       {
         label: "Games",
@@ -27,7 +28,8 @@ const WeaponsDetail = (props) => {
       },
       {
         label: "Precision",
-        value: calculatePercent(w.precisionKills, w.kills).toFixed(2) + "%",
+        value: precision + "%",
+        data: precision,
       },
     ];
 
@@ -39,8 +41,15 @@ const WeaponsDetail = (props) => {
     });
   }
 
+  let sortLabels = ["games", "kills", "kills/g", "precision"];
+
   return (
-    <WeaponList weapons={data} title="weapons" description={description} />
+    <WeaponList
+      weapons={data}
+      title="weapons"
+      description={description}
+      sortLabels={sortLabels}
+    />
   );
 };
 
