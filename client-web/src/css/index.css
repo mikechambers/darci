@@ -124,7 +124,7 @@ html {
   font:var(--font-controls);
 
   font:var(--font-controls);
-  background: var(--background-color);
+  background: #00000000;
   color:white;
   border:0px;
 
