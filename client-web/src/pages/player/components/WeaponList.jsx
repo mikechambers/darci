@@ -91,7 +91,11 @@ const WeaponList = (props) => {
             onChange={onSortChange}
           >
             {sortLabels.map((item, index) => {
-              return <option value={index}>{item}</option>;
+              return (
+                <option key={index} value={index} className="nav_option">
+                  {item}
+                </option>
+              );
             })}
           </select>
         </div>
@@ -113,7 +117,7 @@ const WeaponList = (props) => {
                   <div className="list_subtitle">{item.subtitle}</div>
                 </div>
                 <div id="values_containter" style={valuesStyle}>
-                  {item.items.map((stat, index) => {
+                  {item.items.map((stat, i) => {
                     let align =
                       index === item.items.length - 1 ? "right" : "left";
                     return (
@@ -121,7 +125,7 @@ const WeaponList = (props) => {
                         value={stat.value.toLocaleString()}
                         label={stat.label}
                         align={align}
-                        key={index}
+                        key={i}
                       />
                     );
                   })}
