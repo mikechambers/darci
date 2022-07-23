@@ -2,11 +2,13 @@ import { ReactComponent as PrecisionIcon } from "./images/precision_icon.svg";
 import { ReactComponent as GrenadeIcon } from "./images/grenade_icon.svg";
 import { ReactComponent as MeleeIcon } from "./images/melee_icon.svg";
 import { ReactComponent as SuperIcon } from "./images/super_icon.svg";
+import { ReactComponent as BlankIcon } from "./images/blank_icon.svg";
 
 export const PRECISION_ICON = "PRECISION_ICON";
 export const GRENADE_ICON = "GRENADE_ICON";
 export const MELEE_ICON = "MELEE_ICON";
 export const SUPER_ICON = "SUPER_ICON";
+export const BLANK_ICON = "BLANK_ICON";
 
 const IconManager = (props) => {
   let icon = props.icon;
@@ -26,8 +28,10 @@ const IconManager = (props) => {
     case SUPER_ICON:
       out = <SuperIcon title="Super Kills" width={width} />;
       break;
+    case BLANK_ICON:
+    //fall through
     default:
-      out = <div />;
+      out = <BlankIcon />;
   }
 
   return out;

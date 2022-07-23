@@ -149,7 +149,6 @@ const ActivityListItem = (props) => {
   );
 
   const onItemClick = function () {
-    console.log(isExpanded, !isExpanded);
     setIsExpanded(!isExpanded);
   };
 

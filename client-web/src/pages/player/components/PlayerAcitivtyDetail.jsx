@@ -12,136 +12,138 @@ import { humanDuration } from "../../../utils/date";
 import Stat, { SMALL_STYLE } from "./Stat";
 
 const GAP = 4;
+
+let killsStyle = {
+  display: "flex",
+  alignItems: "flex-end",
+  justifyContent: "flex-end",
+};
+
+let abilitiesContainerStyle = {
+  display: "grid",
+  gridTemplateColumns: "25px 25px",
+  gridTemplateRows: `repeat(3, fr)`,
+  width: "50px",
+  gridGap: `${GAP}px`,
+  font: "var(--font-data-small)",
+  alignContent: "start",
+};
+
+let abilitiesStyle = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-end",
+  alignItems: "center",
+};
+
+let abilitiesIconStyle = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-start",
+  alignItems: "center",
+};
+
+let statsContainterStyle = {
+  display: "grid",
+  width: "140px",
+  gridTemplateColumns: "50% 50%",
+  gridTemplateRows: `repeat(3 1fr)`,
+  alignContent: "start",
+  gridGap: `${GAP}px`,
+};
+
+const killsAssistStyle = {
+  gridColumnStart: "1",
+  gridColumnEnd: "3",
+};
+
+const medalsContainerStyle = {
+  display: "flex",
+  flexWrap: "wrap",
+  columnGap: "4px",
+  rowGap: "4px",
+  width: "100px",
+  alignContent: "flex-start",
+};
+
+const dataContainerStyle = {
+  display: "flex",
+  justifyContent: "space-between",
+};
+
+const timePlayedStyle = {
+  display: "flex",
+  justifyContent: "flex-end",
+  font: "var(--font-small)",
+};
+
+const dataContainerWrapperStyle = {
+  width: "100%",
+  margin: "4px",
+};
+
+const precisionStyle = {
+  display: "flex",
+  alignItems: "flex-end",
+  justifyContent: "flex-end",
+};
+
+const backgroundStyleBase = {
+  width: "185px",
+
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  borderRadius: "4px",
+  margin: "4px",
+  /*filter: "saturate(50%)",*/
+};
+
+const weaponEntryStyleBase = {
+  display: "grid",
+  gridTemplateColumns: "25px 100px 15px 55px",
+  gridGap: `${GAP}px`,
+  font: "var(--font-data-small)",
+  width: "190px",
+  alignContent: "start",
+};
+
+let detailStyleBase = {
+  backgroundColor: "var(--list-item-detail-background-color)",
+
+  border: "var(--list-item-border)",
+  borderTopWidth: "0px",
+  borderRadius: "0px 0px 4px 4px",
+
+  selfAlign: "center",
+  display: "flex",
+  flexDirection: "row",
+
+  //todo: make sure spacing is correct
+  gap: `${GAP}px`,
+};
+
 const PlayerActivityDetail = (props) => {
   let width = props.width;
   let activity = props.activity;
-
-  let detailStyle = {
-    width: `${width}px`,
-
-    backgroundColor: "var(--list-item-detail-background-color)",
-
-    border: "var(--list-item-border)",
-    borderTopWidth: "0px",
-    borderRadius: "0px 0px 4px 4px",
-
-    selfAlign: "center",
-    display: "flex",
-    flexDirection: "row",
-
-    //todo: make sure spacing is correct
-    gap: `${GAP}px`,
-  };
-
-  let backgroundStyle = {
-    width: "185px",
-
-    backgroundImage: `url(${activity.activity.map.image})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    borderRadius: "4px",
-    margin: "4px",
-    /*filter: "saturate(50%)",*/
-  };
 
   let weaponCount = activity.stats.extended.weapons
     ? activity.stats.extended.weapons.length
     : 0;
 
+  const detailStyle = {
+    ...detailStyleBase,
+    width: `${width}px`,
+  };
+
   const weaponEntryStyle = {
-    display: "grid",
-    gridTemplateColumns: "25px 100px 15px 55px",
-
-    //todo: default to 0 if empty
+    ...weaponEntryStyleBase,
     gridTemplateRows: `repeat(${weaponCount} 1fr)`,
-    gridGap: `${GAP}px`,
-    font: "var(--font-data-small)",
-    width: "190px",
-    alignContent: "start",
   };
 
-  let precisionStyle = {
-    display: "flex",
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
+  const backgroundStyle = {
+    ...backgroundStyleBase,
+    backgroundImage: `url(${activity.activity.map.image})`,
   };
-  let precisionStyleLabel = {
-    ...precisionStyle,
-    opacity: ".5",
-  };
-
-  let killsStyle = {
-    display: "flex",
-    alignItems: "flex-end",
-    justifyContent: "flex-end",
-  };
-
-  let abilitiesContainerStyle = {
-    display: "grid",
-    gridTemplateColumns: "25px 25px",
-    gridTemplateRows: `repeat(3, fr)`,
-    width: "50px",
-    gridGap: `${GAP}px`,
-    font: "var(--font-data-small)",
-    alignContent: "start",
-  };
-
-  let abilitiesStyle = {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-  };
-
-  let abilitiesIconStyle = {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  };
-
-  let statsContainterStyle = {
-    display: "grid",
-    width: "140px",
-    gridTemplateColumns: "50% 50%",
-    gridTemplateRows: `repeat(3 1fr)`,
-    alignContent: "start",
-    gridGap: `${GAP}px`,
-  };
-
-  let killsAssistStyle = {
-    gridColumnStart: "1",
-    gridColumnEnd: "3",
-  };
-
-  let medalsContainerStyle = {
-    display: "flex",
-    flexWrap: "wrap",
-    columnGap: "4px",
-    rowGap: "4px",
-    width: "100px",
-    alignContent: "flex-start",
-  };
-
-  //activity.stats.meleeKills
-
-  let dataContainerStyle = {
-    display: "flex",
-    justifyContent: "space-between",
-  };
-
-  let timePlayedStyle = {
-    display: "flex",
-    justifyContent: "flex-end",
-    font: "var(--font-small)",
-  };
-
-  let dataContainerWrapperStyle = {
-    width: "100%",
-    margin: "4px",
-  };
-
-  let totalWeaponKills = 0;
 
   let medals = activity.stats.extended.medals.sort((a, b) => {
     return b.count - a.count;
@@ -150,6 +152,8 @@ const PlayerActivityDetail = (props) => {
   let weapons = activity.stats.extended.weapons.sort((a, b) => {
     return b.kills - a.kills;
   });
+
+  let totalWeaponKills = 0;
 
   console.log(activity);
 

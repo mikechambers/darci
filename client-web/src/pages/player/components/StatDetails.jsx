@@ -10,7 +10,7 @@ const style = {
   columnGap: "40px",
   backgroundColor: "rgba(0,0,0,0.1)",
   padding: "10px",
-  borderRadius: "4px",
+  borderRadius: "var(--border-radius)",
   width: "max-content",
   //border: "var(--list-item-border)",
   backdropFilter: "var(--background-blur)",

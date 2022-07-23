@@ -6,7 +6,7 @@ import InfoTip from "../../../components/InfoTip";
 const containerStyle = {
   display: "flex",
   backgroundColor: "var(--list-item-background-color)",
-  borderRadius: "8px",
+  borderRadius: "var(--border-radius)",
   padding: "12px",
   gap: "var(--list-item-gap)",
 };

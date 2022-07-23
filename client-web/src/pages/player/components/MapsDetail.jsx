@@ -28,7 +28,7 @@ const headerStyle = {
 const elementStyle = {
   width: "235px",
   height: "310px",
-  borderRadius: "4px",
+  borderRadius: "var(--border-radius)",
   //border: "var(--list-item-border)",
   backgroundPosition: "center",
   backgroundSize: "contain",
@@ -44,7 +44,7 @@ const datacontainerStyle = {
   //backgroundColor: "var(--list-item-background-color)",
   backgroundColor: "#1C1C1Cee",
   backdropFilter: "var(--background-blur)",
-  borderRadius: "0px 0px 4px 4px",
+  borderRadius: "0px 0px var(--border-radius) var(--border-radius)",
 
   display: "flex",
   flexDirection: "column",

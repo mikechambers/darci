@@ -16,6 +16,7 @@ import { ReactComponent as SniperRifleIcon } from "./images/sniper_rifle_icon.sv
 import { ReactComponent as SubmachineGunIcon } from "./images/submachine_gun_icon.svg";
 import { ReactComponent as SwordIcon } from "./images/sword_icon.svg";
 import { ReactComponent as TraceRifleIcon } from "./images/trace_rifle_icon.svg";
+import { ReactComponent as BlankIcon } from "./images/blank_icon.svg";
 
 const WeaponIcon = (props) => {
   let itemSubType = props.itemSubType;
@@ -38,7 +39,7 @@ const WeaponIcon = (props) => {
     case ItemSubType.HAND_CANNON:
       out = <HandCanonIcon title={itemSubType.label} width={width} />;
       break;
-    case ItemSubType.HeavyGrenadeLauncherIcon:
+    case ItemSubType.GRENADE_LAUNCHER:
       out = (
         <HeavyGrenadeLauncherIcon title={itemSubType.label} width={width} />
       );
@@ -77,6 +78,7 @@ const WeaponIcon = (props) => {
       out = <TraceRifleIcon title={itemSubType.label} width={width} />;
       break;
     default:
+      out = <BlankIcon width={width} />;
   }
 
   return out;
