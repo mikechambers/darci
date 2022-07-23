@@ -59,6 +59,11 @@ class PlayerActivities {
         a.stats.extended.medals,
         this.#manifest
       );
+
+      a.stats.extended.weapons = parseWeaponsFromServer(
+        a.stats.extended.weapons,
+        this.#manifest
+      );
     }
 
     this.#summary.weapons = parseWeaponsFromServer(

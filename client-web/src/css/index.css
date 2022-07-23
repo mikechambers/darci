@@ -40,6 +40,8 @@
   --font-label: 400 12px 'Roboto', sans-serif;
   --font-data : var(--font);
 
+  --font-data-small:var(--light) 12px 'Roboto', sans-serif;
+
   --font-data-highlight: 700 42px 'Roboto', sans-serif;
   --font-label-highlight: 500 17px 'Roboto', sans-serif;
 

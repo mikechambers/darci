@@ -4,6 +4,7 @@ import JoinedLateIcon from "../../../components/JoinedLateIcon";
 import JoinedLeftIcon from "../../../components/JoinedLeftIcon";
 import LeftEarlyIcon from "../../../components/LeftEarlyIcon";
 import MercyIcon from "../../../components/MercyIcon";
+import PlayerActivityDetail from "./PlayerAcitivtyDetail";
 import Stat from "./Stat";
 
 const resultWinStyle = {
@@ -150,40 +151,8 @@ const ActivityListItem = (props) => {
     setIsExpanded(!isExpanded);
   };
 
-  let detailStyle = {
-    width: `${WIDTH - 10}px`,
-    height: "100px",
-    backgroundColor: "var(--list-item-background-color)",
-    border: "var(--list-item-border)",
-    borderTopWidth: "0px",
-    selfAlign: "center",
-  };
-
-  /*
-  let visibility = "visible";
-  let display = "display";
-  if (!isExpanded) {
-    visibility = "hidden";
-    display = "none";
-  }
-
-  detailStyle.visibility = visibility;
-  detailStyle.display = display;
-  */
-
-  let backgroundStyle = {
-    width: "185px",
-    height: "100%",
-    backgroundImage: `url(${activity.activity.map.image})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    /*filter: "saturate(50%)",*/
-  };
-
   let detailsDiv = isExpanded ? (
-    <div className="activity_details" style={detailStyle}>
-      <div style={backgroundStyle}></div>
-    </div>
+    <PlayerActivityDetail width={WIDTH - 10} activity={activity} />
   ) : (
     ""
   );
