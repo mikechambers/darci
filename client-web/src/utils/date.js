@@ -26,7 +26,8 @@ export const humanDuration = function (ms, short = false) {
       return null;
     }
 
-    let out = `${data} ${label}`;
+    let space = short ? "" : " ";
+    let out = `${data}${space}${label}`;
 
     if (!short && data > 1) {
       out += "s";
