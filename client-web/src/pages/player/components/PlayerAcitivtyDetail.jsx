@@ -253,7 +253,7 @@ const PlayerActivityDetail = (props) => {
               }
 
               let countLabel = "";
-              if (medal.count) {
+              if (medal.count > 1) {
                 countLabel = `${medal.count} x `;
               }
               return (

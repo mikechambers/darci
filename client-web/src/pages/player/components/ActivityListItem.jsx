@@ -110,7 +110,7 @@ const ActivityListItem = (props) => {
   let gm = new Map();
   for (let m of activity.stats.extended.medals) {
     if (m.info.isGold) {
-      gm.set(m.id, m.info);
+      gm.set(m.id, m);
     }
   }
 
@@ -212,12 +212,19 @@ const ActivityListItem = (props) => {
         </div>
         <div style={medalsStyle}>
           {goldMedals.map((medal, index) => {
+            let countLabel = "";
+            if (medal.count > 2) {
+              countLabel = `${medal.count} x `;
+            }
+
             return (
               <img
                 key={index}
-                src={medal.icon}
-                alt={medal.description}
-                title={`${medal.name.toUpperCase()} - ${medal.description}`}
+                src={medal.info.icon}
+                alt={medal.info.description}
+                title={`${countLabel}${medal.info.name.toUpperCase()} - ${
+                  medal.info.description
+                }`}
                 height="14"
               />
             );
