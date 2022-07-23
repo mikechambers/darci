@@ -9,12 +9,14 @@ import Stat from "./Stat";
 
 const resultWinStyle = {
   backgroundColor: "#3FD445",
-  width: "4px",
+  width: "6px",
+  borderRadius: "4px 0px 0px 4px",
 };
 
 const resultLossStyle = {
   backgroundColor: "#E92626",
-  width: "4px",
+  width: "6px",
+  borderRadius: "4px 0px 0px 4px",
 };
 
 const statsStyle = {
@@ -40,13 +42,14 @@ const gameContainerStyle = {
   backgroundColor: "var(--list-item-background-color)",
   border: "var(--list-item-border)",
   borderLeftWidth: "0px",
+  borderRadius: "4px",
   cursor: "pointer",
 };
 
 const gameTitleStyle = {
   display: "flex",
   flexDirection: "column",
-  width: "160px",
+  width: "158px",
   justifyContent: "center",
   paddingLeft: "4px",
 };

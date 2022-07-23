@@ -19,9 +19,12 @@ const PlayerActivityDetail = (props) => {
   let detailStyle = {
     width: `${width}px`,
 
-    backgroundColor: "var(--list-item-background-color)",
+    backgroundColor: "var(--list-item-detail-background-color)",
+
     border: "var(--list-item-border)",
     borderTopWidth: "0px",
+    borderRadius: "0px 0px 4px 4px",
+
     selfAlign: "center",
     display: "flex",
     flexDirection: "row",
@@ -36,18 +39,21 @@ const PlayerActivityDetail = (props) => {
     backgroundImage: `url(${activity.activity.map.image})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
+    borderRadius: "4px",
+    margin: "4px",
     /*filter: "saturate(50%)",*/
   };
 
   let weaponCount = activity.stats.extended.weapons
     ? activity.stats.extended.weapons.length
     : 0;
+
   const weaponEntryStyle = {
     display: "grid",
-    gridTemplateColumns: "25px 105px 20px 40px",
+    gridTemplateColumns: "25px 100px 15px 55px",
 
     //todo: default to 0 if empty
-    gridTemplateRows: `repeat(${weaponCount + 1} 1fr)`,
+    gridTemplateRows: `repeat(${weaponCount} 1fr)`,
     gridGap: `${GAP}px`,
     font: "var(--font-data-small)",
     width: "190px",
@@ -111,6 +117,10 @@ const PlayerActivityDetail = (props) => {
   let medalsContainerStyle = {
     display: "flex",
     flexWrap: "wrap",
+    columnGap: "4px",
+    rowGap: "4px",
+    width: "100px",
+    alignContent: "flex-start",
   };
 
   //activity.stats.meleeKills
@@ -165,19 +175,11 @@ const PlayerActivityDetail = (props) => {
                       weapon.precisionKills,
                       weapon.kills
                     ).toFixed(0)}
-                    %
+                    % &nbsp; <IconManager icon={PRECISION_ICON} />
                   </div>
                 </React.Fragment>
               );
             })}
-            <div></div>
-            <div></div>
-            <div style={killsStyle} className="label_small">
-              kills
-            </div>
-            <div style={precisionStyleLabel}>
-              <IconManager icon={PRECISION_ICON} />
-            </div>
           </div>
           <div style={abilitiesContainerStyle}>
             <div style={abilitiesStyle}>

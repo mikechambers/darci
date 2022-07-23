@@ -66,6 +66,8 @@
 
   /*2E2E2E*/
   --list-item-background-color: #1C1C1C;
+  --list-item-detail-background-color:#1C1C1C66;
+
   --list-item-border: 1px solid #ffffff33;
 
   --background-blur: blur(8px);
@@ -330,7 +332,7 @@ td {
 
 @keyframes fade-in {
   0% {
-    opacity: .5;
+    opacity: .3;
   }
   100% {
     opacity: 1;
@@ -338,7 +340,13 @@ td {
 }
 
 .activity_details {
-  animation: fade-in 0.2s cubic-bezier(0.950, 0.050, 0.795, 0.035) both;
+  /*animation: fade-in 0.2s cubic-bezier(0.950, 0.050, 0.795, 0.035) both;*/
+  animation: fade-in 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+}
+
+.scale-in-tl {
+	-webkit-animation: scale-in-tl 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+	        animation: scale-in-tl 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
 }
 
 .overflow {
