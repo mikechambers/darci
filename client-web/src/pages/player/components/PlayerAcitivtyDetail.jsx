@@ -22,7 +22,7 @@ let killsStyle = {
 let abilitiesContainerStyle = {
   display: "grid",
   gridTemplateColumns: "25px 25px",
-  gridTemplateRows: `repeat(3, fr)`,
+  //gridTemplateRows: `repeat(3, 1fr)`,
   width: "50px",
   gridGap: `${GAP}px`,
   font: "var(--font-data-small)",
@@ -47,7 +47,7 @@ let statsContainterStyle = {
   display: "grid",
   width: "140px",
   gridTemplateColumns: "50% 50%",
-  gridTemplateRows: `repeat(3 1fr)`,
+  gridTemplateRows: `repeat(3, 1fr)`,
   alignContent: "start",
   gridGap: `${GAP}px`,
 };
@@ -98,7 +98,7 @@ const backgroundStyleBase = {
   /*filter: "saturate(50%)",*/
 };
 
-const weaponEntryStyleBase = {
+const weaponEntryStyle = {
   display: "grid",
   gridTemplateColumns: "25px 100px 15px 55px",
   gridGap: `${GAP}px`,
@@ -126,18 +126,9 @@ const PlayerActivityDetail = (props) => {
   let width = props.width;
   let activity = props.activity;
 
-  let weaponCount = activity.stats.extended.weapons
-    ? activity.stats.extended.weapons.length
-    : 0;
-
   const detailStyle = {
     ...detailStyleBase,
     width: `${width}px`,
-  };
-
-  const weaponEntryStyle = {
-    ...weaponEntryStyleBase,
-    gridTemplateRows: `repeat(${weaponCount} 1fr)`,
   };
 
   const backgroundStyle = {
@@ -155,8 +146,6 @@ const PlayerActivityDetail = (props) => {
 
   let totalWeaponKills = 0;
 
-  console.log(activity);
-
   return (
     <div className="activity_details" style={detailStyle}>
       <div style={backgroundStyle}></div>
@@ -168,7 +157,7 @@ const PlayerActivityDetail = (props) => {
               totalWeaponKills += weapon.kills;
 
               return (
-                <React.Fragment>
+                <React.Fragment key={index}>
                   <div>
                     <WeaponIcon itemSubType={weapon.item.itemSubType} />
                   </div>
@@ -258,7 +247,7 @@ const PlayerActivityDetail = (props) => {
             </div>
           </div>
           <div style={medalsContainerStyle}>
-            {medals.map((medal, index) => {
+            {medals.map((medal, i) => {
               if (medal.info.isGold) {
                 return "";
               }
@@ -269,7 +258,7 @@ const PlayerActivityDetail = (props) => {
               }
               return (
                 <img
-                  key={index}
+                  key={i}
                   src={medal.info.icon}
                   alt={medal.info.description}
                   title={`${countLabel}${medal.info.name} - ${medal.info.description}`}
