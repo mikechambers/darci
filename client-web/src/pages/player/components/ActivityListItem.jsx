@@ -39,6 +39,7 @@ const gameContainerStyle = {
   backgroundColor: "var(--list-item-background-color)",
   border: "var(--list-item-border)",
   borderLeftWidth: "0px",
+  cursor: "pointer",
 };
 
 const gameTitleStyle = {
@@ -75,6 +76,7 @@ const medalsStyle = {
 const ActivityListItem = (props) => {
   let activity = props.activity;
   let summary = props.summary;
+  let map = props.map;
 
   let resultStyle =
     activity.stats.standing === Standing.VICTORY
@@ -149,7 +151,7 @@ const ActivityListItem = (props) => {
   };
 
   let detailStyle = {
-    width: `${WIDTH - 40}px`,
+    width: `${WIDTH - 10}px`,
     height: "100px",
     backgroundColor: "var(--list-item-background-color)",
     border: "var(--list-item-border)",
@@ -169,7 +171,22 @@ const ActivityListItem = (props) => {
   detailStyle.display = display;
   */
 
-  let detailsDiv = isExpanded ? <div style={detailStyle}>foo</div> : "";
+  let backgroundStyle = {
+    width: "185px",
+    height: "100%",
+    backgroundImage: `url(${activity.activity.map.image})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    /*filter: "saturate(50%)",*/
+  };
+
+  let detailsDiv = isExpanded ? (
+    <div className="activity_details" style={detailStyle}>
+      <div style={backgroundStyle}></div>
+    </div>
+  ) : (
+    ""
+  );
 
   return (
     <div style={gameContainerWrapper}>
