@@ -77,7 +77,6 @@ const medalsStyle = {
 const ActivityListItem = (props) => {
   let activity = props.activity;
   let summary = props.summary;
-  let map = props.map;
 
   let resultStyle =
     activity.stats.standing === Standing.VICTORY

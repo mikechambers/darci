@@ -1,9 +1,11 @@
-import StatHighlight from "./StatHighlight";
 import { calculatePercent } from "../../../utils";
+import Stat, { ALIGN_RIGHT, LARGE_STYLE } from "./Stat";
 
 const style = {
   display: "flex",
+  flexDirection: "row",
   flexWrap: "wrap",
+  gap: "100px",
 };
 
 const StatHighlights = (props) => {
@@ -11,15 +13,27 @@ const StatHighlights = (props) => {
 
   return (
     <div style={style}>
-      <StatHighlight
+      <Stat
+        styleName={LARGE_STYLE}
         label="win%"
         value={`${calculatePercent(
           summary.wins,
           summary.activityCount
         ).toFixed()}%`}
+        align={ALIGN_RIGHT}
       />
-      <StatHighlight label="KD" value={summary.killsDeathsRatio.toFixed(2)} />
-      <StatHighlight label="EFF" value={summary.efficiency.toFixed(2)} />
+      <Stat
+        styleName={LARGE_STYLE}
+        label="KD"
+        value={summary.killsDeathsRatio.toFixed(2)}
+        align={ALIGN_RIGHT}
+      />
+      <Stat
+        styleName={LARGE_STYLE}
+        label="EFF"
+        value={summary.efficiency.toFixed(2)}
+        align={ALIGN_RIGHT}
+      />
     </div>
   );
 };

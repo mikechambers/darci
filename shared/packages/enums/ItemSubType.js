@@ -11,7 +11,7 @@ class ItemSubType extends EnumBase {
   static FUSION_RIFLE = new ItemSubType("Fusion Rifle", 11);
   static SNIPER_RIFLE = new ItemSubType("Sniper Rifle", 12);
   static PULSE_RIFLE = new ItemSubType("Pulse Rifle", 13);
-  static SCOUNT_RIFLE = new ItemSubType("Scout Rifle", 14);
+  static SCOUT_RIFLE = new ItemSubType("Scout Rifle", 14);
   static SIDEARM = new ItemSubType("Sidearm", 17);
   static SWORD = new ItemSubType("Sword", 18);
   static LINEAR_FUSION_RIFLE = new ItemSubType("Linear Fusion Rifle", 22);
