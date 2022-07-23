@@ -13,6 +13,7 @@
   --link-color:#fbfbfb;
 
   --base-font-color:#ffffff;
+  --base-font-dark-color:#000000;
   --data-label-color:#FFFFFF66;
   --data-label-weight:400;
   --data-label-font-size:16px;
@@ -120,24 +121,23 @@ html {
   width:70px;
 }
 
-.nav_select, .nav_option {
-  font:var(--font-controls);
 
-  font:var(--font-controls);
+.nav_select {
   background: #00000000;
   color:white;
+}
+
+.nav_select, .nav_option {
+  font:var(--font-controls);
   border:0px;
-
   text-align-last: right;
-
-  /*
-  this removes the arrow
-  appearance:none;*/
 }
 
 .nav_option {
+  color:var(--base-font-dark-color);
   /* right align options */
   direction: rtl;
+  
 }
 
 
