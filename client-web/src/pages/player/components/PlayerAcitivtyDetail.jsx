@@ -1,4 +1,5 @@
 import React from "react";
+import { calculateRatio } from "shared";
 import IconManager, {
   GRENADE_ICON,
   MELEE_ICON,
@@ -7,8 +8,10 @@ import IconManager, {
 } from "../../../components/IconManager";
 import WeaponIcon from "../../../components/WeaponIcon";
 import { calculatePercent } from "../../../utils";
+import { humanDuration } from "../../../utils/date";
 import Stat, { SMALL_STYLE } from "./Stat";
 
+const GAP = 4;
 const PlayerActivityDetail = (props) => {
   let width = props.width;
   let activity = props.activity;
@@ -24,7 +27,7 @@ const PlayerActivityDetail = (props) => {
     flexDirection: "row",
 
     //todo: make sure spacing is correct
-    gap: "4px",
+    gap: `${GAP}px`,
   };
 
   let backgroundStyle = {
@@ -45,7 +48,7 @@ const PlayerActivityDetail = (props) => {
 
     //todo: default to 0 if empty
     gridTemplateRows: `repeat(${weaponCount + 1} 1fr)`,
-    gridGap: "2px",
+    gridGap: `${GAP}px`,
     font: "var(--font-data-small)",
     width: "190px",
     alignContent: "start",
@@ -72,7 +75,7 @@ const PlayerActivityDetail = (props) => {
     gridTemplateColumns: "25px 25px",
     gridTemplateRows: `repeat(3, fr)`,
     width: "50px",
-    gridGap: "2px",
+    gridGap: `${GAP}px`,
     font: "var(--font-data-small)",
     alignContent: "start",
   };
@@ -93,10 +96,11 @@ const PlayerActivityDetail = (props) => {
 
   let statsContainterStyle = {
     display: "grid",
-    width: "150px",
+    width: "140px",
     gridTemplateColumns: "50% 50%",
     gridTemplateRows: `repeat(3 1fr)`,
     alignContent: "start",
+    gridGap: `${GAP}px`,
   };
 
   let killsAssistStyle = {
@@ -109,7 +113,7 @@ const PlayerActivityDetail = (props) => {
     flexWrap: "wrap",
   };
 
-  console.log(activity.stats.extended);
+  //activity.stats.meleeKills
 
   let dataContainerStyle = {
     display: "flex",
@@ -119,11 +123,26 @@ const PlayerActivityDetail = (props) => {
   let timePlayedStyle = {
     display: "flex",
     justifyContent: "flex-end",
+    font: "var(--font-small)",
   };
 
   let dataContainerWrapperStyle = {
     width: "100%",
+    margin: "4px",
   };
+
+  let totalWeaponKills = 0;
+
+  let medals = activity.stats.extended.medals.sort((a, b) => {
+    return b.count - a.count;
+  });
+
+  let weapons = activity.stats.extended.weapons.sort((a, b) => {
+    return b.kills - a.kills;
+  });
+
+  console.log(activity);
+
   return (
     <div className="activity_details" style={detailStyle}>
       <div style={backgroundStyle}></div>
@@ -131,7 +150,9 @@ const PlayerActivityDetail = (props) => {
       <div style={dataContainerWrapperStyle}>
         <div style={dataContainerStyle}>
           <div style={weaponEntryStyle}>
-            {activity.stats.extended.weapons.map((weapon, index) => {
+            {weapons.map((weapon, index) => {
+              totalWeaponKills += weapon.kills;
+
               return (
                 <React.Fragment>
                   <div>
@@ -180,39 +201,81 @@ const PlayerActivityDetail = (props) => {
           </div>
           <div style={statsContainterStyle}>
             <div>
-              <Stat label="weapons" value="0" styleName={SMALL_STYLE} />
+              <Stat
+                label="weapons"
+                styleName={SMALL_STYLE}
+                value={`${calculatePercent(
+                  totalWeaponKills,
+                  activity.stats.kills
+                ).toFixed()}%`}
+              />
             </div>
             <div>
-              <Stat label="supers" value="0" styleName={SMALL_STYLE} />
+              <Stat
+                label="supers"
+                value={`${calculatePercent(
+                  activity.stats.extended.superKills,
+                  activity.stats.kills
+                ).toFixed()}%`}
+                styleName={SMALL_STYLE}
+              />
             </div>
             <div>
-              <Stat label="melee" value="0" styleName={SMALL_STYLE} />
+              <Stat
+                label="melee"
+                value={`${calculatePercent(
+                  activity.stats.extended.meleeKills,
+                  activity.stats.kills
+                ).toFixed()}%`}
+                styleName={SMALL_STYLE}
+              />
             </div>
             <div>
-              <Stat label="grenades" value="0" styleName={SMALL_STYLE} />
+              <Stat
+                label="grenades"
+                value={`${calculatePercent(
+                  activity.stats.extended.grenadeKills,
+                  activity.stats.kills
+                ).toFixed()}%`}
+                styleName={SMALL_STYLE}
+              />
             </div>
             <div style={killsAssistStyle}>
-              <Stat label="kills/assists" value="0" styleName={SMALL_STYLE} />
+              <Stat
+                label="k/a"
+                value={`${calculateRatio(
+                  activity.stats.kills,
+                  activity.stats.assists
+                ).toFixed(2)}`}
+                styleName={SMALL_STYLE}
+              />
             </div>
           </div>
           <div style={medalsContainerStyle}>
-            {activity.stats.extended.medals.map((medal, index) => {
+            {medals.map((medal, index) => {
               if (medal.info.isGold) {
                 return "";
+              }
+
+              let countLabel = "";
+              if (medal.count) {
+                countLabel = `${medal.count} x `;
               }
               return (
                 <img
                   key={index}
                   src={medal.info.icon}
                   alt={medal.info.description}
-                  title={`${medal.info.name} - ${medal.info.description}`}
+                  title={`${countLabel}${medal.info.name} - ${medal.info.description}`}
                   height="14"
                 />
               );
             })}
           </div>
         </div>
-        <div style={timePlayedStyle}>hi</div>
+        <div style={timePlayedStyle}>
+          {humanDuration(activity.stats.activityDurationSeconds * 1000)}
+        </div>
       </div>
     </div>
   );
