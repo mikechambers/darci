@@ -19,7 +19,7 @@ import PlayerOverviewBackgroundImage from "./images/player_overview_background.p
 
 const playerOverviewStyle = {
   padding: "var(--content-padding)",
-  height: "500px",
+  height: "460px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-around",
@@ -35,7 +35,7 @@ const weaponsStyle = {
 
 const playerHeaderStyle = {
   padding: "var(--content-padding)",
-  height: "200px",
+  height: "180px",
   display: "flex",
   alignItems: "center",
 };
@@ -100,7 +100,7 @@ const PlayerView = () => {
   const gappedStyle = {
     display: "flex",
     flexDirection: "column",
-    gap: "40px",
+    gap: "30px",
     background:
       "linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(54,54,54,1) 100%)",
   };
