@@ -81,7 +81,6 @@ const PlayerViewConfig = (props) => {
 
   const navigate = useNavigate();
 
-  const location = useLocation();
   let onClick = function (e) {
     let ts = new Date().getTime();
 
