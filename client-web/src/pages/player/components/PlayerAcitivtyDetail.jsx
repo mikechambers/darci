@@ -1,6 +1,7 @@
 import React from "react";
 import { calculateRatio } from "shared";
 import IconManager, {
+  DESTINY_LOGO,
   GRENADE_ICON,
   MELEE_ICON,
   PRECISION_ICON,
@@ -73,8 +74,7 @@ const dataContainerStyle = {
 
 const timePlayedStyle = {
   display: "flex",
-  justifyContent: "flex-end",
-  font: "var(--font-small)",
+  justifyContent: "flex-start",
 };
 
 const dataContainerWrapperStyle = {
@@ -145,6 +145,30 @@ const PlayerActivityDetail = (props) => {
   });
 
   let totalWeaponKills = 0;
+
+  const metaDataStyle = {
+    display: "flex",
+    alignItems: "center",
+    font: "var(--font-small)",
+    justifyContent: "space-between",
+    //backgroundColor: "#FFFFFF11",
+    //padding: "0px 4px",
+    //borderRadius: "var(--border-radius)",
+  };
+
+  const linksStyle = {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+  };
+
+  const siteIconStyle = {
+    verticalAlign: "middle",
+  };
+
+  let activityId = activity.activity.activityId;
+  let characterId = activity.player.character.characterId;
+  console.log(activity);
 
   return (
     <div className="activity_details" style={detailStyle}>
@@ -268,8 +292,46 @@ const PlayerActivityDetail = (props) => {
             })}
           </div>
         </div>
-        <div style={timePlayedStyle}>
-          {humanDuration(activity.stats.activityDurationSeconds * 1000)}
+        <div style={metaDataStyle}>
+          <div style={timePlayedStyle}>
+            {humanDuration(activity.stats.activityDurationSeconds * 1000)}
+          </div>
+          <div style={linksStyle}>
+            <a href={`https://crucible.report/pgcr/${activityId}`}>
+              <img
+                src="https://trials.report/assets/svg/icon.svg"
+                width="10"
+                height="10"
+                alt="View game on Crucible Report"
+                title="View game on Crucible Report"
+                style={siteIconStyle}
+                className="icon_glow"
+              />
+            </a>
+            &nbsp;
+            <a href={`https://destinytracker.com/destiny-2/pgcr/${activityId}`}>
+              <img
+                src="https://destinytracker.com/public/icons/icon192.png"
+                width="14"
+                height="14"
+                alt="View game on DestinyTracker.com"
+                title="View game on DestinyTracker.com"
+                style={siteIconStyle}
+                className="icon_glow"
+              />
+            </a>
+            &nbsp;
+            <a
+              href={`https://www.bungie.net/en/PGCR/${activityId}?character=${characterId}`}
+              className="icon_glow"
+            >
+              <IconManager
+                icon={DESTINY_LOGO}
+                style={siteIconStyle}
+                title="View game on Bungie.com"
+              />
+            </a>
+          </div>
         </div>
       </div>
     </div>
