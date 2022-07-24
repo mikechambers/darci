@@ -41,7 +41,11 @@ const ActivityList = (props) => {
       <div style={wrapperStyle}>
         {activities.map((game, index) => {
           return (
-            <ActivityListItem activity={game} summary={summary} key={index} />
+            <ActivityListItem
+              activity={game}
+              summary={summary}
+              key={game.activity.activityId}
+            />
           );
         })}
       </div>

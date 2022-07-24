@@ -24,7 +24,7 @@ const EnumSelectBase = (props) => {
     >
       {options.map((m, index) => {
         return (
-          <option key={index} value={m} className="nav_option">
+          <option key={m.label} value={m} className="nav_option">
             {m.label}
           </option>
         );
