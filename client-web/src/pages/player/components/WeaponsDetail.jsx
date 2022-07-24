@@ -34,6 +34,7 @@ const WeaponsDetail = (props) => {
     ];
 
     data.push({
+      id: w.id,
       title: w.item.name,
       subtitle: w.item.itemSubType.toString(),
       icon: w.item.icon,
