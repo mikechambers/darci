@@ -2,6 +2,7 @@ import { CharacterClassSelection, Mode, Moment } from "shared";
 import React, { useEffect, useState } from "react";
 import EnumSelectBase from "./EnumSelectBase";
 import { useFetchPlayers } from "../hooks/remote";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const PlayerViewConfig = (props) => {
   let classes = [
@@ -78,9 +79,18 @@ const PlayerViewConfig = (props) => {
     setPlayer(e);
   };
 
+  const navigate = useNavigate();
+
+  const location = useLocation();
   let onClick = function (e) {
-    let url = `/player/${player.memberId}/${player.platformId}/${classSelection.type}/${mode.type}/${moment.type}/`;
-    window.location.href = url;
+    let ts = new Date().getTime();
+
+    let url = `/player/${player.memberId}/${player.platformId}/${classSelection.type}/${mode.type}/${moment.type}/?fr=${ts}`;
+
+    //the fr indicates its from this navigatio, and passes a timestamp, so receivers
+    //can differentiate between different calls
+    //honestly, its a bit of a hack because my data framework isnt very good
+    navigate(url);
   };
 
   let style = {

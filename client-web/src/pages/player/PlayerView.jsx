@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import ActivityList from "./components/ActivityList";
 import WeaponsDetail from "./components/WeaponsDetail";
 import WeaponMetaDetail from "./components/WeaponMetaDetail";
@@ -16,6 +16,7 @@ import TimePlayed from "./components/TimePlayed";
 import StatDetails from "./components/StatDetails";
 import StatHighlights from "./components/StatHighlights";
 import PlayerOverviewBackgroundImage from "./images/player_overview_background.png";
+const { useQuery } = require("../../hooks/browser");
 
 const playerOverviewStyle = {
   padding: "var(--content-padding)",
@@ -47,6 +48,9 @@ const PlayerView = () => {
   let moment = Moment.fromString(params.moment);
   let classSelection = CharacterClassSelection.fromString(params.classType);
 
+  let query = useQuery();
+  let hash = query.get("fr");
+
   /*
   let [profile, isProfileLoading, profileLoadError] = useFetchPlayerProfile(
     true,
@@ -54,14 +58,15 @@ const PlayerView = () => {
     params.platformId
   );
   */
-
+  //console.log(params.memberId, mode.label, moment.label, classSelection.label);
   let [activityStats, isActivitiesLoading, activitiesLoadError] =
     useFetchPlayerActivities(
       true,
       params.memberId,
       mode,
       moment,
-      classSelection
+      classSelection,
+      hash
     );
 
   /*

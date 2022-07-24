@@ -141,7 +141,8 @@ export const useFetchPlayerActivities = (
   memberId,
   mode = Mode.ALL_PVP,
   moment = Moment.WEEK,
-  classSelection = CharacterClassSelection.ALL
+  classSelection = CharacterClassSelection.ALL,
+  hash = undefined
 ) => {
   const [output, setOutput] = useState({
     activityStats: undefined,
@@ -157,6 +158,7 @@ export const useFetchPlayerActivities = (
       return;
     }
 
+    let timeoutId;
     const f = async () => {
       let s = reducer(output, "isLoading", false);
       try {
@@ -176,11 +178,10 @@ export const useFetchPlayerActivities = (
 
     f();
 
-    let timeoutId;
     return () => {
       cleanUpTimeout(timeoutId);
     };
-  }, [memberId]);
+  }, [classSelection, manifest, memberId, mode, moment, refresh, hash]);
 
   return [output.activityStats, output.isLoading, output.error];
 };
