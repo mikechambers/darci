@@ -59,7 +59,7 @@ const WeaponList = (props) => {
           >
             {sortLabels.map((item, index) => {
               return (
-                <option key={index} value={index} className="nav_option">
+                <option key={item} value={index} className="nav_option">
                   {item}
                 </option>
               );

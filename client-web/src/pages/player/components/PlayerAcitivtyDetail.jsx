@@ -168,7 +168,6 @@ const PlayerActivityDetail = (props) => {
 
   let activityId = activity.activity.activityId;
   let characterId = activity.player.character.characterId;
-  console.log(activity);
 
   return (
     <div className="activity_details" style={detailStyle}>
@@ -181,7 +180,7 @@ const PlayerActivityDetail = (props) => {
               totalWeaponKills += weapon.kills;
 
               return (
-                <React.Fragment key={index}>
+                <React.Fragment key={weapon.id}>
                   <div>
                     <WeaponIcon itemSubType={weapon.item.itemSubType} />
                   </div>
@@ -282,7 +281,7 @@ const PlayerActivityDetail = (props) => {
               }
               return (
                 <img
-                  key={i}
+                  key={medal.id}
                   src={medal.info.icon}
                   alt={medal.info.description}
                   title={`${countLabel}${medal.info.name} - ${medal.info.description}`}

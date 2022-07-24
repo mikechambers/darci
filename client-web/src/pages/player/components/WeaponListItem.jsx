@@ -57,7 +57,7 @@ const WeaponListItem = (props) => {
 
   return (
     <div style={style}>
-      <div style={containerStyle} key={index}>
+      <div style={containerStyle}>
         <div className="weapon_list_icon" style={iconStyle}></div>
         <div id="data_container" style={dataContainerStyle}>
           <div id="header_containter" style={headerStyle}>
@@ -72,7 +72,7 @@ const WeaponListItem = (props) => {
                   value={stat.value.toLocaleString()}
                   label={stat.label}
                   align={align}
-                  key={i}
+                  key={stat.label}
                 />
               );
             })}

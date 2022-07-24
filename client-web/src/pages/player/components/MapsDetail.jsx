@@ -215,7 +215,7 @@ const MapsDetail = (props) => {
           );
 
           return (
-            <div key={index} style={h}>
+            <div key={map.referenceId} style={h}>
               <div className="list_title" style={headerStyle}>
                 <span style={mapNameStyle}>{map.map.name}</span>
               </div>

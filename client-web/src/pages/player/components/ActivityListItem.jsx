@@ -219,7 +219,7 @@ const ActivityListItem = (props) => {
 
             return (
               <img
-                key={index}
+                key={medal.id}
                 src={medal.info.icon}
                 alt={medal.info.description}
                 title={`${countLabel}${medal.info.name.toUpperCase()} - ${
