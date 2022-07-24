@@ -1,43 +1,8 @@
 import React, { useState } from "react";
-import Stat from "./Stat";
 import ExportDataButton from "../../../components/ExportDataButton";
 import InfoTip from "../../../components/InfoTip";
-
-const containerStyle = {
-  display: "flex",
-  backgroundColor: "var(--list-item-background-color)",
-  borderRadius: "var(--border-radius)",
-  padding: "12px",
-  gap: "var(--list-item-gap)",
-};
-
-const dataContainerStyle = {
-  width: "100%",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-between",
-};
-
-const headerStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-  width: "100%",
-  alignItems: "flex-end",
-};
-
-const valuesStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-};
-
-const wrapperStyle = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "var(--list-item-gap)",
-
-  maxHeight: "488px",
-  overflow: "auto",
-};
+import { FixedSizeList as List } from "react-window";
+import WeaponListItem from "./WeaponListItem";
 
 const elementStyle = {
   padding: "var(--content-padding)",
@@ -78,6 +43,8 @@ const WeaponList = (props) => {
     setSortIndex(e.target.selectedIndex);
   };
 
+  let itemKey = (index, weapons) => weapons[index].id;
+
   return (
     <div style={elementStyle}>
       <div style={titleStyle}>
@@ -100,40 +67,17 @@ const WeaponList = (props) => {
           </select>
         </div>
       </div>
-      <div style={wrapperStyle}>
-        {weapons.map((item, index) => {
-          let iconStyle = {
-            backgroundImage: `url(${item.icon})`,
-            width: "64px",
-            height: "64px",
-            flexShrink: "0",
-          };
-          return (
-            <div style={containerStyle} key={index}>
-              <div className="weapon_list_icon" style={iconStyle}></div>
-              <div id="data_container" style={dataContainerStyle}>
-                <div id="header_containter" style={headerStyle}>
-                  <div className="list_title">{item.title}</div>
-                  <div className="list_subtitle">{item.subtitle}</div>
-                </div>
-                <div id="values_containter" style={valuesStyle}>
-                  {item.items.map((stat, i) => {
-                    let align = i === item.items.length - 1 ? "right" : "left";
-                    return (
-                      <Stat
-                        value={stat.value.toLocaleString()}
-                        label={stat.label}
-                        align={align}
-                        key={i}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <List
+        height={488}
+        width={422}
+        itemData={weapons}
+        itemCount={weapons.length}
+        itemSize={100}
+        itemKey={itemKey}
+      >
+        {WeaponListItem}
+      </List>
+
       <div style={footerStyle}>
         <div>
           <ExportDataButton />

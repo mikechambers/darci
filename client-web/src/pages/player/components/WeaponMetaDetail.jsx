@@ -11,7 +11,6 @@ You and your fireteam's weapons are not included.`;
   weapons.sort((a, b) => {
     return b.kills - a.kills;
   });
-
   let data = [];
   for (const w of weapons) {
     let precision = calculatePercent(w.precisionKills, w.kills).toFixed(2);
@@ -36,6 +35,7 @@ You and your fireteam's weapons are not included.`;
     ];
 
     data.push({
+      id: w.id,
       title: w.item.name,
       subtitle: w.item.itemSubType.toString(),
       icon: w.item.icon,
