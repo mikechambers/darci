@@ -46,7 +46,7 @@ let abilitiesIconStyle = {
 
 let statsContainterStyle = {
   display: "grid",
-  width: "140px",
+  width: "120px",
   gridTemplateColumns: "50% 50%",
   gridTemplateRows: `repeat(3, 1fr)`,
   alignContent: "start",
