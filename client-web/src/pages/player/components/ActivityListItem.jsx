@@ -225,7 +225,7 @@ const ActivityListItem = (props) => {
                 title={`${countLabel}${medal.info.name.toUpperCase()} - ${
                   medal.info.description
                 }`}
-                height="14"
+                width="18"
               />
             );
           })}

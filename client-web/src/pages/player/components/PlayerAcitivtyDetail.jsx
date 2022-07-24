@@ -286,7 +286,7 @@ const PlayerActivityDetail = (props) => {
                   src={medal.info.icon}
                   alt={medal.info.description}
                   title={`${countLabel}${medal.info.name} - ${medal.info.description}`}
-                  height="14"
+                  height="18"
                 />
               );
             })}
@@ -300,8 +300,7 @@ const PlayerActivityDetail = (props) => {
             <a href={`https://crucible.report/pgcr/${activityId}`}>
               <img
                 src="https://trials.report/assets/svg/icon.svg"
-                width="10"
-                height="10"
+                width="12"
                 alt="View game on Crucible Report"
                 title="View game on Crucible Report"
                 style={siteIconStyle}
@@ -312,8 +311,7 @@ const PlayerActivityDetail = (props) => {
             <a href={`https://destinytracker.com/destiny-2/pgcr/${activityId}`}>
               <img
                 src="https://destinytracker.com/public/icons/icon192.png"
-                width="14"
-                height="14"
+                width="18"
                 alt="View game on DestinyTracker.com"
                 title="View game on DestinyTracker.com"
                 style={siteIconStyle}
