@@ -118,8 +118,7 @@ const WeaponList = (props) => {
                 </div>
                 <div id="values_containter" style={valuesStyle}>
                   {item.items.map((stat, i) => {
-                    let align =
-                      index === item.items.length - 1 ? "right" : "left";
+                    let align = i === item.items.length - 1 ? "right" : "left";
                     return (
                       <Stat
                         value={stat.value.toLocaleString()}
