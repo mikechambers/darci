@@ -261,7 +261,13 @@ class ActivityStoreInterface {
         weaponMap.set(id, item);
       }
 
+      let teamRows = this.#select_teams.all({ activityRowId: r.activity });
+
+      let tr = teamRows.find((t) => t.team_id != r.team);
+      r.opponentTeamScore = tr !== undefined ? tr.score : -1;
+
       let stats = this.parseCrucibleStats(r);
+
       let player = this.parsePlayer(r);
       let activity = this.parseActivity(r);
 
@@ -302,7 +308,6 @@ class ActivityStoreInterface {
     let mode = Mode.fromId(row.activity_mode);
 
     let teamsMap = new Map();
-
     let teamRows = this.#select_teams.all({ activityRowId: activityRowId });
 
     let hasTeams = true;
@@ -430,12 +435,13 @@ class ActivityStoreInterface {
       ),
       activityDurationSeconds: activityRow.activity_duration_seconds,
       standing: activityRow.standing,
-      team: activityRow.team,
       completionReason: activityRow.completion_reason,
       startSeconds: activityRow.start_seconds,
       timePlayedSeconds: activityRow.time_played_seconds,
       playerCount: activityRow.player_count,
+      team: activityRow.team,
       teamScore: activityRow.team_score,
+      opponentTeamScore: activityRow.opponentTeamScore,
       fireteamId: activityRow.fireteam_id,
       joinedLate: activityRow.start_seconds > PLAYER_START_BUFFER,
       extended: extended,

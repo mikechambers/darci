@@ -95,6 +95,8 @@ const backgroundStyleBase = {
   backgroundPosition: "center",
   borderRadius: "4px",
   margin: "4px",
+  display: "flex",
+  alignItems: "flex-end",
   /*filter: "saturate(50%)",*/
 };
 
@@ -169,9 +171,27 @@ const PlayerActivityDetail = (props) => {
   let activityId = activity.activity.activityId;
   let characterId = activity.player.character.characterId;
 
+  let scoreStyle = {
+    //fontWeight: "var(--bold)",
+    backgroundColor: "#00000088",
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    borderRadius: "0px 0px 4px 4px",
+    paddingTop: "2px",
+  };
+  let scoreDiv =
+    activity.stats.opponentTeamScore !== -1 ? (
+      <div style={scoreStyle}>
+        {activity.stats.teamScore} - {activity.stats.opponentTeamScore}
+      </div>
+    ) : (
+      ""
+    );
+
   return (
     <div className="activity_details" style={detailStyle}>
-      <div style={backgroundStyle}></div>
+      <div style={backgroundStyle}>{scoreDiv}</div>
 
       <div style={dataContainerWrapperStyle}>
         <div style={dataContainerStyle}>
