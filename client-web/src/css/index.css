@@ -103,7 +103,6 @@ html {
 #root {
   /*background-color: #58ccff;*/
   margin:0px 0px;
-  height: 100%;
 }
 
 #nav_bar {
@@ -368,3 +367,9 @@ td {
 
 }
 
+.NavBar {
+  position: sticky;
+  top: 0;
+  background-color: var(--background-color);
+  z-index: 1;
+}

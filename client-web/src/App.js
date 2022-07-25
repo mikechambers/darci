@@ -79,7 +79,7 @@ const App = (props) => {
           initializingContent
         ) : (
           <React.Fragment>
-            <div id="nav_bar" style={style}>
+            <nav id="nav_bar" className="NavBar" style={style}>
               <div>
                 <Link to="/">darci</Link> | <Link to="/about">about</Link>
               </div>
@@ -89,7 +89,7 @@ const App = (props) => {
                 classSelection={classSelection}
                 player={player}
               />
-            </div>
+            </nav>
             <div id="current_view">
               <Outlet />
             </div>
