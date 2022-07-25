@@ -148,6 +148,15 @@ app.get("/api/players/", (req, res, next) => {
 
   if (!rows) {
     rows = activityStore.retrieveSyncMembers();
+
+    try {
+      rows.sort((a, b) =>
+        a.bungieDisplayName.localeCompare(b.bungieDisplayName)
+      );
+    } catch (e) {
+      console.log("/api/players error sorting", e);
+    }
+
     cache.add(rows, PLAYERS_ROW_CACHE, PLAYERS_ROW_CACHE_LIFETIME);
   }
 
