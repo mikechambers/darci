@@ -19,14 +19,11 @@ class ActivityStoreInterface {
   #select_sync_members;
   #select_activities_for_member_since;
   #select_activities_for_character_since;
-  #select_weapon_stats;
-  #select_medals;
   #select_member;
   #select_activity;
   #select_teams;
   #select_character_activity_stats_for_activity;
   #select_version;
-  #select_weapon_meta_for_activity;
 
   constructor(dbPath) {
     this.#dbPath = dbPath;
@@ -61,6 +58,7 @@ class ActivityStoreInterface {
                 *,
                 activity.mode as activity_mode,
                 activity.id as activity_index_id,
+                activity.activity_id as activity_id,
                 character_activity_stats.id as character_activity_stats_index  
             FROM
                 character_activity_stats
@@ -83,6 +81,7 @@ class ActivityStoreInterface {
                     *,
                     activity.mode as activity_mode,
                     activity.id as activity_row_id,
+                    activity.activity_id as activity_id,
                     character_activity_stats.id as character_activity_stats_index  
                 FROM
                     character_activity_stats
@@ -106,36 +105,8 @@ class ActivityStoreInterface {
       'SELECT "member_id", "platform_id", "display_name", "bungie_display_name", "bungie_display_name_code" from sync join member on sync.member = member.id'
     );
 
-    this.#select_weapon_stats = this.#db.prepare(`
-            SELECT
-                *
-            FROM
-                weapon_result
-            WHERE character_activity_stats = @characterActivityStatsRowIndex
-        `);
-
-    this.#select_medals = this.#db.prepare(`
-            SELECT
-                *
-            FROM
-                medal_result
-            WHERE
-                character_activity_stats = @characterActivityStatsRowIndex
-        `);
-
     this.#select_member = this.#db.prepare(
       `select * from member where member_id = @memberId`
-    );
-
-    this.#select_weapon_meta_for_activity = this.#db.prepare(
-      `SELECT
-        *
-        FROM
-            weapon_result
-        WHERE character_activity_stats
-        IN 
-            (select id from character_activity_stats 
-                where activity = @activityId and fireteam_id != @fireteamId)`
     );
 
     this.#select_activity = this.#db.prepare(`
@@ -157,15 +128,6 @@ class ActivityStoreInterface {
                 activity.activity_id = @activityId
             ORDER BY
                 period DESC LIMIT 1
-        `);
-
-    this.#select_teams = this.#db.prepare(`
-            SELECT
-                *
-            FROM
-                team_result
-            WHERE
-                activity = @activityRowId
         `);
 
     this.#select_character_activity_stats_for_activity = this.#db.prepare(`
@@ -223,6 +185,73 @@ class ActivityStoreInterface {
 
     let activities = [];
 
+    let activityIds = rows.map((row) => row.activity_id);
+
+    //Note : sqlite library doesnt allow us to bind arrays to prepared statements
+    //we we have to dynamically construct them below
+
+    //select all of the weapon results for the activity set we retrieved
+    const ws = `SELECT
+          weapon_result.reference_id,
+          weapon_result.kills,
+          weapon_result.precision_kills,
+          weapon_result.character_activity_stats,
+          character_activity_stats.fireteam_id as fireteam_id,
+          activity.activity_id
+      FROM
+          weapon_result
+      INNER JOIN
+          character_activity_stats on character_activity_stats.id = weapon_result.character_activity_stats,
+          activity ON character_activity_stats.activity = activity.id
+      WHERE
+          activity.activity_id IN (${activityIds.join(",")})`;
+
+    const weapons = this.#db.prepare(ws).all();
+
+    let activityRowIds = rows.map((row) => row.activity_index_id);
+
+    //select all of the team data for the activity set we retrieved
+    const t = `SELECT
+        *
+    FROM
+        team_result
+    WHERE
+        activity IN (${activityRowIds.join(",")})`;
+
+    const teamRows = this.#db.prepare(t).all();
+
+    //we query below by character_activity_stat ids and not activity ids
+    //because its about twice as fast
+    let characterActivityIds = rows.map(
+      (row) => row.character_activity_stats_index
+    );
+    const m = `SELECT
+            medal_result.reference_id,
+            count,
+            character_activity_stats as character_activity_stats_index
+              FROM
+                  medal_result
+              INNER JOIN
+                  character_activity_stats on character_activity_stats.id = medal_result.character_activity_stats
+              WHERE
+                  character_activity_stats IN (${characterActivityIds.join(
+                    ","
+                  )})`;
+
+    const medalRows = this.#db.prepare(m).all();
+
+    //filter medal results to remove non medal entries
+    let medals = medalRows.filter((medal) => {
+      return !(
+        medal.reference_id === "precisionKills" ||
+        medal.reference_id === "weaponKillsAbility" ||
+        medal.reference_id === "weaponKillsGrenade" ||
+        medal.reference_id === "weaponKillsMelee" ||
+        medal.reference_id === "weaponKillsSuper" ||
+        medal.reference_id === "allMedalsEarned"
+      );
+    });
+
     //begin parsing weapon meta data for activity set
     let weaponMap = new Map();
     for (let r of rows) {
@@ -230,10 +259,11 @@ class ActivityStoreInterface {
       //so we included all fireteam members here.
       let fireteamId = mode.isPrivate() ? -1 : r.fireteam_id;
 
-      let weaponRows = this.#select_weapon_meta_for_activity.all({
-        activityId: r.activity,
-        fireteamId: fireteamId,
-      });
+      let weaponRows = weapons.filter(
+        (weapon) =>
+          weapon.activity_id === r.activity_id &&
+          weapon.fireteam_id !== fireteamId
+      );
 
       for (let wRow of weaponRows) {
         let id = wRow.reference_id;
@@ -261,12 +291,16 @@ class ActivityStoreInterface {
         weaponMap.set(id, item);
       }
 
-      let teamRows = this.#select_teams.all({ activityRowId: r.activity });
+      //find the first team that isnt our team to get the opponent score
+      //note, for rumble this will return a random opponent score, but
+      //property doesnt make sense in multi-team modes
+      let tr = teamRows.find(
+        (t) => r.activity_index_id === t.activity && t.team_id != r.team
+      );
 
-      let tr = teamRows.find((t) => t.team_id != r.team);
       r.opponentTeamScore = tr !== undefined ? tr.score : -1;
 
-      let stats = this.parseCrucibleStats(r);
+      let stats = this.parseCrucibleStats(r, weapons, medals);
 
       let player = this.parsePlayer(r);
       let activity = this.parseActivity(r);
@@ -388,13 +422,44 @@ class ActivityStoreInterface {
     };
   }
 
-  parseCrucibleStats(activityRow) {
-    let weapons = this.retrieveWeapons(
-      activityRow.character_activity_stats_index
+  /* takes an activity row, and then the weapons and medals associated with that row */
+  parseCrucibleStats(activityRow, weaponsRows, medalRows) {
+    //get only the weapons for the character in the activityRow
+    let weapons = weaponsRows.filter(
+      (weapon) =>
+        weapon.character_activity_stats ===
+        activityRow.character_activity_stats_index
     );
-    let medals = this.retrieveMedals(
-      activityRow.character_activity_stats_index
+
+    //reformat into output we need
+    weapons = weapons.map((w) => {
+      return {
+        kills: w.kills,
+        precisionKills: w.precision_kills,
+        id: w.reference_id,
+      };
+    });
+
+    //NOTE medal rows doesnt contain medals for all players in specified activity
+    //only for the character we care about. This is a performance optimization, and is
+    //about twice as fast as selecting for all players for all activities
+    //here is the query for all players
+    //https://gist.github.com/mikechambers/0c5abd11529d22082f9027e997b64f45
+
+    //get only medals for the character in the activity row
+    let medals = medalRows.filter(
+      (medal) =>
+        medal.character_activity_stats_index ===
+        activityRow.character_activity_stats_index
     );
+
+    //reformat
+    medals = medals.map((m) => {
+      return {
+        id: m.reference_id,
+        count: m.count,
+      };
+    });
 
     let extended = {
       precisionKills: activityRow.precision_kills,
@@ -643,57 +708,6 @@ class ActivityStoreInterface {
     out.medals = medalArr;
     out.weapons = weaponArr;
     return out;
-  }
-
-  retrieveMedals(characterActivityStatsRowIndex) {
-    let rows = this.#select_medals.all({
-      characterActivityStatsRowIndex: characterActivityStatsRowIndex,
-    });
-
-    let medals = [];
-
-    for (let r of rows) {
-      let id = r.reference_id;
-
-      if (
-        id === "precisionKills" ||
-        id === "weaponKillsAbility" ||
-        id === "weaponKillsGrenade" ||
-        id === "weaponKillsMelee" ||
-        id === "weaponKillsSuper" ||
-        id === "allMedalsEarned"
-      ) {
-        continue;
-      }
-
-      let item = {
-        id: r.reference_id,
-        count: r.count,
-      };
-
-      medals.push(item);
-    }
-
-    return medals;
-  }
-
-  retrieveWeapons(characterActivityStatsRowIndex) {
-    let rows = this.#select_weapon_stats.all({
-      characterActivityStatsRowIndex: characterActivityStatsRowIndex,
-    });
-
-    let weaponStats = [];
-    for (let r of rows) {
-      let item = {
-        id: r.reference_id,
-        kills: r.kills,
-        precisionKills: r.precision_kills,
-      };
-
-      weaponStats.push(item);
-    }
-
-    return weaponStats;
   }
 
   retrieveSyncMembers() {
