@@ -30,8 +30,13 @@ const elementStyle = {
   height: "310px",
   borderRadius: "var(--border-radius)",
   //border: "var(--list-item-border)",
-  backgroundPosition: "center",
-  backgroundSize: "contain",
+  //backgroundPosition: "0px 49px, center",
+  //backgroundSize: "contain, cover", //contain cover
+  //backgroundRepeat: "repeat, no-repeat",
+  backgroundPosition: "top 49px left 0px, top",
+  backgroundSize: "cover, contain", //contain cover
+  backgroundRepeat: "no-repeat, no-repeat",
+
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -206,7 +211,7 @@ const MapsDetail = (props) => {
         {maps.map((map, index) => {
           let h = {
             ...elementStyle,
-            backgroundImage: `url(${map.map.image})`,
+            backgroundImage: `url(${map.map.image}), url(${map.map.image})`,
           };
 
           let timePlayed = humanDuration(

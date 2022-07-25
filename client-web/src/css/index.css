@@ -72,7 +72,7 @@
 
   --list-item-border: 1px solid #ffffff33;
 
-  --background-blur: blur(8px);
+  --background-blur: blur(2px);
 }
 
 body {
