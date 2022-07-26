@@ -338,9 +338,6 @@ class ActivityStoreInterface {
 
     let activityRowId = row.activity_row_id;
 
-    //TODO: We dont appear to be using this
-    let mode = Mode.fromId(row.activity_mode);
-
     let teamsMap = new Map();
     let teamRows = this.#select_teams.all({ activityRowId: activityRowId });
 
@@ -372,6 +369,7 @@ class ActivityStoreInterface {
     });
 
     for (let cRow of charStatsRows) {
+      //todo : need to pass in weapons and medals
       let stats = this.parseCrucibleStats(cRow);
       let player = this.parsePlayer(cRow);
 
