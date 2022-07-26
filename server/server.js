@@ -59,6 +59,16 @@ app.get("/api/activity/:activityId/", (req, res, next) => {
 app.get(
   "/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/",
   (req, res, next) => {
+    let moment = Moment.fromString(req.params.moment);
+
+    if (
+      moment === Moment.UNKNOWN ||
+      moment.getDate().getTime() <
+        Moment.SEASON_OF_THE_HAUNTED.getDate().getTime()
+    ) {
+      throw { message: "Unsupported Moment", name: "UnsupportedMomentError" };
+    }
+
     let memberId = req.params.member_id;
 
     let characterClassSelection = CharacterClassSelection.fromString(
@@ -76,12 +86,6 @@ app.get(
     //todo: error out if mode or moment are unknown
     if (mode === Mode.UNKNOWN) {
       mode = Mode.ALL_PVP;
-    }
-
-    let moment = Moment.fromString(req.params.moment);
-
-    if (moment === Moment.UNKNOWN) {
-      moment = Moment.DAILY;
     }
 
     let st = new Date().getTime();
