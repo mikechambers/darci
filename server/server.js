@@ -54,6 +54,48 @@ app.get("/api/activity/:activityId/", (req, res, next) => {
   sendJsonResponse(res, out);
 });
 
+app.get(
+  "/api/player/summary/:member_id/:characterClass/:mode/:moment/:endMoment?/",
+  (req, res, next) => {
+    let startTime = new Date().getTime();
+    let moment = Moment.fromString(req.params.moment);
+    let memberId = req.params.member_id;
+    let characterClassSelection = CharacterClassSelection.fromString(
+      req.params.characterClass
+    );
+    let mode = Mode.fromString(req.params.mode);
+    const endMoment = Moment.NOW;
+
+    const startDate = moment.getDate();
+    const endDate = endMoment.getDate();
+
+    const summary = activityStore.retrieveActivitySummary(
+      memberId,
+      characterClassSelection,
+      mode,
+      startDate,
+      endDate
+    );
+
+    const query = {
+      startDate: startDate,
+      endDate: endDate,
+      startMoment: moment.toString(),
+      endMoment: endMoment.toString(),
+      mode: mode.toString(),
+      classSelection: characterClassSelection.toString(),
+      executionTime: new Date().getTime() - startTime,
+    };
+
+    const out = {
+      query: query,
+      summary: summary,
+    };
+
+    sendJsonResponse(res, out);
+  }
+);
+
 ///player/member_id/class/mode/moment/end-moment/
 //can append regex to each one : https://expressjs.com/en/guide/routing.html
 app.get(

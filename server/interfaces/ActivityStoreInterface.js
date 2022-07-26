@@ -148,6 +148,66 @@ class ActivityStoreInterface {
     `);
   }
 
+  retrieveActivitySummary(
+    memberId,
+    characterSelection,
+    mode,
+    startDate,
+    endDate
+  ) {
+    let restrictMode = -1;
+    if (mode.isPrivate()) {
+      restrictMode === Mode.PRIVATE_MATCHES_ALL.id;
+    }
+
+    //TODO: move this to prepared statement
+    //TODO: add character specicfic
+    let sql = `SELECT
+      count(*) as activityCount,
+      sum(time_played_seconds) as timePlayedSeconds,
+      sum((select standing where standing = 1)) as wins,
+      sum((select completion_reason where completion_reason = 4)) as mercies,
+      sum(completed) as completed,
+      sum(assists) as assists,
+      sum(character_activity_stats.kills) as kills,
+      sum(deaths) as deaths,
+      sum(opponents_defeated) as opponentsDefeated,
+      sum(weapon_kills_grenade) as grenadeKills,
+      sum(weapon_kills_melee) as meleeKills,
+      sum(weapon_kills_super) as superKills,
+      sum(weapon_kills_ability) as abilityKills,
+      sum(character_activity_stats.precision_kills) as precisionKills,
+      max(assists) as highestAssists,
+      max(character_activity_stats.kills) as highestKills,
+      max(deaths) as highestDeaths,
+      max(opponents_defeated) as highestOpponentsDefeated,
+      max(weapon_kills_grenade) as highestGrenadeKills,
+      max(weapon_kills_melee) as highestMeleeKills,
+      max(weapon_kills_super) as highestSuperKills,
+      max(weapon_kills_ability) as highestAbilityKills,
+      max(cast(character_activity_stats.kills as real) / cast(deaths as real)) as highestKillsDeathsRatio,
+      max(cast(character_activity_stats.kills + assists as real)   / cast(deaths as real)) as highestEfficiency,
+      sum(weapon_result.kills) as weaponKills
+      FROM
+      character_activity_stats
+      INNER JOIN
+      weapon_result on character_activity_stats.id = weapon_result.character_activity_stats,
+      activity ON character_activity_stats.activity = activity.id,
+      character on character_activity_stats.character = character.id,
+      member on member.id = character.member
+      WHERE
+      member.id = (select id from member where member_id = '${memberId}') AND
+      period > '${startDate.toISOString()}' AND
+      period < '${endDate.toISOString()}' AND
+      exists (select 1 from modes where activity = activity.id and mode = ${
+        mode.id
+      }) AND
+      not exists (select 1 from modes where activity = activity.id and mode = ${restrictMode})`;
+    console.log(sql);
+    const summary = this.#db.prepare(sql).all();
+    return summary && summary.length ? summary[0] : {};
+  }
+
   //TODO: add support for endDate
   retrieveActivities(memberId, characterSelection, mode, startDate, endDate) {
     let restrictMode = -1;
