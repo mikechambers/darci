@@ -88,8 +88,6 @@ app.get(
       mode = Mode.ALL_PVP;
     }
 
-    let st = new Date().getTime();
-
     const endMoment = Moment.NOW;
     const activityData = activityStore.retrieveActivities(
       memberId,
@@ -98,8 +96,6 @@ app.get(
       moment.getDate(),
       endMoment.getDate()
     );
-
-    let et = new Date().getTime();
 
     const activities = activityData.activities;
     const meta = activityData.meta;

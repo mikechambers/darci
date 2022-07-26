@@ -358,6 +358,7 @@ class ActivityStoreInterface {
     });
 
     for (let cRow of charStatsRows) {
+      //todo : need to pass in weapons and medals
       let stats = this.parseCrucibleStats(cRow);
       let player = this.parsePlayer(cRow);
 
