@@ -20,7 +20,7 @@ const PlayerViewConfig = (props) => {
     Mode.PVP_COMPETITIVE,
     Mode.TRIALS_OF_OSIRIS,
     Mode.IRON_BANNER,
-    Mode.ALL_MAYHEM,
+    Mode.MAYHEM,
     Mode.RUMBLE,
     Mode.PRIVATE_MATCHES_ALL,
     Mode.ALL_PVP,

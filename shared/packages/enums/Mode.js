@@ -23,7 +23,7 @@ class Mode extends EnumBase {
   //static TITAN = new Mode("Reserved21", 21);
   //static TITAN = new Mode("Reserved22", 22);
   //static TITAN = new Mode("Reserved24", 24);
-  static ALL_MAYHEM = new Mode("AllMayhem", 25, "All Mayhem");
+  static MAYHEM = new Mode("Mayhem", 25, "Mayhem");
   //static TITAN = new Mode("Reserved26", 26);
   //static TITAN = new Mode("Reserved27", 27);
   //static TITAN = new Mode("Reserved28", 28);
