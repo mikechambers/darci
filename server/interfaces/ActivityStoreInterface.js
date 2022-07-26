@@ -225,32 +225,21 @@ class ActivityStoreInterface {
     let characterActivityIds = rows.map(
       (row) => row.character_activity_stats_index
     );
-    const m = `SELECT
-            medal_result.reference_id,
-            count,
-            character_activity_stats as character_activity_stats_index
-              FROM
-                  medal_result
-              INNER JOIN
-                  character_activity_stats on character_activity_stats.id = medal_result.character_activity_stats
-              WHERE
-                  character_activity_stats IN (${characterActivityIds.join(
-                    ","
-                  )})`;
+    const m = `
+      SELECT
+        medal_result.reference_id,
+        count,
+        character_activity_stats as character_activity_stats_index
+      FROM
+          medal_result
+      INNER JOIN
+          character_activity_stats on character_activity_stats.id = medal_result.character_activity_stats
+      WHERE
+          character_activity_stats IN (${characterActivityIds.join(",")})
+      AND
+          medal_result.reference_id NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')`;
 
-    const medalRows = this.#db.prepare(m).all();
-
-    //filter medal results to remove non medal entries
-    let medals = medalRows.filter((medal) => {
-      return !(
-        medal.reference_id === "precisionKills" ||
-        medal.reference_id === "weaponKillsAbility" ||
-        medal.reference_id === "weaponKillsGrenade" ||
-        medal.reference_id === "weaponKillsMelee" ||
-        medal.reference_id === "weaponKillsSuper" ||
-        medal.reference_id === "allMedalsEarned"
-      );
-    });
+    const medals = this.#db.prepare(m).all();
 
     //begin parsing weapon meta data for activity set
     let weaponMap = new Map();
@@ -337,9 +326,6 @@ class ActivityStoreInterface {
     let activity = this.parseActivity(row);
 
     let activityRowId = row.activity_row_id;
-
-    //TODO: We dont appear to be using this
-    let mode = Mode.fromId(row.activity_mode);
 
     let teamsMap = new Map();
     let teamRows = this.#select_teams.all({ activityRowId: activityRowId });
