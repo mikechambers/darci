@@ -166,7 +166,7 @@ class ActivityStoreInterface {
       count(*) as activityCount,
       sum(time_played_seconds) as timePlayedSeconds,
       sum((select standing where standing = 1)) as wins,
-      sum((select completion_reason where completion_reason = 4)) as mercies,
+      sum( character_activity_stats.completion_reason = 4) as mercies,
       sum(completed) as completed,
       sum(assists) as assists,
       sum(character_activity_stats.kills) as kills,
