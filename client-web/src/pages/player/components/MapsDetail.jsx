@@ -1,4 +1,5 @@
 import React from "react";
+import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 import ExportDataButton from "../../../components/ExportDataButton";
 import GraphicListHeader from "../../../components/GraphicListHeader";
 import { humanDuration } from "../../../utils/date";
@@ -167,12 +168,19 @@ const MapsDetail = (props) => {
 
     d.push({
       label: "kd",
-      value: m.summary.killsDeathsRatio.toFixed(2),
+      value: calculateKillsDeathsRatio(
+        m.summary.kills,
+        m.summary.deaths
+      ).toFixed(2),
     });
 
     d.push({
       label: "eff",
-      value: m.summary.efficiency.toFixed(2),
+      value: calculateEfficiency(
+        m.summary.kills,
+        m.summary.deaths,
+        m.summary.assists
+      ),
     });
 
     d.push({
@@ -254,7 +262,10 @@ const MapsDetail = (props) => {
                   <div style={statContainerStyle}>
                     <Stat
                       label="kd"
-                      value={map.summary.killsDeathsRatio.toFixed(2)}
+                      value={calculateKillsDeathsRatio(
+                        map.summary.kills,
+                        map.summary.deaths
+                      ).toFixed(2)}
                       align="center"
                     />
                     <Stat
@@ -277,7 +288,11 @@ const MapsDetail = (props) => {
                   <div style={statContainerStyle}>
                     <Stat
                       label="eff"
-                      value={map.summary.efficiency.toFixed(2)}
+                      value={calculateEfficiency(
+                        map.summary.kills,
+                        map.summary.deaths,
+                        map.summary.assists
+                      ).toFixed(2)}
                       align="right"
                     />
                     <Stat

@@ -4,9 +4,9 @@ import StatDetailBase from "./StatDetailBase";
 
 const GamesDetail = (props) => {
   let wins = props.wins.toLocaleString();
-  let losses = props.losses.toLocaleString();
   let mercies = props.mercies;
   let activityCount = props.activity_count;
+  let losses = activityCount - wins;
 
   let values = [
     {

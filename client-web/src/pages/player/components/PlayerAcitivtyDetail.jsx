@@ -48,7 +48,6 @@ let statsContainterStyle = {
   display: "grid",
   width: "120px",
   gridTemplateColumns: "50% 50%",
-  gridTemplateRows: `repeat(3, 1fr)`,
   alignContent: "start",
   gridGap: `${GAP}px`,
 };
@@ -207,10 +206,9 @@ const PlayerActivityDetail = (props) => {
                   <div className="overflow">{weapon.item.name}</div>
                   <div style={killsStyle}>{weapon.kills}</div>
                   <div style={precisionStyle}>
-                    {calculatePercent(
-                      weapon.precisionKills,
-                      weapon.kills
-                    ).toFixed(0)}
+                    {calculatePercent(weapon.precision, weapon.kills).toFixed(
+                      0
+                    )}
                     % &nbsp; <IconManager icon={PRECISION_ICON} />
                   </div>
                 </React.Fragment>

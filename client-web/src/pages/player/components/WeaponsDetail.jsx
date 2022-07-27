@@ -12,11 +12,11 @@ const WeaponsDetail = (props) => {
 
   let data = [];
   for (const w of weapons) {
-    let precision = calculatePercent(w.precisionKills, w.kills).toFixed(2);
+    let precision = calculatePercent(w.precision, w.kills).toFixed(2);
     let items = [
       {
         label: "Games",
-        value: w.activityCount,
+        value: w.count,
       },
       {
         label: "Kills",
@@ -24,7 +24,7 @@ const WeaponsDetail = (props) => {
       },
       {
         label: "Kills/g",
-        value: calculateAverage(w.kills, w.activityCount).toFixed(2),
+        value: calculateAverage(w.kills, w.count).toFixed(2),
       },
       {
         label: "Precision",

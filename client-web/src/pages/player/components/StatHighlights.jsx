@@ -1,5 +1,6 @@
 import { calculatePercent } from "../../../utils";
 import Stat, { ALIGN_RIGHT, LARGE_STYLE } from "./Stat";
+import { calculateKillsDeathsRatio, calculateEfficiency } from "shared";
 
 const style = {
   display: "flex",
@@ -25,13 +26,20 @@ const StatHighlights = (props) => {
       <Stat
         styleName={LARGE_STYLE}
         label="KD"
-        value={summary.killsDeathsRatio.toFixed(2)}
+        value={calculateKillsDeathsRatio(summary.kills, summary.deaths).toFixed(
+          2
+        )}
         align={ALIGN_RIGHT}
       />
+
       <Stat
         styleName={LARGE_STYLE}
         label="EFF"
-        value={summary.efficiency.toFixed(2)}
+        value={calculateEfficiency(
+          summary.kills,
+          summary.deaths,
+          summary.assists
+        ).toFixed(2)}
         align={ALIGN_RIGHT}
       />
     </div>

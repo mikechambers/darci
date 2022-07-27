@@ -12,8 +12,9 @@ You and your fireteam's weapons are not included.`;
     return b.kills - a.kills;
   });
   let data = [];
+
   for (const w of weapons) {
-    let precision = calculatePercent(w.precisionKills, w.kills).toFixed(2);
+    let precision = calculatePercent(w.precision, w.kills).toFixed(2);
     let items = [
       {
         label: "Players",

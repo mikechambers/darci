@@ -22,6 +22,11 @@ class PlayerActivities {
     this.#summary = data.summary;
     this.#query = data.query;
 
+    this.#summary.weaponKills = this.#summary.weapons.reduce(
+      (previous, current) => previous + current.kills,
+      0
+    );
+
     //this.#player = new Player(data.player);
     this.#player = parsePlayerFromServer(data.player, manifest);
 
@@ -68,10 +73,6 @@ class PlayerActivities {
 
     this.#summary.weapons = parseWeaponsFromServer(
       this.#summary.weapons,
-      this.#manifest
-    );
-    this.#summary.medals = parseMedalsFromServer(
-      this.#summary.medals,
       this.#manifest
     );
 

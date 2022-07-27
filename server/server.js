@@ -54,21 +54,78 @@ app.get("/api/activity/:activityId/", (req, res, next) => {
   sendJsonResponse(res, out);
 });
 
+///player/member_id/class/mode/moment/end-moment/
+//can append regex to each one : https://expressjs.com/en/guide/routing.html
 app.get(
-  "/api/player/summary/:member_id/:characterClass/:mode/:moment/:endMoment?/",
+  "/api/player/activities/:member_id/:characterClass/:mode/:moment/:endMoment?/",
   (req, res, next) => {
     let startTime = new Date().getTime();
     let moment = Moment.fromString(req.params.moment);
+
+    let memberId = req.params.member_id;
+
+    let characterClassSelection = CharacterClassSelection.fromString(
+      req.params.characterClass
+    );
+
+    let mode = Mode.fromString(req.params.mode);
+
+    const endMoment = Moment.NOW;
+
+    const activities = activityStore.retrieveActivities(
+      memberId,
+      characterClassSelection,
+      mode,
+      moment.getDate(),
+      endMoment.getDate()
+    );
+
+    const player = activityStore.retrieveMember(memberId);
+
+    const query = {
+      startDate: moment.getDate(),
+      endDate: endMoment.getDate(),
+      startMoment: moment.toString(),
+      endMoment: endMoment.toString(),
+      mode: mode.toString(),
+      classSelection: characterClassSelection.toString(),
+      executionTime: new Date().getTime() - startTime,
+    };
+
+    const out = {
+      query: query,
+      player: player,
+      activities: activities,
+      page: {
+        total: activities.length,
+        index: 0,
+        pageSize: MAX_ACTIVITIES_PAGE_LIMIT,
+        packageSize: activities.length,
+      },
+    };
+
+    sendJsonResponse(res, out);
+  }
+);
+
+app.get(
+  "/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/",
+  (req, res, next) => {
+    let startTime = new Date().getTime();
+
+    let moment = Moment.fromString(req.params.moment);
+
     let memberId = req.params.member_id;
     let characterClassSelection = CharacterClassSelection.fromString(
       req.params.characterClass
     );
+
     let mode = Mode.fromString(req.params.mode);
+
     const endMoment = Moment.NOW;
 
     const startDate = moment.getDate();
     const endDate = endMoment.getDate();
-
     const summary = activityStore.retrieveActivitySummary(
       memberId,
       characterClassSelection,
@@ -76,6 +133,42 @@ app.get(
       startDate,
       endDate
     );
+
+    const weapons = activityStore.retrieveWeaponsSummary(
+      memberId,
+      characterClassSelection,
+      mode,
+      startDate,
+      endDate
+    );
+
+    const maps = activityStore.retrieveMapsSummary(
+      memberId,
+      characterClassSelection,
+      mode,
+      startDate,
+      endDate
+    );
+
+    const meta = activityStore.retrieveMetaWeaponsSummary(
+      memberId,
+      characterClassSelection,
+      mode,
+      startDate,
+      endDate
+    );
+
+    const player = activityStore.retrieveMember(memberId);
+
+    const activities = activityStore.retrieveActivities(
+      memberId,
+      characterClassSelection,
+      mode,
+      moment.getDate(),
+      endMoment.getDate()
+    );
+
+    summary.weapons = weapons;
 
     const query = {
       startDate: startDate,
@@ -89,99 +182,11 @@ app.get(
 
     const out = {
       query: query,
-      summary: summary,
-    };
-
-    sendJsonResponse(res, out);
-  }
-);
-
-///player/member_id/class/mode/moment/end-moment/
-//can append regex to each one : https://expressjs.com/en/guide/routing.html
-app.get(
-  "/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/",
-  (req, res, next) => {
-    let moment = Moment.fromString(req.params.moment);
-
-    if (
-      moment === Moment.UNKNOWN ||
-      moment.getDate().getTime() <
-        Moment.SEASON_OF_THE_HAUNTED.getDate().getTime()
-    ) {
-      throw { message: "Unsupported Moment", name: "UnsupportedMomentError" };
-    }
-
-    let memberId = req.params.member_id;
-
-    let characterClassSelection = CharacterClassSelection.fromString(
-      req.params.characterClass
-    );
-
-    //todo: need to add an all to classes
-    //CharacterClassSelection (LastActive and All)
-    if (characterClassSelection == characterClassSelection.UNKNOWN) {
-      characterClassSelection = CharacterClassSelection.ALL;
-    }
-
-    let mode = Mode.fromString(req.params.mode);
-
-    //todo: error out if mode or moment are unknown
-    if (mode === Mode.UNKNOWN) {
-      mode = Mode.ALL_PVP;
-    }
-
-    const endMoment = Moment.NOW;
-    const activityData = activityStore.retrieveActivities(
-      memberId,
-      characterClassSelection,
-      mode,
-      moment.getDate(),
-      endMoment.getDate()
-    );
-
-    const activities = activityData.activities;
-    const meta = activityData.meta;
-
-    const summary = activityStore.summarizeActivities(activities);
-    const maps = activityStore.summarizeMaps(activities);
-
-    //query for name, and whether we have synced? maybe only if no activities have returned
-
-    //note: we could get this from the above query.
-    const player = activityStore.retrieveMember(memberId);
-
-    //rename retrieveActivitiesSince to retrieveActivities and pass in end moment date
-    const query = {
-      startDate: moment.getDate(),
-      endDate: endMoment.getDate(),
-      startMoment: moment.toString(),
-      endMoment: endMoment.toString(),
-      mode: mode.toString(),
-      classSelection: characterClassSelection.toString(),
-    };
-
-    const length = activities.length;
-    if (activities.length > MAX_ACTIVITIES_PAGE_LIMIT) {
-      //note this remove items from the array
-      activities.splice(MAX_ACTIVITIES_PAGE_LIMIT);
-    }
-
-    //TODO: right now, we return medal and weapon data for each activity, but dont use it
-    //we could delete it here, so we dont have to send the data.
-
-    const out = {
-      query: query,
       player: player,
-      activities: activities,
-      meta: meta,
       summary: summary,
+      activities: activities,
       maps: maps,
-      page: {
-        total: length,
-        index: 0,
-        pageSize: MAX_ACTIVITIES_PAGE_LIMIT,
-        packageSize: activities.length,
-      },
+      meta: meta,
     };
 
     sendJsonResponse(res, out);
@@ -190,6 +195,7 @@ app.get(
 
 const PLAYERS_ROW_CACHE = "PLAYERS_ROW_CACHE";
 app.get("/api/players/", (req, res, next) => {
+  //let startTime = new Date().getTime();
   let rows = cache.get(PLAYERS_ROW_CACHE);
 
   if (!rows) {
@@ -205,6 +211,8 @@ app.get("/api/players/", (req, res, next) => {
 
     cache.add(rows, PLAYERS_ROW_CACHE, PLAYERS_ROW_CACHE_LIFETIME);
   }
+
+  //TODO: add query data to players return to be standard with other calls
 
   let out = {
     players: rows,
