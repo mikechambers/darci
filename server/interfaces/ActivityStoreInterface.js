@@ -3,15 +3,7 @@ const Database = require("better-sqlite3");
 const NO_TEAMS_INDEX = 253;
 const { PLAYER_START_BUFFER, DB_SCHEMA_VERSION } = require("../config");
 
-const {
-  CharacterClassSelection,
-  Mode,
-  Standing,
-  CompletionReason,
-  calculateEfficiency,
-  calculateKillsDeathsAssists,
-  calculateKillsDeathsRatio,
-} = require("shared");
+const { Mode, Standing } = require("shared");
 
 class ActivityStoreInterface {
   #db;
@@ -27,6 +19,7 @@ class ActivityStoreInterface {
   #select_map_summary;
   #select_weapons_summary;
   #select_player_activity_summary;
+  #select_medals_summary;
 
   constructor(dbPath) {
     this.#dbPath = dbPath;
@@ -234,6 +227,26 @@ class ActivityStoreInterface {
       GROUP BY weapon_result.reference_id
 	  order by count desc`);
 
+    this.#select_medals_summary = this.#db.prepare(`SELECT
+      medal_result.reference_id as id,
+	    count(*) as count
+      FROM
+      character_activity_stats
+      INNER JOIN
+      medal_result on character_activity_stats.id = medal_result.character_activity_stats,
+      activity ON character_activity_stats.activity = activity.id,
+      character on character_activity_stats.character = character.id,
+      member on member.id = character.member
+      WHERE
+      member.id = (select id from member where member_id = @memberId) AND
+      (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+      period > @startDate AND
+      period < @endDate AND
+      exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
+      not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
+      GROUP BY medal_result.reference_id
+	  order by count desc`);
+
     this.#select_player_activity_summary = this.#db.prepare(`SELECT
     count(*) as activityCount,
     COALESCE(sum(time_played_seconds),0) as timePlayedSeconds,
@@ -315,6 +328,27 @@ class ActivityStoreInterface {
       });
 
     return maps ? maps : [];
+  }
+
+  retrieveMedalsSummary(
+    memberId,
+    characterSelection,
+    mode,
+    startDate,
+    endDate
+  ) {
+    let restrictModeId = this.getRestrictModeId(mode);
+
+    let medals = this.#select_medals_summary.all({
+      memberId,
+      restrictModeId,
+      characterSelectionId: characterSelection.id,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      modeId: mode.id,
+    });
+
+    return medals ? medals : [];
   }
 
   retrieveWeaponsSummary(

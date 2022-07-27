@@ -76,6 +76,11 @@ class PlayerActivities {
       this.#manifest
     );
 
+    this.#summary.medals = parseMedalsFromServer(
+      this.#summary.medals,
+      this.#manifest
+    );
+
     this.#meta = parseWeaponsFromServer(this.#meta, this.#manifest);
 
     for (const m of this.#maps) {

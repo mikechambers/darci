@@ -126,6 +126,7 @@ app.get(
 
     const startDate = moment.getDate();
     const endDate = endMoment.getDate();
+
     const summary = activityStore.retrieveActivitySummary(
       memberId,
       characterClassSelection,
@@ -135,6 +136,14 @@ app.get(
     );
 
     const weapons = activityStore.retrieveWeaponsSummary(
+      memberId,
+      characterClassSelection,
+      mode,
+      startDate,
+      endDate
+    );
+
+    const medals = activityStore.retrieveMedalsSummary(
       memberId,
       characterClassSelection,
       mode,
@@ -164,11 +173,12 @@ app.get(
       memberId,
       characterClassSelection,
       mode,
-      moment.getDate(),
-      endMoment.getDate()
+      startDate,
+      endDate
     );
 
     summary.weapons = weapons;
+    summary.medals = medals;
 
     const query = {
       startDate: startDate,
