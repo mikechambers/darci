@@ -23,6 +23,7 @@ class ActivityStoreInterface {
   #select_teams;
   #select_character_activity_stats_for_activity;
   #select_version;
+  #select_meta_weapons_summary;
 
   constructor(dbPath) {
     this.#dbPath = dbPath;
@@ -122,21 +123,9 @@ class ActivityStoreInterface {
     this.#select_version = this.#db.prepare(`
         SELECT version from version
     `);
-  }
 
-  retrieveMetaWeaponsSummary(
-    memberId,
-    characterSelection,
-    mode,
-    startDate,
-    endDate
-  ) {
-    let restrictMode = -1;
-    if (mode.isPrivate()) {
-      restrictMode === Mode.PRIVATE_MATCHES_ALL.id;
-    }
-
-    const sql = `SELECT
+    //here
+    this.#select_meta_weapons_summary = this.#db.prepare(`SELECT
     reference_id as id,
     count(*) as count,
     sum(precision_kills) as precision,
@@ -161,28 +150,44 @@ class ActivityStoreInterface {
           character on character_activity_stats.character = character.id,
           member on member.id = character.member
           WHERE
-          member.id = (select id from member where member_id = '${memberId}') AND
-          (character.class = ${characterSelection.id} OR 4 = ${
-      characterSelection.id
-    }) AND
-          period > '${startDate.toISOString()}' AND
-          period < '${endDate.toISOString()}' AND
-          exists (select 1 from modes where activity = activity.id and mode = ${
-            mode.id
-          }) AND
-          not exists (select 1 from modes where activity = activity.id and mode = ${restrictMode})
+          member.id = (select id from member where member_id = @memberId) AND
+          (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+          period > @startDate AND
+          period < @endDate AND
+          exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
+          not exists (select 1 from modes where activity = activity.id and mode = @restrictMode)
         )
         AND
         character_activity_stats.fireteam_id not in (select character_activity_stats.fireteam_id where character_activity_stats.character in ( 
       select character.id from character
     inner JOIN
     member on character.member = member.id
-    where member_id = '${memberId}' 
+    where member_id = @memberId
       ))
     )
-    GROUP BY reference_id`;
+    GROUP BY reference_id`);
+  }
 
-    let meta = this.#db.prepare(sql).all();
+  retrieveMetaWeaponsSummary(
+    memberId,
+    characterSelection,
+    mode,
+    startDate,
+    endDate
+  ) {
+    let restrictMode = -1;
+    if (mode.isPrivate()) {
+      restrictMode === Mode.PRIVATE_MATCHES_ALL.id;
+    }
+
+    let meta = this.#select_meta_weapons_summary.all({
+      memberId: memberId,
+      characterSelectionId: characterSelection.id,
+      restrictMode: restrictMode,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      modeId: mode.id,
+    });
 
     return meta ? meta : [];
   }
@@ -435,7 +440,6 @@ WHERE
   AND
       medal_result.reference_id NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')`;
 
-    console.log(m);
     const medals = this.#db.prepare(m).all();
 
     for (let r of rows) {
