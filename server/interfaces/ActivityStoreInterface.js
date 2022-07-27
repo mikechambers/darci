@@ -24,6 +24,7 @@ class ActivityStoreInterface {
   #select_character_activity_stats_for_activity;
   #select_version;
   #select_meta_weapons_summary;
+  #select_map_summary;
 
   constructor(dbPath) {
     this.#dbPath = dbPath;
@@ -72,7 +73,7 @@ class ActivityStoreInterface {
                 period > @startMoment AND
                 period < @endMoment AND
                 exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
-                not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
+                not exists (select 1 from modes where activity = activity.id and mode = @restrictModeIdId)
             ORDER BY
                 activity.period DESC
             LIMIT 50`
@@ -155,7 +156,7 @@ class ActivityStoreInterface {
           period > @startDate AND
           period < @endDate AND
           exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
-          not exists (select 1 from modes where activity = activity.id and mode = @restrictMode)
+          not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
         )
         AND
         character_activity_stats.fireteam_id not in (select character_activity_stats.fireteam_id where character_activity_stats.character in ( 
@@ -166,43 +167,12 @@ class ActivityStoreInterface {
       ))
     )
     GROUP BY reference_id`);
-  }
 
-  retrieveMetaWeaponsSummary(
-    memberId,
-    characterSelection,
-    mode,
-    startDate,
-    endDate
-  ) {
-    let restrictMode = -1;
-    if (mode.isPrivate()) {
-      restrictMode === Mode.PRIVATE_MATCHES_ALL.id;
-    }
-
-    let meta = this.#select_meta_weapons_summary.all({
-      memberId: memberId,
-      characterSelectionId: characterSelection.id,
-      restrictMode: restrictMode,
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      modeId: mode.id,
-    });
-
-    return meta ? meta : [];
-  }
-
-  retrieveMapsSummary(memberId, characterSelection, mode, startDate, endDate) {
-    let restrictMode = -1;
-    if (mode.isPrivate()) {
-      restrictMode === Mode.PRIVATE_MATCHES_ALL.id;
-    }
-
-    let sql = `SELECT
+    this.#select_map_summary = this.#db.prepare(`SELECT
     activity.reference_id as referenceId,
     count(*) as activityCount,
     sum(time_played_seconds) as timePlayedSeconds,
-    sum((select standing where standing = ${Standing.VICTORY.id})) as wins,
+    sum(standing = 0) as wins,
     sum( character_activity_stats.completion_reason = 4) as mercies,
     sum(completed) as completed,
     sum(assists) as assists,
@@ -222,8 +192,8 @@ class ActivityStoreInterface {
     max(weapon_kills_melee) as highestMeleeKills,
     max(weapon_kills_super) as highestSuperKills,
     max(weapon_kills_ability) as highestAbilityKills,
-    max(cast(character_activity_stats.kills as real) / cast(deaths as real)) as highestKillsDeathsRatio,
-    max(cast(character_activity_stats.kills + assists as real)   / cast(deaths as real)) as highestEfficiency
+    COALESCE(max(cast(character_activity_stats.kills as real) / cast(deaths as real)),0) as highestKillsDeathsRatio,
+    COALESCE(max(cast(character_activity_stats.kills + assists as real)   / cast(deaths as real)),0) as highestEfficiency
     FROM
     character_activity_stats
     INNER JOIN
@@ -231,20 +201,54 @@ class ActivityStoreInterface {
     character on character_activity_stats.character = character.id,
     member on member.id = character.member
     WHERE
-    member.id = (select id from member where member_id = '${memberId}') AND
-    (character.class = ${characterSelection.id} OR 4 = ${
-      characterSelection.id
-    }) AND
-    period > '${startDate.toISOString()}' AND
-    period < '${endDate.toISOString()}' AND
-    exists (select 1 from modes where activity = activity.id and mode = ${
-      mode.id
-    }) AND
-    not exists (select 1 from modes where activity = activity.id and mode = ${restrictMode})
+    member.id = (select id from member where member_id = @memberId) AND
+    (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+    period > @startDate AND
+    period < @endDate AND
+    exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
+    not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
     group by activity.reference_id
-    order by activityCount`;
+    order by activityCount`);
+  }
 
-    let maps = this.#db.prepare(sql).all();
+  retrieveMetaWeaponsSummary(
+    memberId,
+    characterSelection,
+    mode,
+    startDate,
+    endDate
+  ) {
+    let restrictModeId = -1;
+    if (mode.isPrivate()) {
+      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
+    }
+
+    let meta = this.#select_meta_weapons_summary.all({
+      memberId,
+      restrictModeId,
+      characterSelectionId: characterSelection.id,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      modeId: mode.id,
+    });
+
+    return meta ? meta : [];
+  }
+
+  retrieveMapsSummary(memberId, characterSelection, mode, startDate, endDate) {
+    let restrictModeId = -1;
+    if (mode.isPrivate()) {
+      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
+    }
+
+    let maps = this.#select_map_summary.all({
+      memberId,
+      restrictModeId,
+      characterSelectionId: characterSelection.id,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      modeId: mode.id,
+    });
 
     maps = maps.map((m) => {
       let out = { referenceId: m.referenceId, summary: { ...m } };
@@ -252,7 +256,7 @@ class ActivityStoreInterface {
       return out;
     });
 
-    return maps && maps.length ? maps : [];
+    return maps ? maps : [];
   }
 
   retrieveWeaponsSummary(
@@ -262,9 +266,9 @@ class ActivityStoreInterface {
     startDate,
     endDate
   ) {
-    let restrictMode = -1;
+    let restrictModeId = -1;
     if (mode.isPrivate()) {
-      restrictMode === Mode.PRIVATE_MATCHES_ALL.id;
+      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
     }
 
     let sql = `SELECT
@@ -289,7 +293,7 @@ class ActivityStoreInterface {
       exists (select 1 from modes where activity = activity.id and mode = ${
         mode.id
       }) AND
-      not exists (select 1 from modes where activity = activity.id and mode = ${restrictMode})
+      not exists (select 1 from modes where activity = activity.id and mode = ${restrictModeId})
       GROUP BY weapon_result.reference_id
 	  order by count desc`;
 
@@ -304,9 +308,9 @@ class ActivityStoreInterface {
     startDate,
     endDate
   ) {
-    let restrictMode = -1;
+    let restrictModeId = -1;
     if (mode.isPrivate()) {
-      restrictMode === Mode.PRIVATE_MATCHES_ALL.id;
+      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
     }
 
     //TODO: move this to prepared statement
@@ -354,7 +358,7 @@ class ActivityStoreInterface {
       exists (select 1 from modes where activity = activity.id and mode = ${
         mode.id
       }) AND
-      not exists (select 1 from modes where activity = activity.id and mode = ${restrictMode})`;
+      not exists (select 1 from modes where activity = activity.id and mode = ${restrictModeId})`;
 
     const summary = this.#db.prepare(sql).all();
     return summary && summary.length ? summary[0] : {};
@@ -362,9 +366,9 @@ class ActivityStoreInterface {
 
   //TODO: add support for endDate
   retrieveActivities(memberId, characterSelection, mode, startDate, endDate) {
-    let restrictMode = -1;
+    let restrictModeId = -1;
     if (mode.isPrivate()) {
-      restrictMode === Mode.PRIVATE_MATCHES_ALL.id;
+      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
     }
 
     let rows = undefined;
@@ -374,7 +378,7 @@ class ActivityStoreInterface {
       startMoment: startDate.toISOString(),
       endMoment: endDate.toISOString(),
       modeId: mode.id,
-      restrictModeId: restrictMode,
+      restrictModeIdId: restrictModeId,
       characterSelectionId: characterSelection.id,
     });
 
