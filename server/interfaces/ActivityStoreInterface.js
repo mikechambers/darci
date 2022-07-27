@@ -26,6 +26,7 @@ class ActivityStoreInterface {
   #select_meta_weapons_summary;
   #select_map_summary;
   #select_weapons_summary;
+  #select_player_activity_summary;
 
   constructor(dbPath) {
     this.#dbPath = dbPath;
@@ -232,6 +233,45 @@ class ActivityStoreInterface {
       not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
       GROUP BY weapon_result.reference_id
 	  order by count desc`);
+
+    this.#select_player_activity_summary = this.#db.prepare(`SELECT
+    count(*) as activityCount,
+    COALESCE(sum(time_played_seconds),0) as timePlayedSeconds,
+    COALESCE(sum(character_activity_stats.standing = 0),0) as wins,
+    COALESCE(sum( character_activity_stats.completion_reason = 4),0) as mercies,
+    COALESCE(sum(completed),0) as completed,
+    COALESCE(sum(assists),0) as assists,
+    COALESCE(sum(character_activity_stats.kills),0) as kills,
+    COALESCE(sum(deaths),0) as deaths,
+    COALESCE(sum(opponents_defeated),0) as opponentsDefeated,
+    COALESCE(sum(weapon_kills_grenade),0) as grenadeKills,
+    COALESCE(sum(weapon_kills_melee),0) as meleeKills,
+    COALESCE(sum(weapon_kills_super),0) as superKills,
+    COALESCE(sum(weapon_kills_ability),0) as abilityKills,
+    COALESCE(sum(character_activity_stats.precision_kills),0) as precision,
+    COALESCE(max(assists),0) as highestAssists,
+    COALESCE(max(character_activity_stats.kills),0) as highestKills,
+    COALESCE(max(deaths),0) as highestDeaths,
+    COALESCE(max(opponents_defeated),0) as highestOpponentsDefeated,
+    COALESCE(max(weapon_kills_grenade),0) as highestGrenadeKills,
+    COALESCE(max(weapon_kills_melee),0) as highestMeleeKills,
+    COALESCE(max(weapon_kills_super),0) as highestSuperKills,
+    COALESCE(max(weapon_kills_ability),0) as highestAbilityKills,
+    COALESCE(max(cast(character_activity_stats.kills as real) / cast(deaths as real)),0.0) as highestKillsDeathsRatio,
+    COALESCE(max(cast(character_activity_stats.kills + assists as real)   / cast(deaths as real)),0.0) as highestEfficiency
+    FROM
+    character_activity_stats
+    INNER JOIN
+    activity ON character_activity_stats.activity = activity.id,
+    character on character_activity_stats.character = character.id,
+    member on member.id = character.member
+    WHERE
+    member.id = (select id from member where member_id = @memberId) AND
+    (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+    period > @startDate AND
+    period < @endDate AND
+    exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
+    not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)`);
   }
 
   retrieveMetaWeaponsSummary(
@@ -243,6 +283,7 @@ class ActivityStoreInterface {
   ) {
     let restrictModeId = this.getRestrictModeId(mode);
 
+    //todo: should this be get not all?
     let meta = this.#select_meta_weapons_summary.all({
       memberId,
       restrictModeId,
@@ -316,55 +357,16 @@ class ActivityStoreInterface {
   ) {
     let restrictModeId = this.getRestrictModeId(mode);
 
-    //TODO: move this to prepared statement
-    //TODO: add character specicfic
-    let sql = `SELECT
-      count(*) as activityCount,
-      COALESCE(sum(time_played_seconds),0) as timePlayedSeconds,
-      COALESCE(sum(character_activity_stats.standing = ${
-        Standing.VICTORY.id
-      }),0) as wins,
-      COALESCE(sum( character_activity_stats.completion_reason = 4),0) as mercies,
-      COALESCE(sum(completed),0) as completed,
-      COALESCE(sum(assists),0) as assists,
-      COALESCE(sum(character_activity_stats.kills),0) as kills,
-      COALESCE(sum(deaths),0) as deaths,
-      COALESCE(sum(opponents_defeated),0) as opponentsDefeated,
-      COALESCE(sum(weapon_kills_grenade),0) as grenadeKills,
-      COALESCE(sum(weapon_kills_melee),0) as meleeKills,
-      COALESCE(sum(weapon_kills_super),0) as superKills,
-      COALESCE(sum(weapon_kills_ability),0) as abilityKills,
-      COALESCE(sum(character_activity_stats.precision_kills),0) as precision,
-      COALESCE(max(assists),0) as highestAssists,
-      COALESCE(max(character_activity_stats.kills),0) as highestKills,
-      COALESCE(max(deaths),0) as highestDeaths,
-      COALESCE(max(opponents_defeated),0) as highestOpponentsDefeated,
-      COALESCE(max(weapon_kills_grenade),0) as highestGrenadeKills,
-      COALESCE(max(weapon_kills_melee),0) as highestMeleeKills,
-      COALESCE(max(weapon_kills_super),0) as highestSuperKills,
-      COALESCE(max(weapon_kills_ability),0) as highestAbilityKills,
-      COALESCE(max(cast(character_activity_stats.kills as real) / cast(deaths as real)),0.0) as highestKillsDeathsRatio,
-      COALESCE(max(cast(character_activity_stats.kills + assists as real)   / cast(deaths as real)),0.0) as highestEfficiency
-      FROM
-      character_activity_stats
-      INNER JOIN
-      activity ON character_activity_stats.activity = activity.id,
-      character on character_activity_stats.character = character.id,
-      member on member.id = character.member
-      WHERE
-      member.id = (select id from member where member_id = '${memberId}') AND
-      (character.class = ${characterSelection.id} OR 4 = ${
-      characterSelection.id
-    }) AND
-      period > '${startDate.toISOString()}' AND
-      period < '${endDate.toISOString()}' AND
-      exists (select 1 from modes where activity = activity.id and mode = ${
-        mode.id
-      }) AND
-      not exists (select 1 from modes where activity = activity.id and mode = ${restrictModeId})`;
+    const summary = this.#select_player_activity_summary.get({
+      memberId,
+      restrictModeId,
+      characterSelectionId: characterSelection.id,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      modeId: mode.id,
+    });
 
-    const summary = this.#db.prepare(sql).all();
-    return summary && summary.length ? summary[0] : {};
+    return summary ? summary : {};
   }
 
   //TODO: add support for endDate
