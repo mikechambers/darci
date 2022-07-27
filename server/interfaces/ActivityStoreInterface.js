@@ -218,10 +218,7 @@ class ActivityStoreInterface {
     startDate,
     endDate
   ) {
-    let restrictModeId = -1;
-    if (mode.isPrivate()) {
-      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
-    }
+    let restrictModeId = this.getRestrictModeId(mode);
 
     let meta = this.#select_meta_weapons_summary.all({
       memberId,
@@ -235,26 +232,33 @@ class ActivityStoreInterface {
     return meta ? meta : [];
   }
 
-  retrieveMapsSummary(memberId, characterSelection, mode, startDate, endDate) {
+  getRestrictModeId(mode) {
     let restrictModeId = -1;
+
     if (mode.isPrivate()) {
       restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
     }
 
-    let maps = this.#select_map_summary.all({
-      memberId,
-      restrictModeId,
-      characterSelectionId: characterSelection.id,
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      modeId: mode.id,
-    });
+    return restrictModeId;
+  }
 
-    maps = maps.map((m) => {
-      let out = { referenceId: m.referenceId, summary: { ...m } };
-      delete out.summary.referenceId;
-      return out;
-    });
+  retrieveMapsSummary(memberId, characterSelection, mode, startDate, endDate) {
+    let restrictModeId = this.getRestrictModeId(mode);
+
+    let maps = this.#select_map_summary
+      .all({
+        memberId,
+        restrictModeId,
+        characterSelectionId: characterSelection.id,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        modeId: mode.id,
+      })
+      .map((m) => {
+        let out = { referenceId: m.referenceId, summary: { ...m } };
+        delete out.summary.referenceId;
+        return out;
+      });
 
     return maps ? maps : [];
   }
@@ -266,10 +270,7 @@ class ActivityStoreInterface {
     startDate,
     endDate
   ) {
-    let restrictModeId = -1;
-    if (mode.isPrivate()) {
-      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
-    }
+    let restrictModeId = this.getRestrictModeId(mode);
 
     let sql = `SELECT
     weapon_result.reference_id as id,
@@ -308,10 +309,7 @@ class ActivityStoreInterface {
     startDate,
     endDate
   ) {
-    let restrictModeId = -1;
-    if (mode.isPrivate()) {
-      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
-    }
+    let restrictModeId = this.getRestrictModeId(mode);
 
     //TODO: move this to prepared statement
     //TODO: add character specicfic
@@ -366,10 +364,7 @@ class ActivityStoreInterface {
 
   //TODO: add support for endDate
   retrieveActivities(memberId, characterSelection, mode, startDate, endDate) {
-    let restrictModeId = -1;
-    if (mode.isPrivate()) {
-      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
-    }
+    let restrictModeId = this.getRestrictModeId(mode);
 
     let rows = undefined;
 
