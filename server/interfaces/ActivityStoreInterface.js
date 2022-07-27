@@ -229,7 +229,7 @@ class ActivityStoreInterface {
 
     this.#select_medals_summary = this.#db.prepare(`SELECT
       medal_result.reference_id as id,
-	    count(*) as count
+	    sum(count) as count
       FROM
       character_activity_stats
       INNER JOIN
@@ -244,6 +244,9 @@ class ActivityStoreInterface {
       period < @endDate AND
       exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
       not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
+      AND
+      medal_result.reference_id
+        NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')
       GROUP BY medal_result.reference_id
 	  order by count desc`);
 
