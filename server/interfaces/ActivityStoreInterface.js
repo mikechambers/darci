@@ -75,7 +75,7 @@ class ActivityStoreInterface {
                 period > @startMoment AND
                 period < @endMoment AND
                 exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
-                not exists (select 1 from modes where activity = activity.id and mode = @restrictModeIdId)
+                not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
             ORDER BY
                 activity.period DESC
             LIMIT 50`
@@ -296,16 +296,6 @@ class ActivityStoreInterface {
     return meta ? meta : [];
   }
 
-  getRestrictModeId(mode) {
-    let restrictModeId = -1;
-
-    if (mode.isPrivate()) {
-      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
-    }
-
-    return restrictModeId;
-  }
-
   retrieveMapsSummary(memberId, characterSelection, mode, startDate, endDate) {
     let restrictModeId = this.getRestrictModeId(mode);
 
@@ -369,56 +359,55 @@ class ActivityStoreInterface {
     return summary ? summary : {};
   }
 
-  //TODO: add support for endDate
   retrieveActivities(memberId, characterSelection, mode, startDate, endDate) {
     let restrictModeId = this.getRestrictModeId(mode);
 
-    let rows = undefined;
-
-    rows = this.#select_activities_for_member_since.all({
-      memberId: memberId,
+    const rows = this.#select_activities_for_member_since.all({
+      memberId,
+      restrictModeId,
       startMoment: startDate.toISOString(),
       endMoment: endDate.toISOString(),
       modeId: mode.id,
-      restrictModeIdId: restrictModeId,
       characterSelectionId: characterSelection.id,
     });
 
-    let activities = [];
-
-    let activityIds = rows.map((row) => row.activity_id);
+    const activityIds = rows.map((row) => row.activity_id);
 
     //Note : sqlite library doesnt allow us to bind arrays to prepared statements
     //we we have to dynamically construct them below
 
     //select all of the weapon results for the activity set we retrieved
-    const ws = `SELECT
-    weapon_result.reference_id as id,
-    weapon_result.kills as kills,
-    weapon_result.precision_kills as precision,
-    weapon_result.character_activity_stats as character_activity_stats_index
-FROM
-    weapon_result
-INNER JOIN
-    character_activity_stats on character_activity_stats.id = weapon_result.character_activity_stats,
-    activity ON character_activity_stats.activity = activity.id,
-      character on character_activity_stats.character = character.id,
-member on member.id = character.member
-WHERE
-    member.id = (select id from member where member_id = '${memberId}') AND
-(character.class = ${characterSelection.id} OR 4 = ${characterSelection.id}) AND
-    activity.activity_id IN (${activityIds.join(",")})`;
+    const ws = `
+      SELECT
+        weapon_result.reference_id as id,
+        weapon_result.kills as kills,
+        weapon_result.precision_kills as precision,
+        weapon_result.character_activity_stats as character_activity_stats_index
+      FROM
+        weapon_result
+      INNER JOIN
+        character_activity_stats on character_activity_stats.id = weapon_result.character_activity_stats,
+        activity ON character_activity_stats.activity = activity.id,
+        character on character_activity_stats.character = character.id,
+        member on member.id = character.member
+      WHERE
+        member.id = (select id from member where member_id = '${memberId}') AND
+        (character.class = ${characterSelection.id} OR 4 = ${
+      characterSelection.id
+    }) AND
+        activity.activity_id IN (${activityIds.join(",")})`;
 
     const weapons = this.#db.prepare(ws).all();
 
-    let activityRowIds = rows.map((row) => row.activity_index_id);
+    const activityRowIds = rows.map((row) => row.activity_index_id);
 
     //select all of the team data for the activity set we retrieved
-    const t = `SELECT
+    const t = `
+      SELECT
         *
-    FROM
+      FROM
         team_result
-    WHERE
+      WHERE
         activity IN (${activityRowIds.join(",")})`;
 
     const teamRows = this.#db.prepare(t).all();
@@ -429,25 +418,27 @@ WHERE
       (row) => row.character_activity_stats_index
     );
     const m = `
-    SELECT
-    medal_result.reference_id as id,
-    count,
-    character_activity_stats as character_activity_stats_index
-  FROM
-      medal_result
-  INNER JOIN
-      character_activity_stats on character_activity_stats.id = medal_result.character_activity_stats,
-  character on character_activity_stats.character = character.id,
-  member on member.id = character.member
-  WHERE
-    member.id = (select id from member where member_id = '${memberId}') AND
-(character.class = ${characterSelection.id} OR 4 = ${characterSelection.id}) AND
-      character_activity_stats IN (${characterActivityIds})
-  AND
-      medal_result.reference_id NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')`;
+      SELECT
+        medal_result.reference_id as id,
+        count,
+        character_activity_stats as character_activity_stats_index
+      FROM
+        medal_result
+      INNER JOIN
+        character_activity_stats on character_activity_stats.id = medal_result.character_activity_stats,
+        character on character_activity_stats.character = character.id,
+        member on member.id = character.member
+      WHERE
+        member.id = (select id from member where member_id = '${memberId}') AND
+        (character.class = ${characterSelection.id} OR 4 = ${characterSelection.id}) AND
+        character_activity_stats IN (${characterActivityIds})
+      AND
+        medal_result.reference_id
+          NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')`;
 
     const medals = this.#db.prepare(m).all();
 
+    let activities = [];
     for (let r of rows) {
       //find the first team that isnt our team to get the opponent score
       //note, for rumble this will return a random opponent score, but
@@ -459,7 +450,6 @@ WHERE
       r.opponentTeamScore = tr !== undefined ? tr.score : -1;
 
       let stats = this.parseCrucibleStats(r, weapons, medals);
-
       let player = this.parsePlayer(r);
       let activity = this.parseActivity(r);
 
@@ -576,6 +566,7 @@ WHERE
 
   /* takes an activity row, and then the weapons and medals associated with that row */
   parseCrucibleStats(activityRow, weaponRows, medalRows) {
+    //get just the weapons associated with the player and row
     let weapons = weaponRows
       .filter(
         (weapon) =>
@@ -607,7 +598,6 @@ WHERE
       grenadeKills: activityRow.weapon_kills_grenade,
       meleeKills: activityRow.weapon_kills_melee,
       superKills: activityRow.weapon_kills_super,
-      //all_medals_earned: activityRow.all_medals_earned,
 
       weapons: weapons,
       medals: medals,
@@ -658,6 +648,16 @@ WHERE
     let out = this.parsePlayer(row);
 
     return out;
+  }
+
+  getRestrictModeId(mode) {
+    let restrictModeId = -1;
+
+    if (mode.isPrivate()) {
+      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
+    }
+
+    return restrictModeId;
   }
 }
 
