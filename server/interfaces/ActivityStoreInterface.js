@@ -25,6 +25,7 @@ class ActivityStoreInterface {
   #select_version;
   #select_meta_weapons_summary;
   #select_map_summary;
+  #select_weapons_summary;
 
   constructor(dbPath) {
     this.#dbPath = dbPath;
@@ -209,6 +210,28 @@ class ActivityStoreInterface {
     not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
     group by activity.reference_id
     order by activityCount`);
+
+    this.#select_weapons_summary = this.#db.prepare(`SELECT
+    weapon_result.reference_id as id,
+	count(*) as count,
+    sum(weapon_result.precision_kills) as precision,
+    sum(weapon_result.kills) as kills
+      FROM
+      character_activity_stats
+      INNER JOIN
+      weapon_result on character_activity_stats.id = weapon_result.character_activity_stats,
+      activity ON character_activity_stats.activity = activity.id,
+      character on character_activity_stats.character = character.id,
+      member on member.id = character.member
+      WHERE
+      member.id = (select id from member where member_id = @memberId) AND
+      (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+      period > @startDate AND
+      period < @endDate AND
+      exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
+      not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
+      GROUP BY weapon_result.reference_id
+	  order by count desc`);
   }
 
   retrieveMetaWeaponsSummary(
@@ -272,34 +295,16 @@ class ActivityStoreInterface {
   ) {
     let restrictModeId = this.getRestrictModeId(mode);
 
-    let sql = `SELECT
-    weapon_result.reference_id as id,
-	count(*) as count,
-    sum(weapon_result.precision_kills) as precision,
-    sum(weapon_result.kills) as kills
-      FROM
-      character_activity_stats
-      INNER JOIN
-      weapon_result on character_activity_stats.id = weapon_result.character_activity_stats,
-      activity ON character_activity_stats.activity = activity.id,
-      character on character_activity_stats.character = character.id,
-      member on member.id = character.member
-      WHERE
-      member.id = (select id from member where member_id = '${memberId}') AND
-      (character.class = ${characterSelection.id} OR 4 = ${
-      characterSelection.id
-    }) AND
-      period > '${startDate.toISOString()}' AND
-      period < '${endDate.toISOString()}' AND
-      exists (select 1 from modes where activity = activity.id and mode = ${
-        mode.id
-      }) AND
-      not exists (select 1 from modes where activity = activity.id and mode = ${restrictModeId})
-      GROUP BY weapon_result.reference_id
-	  order by count desc`;
+    let weapons = this.#select_weapons_summary.all({
+      memberId,
+      restrictModeId,
+      characterSelectionId: characterSelection.id,
+      startDate: startDate.toISOString(),
+      endDate: endDate.toISOString(),
+      modeId: mode.id,
+    });
 
-    const weapons = this.#db.prepare(sql).all();
-    return weapons && weapons.length ? weapons : [];
+    return weapons ? weapons : [];
   }
 
   retrieveActivitySummary(
