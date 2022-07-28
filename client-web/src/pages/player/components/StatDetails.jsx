@@ -23,7 +23,7 @@ const StatDetails = (props) => {
     <div style={style}>
       <GamesDetail
         wins={summary.wins}
-        losses={summary.losses}
+        losses={summary.activityCount - summary.wins}
         mercies={summary.mercies}
         activity_count={summary.activityCount}
       />
