@@ -16,6 +16,7 @@ import TimePlayed from "./components/TimePlayed";
 import StatDetails from "./components/StatDetails";
 import StatHighlights from "./components/StatHighlights";
 import PlayerOverviewBackgroundImage from "./images/player_overview_background.png";
+import MedalsDetail from "./components/MedalsDetail";
 const { useQuery } = require("../../hooks/browser");
 
 const playerOverviewStyle = {
@@ -32,6 +33,8 @@ const playerOverviewStyle = {
 const weaponsStyle = {
   paddingTop: "24px",
   display: "flex",
+  flexWrap: "wrap",
+  rowGap: "var( --list-item-gap)",
 };
 
 const playerHeaderStyle = {
@@ -132,6 +135,7 @@ const PlayerView = () => {
         <div style={weaponsStyle}>
           <WeaponsDetail weapons={weapons} />
           <WeaponMetaDetail weapons={meta} />
+          <MedalsDetail medals={medals} />
         </div>
 
         <div>

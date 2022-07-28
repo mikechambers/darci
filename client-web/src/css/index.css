@@ -46,6 +46,7 @@
   --font-small:var(--regular) 12px 'Roboto', sans-serif;
 
 
+  --font-description:var(--light) 14px 'Roboto', sans-serif;
   --font-data-small:var(--light) 12px 'Roboto', sans-serif;
   --font-label-small:var(--light) 10px 'Roboto', sans-serif;
 
@@ -286,8 +287,8 @@ td {
 
 .error {
   position: absolute;
-  top: 10;
-  right: 15;
+  top: 10px;
+  right: 15px;
   background-color: khaki;
 }
 
