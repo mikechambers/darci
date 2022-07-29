@@ -135,7 +135,7 @@ const PlayerView = () => {
         <div style={weaponsStyle}>
           <WeaponsDetail weapons={weapons} />
           <WeaponMetaDetail weapons={meta} />
-          <MedalsDetail medals={medals} />
+          <MedalsDetail medals={medals} activityCount={summary.activityCount} />
         </div>
 
         <div>

@@ -2,7 +2,7 @@ import React from "react";
 import Stat from "./Stat";
 
 const style = {
-  paddingBottom:"20px",
+  paddingBottom: "20px",
 };
 
 const StatDetailBase = (props) => {
@@ -15,16 +15,13 @@ const StatDetailBase = (props) => {
 
   return (
     <div className="stat_detail">
-      <div
-        className="subsection_header"
-        style={style}
-      >
+      <div className="subsection_header" style={style}>
         {title}
       </div>
       {values.map((v, index) => {
         return (
           <div style={style} key={index}>
-            <Stat value={v.value} label={v.label}/>
+            <Stat value={v.value.toLocaleString()} label={v.label} />
           </div>
         );
       })}

@@ -40,9 +40,11 @@ const Stat = (props) => {
   return (
     <div style={s}>
       <div className={valueClassName} title={title} style={highlightStyle}>
-        {value}
+        {value.toLocaleString()}
       </div>
-      <div className={labelClassName}>{label}</div>
+      <div title={title} className={labelClassName}>
+        {label}
+      </div>
     </div>
   );
 };

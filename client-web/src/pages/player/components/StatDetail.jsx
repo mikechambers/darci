@@ -5,15 +5,15 @@ const StatDetail = (props) => {
 
   let values = [
     {
-      value: props.avg.toLocaleString(),
+      value: props.avg,
       label: "avg",
     },
     {
-      value: props.high.toLocaleString(),
+      value: props.high,
       label: "high",
     },
     {
-      value: props.total.toLocaleString(),
+      value: props.total,
       label: "total",
     },
   ];

@@ -22,6 +22,7 @@ const titleStyle = {
 
 const MedalsDetail = (props) => {
   let medals = props.medals;
+  let activityCount = props.activityCount;
 
   let [sortIndex, setSortIndex] = useState(0);
 
@@ -45,10 +46,16 @@ const MedalsDetail = (props) => {
     return -1;
   };
 
+  let sortGamesMedal = (a, b) => {
+    return activityCount / b.count - activityCount / a.count;
+  };
+
   let sort = sortGold;
   if (sortIndex === 1) {
     sort = sortCount;
   } else if (sortIndex === 2) {
+    sort = sortGamesMedal;
+  } else if (sortIndex === 3) {
     sort = sortName;
   }
 
@@ -58,7 +65,9 @@ const MedalsDetail = (props) => {
     setSortIndex(e.target.selectedIndex);
   };
 
-  let itemKey = (index, medals) => medals[index].id;
+  let itemKey = (index, data) => data.medals[index].id;
+
+  let itemData = { activityCount: activityCount, medals: medals };
 
   return (
     <div style={elementStyle}>
@@ -79,6 +88,9 @@ const MedalsDetail = (props) => {
               count
             </option>
             <option value="2" className="nav_option">
+              games until medal
+            </option>
+            <option value="3" className="nav_option">
               name
             </option>
           </select>
@@ -87,9 +99,9 @@ const MedalsDetail = (props) => {
       <List
         height={488}
         width={422}
-        itemData={medals}
+        itemData={itemData}
         itemCount={medals.length}
-        itemSize={100}
+        itemSize={122}
         itemKey={itemKey}
       >
         {MedalListItem}

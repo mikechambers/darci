@@ -374,3 +374,10 @@ td {
   background-color: var(--background-color);
   z-index: 1;
 }
+
+.outline {
+  filter: drop-shadow(1px 0 0 white) 
+  drop-shadow(0 1px 0 white)
+  drop-shadow(-1px 0 0 white) 
+  drop-shadow(0 -1px 0 white);
+}

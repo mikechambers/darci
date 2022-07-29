@@ -3,9 +3,9 @@ import { calculatePercent } from "../../../utils";
 import StatDetailBase from "./StatDetailBase";
 
 const GamesDetail = (props) => {
-  let wins = props.wins.toLocaleString();
+  let wins = props.wins;
   let mercies = props.mercies;
-  let activityCount = props.activity_count;
+  let activityCount = props.activityCount;
   let losses = activityCount - wins;
 
   let values = [
