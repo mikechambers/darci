@@ -12,6 +12,7 @@ import {
   useGlobalContext,
   GlobalAction,
 } from "./contexts/GlobalContext";
+import Sidebar from "./components/Sidebar";
 const { useQuery } = require("./hooks/browser");
 
 const App = (props) => {
@@ -63,13 +64,17 @@ const App = (props) => {
   } else if (isLoading) {
     initializingContent = <div>Initializing Manifest</div>;
   }
-
+  /*
   const style = {
     padding: "var(--content-padding)",
     borderBottom: "1px solid #FFFFFF66",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+  };*/
+
+  const style = {
+    display: "flex",
   };
 
   return (
@@ -78,7 +83,22 @@ const App = (props) => {
         {initializingContent ? (
           initializingContent
         ) : (
-          <React.Fragment>
+          <div style={style}>
+            <Sidebar />
+
+            <div id="current_view">
+              <Outlet />
+            </div>
+          </div>
+        )}
+      </React.Fragment>
+    </GlobalContext.Provider>
+  );
+};
+
+export default App;
+
+/*
             <nav id="nav_bar" className="NavBar" style={style}>
               <div>
                 <Link to="/">darci</Link> | <Link to="/about">about</Link>
@@ -90,14 +110,4 @@ const App = (props) => {
                 player={player}
               />
             </nav>
-            <div id="current_view">
-              <Outlet />
-            </div>
-          </React.Fragment>
-        )}
-      </React.Fragment>
-    </GlobalContext.Provider>
-  );
-};
-
-export default App;
+            */
