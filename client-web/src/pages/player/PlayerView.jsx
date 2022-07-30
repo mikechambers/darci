@@ -47,8 +47,11 @@ const playerHeaderStyle = {
 const invalidParametersStyle = {
   padding: "var(--content-padding)",
   display: "flex",
+  width: "100%",
+  height: "100%",
   flexDirection: "column",
-  alignItems: "flex-start",
+  justifyContent: "center",
+  alignItems: "center",
 };
 
 const PlayerView = () => {

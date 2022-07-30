@@ -3,7 +3,7 @@ const NoMatchView = (props) => {
     display: "flex",
     width: "100%",
     height: "100%",
-    flexFlow: "column",
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     backgroundImage: `url(https://www.bungie.net/img/destiny_content/pgcr/pvp_street.jpg)`,
