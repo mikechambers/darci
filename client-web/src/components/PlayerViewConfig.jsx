@@ -14,6 +14,7 @@ const createUrl = function (player, classSelection, mode, moment) {
 const PlayerViewConfig = (props) => {
   const style = props.style;
   const onUpdate = props.onUpdate;
+  const maxLabelLength = props.maxLabelLength ? props.maxLabelLength : 100;
 
   let classes = [
     CharacterClassSelection.ALL,
@@ -121,6 +122,7 @@ const PlayerViewConfig = (props) => {
         options={players}
         selected={player}
         label="player"
+        maxLabelLength={maxLabelLength}
       />
 
       <EnumSelectBase
@@ -128,18 +130,21 @@ const PlayerViewConfig = (props) => {
         options={classes}
         selected={classSelection}
         label="class"
+        maxLabelLength={maxLabelLength}
       />
       <EnumSelectBase
         onChange={modeOnChange}
         options={modes}
         selected={mode}
         label="mode"
+        maxLabelLength={maxLabelLength}
       />
       <EnumSelectBase
         onChange={momentOnChange}
         options={moments}
         selected={moment}
         label="moment"
+        maxLabelLength={maxLabelLength}
       />
 
       <Button onClick={onClick} size="xs">

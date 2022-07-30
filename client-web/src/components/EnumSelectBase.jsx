@@ -8,6 +8,7 @@ const EnumSelectBase = (props) => {
   let label = props.label;
   let description = props.description ? props.description : "";
   let onChange = props.onChange;
+  let maxLabelLength = props.maxLabelLength ? props.maxLabelLength : 100;
 
   let handleOnChange = function (e) {
     onChange(options[e.target.selectedIndex].data);
@@ -20,7 +21,7 @@ const EnumSelectBase = (props) => {
   options = options.map((item, index) => {
     return {
       value: item.label,
-      label: truncate(item.label, 22),
+      label: truncate(item.label, maxLabelLength),
       data: item,
     };
   });

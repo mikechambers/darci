@@ -101,7 +101,7 @@ const Sidebar = (props) => {
         selectedIndex={navIndex}
         onChange={onNavChange}
       />
-      <PlayerViewConfig onUpdate={onPlayerConfigUpdate} />
+      <PlayerViewConfig onUpdate={onPlayerConfigUpdate} maxLabelLength="22" />
     </div>
   );
 };
