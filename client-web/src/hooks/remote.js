@@ -139,9 +139,9 @@ export const useFetchActivity = (activityId) => {
 export const useFetchPlayerActivities = (
   refresh,
   memberId,
-  mode = Mode.ALL_PVP,
-  moment = Moment.WEEK,
-  classSelection = CharacterClassSelection.ALL,
+  mode,
+  moment,
+  classSelection,
   hash = undefined
 ) => {
   const [output, setOutput] = useState({
@@ -154,7 +154,7 @@ export const useFetchPlayerActivities = (
   const manifest = global.manifest;
 
   useEffect(() => {
-    if (!manifest) {
+    if (!manifest || !memberId || !mode || !moment || !classSelection) {
       return;
     }
 

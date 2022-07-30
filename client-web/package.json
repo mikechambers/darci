@@ -4,6 +4,9 @@
   "private": true,
   "proxy": "http://127.0.0.1:8080",
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@mantine/core": "^5.0.0",
+    "@mantine/hooks": "^5.0.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",

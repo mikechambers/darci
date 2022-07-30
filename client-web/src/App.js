@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { CharacterClassSelection, Mode, Moment } from "shared";
 import PlayerViewConfig from "./components/PlayerViewConfig";
 import { useFetchPlayers } from "./hooks/remote";
+import { MantineProvider } from "@mantine/core";
 
 import {
   GlobalContext,
@@ -77,21 +78,34 @@ const App = (props) => {
     display: "flex",
   };
 
+  const currentViewStyle = {
+    flexGrow: "2",
+    height: "inherit",
+  };
+
   return (
     <GlobalContext.Provider value={{ global, dispatchGlobal }}>
-      <React.Fragment>
-        {initializingContent ? (
-          initializingContent
-        ) : (
-          <div style={style}>
-            <Sidebar />
+      <MantineProvider
+        theme={{
+          fontFamily: "Roboto, sans-serif",
 
-            <div id="current_view">
-              <Outlet />
+          primaryColor: "indigo",
+        }}
+      >
+        <React.Fragment>
+          {initializingContent ? (
+            initializingContent
+          ) : (
+            <div style={style}>
+              <Sidebar />
+
+              <div id="current_view" style={currentViewStyle}>
+                <Outlet />
+              </div>
             </div>
-          </div>
-        )}
-      </React.Fragment>
+          )}
+        </React.Fragment>
+      </MantineProvider>
     </GlobalContext.Provider>
   );
 };

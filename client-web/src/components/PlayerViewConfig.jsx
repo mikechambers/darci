@@ -2,9 +2,19 @@ import { CharacterClassSelection, Mode, Moment } from "shared";
 import React, { useEffect, useState } from "react";
 import EnumSelectBase from "./EnumSelectBase";
 import { useFetchPlayers } from "../hooks/remote";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Button } from "@mantine/core";
+
+const createUrl = function (player, classSelection, mode, moment) {
+  let ts = new Date().getTime();
+  let url = `/player/${player.memberId}/${player.platformId}/${classSelection.type}/${mode.type}/${moment.type}/?fr=${ts}`;
+
+  return url;
+};
 
 const PlayerViewConfig = (props) => {
+  const style = props.style;
+  const onUpdate = props.onUpdate;
+
   let classes = [
     CharacterClassSelection.ALL,
     CharacterClassSelection.HUNTER,
@@ -84,56 +94,61 @@ const PlayerViewConfig = (props) => {
     setPlayer(e);
   };
 
-  const navigate = useNavigate();
-
   let onClick = function (e) {
-    let ts = new Date().getTime();
-
-    let url = `/player/${player.memberId}/${player.platformId}/${classSelection.type}/${mode.type}/${moment.type}/?fr=${ts}`;
+    let url = createUrl(player, classSelection, mode, moment);
 
     //the fr indicates its from this navigatio, and passes a timestamp, so receivers
     //can differentiate between different calls
     //honestly, its a bit of a hack because my data framework isnt very good
-    navigate(url);
+
+    if (onClick) {
+      onUpdate(url);
+    }
   };
 
-  let style = {
+  let s = {
+    ...style,
     display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    rowGap: "6px",
   };
 
   return (
-    <div style={style}>
+    <div style={s}>
       <EnumSelectBase
         onChange={playerOnChange}
         options={players}
         selected={player}
-        label="players"
+        label="player"
       />
 
       <EnumSelectBase
         onChange={classOnChange}
         options={classes}
         selected={classSelection}
-        label="classes"
+        label="class"
       />
       <EnumSelectBase
         onChange={modeOnChange}
         options={modes}
         selected={mode}
-        label="modes"
+        label="mode"
       />
       <EnumSelectBase
         onChange={momentOnChange}
         options={moments}
         selected={moment}
-        label="moments"
+        label="moment"
       />
 
-      <button className="nav_button" onClick={onClick}>
-        Go
-      </button>
+      <Button onClick={onClick} size="xs">
+        View
+      </Button>
     </div>
   );
 };
 
 export default PlayerViewConfig;
+
+/*<div style={buttonWrapperStyle}>*/

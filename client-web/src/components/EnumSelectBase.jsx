@@ -1,35 +1,53 @@
 import React from "react";
+import { NativeSelect } from "@mantine/core";
 
 const EnumSelectBase = (props) => {
   let options = props.options;
   let selected = props.selected;
   let label = props.label;
+  let description = props.description ? props.description : "";
   let onChange = props.onChange;
 
   let handleOnChange = function (e) {
-    onChange(options[e.target.selectedIndex]);
+    onChange(options[e.target.selectedIndex].data);
   };
 
   if (!options) {
     options = [];
   }
 
+  options = options.map((item, index) => {
+    return {
+      value: item.label,
+      label: item.label,
+      data: item,
+    };
+  });
+
+  let defaultValue = "";
+  if (props.selected) {
+    const found = options.find((option) => option.label === selected.label);
+
+    defaultValue = found ? found.label : options[0].label;
+  }
+
+  //todo: can add an icon
   return (
-    <select
-      className="nav_select"
-      onChange={handleOnChange}
-      value={selected}
-      name={label}
-      id={`${label}_select`}
-    >
-      {options.map((m, index) => {
-        return (
-          <option key={m.label} value={m} className="nav_option">
-            {m.label}
-          </option>
-        );
-      })}
-    </select>
+    <div>
+      <NativeSelect
+        onChange={handleOnChange}
+        label={label}
+        description={description}
+        defaultValue={defaultValue}
+        data={options}
+        size="xs"
+        variant="filled"
+        styles={(theme) => ({
+          input: { opacity: "0.8" },
+          label: { color: "#ffffff", textTransform: "uppercase" },
+        })}
+      />
+    </div>
   );
 };
 

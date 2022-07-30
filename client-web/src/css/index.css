@@ -29,6 +29,7 @@
 
   --content-padding:  0px 30px;
 
+  --font-family:'Roboto', sans-serif;
   --font: var(--regular) 16px 'Roboto', sans-serif;
 
   --font-main-nav:16px 'Roboto', sans-serif;
@@ -94,6 +95,7 @@ body {
   padding:0px;
   height:100%;
   width:100%;
+
 }
 
 

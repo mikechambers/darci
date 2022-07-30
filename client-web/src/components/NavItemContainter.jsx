@@ -40,13 +40,10 @@ const NavItemContainer = (props) => {
   const items = props.items;
   const type = props.type ? props.type : MAIN_NAV;
   const onChange = props.onChange;
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const selectedIndex = props.selectedIndex;
 
   const navOnClick = function (e) {
     const index = parseInt(e.target.dataset.index);
-
-    setSelectedIndex(index);
 
     if (onChange) {
       onChange(index);

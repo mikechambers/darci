@@ -44,14 +44,20 @@ const playerHeaderStyle = {
   alignItems: "center",
 };
 
+const invalidParametersStyle = {
+  padding: "var(--content-padding)",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+};
+
 const PlayerView = () => {
   let params = useParams();
+  let query = useQuery();
 
   let mode = Mode.fromString(params.mode);
   let moment = Moment.fromString(params.moment);
   let classSelection = CharacterClassSelection.fromString(params.classType);
-
-  let query = useQuery();
   let hash = query.get("fr");
 
   /*
@@ -72,6 +78,17 @@ const PlayerView = () => {
       hash
     );
 
+  if (!params.memberId || !params.mode || !params.moment || !params.classType) {
+    return (
+      <div style={invalidParametersStyle}>
+        <div className="page_title">Invalid Parameters</div>
+        <div className="page_subtitle">
+          Please select Player parameters from the navigation on the left.
+        </div>
+      </div>
+    );
+  }
+
   /*
     if (profileLoadError) {
         return <div>An error occured (profileLoadError) <br />{profileLoadError.toString()}<br />{profileLoadError.stack}</div>
@@ -80,11 +97,10 @@ const PlayerView = () => {
 
   if (activitiesLoadError) {
     return (
-      <div>
-        An error occured (activitiesLoadError) <br />
-        {activitiesLoadError.toString()}
-        <br />
-        {activitiesLoadError.stack}
+      <div style={invalidParametersStyle}>
+        <div className="page_title">Error loading Activities</div>
+        <div>{activitiesLoadError.toString()}</div>
+        <div>{activitiesLoadError.stack}</div>
       </div>
     );
   }
