@@ -4,7 +4,7 @@ import IconManager, {
   PLAYER_ICON,
   SEARCH_ICON,
 } from "./IconManager";
-import SidebarBackground from "./images/nav_background.png";
+import SidebarBackground from "./images/nav_background_tg.png";
 import NavItemContainer from "./NavItemContainter";
 
 const sidebarStyle = {

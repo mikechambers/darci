@@ -31,6 +31,9 @@
 
   --font: var(--regular) 16px 'Roboto', sans-serif;
 
+  --font-main-nav:16px 'Roboto', sans-serif;
+  --font-page-nav:12px 'Roboto', sans-serif;
+
   --font-nav: var(--regular) 18px 'Roboto', sans-serif;
 
   --font-controls: var(--light) 14px 'Roboto', sans-serif;
@@ -385,8 +388,14 @@ td {
 }
 
 .nav {
+  font:var(--font-main-nav);
+  text-transform: uppercase;
   cursor: pointer;
   transition: opacity .5s ease-in-out;
+}
+
+.nav.page {
+  font:var(--font-page-nav);
 }
 
 .nav:hover {
@@ -402,5 +411,5 @@ td {
 }
 
 .nav_transition {
-  transition: top .5s ease-in-out;
+  transition: top .4s ease-in-out;
 }

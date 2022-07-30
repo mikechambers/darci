@@ -69,8 +69,23 @@ const NavItemContainer = (props) => {
     };
   });
 
+  const indicator = (
+    <div style={navIndicatorContainerStyle}>
+      <div className="nav_transition" style={navIndicatorStyle}></div>
+    </div>
+  );
+
+  let leftIndicator = "";
+  let rightIndicator = indicator;
+
+  if (type === PAGE_NAV) {
+    rightIndicator = "";
+    leftIndicator = indicator;
+  }
+
   return (
     <div style={navContainerStyle}>
+      {leftIndicator}
       <div style={navItemContainterStyle}>
         {links.map((link, index) => {
           return (
@@ -87,9 +102,7 @@ const NavItemContainer = (props) => {
           );
         })}
       </div>
-      <div style={navIndicatorContainerStyle}>
-        <div className="nav_transition" style={navIndicatorStyle}></div>
-      </div>
+      {rightIndicator}
     </div>
   );
 };
