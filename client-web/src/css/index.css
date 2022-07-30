@@ -62,7 +62,8 @@
   /* t, r, b, l */
   --table-cell-padding: 4px 0px 0px 16px;
 
-  --background-color:rgb(34,34,34);
+  /*--background-color:rgb(34,34,34);*/
+  --background-color:#131313;
 
   /**gap between items in a list. Such as weapons / maps */
   --list-item-gap: 12px;
@@ -381,4 +382,25 @@ td {
   drop-shadow(0 1px 0 white)
   drop-shadow(-1px 0 0 white) 
   drop-shadow(0 -1px 0 white);
+}
+
+.nav {
+  cursor: pointer;
+  transition: opacity .5s ease-in-out;
+}
+
+.nav:hover {
+  text-decoration: underline;
+}
+
+.nav_active {
+  opacity:1;
+}
+
+.nav_inactive {
+  opacity: 0.5;
+}
+
+.nav_transition {
+  transition: top .5s ease-in-out;
 }
