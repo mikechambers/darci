@@ -1,4 +1,4 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import ActivityList from "./components/ActivityList";
 import WeaponsDetail from "./components/WeaponsDetail";
 import WeaponMetaDetail from "./components/WeaponMetaDetail";
@@ -17,6 +17,7 @@ import StatDetails from "./components/StatDetails";
 import StatHighlights from "./components/StatHighlights";
 import PlayerOverviewBackgroundImage from "./images/player_overview_background.png";
 import MedalsDetail from "./components/MedalsDetail";
+import PlayerViewConfig from "../../components/PlayerViewConfig";
 const { useQuery } = require("../../hooks/browser");
 
 const playerOverviewStyle = {
@@ -81,12 +82,18 @@ const PlayerView = () => {
       hash
     );
 
+  let navigate = useNavigate();
   if (!params.memberId || !params.mode || !params.moment || !params.classType) {
+    const onPlayerConfigUpdate = (url) => {
+      navigate(url);
+    };
+
     return (
       <div style={invalidParametersStyle}>
         <div className="page_title">Invalid Parameters</div>
-        <div className="page_subtitle">
-          Please select Player parameters from the navigation on the left.
+        <div className="page_subtitle">Please select Player parameters:</div>
+        <div>
+          <PlayerViewConfig onUpdate={onPlayerConfigUpdate} />
         </div>
       </div>
     );
