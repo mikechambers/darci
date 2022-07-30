@@ -1,5 +1,6 @@
 import React from "react";
 import { NativeSelect } from "@mantine/core";
+import { truncate } from "../utils";
 
 const EnumSelectBase = (props) => {
   let options = props.options;
@@ -19,7 +20,7 @@ const EnumSelectBase = (props) => {
   options = options.map((item, index) => {
     return {
       value: item.label,
-      label: item.label,
+      label: truncate(item.label, 22),
       data: item,
     };
   });
