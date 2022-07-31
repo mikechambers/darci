@@ -152,7 +152,7 @@ const PlayerView = () => {
     flexDirection: "column",
     gap: "30px",
     background:
-      "linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(54,54,54,1) 100%)",
+      "linear-gradient(180deg, var(--background-color) 0%, rgba(54,54,54,1) 100%)",
   };
 
   return (

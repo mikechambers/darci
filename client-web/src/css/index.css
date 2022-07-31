@@ -66,8 +66,8 @@
   /* t, r, b, l */
   --table-cell-padding: 4px 0px 0px 16px;
 
-  /*--background-color:rgb(34,34,34);*/
-  --background-color:#131313;
+  --background-color:rgb(34,34,34);
+  /*--background-color:#131313;*/
 
   /**gap between items in a list. Such as weapons / maps */
   --list-item-gap: 12px;
