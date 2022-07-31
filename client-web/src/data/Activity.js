@@ -1,93 +1,115 @@
 import { CompletionReason, Standing, Mode } from "shared";
+import Player from "./Player";
 
 const { calculateStats } = require("../utils/activity");
 
-const { parsePlayerFromServer } = require("../utils/data");
-const TEAM_NAMES = ["Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot",
-    "Golf", "Hotel", "India", "Juliett", "Kilo", "Lima", "Mike", "November",
-    "Oscar", "Papa", "Quebec", "Romeo", "Sierra", "Tango", "Uniform", "Victor",
-    "Whiskey", "X-ray", "Yankee", "Zulu"];
+const TEAM_NAMES = [
+  "Alpha",
+  "Bravo",
+  "Charlie",
+  "Delta",
+  "Echo",
+  "Foxtrot",
+  "Golf",
+  "Hotel",
+  "India",
+  "Juliett",
+  "Kilo",
+  "Lima",
+  "Mike",
+  "November",
+  "Oscar",
+  "Papa",
+  "Quebec",
+  "Romeo",
+  "Sierra",
+  "Tango",
+  "Uniform",
+  "Victor",
+  "Whiskey",
+  "X-ray",
+  "Yankee",
+  "Zulu",
+];
 
 export default class Activity {
+  #data;
+  #manifest;
 
-    #data;
-    #manifest;
+  constructor(data, manifest) {
+    this.#data = data;
+    this.#manifest = manifest;
+    this.#parse();
+  }
 
-    constructor(data, manifest) {
-        this.#data = data;
-        this.#manifest = manifest;
-        this.#parse();
-    }
+  #parse() {
+    let activity = this.#data.activity;
 
-    #parse() {
+    let map = this.#manifest.getActivityDefinition(activity.referenceId);
+    activity.map = map;
 
-        let activity = this.#data.activity;
+    let modeInfo = this.#manifest.getModeInfo(activity.directorActivityHash);
+    activity.modeInfo = modeInfo;
 
-        let map = this.#manifest.getActivityDefinition(activity.referenceId);
-        activity.map = map;
+    let mode = Mode.fromId(activity.mode);
+    activity.mode = mode;
 
-        let modeInfo = this.#manifest.getModeInfo(activity.directorActivityHash);
-        activity.modeInfo = modeInfo;
+    this.teams.forEach((team, index) => {
+      team.name = TEAM_NAMES[index];
+      for (const p of team.players) {
+        p.player = Player.fromApi(p.player, this.#manifest);
 
-        let mode = Mode.fromId(activity.mode);
-        activity.mode = mode;
+        //p.stats.standing = Standing.fromId(p.stats.standing);
+        //p.stats.completionReason = Standing.fromId(p.stats.completionReason);
 
-        this.teams.forEach((team, index) => {
-            team.name = TEAM_NAMES[index];
-            for (const p of team.players) {
+        p.stats = calculateStats(p.stats, mode);
+        //TODO: get emblem from manifest and set here
+      }
+    });
+  }
 
-                p.player = parsePlayerFromServer(p.player, this.#manifest);
+  getCompletionReason(memberId = undefined) {
+    let teams = this.teams;
 
-                //p.stats.standing = Standing.fromId(p.stats.standing);
-                //p.stats.completionReason = Standing.fromId(p.stats.completionReason);
-
-                p.stats = calculateStats(p.stats, mode);
-                //TODO: get emblem from manifest and set here
-            }
-        });
-    }
-
-    getCompletionReason(memberId = undefined) {
-        let teams = this.teams;
-
-        for (const team of teams) {
-            for (const player of team.players) {
-
-                //if memberId is not specified, and the completion reason is known
-                //return the completion reason
-                if (!memberId && player.stats.completionReason !== CompletionReason.UNKNOWN) {
-                    return player.stats.completionReason;
-                }
-
-                if (player.player.memberId === memberId) {
-                    return player.stats.standing;
-                }
-            }
+    for (const team of teams) {
+      for (const player of team.players) {
+        //if memberId is not specified, and the completion reason is known
+        //return the completion reason
+        if (
+          !memberId &&
+          player.stats.completionReason !== CompletionReason.UNKNOWN
+        ) {
+          return player.stats.completionReason;
         }
 
-        return CompletionReason.UNKNOWN;
-    }
-
-    getStandingForMember(memberId) {
-
-        let teams = this.teams;
-
-        for (const team of teams) {
-            for (const player of team.players) {
-                if (player.player.memberId === memberId) {
-                    return player.stats.standing;
-                }
-            }
+        if (player.player.memberId === memberId) {
+          return player.stats.standing;
         }
-
-        return Standing.UNKNOWN;
+      }
     }
 
-    get teams() {
-        return this.#data.teams;
+    return CompletionReason.UNKNOWN;
+  }
+
+  getStandingForMember(memberId) {
+    let teams = this.teams;
+
+    for (const team of teams) {
+      for (const player of team.players) {
+        if (player.player.memberId === memberId) {
+          return player.stats.standing;
+        }
+      }
     }
 
-    get overview() {
-        return this.#data.activity;
-    }
+    return Standing.UNKNOWN;
+  }
+
+  get teams() {
+    return this.#data.teams;
+  }
+
+  get overview() {
+    return this.#data.activity;
+  }
 }

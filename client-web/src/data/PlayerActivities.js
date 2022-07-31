@@ -1,120 +1,50 @@
-import Manifest from "./Manifest";
-
-const { Mode } = require("shared");
-const {
-  parsePlayerFromServer,
-  parseMedalsFromServer,
-  parseWeaponsFromServer,
-} = require("../utils/data");
-const { calculateStats } = require("../utils/activity");
+import { Mode } from "shared";
+import { calculateStats } from "../utils/activity";
+import { parseMedalsFromServer, parseWeaponsFromServer } from "../utils/data";
+import Player from "./Player";
 
 class PlayerActivities {
-  #activities = [];
-  #summary;
-  #meta;
-  #manifest;
-  #player;
-  #query;
-  #maps;
+  activities = [];
+  player;
 
-  constructor(data, manifest) {
-    this.#activities = data.activities;
-    this.#summary = data.summary;
-    this.#query = data.query;
-
-    this.#summary.weaponKills = this.#summary.weapons.reduce(
-      (previous, current) => previous + current.kills,
-      0
-    );
-
-    //this.#player = new Player(data.player);
-    this.#player = parsePlayerFromServer(data.player, manifest);
-
-    this.#meta = data.meta;
-    this.#maps = data.maps;
-
-    //this is in case we cant load a manifest for some reason
-    if (!manifest) {
-      manifest = new Manifest();
-    }
-
-    this.#manifest = manifest;
-    this.#update();
+  constructor(options = {}) {
+    this.activities = options.activites;
+    this.player = options.player;
   }
 
-  #update() {
-    for (const a of this.#activities) {
-      //a.player = new Player(a.player);
-      a.player = parsePlayerFromServer(a.player, this.#manifest);
+  static fromApi(data, manifest) {
+    let activities = data.activities.map((a) => {
+      let out = {};
 
-      let map = this.#manifest.getActivityDefinition(a.activity.referenceId);
-      a.activity.map = map;
+      out.player = Player.fromApi(a.player, manifest);
 
-      let modeInfo = this.#manifest.getActivityDefinition(
+      out.activity = a.activity;
+      out.activity.map = manifest.getActivityDefinition(a.activity.referenceId);
+      let modeInfo = manifest.getActivityDefinition(
         a.activity.directorActivityHash
       );
-      a.activity.modeInfo = modeInfo;
 
-      let mode = Mode.fromId(a.activity.mode);
-      a.activity.mode = mode;
+      out.activity.modeInfo = modeInfo;
+      out.activity.mode = Mode.fromId(a.activity.mode);
 
-      a.stats = calculateStats(a.stats, mode);
+      out.stats = calculateStats(a.stats, out.activity.mode);
 
-      a.stats.extended.medals = parseMedalsFromServer(
+      out.stats.extended.medals = parseMedalsFromServer(
         a.stats.extended.medals,
-        this.#manifest
+        manifest
       );
 
-      a.stats.extended.weapons = parseWeaponsFromServer(
+      out.stats.extended.weapons = parseWeaponsFromServer(
         a.stats.extended.weapons,
-        this.#manifest
+        manifest
       );
-    }
 
-    this.#summary.weapons = parseWeaponsFromServer(
-      this.#summary.weapons,
-      this.#manifest
-    );
+      return out;
+    });
 
-    this.#summary.medals = parseMedalsFromServer(
-      this.#summary.medals,
-      this.#manifest
-    );
+    const player = Player.fromApi(data.player);
 
-    this.#meta = parseWeaponsFromServer(this.#meta, this.#manifest);
-
-    for (const m of this.#maps) {
-      let map = this.#manifest.getActivityDefinition(m.referenceId);
-      m.map = map;
-    }
-  }
-
-  get totalActivities() {
-    return this.#activities ? this.#activities.length() : 0;
-  }
-
-  get activities() {
-    return this.#activities;
-  }
-
-  get summary() {
-    return this.#summary;
-  }
-
-  get player() {
-    return this.#player;
-  }
-
-  get meta() {
-    return this.#meta;
-  }
-
-  get query() {
-    return this.#query;
-  }
-
-  get maps() {
-    return this.#maps;
+    return new PlayerActivities({ activities, player });
   }
 }
 

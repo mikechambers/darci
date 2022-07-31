@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ActivityList from "./components/ActivityList";
 import WeaponsDetail from "./components/WeaponsDetail";
 import WeaponMetaDetail from "./components/WeaponMetaDetail";
@@ -6,10 +6,12 @@ import MedalHighlights from "./components/MedalHighlights";
 import MapsDetail from "./components/MapsDetail";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
 
-import { useFetchPlayerActivities } from "../../hooks/remote";
+import {
+  useFetchPlayerActivities,
+  useFetchPlayerSummary,
+} from "../../hooks/remote";
 
 import { CharacterClassSelection, Mode, Moment } from "shared";
-import ErrorView from "../../components/ErrorView";
 
 import TimePlayed from "./components/TimePlayed";
 
@@ -72,7 +74,17 @@ const PlayerView = () => {
   );
   */
   //console.log(params.memberId, mode.label, moment.label, classSelection.label);
-  let [activityStats, isActivitiesLoading, activitiesLoadError] =
+  let [playerSummary, isPlayerSummaryLoading, playerSummaryLoadError] =
+    useFetchPlayerSummary(
+      true,
+      params.memberId,
+      mode,
+      moment,
+      classSelection,
+      hash
+    );
+
+  let [playerActivities, isPlayerActivitiesLoading, playerActivitiesLoadError] =
     useFetchPlayerActivities(
       true,
       params.memberId,
@@ -105,30 +117,34 @@ const PlayerView = () => {
     }
     */
 
-  if (activitiesLoadError) {
+  if (playerSummaryLoadError) {
     return (
       <div style={invalidParametersStyle}>
         <div className="page_title">Error loading Activities</div>
-        <div>{activitiesLoadError.toString()}</div>
-        <div>{activitiesLoadError.stack}</div>
+        <div>{playerSummaryLoadError.toString()}</div>
+        <div>{playerSummaryLoadError.stack}</div>
       </div>
     );
   }
 
-  if (!activityStats) {
+  if (!playerSummary) {
     return "";
   }
 
-  let summary = activityStats.summary;
+  let summary = playerSummary.summary;
   let weapons = summary.weapons;
   let medals = summary.medals;
-  let meta = activityStats.meta;
-  let maps = activityStats.maps;
+  let meta = playerSummary.meta;
+  let maps = playerSummary.maps;
+  let player = playerSummary.player;
 
-  mode = Mode.fromString(activityStats.query.mode);
-  moment = Moment.fromString(activityStats.query.startMoment);
+  let activities = playerActivities ? playerActivities.activities : [];
+  let isActivitiesLoading = false;
+
+  mode = Mode.fromString(playerSummary.query.mode);
+  moment = Moment.fromString(playerSummary.query.startMoment);
   classSelection = CharacterClassSelection.fromString(
-    activityStats.query.classSelection
+    playerSummary.query.classSelection
   );
 
   const gappedStyle = {
@@ -143,7 +159,7 @@ const PlayerView = () => {
     <div>
       <div id="player_overview_header" style={playerHeaderStyle}>
         <PlayerActivitiesHeader
-          player={activityStats.player}
+          player={player}
           classSelection={classSelection}
           mode={mode}
           moment={moment}
@@ -170,13 +186,11 @@ const PlayerView = () => {
 
         <div>
           <ActivityList
-            activities={activityStats.activities}
+            activities={activities}
             summary={summary}
             isLoading={isActivitiesLoading}
           />
         </div>
-
-        <ErrorView error={[activitiesLoadError]} />
       </div>
     </div>
   );

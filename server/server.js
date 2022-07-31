@@ -169,6 +169,7 @@ app.get(
 
     const player = activityStore.retrieveMember(memberId);
 
+    /*
     const activities = activityStore.retrieveActivities(
       memberId,
       characterClassSelection,
@@ -176,6 +177,7 @@ app.get(
       startDate,
       endDate
     );
+    */
 
     summary.weapons = weapons;
     summary.medals = medals;
@@ -194,7 +196,7 @@ app.get(
       query: query,
       player: player,
       summary: summary,
-      activities: activities,
+      //activities: activities,
       maps: maps,
       meta: meta,
     };
