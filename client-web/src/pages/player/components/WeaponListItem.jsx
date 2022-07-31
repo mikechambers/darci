@@ -32,15 +32,6 @@ const valuesStyle = {
   justifyContent: "space-between",
 };
 
-const wrapperStyle = {
-  display: "flex",
-  flexDirection: "column",
-  //gap: "var(--list-item-gap)",
-
-  //maxHeight: "488px",
-  //overflow: "auto",
-};
-
 const WeaponListItem = (props) => {
   let weapons = props.data;
   let style = props.style;

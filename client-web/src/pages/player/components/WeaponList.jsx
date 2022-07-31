@@ -20,6 +20,8 @@ const titleStyle = {
   justifyContent: "space-between",
 };
 
+const ITEM_HEIGHT = 100;
+const MAX_HEIGHT = 488;
 const WeaponList = (props) => {
   let weapons = props.weapons;
   let title = props.title;
@@ -45,6 +47,10 @@ const WeaponList = (props) => {
 
   let itemKey = (index, weapons) => weapons[index].id;
 
+  let height = ITEM_HEIGHT * weapons.length;
+  if (height > MAX_HEIGHT) {
+    height = MAX_HEIGHT;
+  }
   return (
     <div style={elementStyle}>
       <div style={titleStyle}>
@@ -68,11 +74,11 @@ const WeaponList = (props) => {
         </div>
       </div>
       <List
-        height={488}
+        height={height}
         width={422}
         itemData={weapons}
         itemCount={weapons.length}
-        itemSize={100}
+        itemSize={ITEM_HEIGHT}
         itemKey={itemKey}
       >
         {WeaponListItem}

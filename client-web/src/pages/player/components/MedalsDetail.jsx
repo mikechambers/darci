@@ -20,6 +20,8 @@ const titleStyle = {
   justifyContent: "space-between",
 };
 
+const ITEM_HEIGHT = 122;
+const MAX_HEIGHT = 488;
 const MedalsDetail = (props) => {
   let medals = props.medals;
   let activityCount = props.activityCount;
@@ -68,6 +70,10 @@ const MedalsDetail = (props) => {
   let itemKey = (index, data) => data.medals[index].id;
 
   let itemData = { activityCount: activityCount, medals: medals };
+  let height = ITEM_HEIGHT * medals.length;
+  if (height > MAX_HEIGHT) {
+    height = MAX_HEIGHT;
+  }
 
   return (
     <div style={elementStyle}>
@@ -97,11 +103,11 @@ const MedalsDetail = (props) => {
         </div>
       </div>
       <List
-        height={488}
+        height={height}
         width={422}
         itemData={itemData}
         itemCount={medals.length}
-        itemSize={122}
+        itemSize={ITEM_HEIGHT}
         itemKey={itemKey}
       >
         {MedalListItem}
