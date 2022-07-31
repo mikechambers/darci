@@ -1,5 +1,4 @@
 import React from "react";
-import { NativeSelect } from "@mantine/core";
 import { truncate } from "../utils";
 
 const EnumSelectBase = (props) => {

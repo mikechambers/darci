@@ -1,12 +1,9 @@
-import React, { Component, useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-import { Link } from "react-router-dom";
+
 import { useFetchManifest } from "./hooks/remote";
 import { useParams } from "react-router-dom";
 import { CharacterClassSelection, Mode, Moment } from "shared";
-import PlayerViewConfig from "./components/PlayerViewConfig";
-import { useFetchPlayers } from "./hooks/remote";
-import { MantineProvider } from "@mantine/core";
 
 import {
   GlobalContext,
