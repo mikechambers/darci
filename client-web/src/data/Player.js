@@ -2,7 +2,6 @@ import { CharacterClass } from "shared";
 
 class Player {
   memberId;
-  bungieDisplayName;
   bungieDisplayNameCode;
   platformId;
   characters;
@@ -15,14 +14,6 @@ class Player {
     this.platformId = options.platformId;
     this.characters = options.characters;
     this.character = options.character;
-  }
-
-  hasFullBungieName() {
-    return this.bungieDisplayName && this.bungieDisplayNameCode;
-  }
-
-  getShortName() {
-    return this.bungieDisplayName ? this.bungieDisplayName : this.displayName;
   }
 
   getFullName() {
@@ -39,13 +30,48 @@ class Player {
       memberId: data.memberId,
       bungieDisplayName: data.bungieDisplayName,
       bungieDisplayNameCode: data.bungieDisplayNameCode,
-      displayName: data.displayName,
       platformId: data.platformId,
       characters: chars,
       character: chars[0],
     });
 
     return out;
+  }
+
+  static fromJson(json) {
+    if (!json) {
+      return;
+    }
+
+    let options = JSON.parse(json);
+
+    let out = new Player({
+      memberId: options.memberId,
+      bungieDisplayName: options.bungieDisplayName,
+      bungieDisplayNameCode: options.bungieDisplayNameCode,
+      platformId: options.platformId,
+      characters: options,
+    });
+
+    return out;
+  }
+
+  toJson() {
+    let out = {
+      memberId: this.memberId,
+      bungieDisplayName: this.bungieDisplayName,
+      bungieDisplayNameCode: this.bungieDisplayNameCode,
+      platformId: this.platformId,
+    };
+
+    let json = JSON.stringify(out);
+    console.log(json);
+
+    return json;
+  }
+
+  toString() {
+    return this.getFullName();
   }
 }
 

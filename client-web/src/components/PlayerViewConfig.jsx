@@ -1,8 +1,11 @@
 import { CharacterClassSelection, Mode, Moment } from "shared";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import EnumSelectBase from "./EnumSelectBase";
 import { useFetchPlayers } from "../hooks/remote";
 import { Button } from "@mantine/core";
+import { useLocalStorage } from "@mantine/hooks";
+import { useState } from "react";
+import Player from "../data/Player";
 
 const createUrl = function (player, classSelection, mode, moment) {
   let ts = new Date().getTime();
@@ -22,9 +25,19 @@ const PlayerViewConfig = (props) => {
     CharacterClassSelection.TITAN,
     CharacterClassSelection.WARLOCK,
   ];
-  const [classSelection, setClassSelection] = useState(
-    props.classSelection ? props.classSelection : CharacterClassSelection.ALL
-  );
+  const [classSelection, setClassSelection] = useLocalStorage({
+    key: "config-class-type",
+    defaultValue: CharacterClassSelection.ALL,
+    serialize: (value) => {
+      return value.type;
+    },
+    deserialize: (localStorageValue) => {
+      if (!localStorageValue) {
+        return;
+      }
+      return CharacterClassSelection.fromString(localStorageValue);
+    },
+  });
 
   let modes = [
     Mode.PVP_QUICKPLAY,
@@ -39,9 +52,19 @@ const PlayerViewConfig = (props) => {
     Mode.PRIVATE_MATCHES_ALL,
     Mode.ALL_PVP,
   ];
-  const [mode, setMode] = useState(
-    props.mode ? props.mode : Mode.PVP_QUICKPLAY
-  );
+  const [mode, setMode] = useLocalStorage({
+    key: "config-mode",
+    defaultValue: Mode.PVP_QUICKPLAY,
+    serialize: (value) => {
+      return value.type;
+    },
+    deserialize: (localStorageValue) => {
+      if (!localStorageValue) {
+        return;
+      }
+      return Mode.fromString(localStorageValue);
+    },
+  });
 
   let moments = [
     Moment.DAILY,
@@ -52,32 +75,58 @@ const PlayerViewConfig = (props) => {
     Moment.MONTH,
     Moment.SEASON_OF_THE_HAUNTED,
   ];
-  const [moment, setMoment] = useState(
-    props.moment ? props.moment : Moment.WEEK
-  );
+  const [moment, setMoment] = useLocalStorage({
+    key: "config-moment",
+    defaultValue: Moment.WEEK,
+    serialize: (value) => {
+      return value.type;
+    },
+    deserialize: (localStorageValue) => {
+      if (!localStorageValue) {
+        return;
+      }
+      return Moment.fromString(localStorageValue);
+    },
+  });
 
   const [loadedPlayers, isPlayersLoading, isPlayersError] = useFetchPlayers();
   const [players, setPlayers] = useState();
-  const [player, setPlayer] = useState();
+  const [player, setPlayer] = useLocalStorage({
+    key: "config-player",
+    serialize: (value) => {
+      return value.toJson();
+    },
+    deserialize: (localStorageValue) => {
+      if (undefined) {
+        return undefined;
+      }
+      return Player.fromJson(localStorageValue);
+    },
+  });
+
+  let [selected, setSelected] = useState();
 
   useEffect(() => {
-    let selected = props.player;
+    if (!loadedPlayers) {
+      return;
+    }
+
+    let found = false;
     for (const p of loadedPlayers) {
       p.label = p.getFullName();
-      p.toString = () => p.label;
 
-      if (selected && p.memberId === selected.memberId) {
-        selected = p;
-        setPlayer(selected);
+      if (player && p.memberId === player.memberId) {
+        found = true;
+        setSelected(p);
       }
     }
 
-    if (loadedPlayers && loadedPlayers.length && !selected) {
+    if (!found && loadedPlayers.length) {
       setPlayer(loadedPlayers[0]);
     }
 
     setPlayers(loadedPlayers);
-  }, [loadedPlayers, props.player]);
+  }, [loadedPlayers, player, setPlayer]);
 
   let classOnChange = function (e) {
     setClassSelection(e);
@@ -120,7 +169,7 @@ const PlayerViewConfig = (props) => {
       <EnumSelectBase
         onChange={playerOnChange}
         options={players}
-        selected={player}
+        selected={selected}
         label="player"
         maxLabelLength={maxLabelLength}
       />

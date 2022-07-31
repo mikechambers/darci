@@ -6,7 +6,7 @@
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@mantine/core": "^5.0.0",
-    "@mantine/hooks": "^5.0.0",
+    "@mantine/hooks": "^5.0.2",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -17,6 +17,7 @@
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
     "react-window": "^1.8.7",
+    "save": "^2.5.0",
     "shared": "file:../shared",
     "web-vitals": "^2.1.2"
   },
