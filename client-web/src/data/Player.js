@@ -65,7 +65,6 @@ class Player {
     };
 
     let json = JSON.stringify(out);
-    console.log(json);
 
     return json;
   }
