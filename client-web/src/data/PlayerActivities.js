@@ -8,7 +8,7 @@ class PlayerActivities {
   player;
 
   constructor(options = {}) {
-    this.activities = options.activites;
+    this.activities = options.activities;
     this.player = options.player;
   }
 
