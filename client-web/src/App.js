@@ -85,27 +85,19 @@ const App = (props) => {
 
   return (
     <GlobalContext.Provider value={{ global, dispatchGlobal }}>
-      <MantineProvider
-        theme={{
-          fontFamily: "Roboto, sans-serif",
+      <React.Fragment>
+        {initializingContent ? (
+          initializingContent
+        ) : (
+          <div style={style}>
+            <Sidebar />
 
-          primaryColor: "indigo",
-        }}
-      >
-        <React.Fragment>
-          {initializingContent ? (
-            initializingContent
-          ) : (
-            <div style={style}>
-              <Sidebar />
-
-              <div id="current_view" style={currentViewStyle}>
-                <Outlet />
-              </div>
+            <div id="current_view" style={currentViewStyle}>
+              <Outlet />
             </div>
-          )}
-        </React.Fragment>
-      </MantineProvider>
+          </div>
+        )}
+      </React.Fragment>
     </GlobalContext.Provider>
   );
 };

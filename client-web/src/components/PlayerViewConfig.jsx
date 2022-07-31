@@ -2,7 +2,6 @@ import { CharacterClassSelection, Mode, Moment } from "shared";
 import React, { useEffect } from "react";
 import EnumSelectBase from "./EnumSelectBase";
 import { useFetchPlayers } from "../hooks/remote";
-import { Button } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import { useState } from "react";
 import Player from "../data/Player";
@@ -195,14 +194,11 @@ const PlayerViewConfig = (props) => {
         label="moment"
         maxLabelLength={maxLabelLength}
       />
-
-      <Button onClick={onClick} size="xs">
+      <button onClick={onClick} className="b">
         View
-      </Button>
+      </button>
     </div>
   );
 };
 
 export default PlayerViewConfig;
-
-/*<div style={buttonWrapperStyle}>*/

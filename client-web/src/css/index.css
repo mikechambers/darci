@@ -439,12 +439,55 @@ select {
 
 .form_label {
   display: inline-block;
-font-size: 12px;
-font-weight: 500;
-color: #212529;
-word-break: break-word;
-cursor: default;
--webkit-tap-highlight-color: transparent;
-color: #ffffff;
-text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 500;
+  color: #212529;
+  word-break: break-word;
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.b {
+  font-family: Roboto,sans-serif;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  padding-right: 0px;
+  padding-left: 0px;
+  
+  font-size: 16px;
+  background-color: transparent;
+  text-align: left;
+  color: #000;
+  text-decoration: none;
+  box-sizing: border-box;
+  height: 30px;
+  padding-left: 14px;
+  padding-right: 14px;
+  font-family: Roboto,sans-serif;
+  display: inline-block;
+  width: auto;
+  border-radius: 4px;
+  font-weight: 600;
+  position: relative;
+  line-height: 1;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: #4c6ef5;
+  background-image: #4c6ef5;
+  color: #fff;
+
+  user-select: none;
+  appearance: none;
+}
+
+.b:hover {
+  background-color: #4c6ef5dd;
+}
+
+.b:active {
+  translate: 0px 1px;
 }
