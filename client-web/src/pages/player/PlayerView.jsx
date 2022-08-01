@@ -22,6 +22,7 @@ import MedalsDetail from "./components/MedalsDetail";
 import PlayerViewConfig from "../../components/PlayerViewConfig";
 import { useEffect, useState } from "react";
 import RefreshStatus from "./components/RefreshStatus";
+import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../consts";
 const { useQuery } = require("../../hooks/browser");
 
 const playerOverviewStyle = {
@@ -78,7 +79,7 @@ const PlayerView = () => {
   //console.log(params.memberId, mode.label, moment.label, classSelection.label);
   let [playerSummary, isPlayerSummaryLoading, playerSummaryLoadError] =
     useFetchPlayerSummary(
-      true,
+      PLAYER_VIEW_REFRESH_INTERVAL,
       params.memberId,
       mode,
       moment,
@@ -88,7 +89,7 @@ const PlayerView = () => {
 
   let [playerActivities, isPlayerActivitiesLoading, playerActivitiesLoadError] =
     useFetchPlayerActivities(
-      true,
+      PLAYER_VIEW_REFRESH_INTERVAL,
       params.memberId,
       mode,
       moment,
@@ -165,7 +166,10 @@ const PlayerView = () => {
 
   return (
     <div>
-      <RefreshStatus lastUpdate={lastUpdate} />
+      <RefreshStatus
+        lastUpdate={lastUpdate}
+        refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
+      />
       <div id="player_overview_header" style={playerHeaderStyle}>
         <PlayerActivitiesHeader
           player={player}

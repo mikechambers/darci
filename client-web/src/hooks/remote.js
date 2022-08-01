@@ -6,7 +6,7 @@ import Activity from "../data/Activity";
 import { useState, useContext, useEffect } from "react";
 import Manifest from "../data/Manifest";
 
-import { DATA_REFRESH_INTERVAL, MANIFEST_CHECK_INTERVAL } from "../consts";
+import { MANIFEST_CHECK_INTERVAL } from "../consts";
 import { fetchApi, fetchDestinyApi } from "../utils/remote";
 
 import Player from "../data/Player";
@@ -138,7 +138,7 @@ export const useFetchActivity = (activityId) => {
 };
 
 export const useFetchPlayerActivities = (
-  refresh,
+  refreshInterval,
   memberId,
   mode,
   moment,
@@ -175,7 +175,7 @@ export const useFetchPlayerActivities = (
 
       setOutput(s);
 
-      timeoutId = startTimeout(f, refresh);
+      timeoutId = startTimeout(f, refreshInterval);
     };
 
     f();
@@ -183,13 +183,13 @@ export const useFetchPlayerActivities = (
     return () => {
       cleanUpTimeout(timeoutId);
     };
-  }, [classSelection, manifest, memberId, mode, moment, refresh, hash]);
+  }, [classSelection, manifest, memberId, mode, moment, refreshInterval, hash]);
 
   return [output.activityStats, output.isLoading, output.error];
 };
 
 export const useFetchPlayerSummary = (
-  refresh,
+  refreshInterval,
   memberId,
   mode,
   moment,
@@ -226,7 +226,7 @@ export const useFetchPlayerSummary = (
 
       setOutput(s);
 
-      timeoutId = startTimeout(f, refresh);
+      timeoutId = startTimeout(f, refreshInterval);
     };
 
     f();
@@ -234,7 +234,7 @@ export const useFetchPlayerSummary = (
     return () => {
       cleanUpTimeout(timeoutId);
     };
-  }, [classSelection, manifest, memberId, mode, moment, refresh, hash]);
+  }, [classSelection, manifest, memberId, mode, moment, refreshInterval, hash]);
 
   return [output.activityStats, output.isLoading, output.error];
 };
@@ -275,7 +275,11 @@ export const useFetchPlayers = () => {
   return [output.players, output.isLoading, output.error];
 };
 
-export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
+export const useFetchPlayerProfile = (
+  refreshInterval,
+  memberId,
+  platformId
+) => {
   const [output, setOutput] = useState({
     profile: null,
     isLoading: true,
@@ -301,8 +305,7 @@ export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
       }
 
       setOutput(s);
-
-      timeoutId = startTimeout(f, refresh);
+      timeoutId = startTimeout(f, refreshInterval);
     };
 
     f();
@@ -318,12 +321,12 @@ export const useFetchPlayerProfile = (refresh, memberId, platformId) => {
 
 //note, we wrap these to make it easier to log, debug in a single place
 //and also remove some boiler plate code on whether they should run (refresh)
-const startTimeout = (f, shouldRunTimer) => {
-  if (!shouldRunTimer) {
+const startTimeout = (f, interval) => {
+  if (!interval) {
     return;
   }
 
-  const id = setTimeout(f, DATA_REFRESH_INTERVAL);
+  const id = setTimeout(f, interval);
   return id;
 };
 
