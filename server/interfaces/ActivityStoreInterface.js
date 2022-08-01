@@ -270,44 +270,44 @@ class ActivityStoreInterface {
 
     this.#select_player_activity_summary = this.#db.prepare(`SELECT
     count(*) as activityCount,
-    sum(time_played_seconds) as timePlayedSeconds,
-    sum(character_activity_stats.standing = 0) as wins,
-    sum( character_activity_stats.completion_reason = 4) as mercies,
-    sum(completed) as completed,
-    sum(assists) as assists,
-    sum(character_activity_stats.kills) as kills,
-    sum(deaths) as deaths,
-    sum(opponents_defeated) as opponentsDefeated,
-    sum(weapon_kills_grenade) as grenadeKills,
-    sum(weapon_kills_melee) as meleeKills,
-    sum(weapon_kills_super) as superKills,
-    sum(weapon_kills_ability) as abilityKills,
-    sum(character_activity_stats.precision_kills) as precision,
-    max(assists) as highestAssists,
-    max(character_activity_stats.kills) as highestKills,
-    max(deaths) as highestDeaths,
-    max(opponents_defeated) as highestOpponentsDefeated,
-    max(weapon_kills_grenade) as highestGrenadeKills,
-    max(weapon_kills_melee) as highestMeleeKills,
-    max(weapon_kills_super) as highestSuperKills,
-    max(weapon_kills_ability) as highestAbilityKills,
-    max(
+    COALESCE(sum(time_played_seconds),0) as timePlayedSeconds,
+    COALESCE(sum(character_activity_stats.standing = 0),0) as wins,
+    COALESCE(sum( character_activity_stats.completion_reason = 4),0) as mercies,
+    COALESCE(sum(completed),0) as completed,
+    COALESCE(sum(assists),0) as assists,
+    COALESCE(sum(character_activity_stats.kills),0) as kills,
+    COALESCE(sum(deaths),0) as deaths,
+    COALESCE(sum(opponents_defeated),0) as opponentsDefeated,
+    COALESCE(sum(weapon_kills_grenade),0) as grenadeKills,
+    COALESCE(sum(weapon_kills_melee),0) as meleeKills,
+    COALESCE(sum(weapon_kills_super),0) as superKills,
+    COALESCE(sum(weapon_kills_ability),0) as abilityKills,
+    COALESCE(sum(character_activity_stats.precision_kills),0) as precision,
+    COALESCE(max(assists),0) as highestAssists,
+    COALESCE(max(character_activity_stats.kills),0) as highestKills,
+    COALESCE(max(deaths),0) as highestDeaths,
+    COALESCE(max(opponents_defeated),0) as highestOpponentsDefeated,
+    COALESCE(max(weapon_kills_grenade),0) as highestGrenadeKills,
+    COALESCE(max(weapon_kills_melee),0) as highestMeleeKills,
+    COALESCE(max(weapon_kills_super),0) as highestSuperKills,
+    COALESCE(max(weapon_kills_ability),0) as highestAbilityKills,
+    COALESCE(max(
         cast(character_activity_stats.kills as real) 
         / 
         cast(
             IFNULL(
                 NULLIF(character_activity_stats.deaths, 0), 
             1) as real
-        ))
+        )),0.0)
      as highestKillsDeathsRatio,
-    max(
+     COALESCE(max(
         cast((character_activity_stats.kills + character_activity_stats.assists) as real) 
         / 
         cast(
             IFNULL(
                 NULLIF(character_activity_stats.deaths, 0), 
             1) as real
-        ))
+        )),0.0)
      as highestEfficiency
     FROM
     character_activity_stats
