@@ -1,9 +1,10 @@
-import { DateTime, Duration } from "luxon";
+import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { calculatePercent } from "../../../utils";
 
 const RefreshStatus = (props) => {
-  let lastUpdate = props.lastUpdate;
+  const lastUpdate = props.lastUpdate;
+  const refreshInterval = props.refreshInterval;
 
   const [elapsedTime, setElapsedTime] = useState();
   useEffect(() => {
@@ -27,7 +28,7 @@ const RefreshStatus = (props) => {
 
       setElapsedTime(t);
 
-      let totalTime = 30 * 1000;
+      let totalTime = refreshInterval;
       if (t >= totalTime) {
         return;
       }
@@ -41,7 +42,7 @@ const RefreshStatus = (props) => {
     return () => {
       window.cancelAnimationFrame(intervalId);
     };
-  }, [lastUpdate]);
+  }, [lastUpdate, refreshInterval]);
 
   let s = "Waiting to update";
   let percent = 0;
@@ -49,8 +50,8 @@ const RefreshStatus = (props) => {
     let out = DateTime.fromJSDate(lastUpdate).toRelative();
     s = `Last updated ${out}`;
 
-    let totalTime = 30 * 1000; // 30 seconds
-    percent = calculatePercent(elapsedTime, totalTime);
+    percent = calculatePercent(elapsedTime, refreshInterval);
+    percent = Math.min(percent, 100);
   }
 
   let elementStyle = {
