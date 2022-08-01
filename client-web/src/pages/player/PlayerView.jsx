@@ -169,6 +169,7 @@ const PlayerView = () => {
       <RefreshStatus
         lastUpdate={lastUpdate}
         refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
+        align="left"
       />
       <div id="player_overview_header" style={playerHeaderStyle}>
         <PlayerActivitiesHeader

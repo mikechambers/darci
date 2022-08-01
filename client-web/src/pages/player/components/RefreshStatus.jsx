@@ -5,6 +5,14 @@ import { calculatePercent } from "../../../utils";
 const RefreshStatus = (props) => {
   const lastUpdate = props.lastUpdate;
   const refreshInterval = props.refreshInterval;
+  const align = props.align;
+
+  let elementAlign = "flex-start";
+  if (align === "center") {
+    elementAlign = "center";
+  } else if (align === "right") {
+    elementAlign = "flex-end";
+  }
 
   const [elapsedTime, setElapsedTime] = useState();
   useEffect(() => {
@@ -12,24 +20,13 @@ const RefreshStatus = (props) => {
       return;
     }
 
-    /*
-    const interval = setInterval(() => {
-      let t = Date.now() - lastUpdate.getTime();
-      setElapsedTime(t);
-    }, 100);
-    return () => {
-      clearInterval(interval);
-    };
-    */
-
     let lastUpdateMs = lastUpdate.getTime();
     const frameCallback = (elapsed) => {
       let t = Date.now() - lastUpdateMs;
 
       setElapsedTime(t);
 
-      let totalTime = refreshInterval;
-      if (t >= totalTime) {
+      if (t >= refreshInterval) {
         return;
       }
 
@@ -56,6 +53,9 @@ const RefreshStatus = (props) => {
 
   let elementStyle = {
     padding: "24px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: elementAlign,
   };
   let barContainerStyle = {
     width: "500px",
