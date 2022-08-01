@@ -20,6 +20,8 @@ import StatHighlights from "./components/StatHighlights";
 import PlayerOverviewBackgroundImage from "./images/player_overview_background.png";
 import MedalsDetail from "./components/MedalsDetail";
 import PlayerViewConfig from "../../components/PlayerViewConfig";
+import { useEffect, useState } from "react";
+import RefreshStatus from "./components/RefreshStatus";
 const { useQuery } = require("../../hooks/browser");
 
 const playerOverviewStyle = {
@@ -94,6 +96,12 @@ const PlayerView = () => {
       hash
     );
 
+  const [lastUpdate, setLastUpdate] = useState();
+  useEffect(() => {
+    //console.log("updated", new Date());
+    setLastUpdate(new Date());
+  }, [playerSummary]);
+
   let navigate = useNavigate();
   if (!params.memberId || !params.mode || !params.moment || !params.classType) {
     const onPlayerConfigUpdate = (url) => {
@@ -157,6 +165,7 @@ const PlayerView = () => {
 
   return (
     <div>
+      <RefreshStatus lastUpdate={lastUpdate} />
       <div id="player_overview_header" style={playerHeaderStyle}>
         <PlayerActivitiesHeader
           player={player}
