@@ -50,6 +50,7 @@
   --font-small:var(--regular) 12px 'Roboto', sans-serif;
 
 
+  --font-progress:var(--light) 16px 'Roboto', sans-serif;
   --font-description:var(--light) 14px 'Roboto', sans-serif;
   --font-data-small:var(--light) 12px 'Roboto', sans-serif;
   --font-label-small:var(--light) 10px 'Roboto', sans-serif;
