@@ -52,7 +52,7 @@ const RefreshStatus = (props) => {
   }
 
   let elementStyle = {
-    padding: "24px",
+    //padding: "24px",
     display: "flex",
     flexDirection: "column",
     alignItems: elementAlign,

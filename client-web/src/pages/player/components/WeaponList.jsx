@@ -5,7 +5,7 @@ import { FixedSizeList as List } from "react-window";
 import WeaponListItem from "./WeaponListItem";
 
 const elementStyle = {
-  padding: "var(--content-padding)",
+  //padding: "var(--page-container-padding)",
   width: "422px",
 };
 
@@ -17,18 +17,17 @@ const footerStyle = {
 const titleStyle = {
   display: "flex",
   flexDirection: "row",
-  justifyContent: "space-between",
+  justifyContent: "flex-end",
 };
 
 const ITEM_HEIGHT = 100;
 const MAX_HEIGHT = 488;
 const WeaponList = (props) => {
   let weapons = props.weapons;
-  let title = props.title;
+
   let sortLabels = props.sortLabels;
   let defaultIndex = props.sortIndex ? props.sortIndex : 0;
 
-  let description = props.description ? props.description : "";
   let [sortIndex, setSortIndex] = useState(defaultIndex);
 
   weapons.sort((a, b) => {
@@ -54,9 +53,6 @@ const WeaponList = (props) => {
   return (
     <div style={elementStyle}>
       <div style={titleStyle}>
-        <div className="section_header">
-          {title} <InfoTip text={description} />
-        </div>
         <div>
           <select
             className="nav_select"
@@ -83,12 +79,6 @@ const WeaponList = (props) => {
       >
         {WeaponListItem}
       </List>
-
-      <div style={footerStyle}>
-        <div>
-          <ExportDataButton />
-        </div>
-      </div>
     </div>
   );
 };

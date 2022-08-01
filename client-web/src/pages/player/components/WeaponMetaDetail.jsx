@@ -46,14 +46,7 @@ You and your fireteam's weapons are not included.`;
 
   let sortLabels = ["players", "kills", "kills/p", "precision"];
 
-  return (
-    <WeaponList
-      weapons={data}
-      title="Weapon Meta"
-      description={description}
-      sortLabels={sortLabels}
-    />
-  );
+  return <WeaponList weapons={data} sortLabels={sortLabels} />;
 };
 
 export default WeaponsDetail;

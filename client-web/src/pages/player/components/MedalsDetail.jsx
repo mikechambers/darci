@@ -5,7 +5,7 @@ import MedalListItem from "./MedalListItem";
 import { useState } from "react";
 
 const elementStyle = {
-  padding: "var(--content-padding)",
+  //padding: "var(--page-container-padding)",
   width: "422px",
 };
 
@@ -17,7 +17,7 @@ const footerStyle = {
 const titleStyle = {
   display: "flex",
   flexDirection: "row",
-  justifyContent: "space-between",
+  justifyContent: "flex-end",
 };
 
 const ITEM_HEIGHT = 122;
@@ -78,9 +78,6 @@ const MedalsDetail = (props) => {
   return (
     <div style={elementStyle}>
       <div style={titleStyle}>
-        <div className="section_header">
-          Medals <InfoTip text="Medals" />
-        </div>
         <div>
           <select
             className="nav_select"
@@ -112,12 +109,6 @@ const MedalsDetail = (props) => {
       >
         {MedalListItem}
       </List>
-
-      <div style={footerStyle}>
-        <div>
-          <ExportDataButton />
-        </div>
-      </div>
     </div>
   );
 };

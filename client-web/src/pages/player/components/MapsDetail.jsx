@@ -9,7 +9,7 @@ import Stat from "./Stat";
 const containerStyle = {
   display: "flex",
   flexDirection: "column",
-  padding: "var(--content-padding)",
+  //padding: "var(--page-container-padding)",
 };
 
 const wrapperStyle = {
@@ -212,9 +212,6 @@ const MapsDetail = (props) => {
 
   return (
     <div style={containerStyle}>
-      <div>
-        <GraphicListHeader description={description} title="Maps" />
-      </div>
       <div style={wrapperStyle}>
         {maps.map((map, index) => {
           let h = {
@@ -328,11 +325,6 @@ const MapsDetail = (props) => {
             </div>
           );
         })}
-      </div>
-      <div style={footerStyle}>
-        <div>
-          <ExportDataButton />
-        </div>
       </div>
     </div>
   );

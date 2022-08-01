@@ -24,6 +24,15 @@ const getFormatStr = function (d) {
   return out;
 };
 
+const elementStyle = {
+  height: "180px",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  justifyContent: "center",
+  //maxWidth: "720px",
+};
+
 const PlayerActivitiesOverview = (props) => {
   const player = props.player;
   const mode = props.mode;
@@ -39,12 +48,14 @@ const PlayerActivitiesOverview = (props) => {
   let humanMoment = dt.toFormat(f);
 
   return (
-    <div>
+    <div style={elementStyle}>
       <div className="page_title">
         <span>{playerName}</span>
         <span className="bungie_name_code">#{playerNameCode}</span>{" "}
       </div>
-      <hr />
+
+      <hr className="title" />
+
       <div className="page_subtitle">
         {mode.label} stats for {formatCharacterClass(classSelection)} since{" "}
         {moment.label} ({humanMoment})

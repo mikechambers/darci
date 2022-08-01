@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import ActivityList from "./components/ActivityList";
 import WeaponsDetail from "./components/WeaponsDetail";
 import WeaponMetaDetail from "./components/WeaponMetaDetail";
-import MedalHighlights from "./components/MedalHighlights";
 import MapsDetail from "./components/MapsDetail";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
 
@@ -13,45 +12,23 @@ import {
 
 import { CharacterClassSelection, Mode, Moment } from "shared";
 
-import TimePlayed from "./components/TimePlayed";
-
-import StatDetails from "./components/StatDetails";
-import StatHighlights from "./components/StatHighlights";
-import PlayerOverviewBackgroundImage from "./images/player_overview_background.png";
 import MedalsDetail from "./components/MedalsDetail";
 import PlayerViewConfig from "../../components/PlayerViewConfig";
 import { useEffect, useState } from "react";
 import RefreshStatus from "./components/RefreshStatus";
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../consts";
+import PlayerOverview from "./components/PlayerOverview";
+import PageSectionTitle from "./PageSectionTitle";
 const { useQuery } = require("../../hooks/browser");
 
-const playerOverviewStyle = {
-  padding: "var(--content-padding)",
-  height: "460px",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "space-around",
-
-  backgroundImage: `url(${PlayerOverviewBackgroundImage})`,
-  backgroundRepeat: "repeat",
-};
-
 const weaponsStyle = {
-  paddingTop: "24px",
   display: "flex",
   flexWrap: "wrap",
-  rowGap: "var( --list-item-gap)",
-};
-
-const playerHeaderStyle = {
-  padding: "var(--content-padding)",
-  height: "180px",
-  display: "flex",
-  alignItems: "center",
+  gap: "30px",
 };
 
 const invalidParametersStyle = {
-  padding: "var(--content-padding)",
+  padding: "var(--page-container-padding)",
   display: "flex",
   width: "100%",
   height: "100%",
@@ -160,51 +137,51 @@ const PlayerView = () => {
     display: "flex",
     flexDirection: "column",
     gap: "30px",
+  };
+
+  const pageContainerStyle = {
+    minWidth: "720px",
+    padding: "var(--page-container-padding)",
     background:
       "linear-gradient(180deg, var(--background-color) 0%, rgba(54,54,54,1) 100%)",
   };
 
   return (
-    <div>
+    <div style={pageContainerStyle}>
       <RefreshStatus
         lastUpdate={lastUpdate}
         refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
         align="left"
       />
-      <div id="player_overview_header" style={playerHeaderStyle}>
-        <PlayerActivitiesHeader
-          player={player}
-          classSelection={classSelection}
-          mode={mode}
-          moment={moment}
-        />
-      </div>
+
+      <PlayerActivitiesHeader
+        player={player}
+        classSelection={classSelection}
+        mode={mode}
+        moment={moment}
+      />
 
       <div style={gappedStyle}>
-        <div style={playerOverviewStyle}>
-          <StatHighlights summary={summary} />
-          <StatDetails summary={summary} />
-          <MedalHighlights medals={medals} />
-          <TimePlayed seconds={summary.timePlayedSeconds} />
-        </div>
+        <PlayerOverview summary={summary} medals={medals} />
 
-        <div style={weaponsStyle}>
-          <WeaponsDetail weapons={weapons} />
-          <WeaponMetaDetail weapons={meta} />
-          <MedalsDetail medals={medals} activityCount={summary.activityCount} />
-        </div>
+        <PageSectionTitle title="Weapons" description="" />
+        <WeaponsDetail weapons={weapons} />
 
-        <div>
-          <MapsDetail maps={maps} />
-        </div>
+        <PageSectionTitle title="Meta Weapons" description="" />
+        <WeaponMetaDetail weapons={meta} />
 
-        <div>
-          <ActivityList
-            activities={activities}
-            summary={summary}
-            isLoading={isActivitiesLoading}
-          />
-        </div>
+        <PageSectionTitle title="Medals" description="" />
+        <MedalsDetail medals={medals} activityCount={summary.activityCount} />
+
+        <PageSectionTitle title="Maps" description="" />
+        <MapsDetail maps={maps} />
+
+        <PageSectionTitle title="Games" description="" />
+        <ActivityList
+          activities={activities}
+          summary={summary}
+          isLoading={isActivitiesLoading}
+        />
       </div>
     </div>
   );

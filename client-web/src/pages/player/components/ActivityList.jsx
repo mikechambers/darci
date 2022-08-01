@@ -10,7 +10,7 @@ const containerStyle = {
   width: `${WIDTH}px`,
   display: "flex",
   flexDirection: "column",
-  padding: "var(--content-padding)",
+  //padding: "var(--page-container-padding)",
 };
 
 const wrapperStyle = {
@@ -27,7 +27,6 @@ const footerStyle = {
 
 const dateStyle = {
   width: "735px",
-  height: "46px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
@@ -39,9 +38,6 @@ const ActivityList = (props) => {
   let activities = props.activities;
   let summary = props.summary;
 
-  let description =
-    "List of most recent activities, displaying stats, highlights and game status.";
-
   if (props.isLoading) {
     return <div>Loading...</div>;
   }
@@ -50,8 +46,6 @@ const ActivityList = (props) => {
   let now = DateTime.now();
   return (
     <div style={containerStyle}>
-      <GraphicListHeader description={description} title="Games" />
-
       <div style={wrapperStyle}>
         {activities.map((game, index) => {
           let dt = DateTime.fromISO(game.activity.period);
@@ -83,11 +77,6 @@ const ActivityList = (props) => {
             </React.Fragment>
           );
         })}
-      </div>
-      <div style={footerStyle}>
-        <div>
-          <ExportDataButton />
-        </div>
       </div>
     </div>
   );

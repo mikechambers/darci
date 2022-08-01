@@ -27,7 +27,7 @@
 
   --border-radius: 4px;
 
-  --content-padding:  0px 30px;
+  --page-container-padding:  45px;
 
   --font-family:'Roboto', sans-serif;
   --font: var(--regular) 16px 'Roboto', sans-serif;
@@ -102,6 +102,11 @@ body {
 
 hr {
   border-top: 1px solid #FFFFFF;
+}
+
+hr.title {
+  width: 50%;
+  margin-left: 0px;
 }
 
 /**************** main layout *********************/
