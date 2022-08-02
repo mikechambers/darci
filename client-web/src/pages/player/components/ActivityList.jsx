@@ -1,7 +1,5 @@
 import { DateTime, Interval } from "luxon";
 import React from "react";
-import ExportDataButton from "../../../components/ExportDataButton";
-import GraphicListHeader from "../../../components/GraphicListHeader";
 import ActivityListItem from "./ActivityListItem";
 
 const WIDTH = 735;
@@ -20,18 +18,18 @@ const wrapperStyle = {
   gap: "2px",
 };
 
-const footerStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-};
-
-const dateStyle = {
+const dateStyleFirst = {
   width: "735px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
   textTransform: "capitalize",
   font: "var(--font-subsection-header)",
+};
+
+const dateStyle = {
+  ...dateStyleFirst,
+  paddingTop: "24px",
 };
 
 const ActivityList = (props) => {
@@ -63,7 +61,9 @@ const ActivityList = (props) => {
             } else {
               s = dt.toFormat("DDD");
             }
-            dateDiv = <div style={dateStyle}>{s}</div>;
+            let style = !index ? dateStyleFirst : dateStyle;
+
+            dateDiv = <div style={style}>{s}</div>;
           }
 
           return (
