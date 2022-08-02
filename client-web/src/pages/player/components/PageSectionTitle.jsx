@@ -8,9 +8,10 @@ const headerStyle = {
 const PageSectionTitle = (props) => {
   const description = props.description;
   const title = props.title;
+  const id = props.id ? props.id : "";
 
   return (
-    <div style={headerStyle}>
+    <div id={id} style={headerStyle}>
       <div className="section_header" title={description}>
         {title}
       </div>

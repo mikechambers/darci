@@ -18,14 +18,9 @@ import { useEffect, useState } from "react";
 import RefreshStatus from "./components/RefreshStatus";
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../consts";
 import PlayerOverview from "./components/PlayerOverview";
-import PageSectionTitle from "./PageSectionTitle";
+import PageSectionTitle from "./components/PageSectionTitle";
+import PageViewNavigation from "./components/PageViewNavigation";
 const { useQuery } = require("../../hooks/browser");
-
-const weaponsStyle = {
-  display: "flex",
-  flexWrap: "wrap",
-  gap: "30px",
-};
 
 const invalidParametersStyle = {
   padding: "var(--page-container-padding)",
@@ -141,7 +136,7 @@ const PlayerView = () => {
 
   const pageContainerStyle = {
     minWidth: "720px",
-    padding: "var(--page-container-padding)",
+    padding: "24px var(--page-container-padding)",
     background:
       "linear-gradient(180deg, var(--background-color) 0%, rgba(54,54,54,1) 100%)",
   };
@@ -152,36 +147,66 @@ const PlayerView = () => {
     gap: "30px",
   };
 
+  const pageLinks = [
+    {
+      value: "Overview",
+      id: "overview",
+    },
+    {
+      value: "Weapons",
+      id: "weapons",
+    },
+    {
+      value: "Meta Weapons",
+      id: "meta",
+    },
+    {
+      value: "medals",
+      id: "medals",
+    },
+    {
+      value: "maps",
+      id: "maps",
+    },
+    {
+      value: "games",
+      id: "games",
+    },
+  ];
+
   return (
     <div style={pageContainerStyle}>
-      <RefreshStatus
-        lastUpdate={lastUpdate}
-        refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
-        align="left"
-      />
-
-      <PlayerActivitiesHeader
-        player={player}
-        classSelection={classSelection}
-        mode={mode}
-        moment={moment}
-      />
-
       <div style={gappedStyle}>
+        <PageViewNavigation links={pageLinks} />
+        <RefreshStatus
+          lastUpdate={lastUpdate}
+          refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
+          align="left"
+        />
+
+        <div id="overview">
+          <PlayerActivitiesHeader
+            player={player}
+            classSelection={classSelection}
+            mode={mode}
+            moment={moment}
+          />
+        </div>
+
         <PlayerOverview summary={summary} medals={medals} />
 
         <div style={itemDetailsStyle}>
           <div>
             {" "}
-            <PageSectionTitle title="Weapons" description="" />
+            <PageSectionTitle id="weapons" title="Weapons" description="" />
             <WeaponsDetail weapons={weapons} />
           </div>
           <div>
-            <PageSectionTitle title="Meta Weapons" description="" />
+            <PageSectionTitle id="meta" title="Meta Weapons" description="" />
             <WeaponMetaDetail weapons={meta} />
           </div>
           <div>
-            <PageSectionTitle title="Medals" description="" />
+            <PageSectionTitle id="medals" title="Medals" description="" />
             <MedalsDetail
               medals={medals}
               activityCount={summary.activityCount}
@@ -189,10 +214,10 @@ const PlayerView = () => {
           </div>
         </div>
         <div>
-          <PageSectionTitle title="Maps" description="" />
+          <PageSectionTitle id="maps" title="Maps" description="" />
           <MapsDetail maps={maps} />
         </div>
-        <PageSectionTitle title="Games" description="" />
+        <PageSectionTitle id="games" title="Games" description="" />
         <ActivityList
           activities={activities}
           summary={summary}

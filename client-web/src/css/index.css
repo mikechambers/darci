@@ -395,33 +395,6 @@ td {
   drop-shadow(0 -1px 0 white);
 }
 
-.nav {
-  font:var(--font-main-nav);
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: opacity .5s ease-in-out;
-}
-
-.nav.page {
-  font:var(--font-page-nav);
-}
-
-.nav:hover {
-  text-decoration: underline;
-}
-
-.nav_active {
-  opacity:1;
-}
-
-.nav_inactive {
-  opacity: 0.5;
-}
-
-.nav_transition {
-  transition: top .4s ease-in-out;
-}
-
 select {
   font-family: Roboto,sans-serif;
   height: 30px;
@@ -496,4 +469,35 @@ select {
 
 .b:active {
   translate: 0px 1px;
+}
+
+.nav {
+  font:var(--font-main-nav);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity .5s ease-in-out;
+}
+
+.nav.page {
+  font:var(--font-page-nav);
+}
+
+.nav:hover {
+  text-decoration: underline;
+}
+
+.nav_active {
+  opacity:1;
+}
+
+.nav_inactive {
+  opacity: 0.5;
+}
+
+.nav_transition {
+  transition: top .4s ease-in-out;
+}
+
+.page_nav_transition {
+  transition: left .4s ease-in-out;
 }
