@@ -198,15 +198,27 @@ const PlayerView = () => {
         <div style={itemDetailsStyle}>
           <div>
             {" "}
-            <PageSectionTitle id="weapons" title="Weapons" description="" />
+            <PageSectionTitle
+              id="weapons"
+              title="Weapons"
+              description="Your weapon stats"
+            />
             <WeaponsDetail weapons={weapons} />
           </div>
           <div>
-            <PageSectionTitle id="meta" title="Meta Weapons" description="" />
+            <PageSectionTitle
+              id="meta"
+              title="Meta Weapons"
+              description="Weapon meta from your matches excluding you and your fireteam members"
+            />
             <WeaponMetaDetail weapons={meta} />
           </div>
           <div>
-            <PageSectionTitle id="medals" title="Medals" description="" />
+            <PageSectionTitle
+              id="medals"
+              title="Medals"
+              description="Medals earned in matches"
+            />
             <MedalsDetail
               medals={medals}
               activityCount={summary.activityCount}
@@ -214,10 +226,18 @@ const PlayerView = () => {
           </div>
         </div>
         <div>
-          <PageSectionTitle id="maps" title="Maps" description="" />
+          <PageSectionTitle
+            id="maps"
+            description="Stats broken down by map"
+            title="Maps"
+          />
           <MapsDetail maps={maps} />
         </div>
-        <PageSectionTitle id="games" title="Games" description="" />
+        <PageSectionTitle
+          description="Most recent matches"
+          id="games"
+          title="Games"
+        />
         <ActivityList
           activities={activities}
           summary={summary}
