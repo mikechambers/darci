@@ -47,7 +47,7 @@ const Medal = (props) => {
 
   const badge =
     count > 1 ? (
-      <div style={badgeStyle} title={`${count} medal${count > 0 ? "s" : ""}`}>
+      <div style={badgeStyle} title={`${count} medal${count > 1 ? "s" : ""}`}>
         {count}
       </div>
     ) : (

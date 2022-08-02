@@ -354,11 +354,3 @@ const PlayerActivityDetail = (props) => {
 };
 
 export default PlayerActivityDetail;
-
-/*           <img
-                  
-                  src={medal.info.icon}
-                  alt={medal.info.description}
-                  title={`${countLabel}${medal.info.name} - ${medal.info.description}`}
-                  height="18"
-                /> */

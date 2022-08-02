@@ -267,15 +267,3 @@ const ActivityListItem = (props) => {
 };
 
 export default ActivityListItem;
-
-/*
-           <img
-                key={medal.id}
-                src={medal.info.icon}
-                alt={medal.info.description}
-                title={`${countLabel}${medal.info.name.toUpperCase()} - ${
-                  medal.info.description
-                }`}
-                width="18"
-              />
-*/
