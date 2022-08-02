@@ -4,7 +4,6 @@ import WeaponsDetail from "./components/WeaponsDetail";
 import WeaponMetaDetail from "./components/WeaponMetaDetail";
 import MapsDetail from "./components/MapsDetail";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
-import { ReactComponent as NavigationIcon } from "../../components/images/tabler/map.svg";
 
 import {
   useFetchPlayerActivities,
@@ -41,7 +40,7 @@ const gappedStyle = {
 
 const pageContainerStyle = {
   minWidth: "720px",
-  padding: "24px var(--page-container-padding)",
+  padding: "0px var(--page-container-padding)",
   background:
     "linear-gradient(180deg, var(--background-color) 0%, rgba(54,54,54,1) 100%)",
 };
@@ -78,23 +77,6 @@ const pageLinks = [
     id: "games",
   },
 ];
-
-const navigationIconWrapperStyle = {
-  position: "sticky",
-  top: 21,
-};
-const navigationIconStyle = {
-  strokeWidth: 1,
-  width: 18,
-  position: "absolute",
-  top: 0,
-  left: 15,
-};
-
-const onPageHomeClick = function () {
-  let e = document.getElementById("page_nav");
-  e.scrollIntoView({ behavior: "smooth", block: "start" });
-};
 
 const PlayerView = () => {
   let params = useParams();
@@ -193,85 +175,76 @@ const PlayerView = () => {
   );
 
   return (
-    <React.Fragment>
-      <div
-        style={navigationIconWrapperStyle}
-        onClick={onPageHomeClick}
-        title="Return to top of page"
-      >
-        <NavigationIcon style={navigationIconStyle} className="page_nav_icon" />
-      </div>
-      <div id="page_nav" style={pageContainerStyle}>
-        <div style={gappedStyle}>
-          <PageViewNavigation links={pageLinks} />
-          <RefreshStatus
-            lastUpdate={lastUpdate}
-            refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
-            align="left"
+    <div id="page_nav" style={pageContainerStyle}>
+      <div style={gappedStyle}>
+        <PageViewNavigation links={pageLinks} />
+        <RefreshStatus
+          lastUpdate={lastUpdate}
+          refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
+          align="left"
+        />
+
+        <div id="overview">
+          <PlayerActivitiesHeader
+            player={player}
+            classSelection={classSelection}
+            mode={mode}
+            moment={moment}
           />
+        </div>
 
-          <div id="overview">
-            <PlayerActivitiesHeader
-              player={player}
-              classSelection={classSelection}
-              mode={mode}
-              moment={moment}
+        <PlayerOverview summary={summary} medals={medals} />
+
+        <div style={itemDetailsStyle}>
+          <div>
+            {" "}
+            <PageSectionTitle
+              id="weapons"
+              title="Weapons"
+              description="Your weapon stats"
             />
-          </div>
-
-          <PlayerOverview summary={summary} medals={medals} />
-
-          <div style={itemDetailsStyle}>
-            <div>
-              {" "}
-              <PageSectionTitle
-                id="weapons"
-                title="Weapons"
-                description="Your weapon stats"
-              />
-              <WeaponsDetail weapons={weapons} />
-            </div>
-            <div>
-              <PageSectionTitle
-                id="meta"
-                title="Meta Weapons"
-                description="Weapon meta from your matches excluding you and your fireteam members"
-              />
-              <WeaponMetaDetail weapons={meta} />
-            </div>
-            <div>
-              <PageSectionTitle
-                id="medals"
-                title="Medals"
-                description="Medals earned in matches"
-              />
-              <MedalsDetail
-                medals={medals}
-                activityCount={summary.activityCount}
-              />
-            </div>
+            <WeaponsDetail weapons={weapons} />
           </div>
           <div>
             <PageSectionTitle
-              id="maps"
-              description="Stats broken down by map"
-              title="Maps"
+              id="meta"
+              title="Meta Weapons"
+              description="Weapon meta from your matches excluding you and your fireteam members"
             />
-            <MapsDetail maps={maps} />
+            <WeaponMetaDetail weapons={meta} />
           </div>
-          <PageSectionTitle
-            description="Most recent matches"
-            id="games"
-            title="Games"
-          />
-          <ActivityList
-            activities={activities}
-            summary={summary}
-            isLoading={isActivitiesLoading}
-          />
+          <div>
+            <PageSectionTitle
+              id="medals"
+              title="Medals"
+              description="Medals earned in matches"
+            />
+            <MedalsDetail
+              medals={medals}
+              activityCount={summary.activityCount}
+            />
+          </div>
         </div>
+        <div>
+          <PageSectionTitle
+            id="maps"
+            description="Stats broken down by map"
+            title="Maps"
+          />
+          <MapsDetail maps={maps} />
+        </div>
+        <PageSectionTitle
+          description="Most recent matches"
+          id="games"
+          title="Games"
+        />
+        <ActivityList
+          activities={activities}
+          summary={summary}
+          isLoading={isActivitiesLoading}
+        />
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

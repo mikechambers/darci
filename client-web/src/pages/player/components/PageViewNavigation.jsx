@@ -1,9 +1,27 @@
-import { useState } from "react";
+import React from "react";
+import { ReactComponent as NavigationIcon } from "../../../components/images/tabler/map.svg";
 
-//make this generic,
+const navigationIconWrapperStyle = {
+  position: "sticky",
+  top: 0,
+};
+
+//note, this is a bit of hack. Need to find a programtic
+//way to position correctly
+const navigationIconStyle = {
+  strokeWidth: 1,
+  width: 18,
+  position: "absolute",
+  top: 26,
+  left: -30,
+};
+
+const onPageHomeClick = function () {
+  let e = document.getElementById("page_nav");
+  e.scrollIntoView({ behavior: "smooth", block: "start" });
+};
 const PageViewNavigation = (props) => {
   const links = props.links;
-  const id = props.id;
 
   const elementStyle = {};
 
@@ -12,12 +30,6 @@ const PageViewNavigation = (props) => {
     flexDirection: "columns",
     gap: "24px",
     justifyContent: "space-apart",
-  };
-
-  const underlineStyleBase = {
-    position: "relative",
-    borderTop: "var( --underline)",
-    width: `20px`,
   };
 
   //const [indicatorProps, setIndicatorProps] = useState({ width: 50, left: 0 });
@@ -47,22 +59,31 @@ const PageViewNavigation = (props) => {
   */
 
   return (
-    <div style={elementStyle}>
-      <div style={linkContainerStyle}>
-        {links.map((item, index) => {
-          return (
-            <div
-              className="nav page"
-              id={`page_view_nav_${index}`}
-              key={item.value}
-              onClick={() => onClick(index)}
-            >
-              {item.value}
-            </div>
-          );
-        })}
+    <React.Fragment>
+      <div
+        style={navigationIconWrapperStyle}
+        onClick={onPageHomeClick}
+        title="Return to top of page"
+      >
+        <NavigationIcon style={navigationIconStyle} className="page_nav_icon" />
       </div>
-    </div>
+      <div id="s" style={elementStyle}>
+        <div style={linkContainerStyle}>
+          {links.map((item, index) => {
+            return (
+              <div
+                className="nav page"
+                id={`page_view_nav_${index}`}
+                key={item.value}
+                onClick={() => onClick(index)}
+              >
+                {item.value}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </React.Fragment>
   );
 };
 
