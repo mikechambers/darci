@@ -2,6 +2,7 @@ let style = {
   display: "flex",
   alignItems: "start",
   justifyContent: "start",
+  flexWrap: "wrap",
 };
 
 const medal_style = {
