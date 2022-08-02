@@ -84,7 +84,6 @@ const navigationIconWrapperStyle = {
   top: 21,
 };
 const navigationIconStyle = {
-  strokeWidth: 1,
   width: 18,
   position: "absolute",
   top: 0,
