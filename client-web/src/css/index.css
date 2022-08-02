@@ -498,3 +498,15 @@ select {
 .page_nav_transition {
   transition: left .4s ease-in-out;
 }
+
+.page_nav_icon {
+  color:#ffffffbb;
+}
+.page_nav_icon:hover {
+  cursor: pointer;
+  color:#ffffff;
+}
+
+.page_nav_icon:active {
+  translate: 0px 1px;
+}
