@@ -1,3 +1,5 @@
+import Medal, { MEDIUM } from "../../../components/Medal";
+
 let style = {
   display: "flex",
   alignItems: "start",
@@ -45,15 +47,9 @@ const MedalHighlights = (props) => {
       {medals.map((m, index) => {
         return (
           <div style={medal_style} className="medal" key={m.id}>
-            <img
-              height="32"
-              width="32"
-              title={m.info.description}
-              alt={m.info.description}
-              src={m.info.icon}
-            />{" "}
+            <Medal medal={m.info} count={m.count} size={MEDIUM} />
             &nbsp;
-            {m.info.name} x {m.count}
+            {m.info.name}
           </div>
         );
       })}
@@ -62,3 +58,12 @@ const MedalHighlights = (props) => {
 };
 
 export default MedalHighlights;
+
+/*
+            <img
+              height="32"
+              width="32"
+              title={m.info.description}
+              alt={m.info.description}
+              src={m.info.icon}
+            />*/

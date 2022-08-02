@@ -7,6 +7,7 @@ import IconManager, {
   PRECISION_ICON,
   SUPER_ICON,
 } from "../../../components/IconManager";
+import Medal, { SMALL } from "../../../components/Medal";
 import WeaponIcon from "../../../components/WeaponIcon";
 import { calculatePercent } from "../../../utils";
 import { humanDuration } from "../../../utils/date";
@@ -298,12 +299,11 @@ const PlayerActivityDetail = (props) => {
                 countLabel = `${medal.count} x `;
               }
               return (
-                <img
+                <Medal
                   key={medal.id}
-                  src={medal.info.icon}
-                  alt={medal.info.description}
-                  title={`${countLabel}${medal.info.name} - ${medal.info.description}`}
-                  height="18"
+                  size={SMALL}
+                  medal={medal.info}
+                  count={medal.count}
                 />
               );
             })}
@@ -354,3 +354,11 @@ const PlayerActivityDetail = (props) => {
 };
 
 export default PlayerActivityDetail;
+
+/*           <img
+                  
+                  src={medal.info.icon}
+                  alt={medal.info.description}
+                  title={`${countLabel}${medal.info.name} - ${medal.info.description}`}
+                  height="18"
+                /> */

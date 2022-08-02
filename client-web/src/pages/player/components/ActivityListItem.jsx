@@ -6,6 +6,7 @@ import Stat from "./Stat";
 import { ReactComponent as JoinedLateIcon } from "../../../components/images/tabler/joined_late_icon.svg";
 import { ReactComponent as JoinedLateLeftEarlyIcon } from "../../../components/images/tabler/joined_late_left_early_icon.svg";
 import { ReactComponent as MercyIcon } from "../../../components/images/tabler/mercy_icon.svg";
+import Medal, { SMALL } from "../../../components/Medal";
 
 const resultWinStyle = {
   backgroundColor: "#3FD445",
@@ -250,14 +251,11 @@ const ActivityListItem = (props) => {
             }
 
             return (
-              <img
+              <Medal
                 key={medal.id}
-                src={medal.info.icon}
-                alt={medal.info.description}
-                title={`${countLabel}${medal.info.name.toUpperCase()} - ${
-                  medal.info.description
-                }`}
-                width="18"
+                medal={medal.info}
+                count={medal.count}
+                size={SMALL}
               />
             );
           })}
@@ -269,3 +267,15 @@ const ActivityListItem = (props) => {
 };
 
 export default ActivityListItem;
+
+/*
+           <img
+                key={medal.id}
+                src={medal.info.icon}
+                alt={medal.info.description}
+                title={`${countLabel}${medal.info.name.toUpperCase()} - ${
+                  medal.info.description
+                }`}
+                width="18"
+              />
+*/
