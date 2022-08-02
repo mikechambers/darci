@@ -14,7 +14,7 @@ const ProgressBar = (props) => {
   };
 
   const barStyle = {
-    width: "75%",
+    //width: "75%",
     backgroundColor: "#FF0000",
   };
 

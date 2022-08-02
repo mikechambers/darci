@@ -146,6 +146,12 @@ const PlayerView = () => {
       "linear-gradient(180deg, var(--background-color) 0%, rgba(54,54,54,1) 100%)",
   };
 
+  const itemDetailsStyle = {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "30px",
+  };
+
   return (
     <div style={pageContainerStyle}>
       <RefreshStatus
@@ -164,17 +170,29 @@ const PlayerView = () => {
       <div style={gappedStyle}>
         <PlayerOverview summary={summary} medals={medals} />
 
-        <PageSectionTitle title="Weapons" description="" />
-        <WeaponsDetail weapons={weapons} />
+        <div style={itemDetailsStyle}>
+          <div>
+            {" "}
+            <PageSectionTitle title="Weapons" description="" />
+            <WeaponsDetail weapons={weapons} />
+          </div>
+          <div>
+            <PageSectionTitle title="Meta Weapons" description="" />
+            <WeaponMetaDetail weapons={meta} />
+          </div>
+          <div>
+            <PageSectionTitle title="Medals" description="" />
+            <MedalsDetail
+              medals={medals}
+              activityCount={summary.activityCount}
+            />
+          </div>
 
-        <PageSectionTitle title="Meta Weapons" description="" />
-        <WeaponMetaDetail weapons={meta} />
-
-        <PageSectionTitle title="Medals" description="" />
-        <MedalsDetail medals={medals} activityCount={summary.activityCount} />
-
-        <PageSectionTitle title="Maps" description="" />
-        <MapsDetail maps={maps} />
+          <div>
+            <PageSectionTitle title="Maps" description="" />
+            <MapsDetail maps={maps} />
+          </div>
+        </div>
 
         <PageSectionTitle title="Games" description="" />
         <ActivityList

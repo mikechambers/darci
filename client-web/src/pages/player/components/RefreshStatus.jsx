@@ -2,6 +2,25 @@ import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { calculatePercent } from "../../../utils";
 
+const barContainerStyle = {
+  width: "50%",
+  backgroundColor: "#FFFFFF22",
+};
+const timeElapsedStyle = {
+  font: "var(--font-progress)",
+};
+
+const elementStyleBase = {
+  //padding: "24px",
+  display: "flex",
+  flexDirection: "column",
+};
+
+const barStyleBase = {
+  backgroundColor: "#FFFFFF88",
+  height: "5px",
+};
+
 const RefreshStatus = (props) => {
   const lastUpdate = props.lastUpdate;
   const refreshInterval = props.refreshInterval;
@@ -51,25 +70,14 @@ const RefreshStatus = (props) => {
     percent = Math.min(percent, 100);
   }
 
-  let elementStyle = {
-    //padding: "24px",
-    display: "flex",
-    flexDirection: "column",
+  const elementStyle = {
+    ...elementStyleBase,
     alignItems: elementAlign,
   };
-  let barContainerStyle = {
-    width: "500px",
-    backgroundColor: "#FFFFFF22",
-  };
 
-  let barStyle = {
+  const barStyle = {
+    ...barStyleBase,
     width: `${percent}%`,
-    backgroundColor: "#FFFFFF88",
-    height: "5px",
-  };
-
-  let timeElapsedStyle = {
-    font: "var(--font-progress)",
   };
 
   return (
