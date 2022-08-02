@@ -187,13 +187,11 @@ const PlayerView = () => {
               activityCount={summary.activityCount}
             />
           </div>
-
-          <div>
-            <PageSectionTitle title="Maps" description="" />
-            <MapsDetail maps={maps} />
-          </div>
         </div>
-
+        <div>
+          <PageSectionTitle title="Maps" description="" />
+          <MapsDetail maps={maps} />
+        </div>
         <PageSectionTitle title="Games" description="" />
         <ActivityList
           activities={activities}
