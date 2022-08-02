@@ -1,7 +1,5 @@
 import React from "react";
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
-import ExportDataButton from "../../../components/ExportDataButton";
-import GraphicListHeader from "../../../components/GraphicListHeader";
 import { humanDuration } from "../../../utils/date";
 import { calculatePercent, calculateAverage } from "../../../utils/index";
 import Stat from "./Stat";
