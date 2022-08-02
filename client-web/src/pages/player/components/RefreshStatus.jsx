@@ -18,7 +18,7 @@ const elementStyleBase = {
 
 const barStyleBase = {
   backgroundColor: "#FFFFFF88",
-  height: "5px",
+  height: "2px",
 };
 
 const RefreshStatus = (props) => {
