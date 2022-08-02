@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import ExportDataButton from "../../../components/ExportDataButton";
-import InfoTip from "../../../components/InfoTip";
 import { FixedSizeList as List } from "react-window";
 import WeaponListItem from "./WeaponListItem";
 
