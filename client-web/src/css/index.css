@@ -32,8 +32,8 @@
   --font-family:'Roboto', sans-serif;
   --font: var(--regular) 16px 'Roboto', sans-serif;
 
-  --font-main-nav:16px 'Roboto', sans-serif;
-  --font-page-nav:12px 'Roboto', sans-serif;
+  --font-main-nav: var(--regular) 16px 'Roboto', sans-serif;
+  --font-page-nav:var(--regular) 14px 'Roboto', sans-serif;
 
   --font-nav: var(--regular) 18px 'Roboto', sans-serif;
 
@@ -117,12 +117,6 @@ html {
 #root {
   /*background-color: #58ccff;*/
   margin:0px 0px;
-}
-
-#nav_bar {
-  /*background-color: #ffee00;*/
-  height: 65px;
-  font:var(--font-nav);
 }
 
 #current_view {
@@ -480,6 +474,9 @@ select {
 
 .nav.page {
   font:var(--font-page-nav);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity .5s ease-in-out;
 }
 
 .nav:hover {

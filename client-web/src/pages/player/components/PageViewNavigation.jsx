@@ -52,7 +52,7 @@ const PageViewNavigation = (props) => {
         {links.map((item, index) => {
           return (
             <div
-              className="nav"
+              className="nav page"
               id={`page_view_nav_${index}`}
               key={item.value}
               onClick={() => onClick(index)}

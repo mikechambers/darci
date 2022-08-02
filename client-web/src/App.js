@@ -100,17 +100,3 @@ const App = (props) => {
 };
 
 export default App;
-
-/*
-            <nav id="nav_bar" className="NavBar" style={style}>
-              <div>
-                <Link to="/">darci</Link> | <Link to="/about">about</Link>
-              </div>
-              <PlayerViewConfig
-                mode={mode}
-                moment={moment}
-                classSelection={classSelection}
-                player={player}
-              />
-            </nav>
-            */
