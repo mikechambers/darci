@@ -161,7 +161,7 @@ const ActivityListItem = (props) => {
   let assistsTitle = assistsHighlight ? title : "";
 
   let defeatsHighlight =
-    activity.stats.opponenentsDefeated === summary.highestOpponentsDefeated;
+    activity.stats.opponentsDefeated === summary.highestOpponentsDefeated;
   let defeatsTitle = defeatsHighlight ? title : "";
 
   let deathsHighlight = activity.stats.deaths === summary.highestDeaths;
@@ -245,11 +245,6 @@ const ActivityListItem = (props) => {
         </div>
         <div style={medalsStyle}>
           {goldMedals.map((medal, index) => {
-            let countLabel = "";
-            if (medal.count > 2) {
-              countLabel = `${medal.count} x `;
-            }
-
             return (
               <Medal
                 key={medal.id}
