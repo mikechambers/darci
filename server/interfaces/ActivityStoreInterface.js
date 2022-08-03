@@ -593,9 +593,43 @@ class ActivityStoreInterface {
       activityRowId: row.activity_row_id,
     });
 
+    const ws = `
+    SELECT
+      weapon_result.reference_id as id,
+      weapon_result.kills as kills,
+      weapon_result.precision_kills as precision,
+      weapon_result.character_activity_stats as character_activity_stats_index
+    FROM
+      weapon_result
+    INNER JOIN
+      character_activity_stats on character_activity_stats.id = weapon_result.character_activity_stats,
+      activity ON character_activity_stats.activity = activity.id
+    WHERE
+      activity.activity_id = (${row.activity_id})`;
+
+    const weapons = this.#db.prepare(ws).all();
+
+    const m = `
+      SELECT
+        medal_result.reference_id as id,
+        count,
+        character_activity_stats as character_activity_stats_index
+      FROM
+        medal_result
+      INNER JOIN
+        character_activity_stats on character_activity_stats.id = medal_result.character_activity_stats,
+        activity ON character_activity_stats.activity = activity.id
+      WHERE
+      activity.activity_id = (${row.activity_id})
+      AND
+        medal_result.reference_id
+          NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')`;
+
+    const medals = this.#db.prepare(m).all();
+
     for (let cRow of charStatsRows) {
       //todo : need to pass in weapons and medals
-      let stats = this.parseCrucibleStats(cRow);
+      let stats = this.parseCrucibleStats(cRow, weapons, medals);
       let player = this.parsePlayer(cRow);
 
       let teamIndex = hasTeams ? stats.team : NO_TEAMS_INDEX;
@@ -613,7 +647,7 @@ class ActivityStoreInterface {
       });
     }
 
-    let teams = Array.from(gm.values());
+    let teams = Array.from(teamsMap.values());
 
     return { activity: activity, teams: teams };
   }

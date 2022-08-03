@@ -47,9 +47,16 @@ app.get("/", (req, res, next) => {
 */
 
 app.get("/api/activity/:activityId/", (req, res, next) => {
+  let startTime = new Date().getTime();
   let activityId = req.params.activityId;
 
   let out = activityStore.retrieveActivity(activityId);
+
+  const query = {
+    activityId: activityId,
+    executionTime: new Date().getTime() - startTime,
+  };
+  out.query = query;
 
   sendJsonResponse(res, out);
 });
