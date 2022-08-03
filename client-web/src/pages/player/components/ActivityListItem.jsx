@@ -2,10 +2,12 @@ import { useState } from "react";
 import { CompletionReason, Standing } from "shared";
 import PlayerActivityDetail from "./PlayerAcitivtyDetail";
 import Stat from "./Stat";
+import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as JoinedLateIcon } from "../../../components/images/tabler/joined_late_icon.svg";
 import { ReactComponent as JoinedLateLeftEarlyIcon } from "../../../components/images/tabler/joined_late_left_early_icon.svg";
 import { ReactComponent as MercyIcon } from "../../../components/images/tabler/mercy_icon.svg";
+import { ReactComponent as ChevronRight } from "../../../components/images/tabler/chevron-right.svg";
 import Medal, { SMALL } from "../../../components/Medal";
 
 const resultWinStyle = {
@@ -90,10 +92,35 @@ const medalsStyle = {
   columnGap: "4px",
 };
 
+const gameDetailNavStyle = {
+  backgroundColor: "#FFFFFFee",
+  width: "10px",
+  borderRadius: "0px 4px 4px 0px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+
+const chevronIconStyle = {
+  color: "#000000",
+  width: 16,
+  height: 16,
+};
+
 const rotateStyle = { transform: "rotate(180deg)" };
 const ActivityListItem = (props) => {
   let activity = props.activity;
   let summary = props.summary;
+
+  let navigate = useNavigate();
+
+  const onGameDetailNavClick = (e, activityId) => {
+    e.stopPropagation();
+    //console.log(activityId, e);
+    ///activity/11244274172
+    navigate(`/activity/${activityId}`);
+    //console.log("click", e);
+  };
 
   let resultStyle =
     activity.stats.standing === Standing.VICTORY
@@ -181,7 +208,7 @@ const ActivityListItem = (props) => {
     props.expanded === undefined ? false : props.expanded
   );
 
-  const onItemClick = function () {
+  const onItemClick = function (e) {
     setIsExpanded(!isExpanded);
   };
 
@@ -254,6 +281,12 @@ const ActivityListItem = (props) => {
               />
             );
           })}
+        </div>
+        <div
+          style={gameDetailNavStyle}
+          onClick={(e) => onGameDetailNavClick(e, activity.activity.activityId)}
+        >
+          <ChevronRight style={chevronIconStyle} />
         </div>
       </div>
       {detailsDiv}

@@ -74,6 +74,15 @@ class ActivityStoreInterface {
             LIMIT 50`
     );
 
+    this.#select_teams = this.#db.prepare(`
+            SELECT
+                *
+            FROM
+                team_result
+            WHERE
+                activity = @activityRowId
+        `);
+
     this.#select_sync_members = this.#db.prepare(
       'SELECT "member_id", "platform_id", "display_name", "bungie_display_name", "bungie_display_name_code" from sync join member on sync.member = member.id'
     );

@@ -29,9 +29,10 @@ ReactDOM.render(
               </Route>
             </Route>
           </Route>
-          <Route path="activity/:activityId/" element={<ActivityView />}>
-            <Route path=":memberId" element={<ActivityView />} />
-          </Route>
+          <Route
+            path="activity/:activityId/"
+            element={<ActivityView />}
+          ></Route>
           <Route path="*" element={<NoMatchView />} />
         </Route>
       </Routes>
