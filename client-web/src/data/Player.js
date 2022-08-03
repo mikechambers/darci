@@ -1,4 +1,4 @@
-import { CharacterClass } from "shared";
+import Character from "./Character";
 
 class Player {
   memberId;
@@ -23,7 +23,7 @@ class Player {
   static fromApi(data, manifest) {
     let chars = [];
     for (const c of data.characters) {
-      chars.push(parseCharacterFromServer(c, manifest));
+      chars.push(Character.fromApi(c, manifest));
     }
 
     let out = new Player({
@@ -75,22 +75,3 @@ class Player {
 }
 
 export default Player;
-
-const parseCharacterFromServer = (data, manifest) => {
-  let emblem = {
-    id: data.emblemHash,
-  };
-
-  if (manifest) {
-    emblem = manifest.getEmblemDefinition(data.emblemHash);
-  }
-
-  let character = {
-    characterId: data.characterId,
-    classType: CharacterClass.fromId(data.classType),
-    lightLevel: data.lightLevel,
-    emblem: emblem,
-  };
-
-  return character;
-};

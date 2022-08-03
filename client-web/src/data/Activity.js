@@ -33,31 +33,33 @@ const TEAM_NAMES = [
 ];
 
 export default class Activity {
-  #data;
-  #manifest;
+  teams;
+  details;
+  weapons;
+
+  //team weapons
+  //team summary
+
+  //highest over stats
 
   constructor(data, manifest) {
-    this.#data = data;
-    this.#manifest = manifest;
-    this.#parse();
-  }
+    let activity = data.activity;
 
-  #parse() {
-    let activity = this.#data.activity;
-
-    let map = this.#manifest.getActivityDefinition(activity.referenceId);
+    let map = manifest.getActivityDefinition(activity.referenceId);
     activity.map = map;
 
-    let modeInfo = this.#manifest.getModeInfo(activity.directorActivityHash);
+    let modeInfo = manifest.getModeInfo(activity.directorActivityHash);
     activity.modeInfo = modeInfo;
 
     let mode = Mode.fromId(activity.mode);
     activity.mode = mode;
 
-    this.teams.forEach((team, index) => {
+    let teams = data.teams;
+
+    teams.forEach((team, index) => {
       team.name = TEAM_NAMES[index];
       for (const p of team.players) {
-        p.player = Player.fromApi(p.player, this.#manifest);
+        p.player = Player.fromApi(p.player, manifest);
 
         //p.stats.standing = Standing.fromId(p.stats.standing);
         //p.stats.completionReason = Standing.fromId(p.stats.completionReason);
@@ -66,6 +68,10 @@ export default class Activity {
         //TODO: get emblem from manifest and set here
       }
     });
+
+    this.teams = teams;
+    activity.period = new Date(activity.period);
+    this.details = activity;
   }
 
   getCompletionReason(memberId = undefined) {
@@ -103,13 +109,5 @@ export default class Activity {
     }
 
     return Standing.UNKNOWN;
-  }
-
-  get teams() {
-    return this.#data.teams;
-  }
-
-  get overview() {
-    return this.#data.activity;
   }
 }

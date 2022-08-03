@@ -17,7 +17,7 @@ const elementStyle = {
   borderRadius: "var(--border-radius)",
   rowGap: "36px",
   width: "min-content",
-  padding: "24px",
+  padding: "var(--content-padding)",
 };
 
 const PlayerOverview = (props) => {

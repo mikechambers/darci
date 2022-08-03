@@ -9,7 +9,7 @@ class Manifest {
   constructor(manifestData) {
     this.#manifestData = manifestData;
 
-    for (const [key, value] of Object.entries(
+    for (const value of Object.values(
       this.#manifestData.data.trialsPassageItemDefinitions
     )) {
       if (value.id) {
@@ -120,12 +120,13 @@ class Manifest {
       return out;
     }
 
-    Object.assign(out, e);
-    out.icon = createResourceUrl(e.icon);
-    out.secondaryIcon = createResourceUrl(e.secondaryIcon);
-    out.secondaryOverlay = createResourceUrl(e.secondaryOverlay);
-    out.secondarySpecial = createResourceUrl(e.secondarySpecial);
-
+    out = {
+      ...e,
+      icon: createResourceUrl(e.icon),
+      secondaryIcon: createResourceUrl(e.secondaryIcon),
+      secondaryOverlay: createResourceUrl(e.secondaryOverlay),
+      secondarySpecial: createResourceUrl(e.secondarySpecial),
+    };
     return out;
   }
 

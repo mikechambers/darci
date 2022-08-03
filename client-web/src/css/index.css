@@ -28,6 +28,7 @@
   --border-radius: 4px;
 
   --page-container-padding:  45px;
+  --content-padding:20px;
 
   --font-family:'Roboto', sans-serif;
   --font: var(--regular) 16px 'Roboto', sans-serif;
@@ -39,6 +40,11 @@
 
   --font-controls: var(--light) 14px 'Roboto', sans-serif;
 
+  --font-activity-map-name:var(--light) 36px 'Roboto', sans-serif;
+  --font-activity-mode-name:var(--bold) 36px 'Roboto', sans-serif;
+
+  --font-activity-period:var(--light) 14px 'Roboto', sans-serif;
+
   --font-page-title: var(--medium) 32px 'Roboto', sans-serif;
   --font-page-subtitle: var(--light) 20px 'Roboto', sans-serif;
   --font-section-header: var(--medium) 18px 'Roboto', sans-serif;
@@ -48,7 +54,6 @@
   --font-data : var(--font);
 
   --font-small:var(--regular) 12px 'Roboto', sans-serif;
-
 
   --font-progress:var(--light) 16px 'Roboto', sans-serif;
   --font-description:var(--light) 14px 'Roboto', sans-serif;
