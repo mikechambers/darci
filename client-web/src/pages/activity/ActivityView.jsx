@@ -4,6 +4,7 @@ import { useFetchActivity } from "../../hooks/remote";
 import PageSectionTitle from "../player/components/PageSectionTitle";
 import PageViewNavigation from "../player/components/PageViewNavigation";
 import ActivityDetails from "./components/ActivityDetails";
+import ActivityLeaderBoard from "./components/ActivityLeaderBoard";
 import LeaderList from "./components/LeaderList";
 
 const pageContainerStyle = {
@@ -70,35 +71,6 @@ const ActivityView = (props) => {
   const details = activity.details;
   const teams = activity.teams;
 
-  //todo: need to test this with rumble
-  let players = [];
-  for (const t of teams) {
-    for (const p of t.players) {
-      players.push({
-        player: p,
-        teamName: t.name,
-      });
-    }
-  }
-
-  console.log(players);
-
-  players.sort(
-    (a, b) =>
-      b.player.stats.opponentsDefeated - a.player.stats.opponentsDefeated
-  );
-
-  let opponentsDefeatedLeaders = players.splice(0, 3);
-  opponentsDefeatedLeaders = opponentsDefeatedLeaders.map((data) => {
-    return {
-      player: data.player.player,
-      stat: data.player.stats.opponentsDefeated,
-      teamName: data.teamName,
-    };
-  });
-
-  console.log(opponentsDefeatedLeaders);
-
   return (
     <div style={pageContainerStyle}>
       <div style={gappedStyle}>
@@ -111,10 +83,7 @@ const ActivityView = (props) => {
             title="Leaderboard"
             description="Top players in activity"
           />
-          <LeaderList
-            title="Opponents Defeated"
-            leaderData={opponentsDefeatedLeaders}
-          />
+          <ActivityLeaderBoard teams={teams} />
         </div>
 
         <div>Activity Id : {activityId}</div>
