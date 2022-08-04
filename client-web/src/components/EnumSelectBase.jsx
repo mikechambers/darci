@@ -27,7 +27,8 @@ const EnumSelectBase = (props) => {
   let defaultValue = "";
   if (options && options.length && props.selected) {
     const found = options.find((option) => {
-      return option.data.memberId === selected.memberId;
+      //note, label may be truncated in options
+      return option.value === selected.label;
     });
 
     defaultValue = found ? found.value : options[0].value;
