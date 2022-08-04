@@ -1,4 +1,4 @@
-import { DateTime } from "luxon";
+import { DateTime, Interval } from "luxon";
 import { useParams } from "react-router-dom";
 import { useFetchActivity } from "../../hooks/remote";
 import { humanDuration } from "../../utils/date";
@@ -143,7 +143,17 @@ const ActivityView = (props) => {
   );
 
   //todo: change based on time
-  let period = DateTime.fromJSDate(details.period).toFormat("ff");
+  let period = DateTime.fromJSDate(details.period);
+  let now = DateTime.now();
+  let diff = Interval.fromDateTimes(period, now).length("days");
+  let periodHuman;
+  if (diff < 2) {
+    periodHuman = period.toRelativeCalendar();
+  } else if (diff < 7) {
+    periodHuman = period.toFormat("EEEE, LLLL d");
+  } else {
+    periodHuman = period.toFormat("DDD");
+  }
 
   let teamScoresStyle = {
     display: "flex",
@@ -225,7 +235,7 @@ const ActivityView = (props) => {
               </div>
             </div>
             <div style={matchTimeStyle}>
-              <div style={periodStyle}>{period}</div>
+              <div style={periodStyle}>{periodHuman}</div>
             </div>
           </div>
         </div>
