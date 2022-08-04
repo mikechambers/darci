@@ -17,7 +17,7 @@ const LeaderList = (props) => {
   const itemWrapperStyle = {
     width: 200,
     display: "grid",
-    gridTemplateColumns: "3px 155px 42px",
+    gridTemplateColumns: "3px 148px 42px",
     columnGap: 4,
     rowGap: 2,
     alignItems: "center",
@@ -30,7 +30,7 @@ const LeaderList = (props) => {
 
   const titleStyle = {
     font: "var(--font-subsection-header)",
-    paddingBottom: 8,
+    borderBottom: "1px #ffffff66 solid",
   };
 
   const nameStyle = {
@@ -43,8 +43,14 @@ const LeaderList = (props) => {
   const nameCodeStyle = {
     font: "var(--font-small-name-code)",
   };
+
+  const elementStyle = {
+    display: "flex",
+    flexDirection: "column",
+    rowGap: 4,
+  };
   return (
-    <div>
+    <div style={elementStyle}>
       <div style={titleStyle}>{title}</div>
       <div style={itemWrapperStyle}>
         {leaderData.map((item) => {

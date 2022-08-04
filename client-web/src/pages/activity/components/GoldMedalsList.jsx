@@ -32,6 +32,7 @@ const headerStyle = {
   columnGap: 4,
   rowGap: 2,
   alignItems: "center",
+  borderBottom: "1px #ffffff66 solid",
 };
 
 const nameStyle = { font: "var(--font-title-name)" };

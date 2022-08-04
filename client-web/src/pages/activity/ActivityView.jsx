@@ -6,7 +6,6 @@ import PageViewNavigation from "../player/components/PageViewNavigation";
 import ActivityDetails from "./components/ActivityDetails";
 import ActivityLeaderBoard from "./components/ActivityLeaderBoard";
 import GoldMedalsList from "./components/GoldMedalsList";
-import LeaderList from "./components/LeaderList";
 
 const pageContainerStyle = {
   minWidth: "720px",
