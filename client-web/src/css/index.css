@@ -44,6 +44,8 @@
   --font-activity-mode-name:var(--bold) 36px 'Roboto', sans-serif;
 
   --font-activity-period:var(--light) 14px 'Roboto', sans-serif;
+  --font-activity-score-box:var(--bold) 22px 'Roboto', sans-serif;
+  --font-activity-completion-reason:var(--medium) 16px 'Roboto', sans-serif;
 
   --font-page-title: var(--medium) 32px 'Roboto', sans-serif;
   --font-page-subtitle: var(--light) 20px 'Roboto', sans-serif;
