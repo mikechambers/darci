@@ -1,5 +1,6 @@
 import { DateTime, Interval } from "luxon";
 import { humanDuration } from "../../../utils/date";
+import { capitalize } from "../../../utils/string";
 
 const scoreStyle = {
   padding: "var(--content-padding)",
@@ -134,7 +135,9 @@ const ActivityDetails = (props) => {
   let diff = Interval.fromDateTimes(period, now).length("days");
   let periodHuman;
   if (diff < 2) {
-    periodHuman = `${period.toRelativeCalendar()} at ${period.toFormat("t")}`;
+    periodHuman = `${capitalize(
+      period.toRelativeCalendar()
+    )} at ${period.toFormat("t")}`;
   } else if (diff < 7) {
     periodHuman = period.toFormat("EEEE, LLLL d 'at' t");
   } else if (period.get("year") !== now.get("year")) {
