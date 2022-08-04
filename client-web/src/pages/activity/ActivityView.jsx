@@ -86,16 +86,35 @@ const ActivityView = (props) => {
           <ActivityLeaderBoard teams={teams} />
         </div>
 
-        <div>Activity Id : {activityId}</div>
         <div>
-          <a href={`https://destinytracker.com/destiny-2/pgcr/${activityId}`}>
-            Destiny Tracker
-          </a>
+          <PageSectionTitle
+            id="medals"
+            title="Gold Medals"
+            description="Gold medals"
+          />
         </div>
+
         <div>
-          <a href={`https://www.bungie.net/en/PGCR/${params.activityId}`}>
-            Bungie PGCR
-          </a>
+          <PageSectionTitle
+            id="links"
+            title="Links"
+            description="Links to game details on other sites."
+          />
+          <div>
+            <a href={`https://destinytracker.com/destiny-2/pgcr/${activityId}`}>
+              Destiny Tracker
+            </a>
+          </div>
+          <div>
+            <a href={`https://www.bungie.net/en/PGCR/${params.activityId}`}>
+              Bungie PGCR
+            </a>
+          </div>
+          <div>
+            <a href={`https://crucible.report/pgcr/${params.activityId}`}>
+              Trials Report
+            </a>
+          </div>
         </div>
       </div>
     </div>

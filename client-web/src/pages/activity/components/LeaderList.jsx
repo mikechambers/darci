@@ -3,7 +3,8 @@ import { ItemSubType } from "shared";
 
 const teamStyle = {
   width: 3,
-  margin: 2,
+  height: 14,
+  //margin: 2,
 };
 
 const LeaderList = (props) => {
@@ -14,8 +15,12 @@ const LeaderList = (props) => {
     width: 200,
   };
   const itemWrapperStyle = {
+    width: 200,
     display: "grid",
-    gridTemplateColumns: "10px 160px 30px",
+    gridTemplateColumns: "3px 1fr 1fr",
+    columnGap: 4,
+    rowGap: 2,
+    alignItems: "center",
   };
 
   const valueStyle = {
@@ -30,6 +35,9 @@ const LeaderList = (props) => {
 
   const nameStyle = {
     font: "var(--font-small-name)",
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
   };
 
   const nameCodeStyle = {
