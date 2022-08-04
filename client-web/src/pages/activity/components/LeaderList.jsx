@@ -17,7 +17,7 @@ const LeaderList = (props) => {
   const itemWrapperStyle = {
     width: 200,
     display: "grid",
-    gridTemplateColumns: "3px 1fr 1fr",
+    gridTemplateColumns: "3px 155px 42px",
     columnGap: 4,
     rowGap: 2,
     alignItems: "center",
