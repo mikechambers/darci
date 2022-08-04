@@ -175,8 +175,8 @@ const ActivityLeaderBoard = (props) => {
       </div>
       <div style={leaderRowStyle}>
         <LeaderList title="Assists" leaderData={assistsLeaders} />
-        <LeaderList title="Deaths" leaderData={deathsLeaders} />
         <LeaderList title="Precision Kills" leaderData={precisionLeaders} />
+        <LeaderList title="Deaths" leaderData={deathsLeaders} />
       </div>
       <div style={leaderRowStyle}>
         <LeaderList title="Score" leaderData={scoreLeaders} />
