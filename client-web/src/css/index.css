@@ -58,6 +58,10 @@
   --font-small:var(--regular) 12px 'Roboto', sans-serif;
 
   --font-progress:var(--light) 16px 'Roboto', sans-serif;
+  --font-small-name:var(--light) 16px 'Roboto', sans-serif;
+  --font-small-name-code:var(--light) 12px 'Roboto', sans-serif;
+
+
   --font-description:var(--light) 14px 'Roboto', sans-serif;
   --font-data-small:var(--light) 12px 'Roboto', sans-serif;
   --font-label-small:var(--light) 10px 'Roboto', sans-serif;
@@ -517,4 +521,12 @@ select {
 
 .page_nav_icon:active {
   translate: 0px 1px;
+}
+
+.alpha {
+  background-color: #567CC6ee;
+}
+
+.bravo {
+  background-color:#9D3627ee;
 }
