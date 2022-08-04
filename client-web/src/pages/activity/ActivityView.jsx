@@ -68,6 +68,10 @@ const ActivityView = (props) => {
   const details = activity.details;
   const teams = activity.teams;
 
+  //todo: need to test this with rumble
+  let alphaTeam = teams[0];
+  let betaTeam = teams[1];
+
   let summaryStyle = {
     width: 700,
     height: 400,
@@ -136,6 +140,7 @@ const ActivityView = (props) => {
 
   let periodStyle = {
     font: "var(--font-activity-period)",
+    textShadow: "var(--text-shadow)",
   };
 
   const activityDuration = humanDuration(
@@ -148,11 +153,13 @@ const ActivityView = (props) => {
   let diff = Interval.fromDateTimes(period, now).length("days");
   let periodHuman;
   if (diff < 2) {
-    periodHuman = period.toRelativeCalendar();
+    periodHuman = `${period.toRelativeCalendar()} at ${period.toFormat("t")}`;
   } else if (diff < 7) {
-    periodHuman = period.toFormat("EEEE, LLLL d");
+    periodHuman = period.toFormat("EEEE, LLLL d 'at' t");
+  } else if (period.get("year") !== now.get("year")) {
+    periodHuman = period.toFormat("LLLL d, kkkk 'at' t");
   } else {
-    periodHuman = period.toFormat("DDD");
+    periodHuman = period.toFormat("LLLL d 'at' t");
   }
 
   let teamScoresStyle = {
@@ -214,9 +221,9 @@ const ActivityView = (props) => {
               {details.completionReason.label}
             </div>
             <div style={teamScoresStyle}>
-              <div style={alphaScoreBoxStyle}>150</div>
+              <div style={alphaScoreBoxStyle}>{alphaTeam.score}</div>
               <div style={scoreDivider}></div>
-              <div style={betaScoreBoxStyle}>92</div>
+              <div style={betaScoreBoxStyle}>{betaTeam.score}</div>
             </div>
             <div>{activityDuration}</div>
           </div>

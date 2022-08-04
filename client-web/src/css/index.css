@@ -221,12 +221,12 @@ h2, .section_header {
 
 .data {
   font:var(--font-data);
-  text-shadow: var(--text-shadow)
+  text-shadow: var(--text-shadow);
 }
 
 .data_small {
   font:var(--font-data-small);
-  text-shadow: var(--text-shadow)
+  text-shadow: var(--text-shadow);
 }
 
 .label_small {
@@ -416,6 +416,7 @@ select {
   background-color: #f1f3f5;
   opacity: 0.8;
 }
+
 
 .form_label {
   display: inline-block;
