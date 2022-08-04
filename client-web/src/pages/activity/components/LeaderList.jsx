@@ -53,8 +53,9 @@ const LeaderList = (props) => {
               <div
                 className={item.teamName.toLowerCase()}
                 style={teamStyle}
+                title={`${item.teamName} team`}
               ></div>
-              <div style={nameStyle}>
+              <div style={nameStyle} title={item.player.getFullName()}>
                 {item.player.bungieDisplayName}
                 <span className="bungie_name_code" style={nameCodeStyle}>
                   #{item.player.bungieDisplayNameCode}
