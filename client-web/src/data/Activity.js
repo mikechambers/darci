@@ -70,31 +70,35 @@ export default class Activity {
     });
 
     this.teams = teams;
+
+    //let completionReason = teams[0].players[0].stats.completionReason;
+    //let activityDuration = teams[0].players[0].stats.activityDurationSeconds;
+    activity.completionReason = this.getActivityStat("completionReason");
+
+    if (!activity.completionReason) {
+      activity.completionReason = CompletionReason.UNKNOWN;
+    }
+
+    activity.activityDurationSeconds = this.getActivityStat(
+      "activityDurationSeconds"
+    );
+
     activity.period = new Date(activity.period);
     this.details = activity;
   }
 
-  getCompletionReason(memberId = undefined) {
+  getActivityStat(stat) {
     let teams = this.teams;
 
     for (const team of teams) {
       for (const player of team.players) {
-        //if memberId is not specified, and the completion reason is known
-        //return the completion reason
-        if (
-          !memberId &&
-          player.stats.completionReason !== CompletionReason.UNKNOWN
-        ) {
-          return player.stats.completionReason;
-        }
-
-        if (player.player.memberId === memberId) {
-          return player.stats.standing;
+        if (player.stats[stat] !== undefined) {
+          return player.stats[stat];
         }
       }
     }
 
-    return CompletionReason.UNKNOWN;
+    return undefined;
   }
 
   getStandingForMember(memberId) {

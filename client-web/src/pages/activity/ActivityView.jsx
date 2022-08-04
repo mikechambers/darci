@@ -145,14 +145,11 @@ const ActivityView = (props) => {
     font: "var(--font-activity-period)",
   };
 
-  //todo: need to test this and move to Activity
-  let activityDuration = teams[0].players[0].stats.activityDurationSeconds;
-  activityDuration = humanDuration(activityDuration * 1000);
+  const activityDuration = humanDuration(
+    details.activityDurationSeconds * 1000
+  );
 
-  let completionReason = teams[0].players[0].stats.completionReason;
-
-  //let period = DateTime.fromJSDate(details.period).toRelative();
-
+  //todo: change based on time
   let period = DateTime.fromJSDate(details.period).toFormat("ff");
 
   let teamScoresStyle = {
@@ -192,14 +189,15 @@ const ActivityView = (props) => {
     textTransform: "uppercase",
   };
 
-  console.log(activity);
   return (
     <div style={pageContainerStyle}>
       <div style={gappedStyle}>
         <PageViewNavigation links={pageLinks} />
         <div style={summaryStyle}>
           <div style={scoreStyle}>
-            <div style={completionReasonStyle}>{completionReason.label}</div>
+            <div style={completionReasonStyle}>
+              {details.completionReason.label}
+            </div>
             <div style={teamScoresStyle}>
               <div style={alphaScoreBoxStyle}>150</div>
               <div style={scoreDivider}></div>
