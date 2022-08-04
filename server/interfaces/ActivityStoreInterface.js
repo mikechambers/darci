@@ -133,43 +133,48 @@ class ActivityStoreInterface {
     this.#select_meta_weapons_summary = this.#db.prepare(`SELECT
     reference_id as id,
     count(*) as count,
-    sum(precision_kills) as precision,
-    sum(kills) as kills
+    sum(weapon_result.precision_kills) as precision,
+    sum(weapon_result.kills) as kills
     FROM
             weapon_result
+	INNER JOIN
+	character_activity_stats on weapon_result.character_activity_stats = character_activity_stats.id
     WHERE
-    character_activity_stats IN (
-    
-    SELECT
-        id
-    FROM
-    character_activity_stats
-    where
         activity in (
           SELECT
             activity.id
           FROM
-          character_activity_stats
+            character_activity_stats
           INNER JOIN
-          activity ON character_activity_stats.activity = activity.id,
-          character on character_activity_stats.character = character.id,
-          member on member.id = character.member
+            activity ON character_activity_stats.activity = activity.id,
+            character on character_activity_stats.character = character.id,
+            member on member.id = character.member
           WHERE
-          member.id = (select id from member where member_id = @memberId) AND
-          (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
-          period > @startDate AND
-          period < @endDate AND
-          exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
-          not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
+            member.id = (select id from member where member_id = @memberId) AND
+            (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+            period > @startDate AND
+            period < @endDate AND
+            exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
+            not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
         )
-        AND
-        character_activity_stats.fireteam_id not in (select character_activity_stats.fireteam_id where character_activity_stats.character in ( 
-      select character.id from character
-    inner JOIN
-    member on character.member = member.id
-    where member_id = @memberId
-      ))
-    )
+    AND
+	fireteam_id not in (
+    SELECT
+    fireteam_id
+  FROM
+    character_activity_stats
+  INNER JOIN
+    activity ON character_activity_stats.activity = activity.id,
+    character on character_activity_stats.character = character.id,
+    member on member.id = character.member
+  WHERE
+    member.id = (select id from member where member_id = @memberId) AND
+    (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+    period > @startDate AND
+    period < @endDate AND
+    exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
+    not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
+	) 
     GROUP BY reference_id`);
 
     this.#select_map_summary = this.#db.prepare(`SELECT
