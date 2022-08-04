@@ -26,12 +26,13 @@ const EnumSelectBase = (props) => {
 
   let defaultValue = "";
   if (options && options.length && props.selected) {
-    const found = options.find((option) => option.label === selected.label);
+    const found = options.find((option) => {
+      return option.data.memberId === selected.memberId;
+    });
 
-    defaultValue = found ? found.label : options[0].label;
+    defaultValue = found ? found.value : options[0].value;
   }
 
-  //todo: can add an icon
   return (
     <div>
       <label className="form_label">{label}</label>
