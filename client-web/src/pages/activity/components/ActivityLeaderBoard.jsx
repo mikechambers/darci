@@ -14,18 +14,7 @@ const leaderRowStyle = {
 };
 
 const ActivityLeaderBoard = (props) => {
-  const teams = props.teams;
-
-  //todo: need to test this with rumble
-  let players = [];
-  for (const t of teams) {
-    for (const p of t.players) {
-      players.push({
-        player: p,
-        teamName: t.name,
-      });
-    }
-  }
+  const players = props.players;
 
   players.sort(
     (a, b) =>
@@ -161,6 +150,12 @@ const ActivityLeaderBoard = (props) => {
       teamName: data.teamName,
     };
   });
+
+  players.sort(
+    (a, b) =>
+      b.player.stats.extended.abilityKills -
+      a.player.stats.extended.abilityKills
+  );
 
   return (
     <div style={elementWrapperStyle}>

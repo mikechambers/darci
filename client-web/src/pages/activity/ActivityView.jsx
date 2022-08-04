@@ -5,6 +5,7 @@ import PageSectionTitle from "../player/components/PageSectionTitle";
 import PageViewNavigation from "../player/components/PageViewNavigation";
 import ActivityDetails from "./components/ActivityDetails";
 import ActivityLeaderBoard from "./components/ActivityLeaderBoard";
+import GoldMedalsList from "./components/GoldMedalsList";
 import LeaderList from "./components/LeaderList";
 
 const pageContainerStyle = {
@@ -71,6 +72,17 @@ const ActivityView = (props) => {
   const details = activity.details;
   const teams = activity.teams;
 
+  //todo: need to test this with rumble
+  let players = [];
+  for (const t of teams) {
+    for (const p of t.players) {
+      players.push({
+        player: p,
+        teamName: t.name,
+      });
+    }
+  }
+
   return (
     <div style={pageContainerStyle}>
       <div style={gappedStyle}>
@@ -83,7 +95,7 @@ const ActivityView = (props) => {
             title="Leaderboard"
             description="Top players in activity"
           />
-          <ActivityLeaderBoard teams={teams} />
+          <ActivityLeaderBoard players={players} />
         </div>
 
         <div>
@@ -92,6 +104,7 @@ const ActivityView = (props) => {
             title="Gold Medals"
             description="Gold medals"
           />
+          <GoldMedalsList players={players} />
         </div>
 
         <div>

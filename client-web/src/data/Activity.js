@@ -1,4 +1,5 @@
 import { CompletionReason, Standing, Mode } from "shared";
+import { parseMedalsFromServer, parseWeaponsFromServer } from "../utils/data";
 import Player from "./Player";
 
 const { calculateStats } = require("../utils/activity");
@@ -66,6 +67,15 @@ export default class Activity {
 
         p.stats = calculateStats(p.stats, mode);
         //TODO: get emblem from manifest and set here
+        p.stats.extended.medals = parseMedalsFromServer(
+          p.stats.extended.medals,
+          manifest
+        );
+
+        p.stats.extended.weapons = parseWeaponsFromServer(
+          p.stats.extended.weapons,
+          manifest
+        );
       }
     });
 

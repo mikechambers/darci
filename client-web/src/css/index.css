@@ -61,6 +61,9 @@
   --font-small-name:var(--light) 16px 'Roboto', sans-serif;
   --font-small-name-code:var(--light) 12px 'Roboto', sans-serif;
 
+  --font-title-name:var(--font-subsection-header);
+  --font-title-name-code:var(--light) 14px 'Roboto', sans-serif;
+
 
   --font-description:var(--light) 14px 'Roboto', sans-serif;
   --font-data-small:var(--light) 12px 'Roboto', sans-serif;
