@@ -1,6 +1,18 @@
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 import LeaderList from "./LeaderList";
 
+const elementWrapperStyle = {
+  display: "flex",
+  flexDirection: "column",
+  gap: 24,
+};
+
+const leaderRowStyle = {
+  display: "flex",
+  flexDirection: "columns",
+  gap: 36,
+};
+
 const ActivityLeaderBoard = (props) => {
   const teams = props.teams;
 
@@ -110,17 +122,45 @@ const ActivityLeaderBoard = (props) => {
     };
   });
 
-  const elementWrapperStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: 24,
-  };
+  players.sort((a, b) => b.player.stats.score - a.player.stats.score);
 
-  const leaderRowStyle = {
-    display: "flex",
-    flexDirection: "columns",
-    gap: 24,
-  };
+  let scoreLeaders = players.slice(0, 3);
+  scoreLeaders = scoreLeaders.map((data) => {
+    return {
+      player: data.player.player,
+      stat: data.player.stats.score,
+      teamName: data.teamName,
+    };
+  });
+
+  players.sort(
+    (a, b) =>
+      b.player.stats.extended.precisionKills -
+      a.player.stats.extended.precisionKills
+  );
+
+  let precisionLeaders = players.slice(0, 3);
+  precisionLeaders = precisionLeaders.map((data) => {
+    return {
+      player: data.player.player,
+      stat: data.player.stats.extended.precisionKills,
+      teamName: data.teamName,
+    };
+  });
+
+  players.sort(
+    (a, b) =>
+      b.player.stats.extended.totalMedals - a.player.stats.extended.totalMedals
+  );
+
+  let medalsLeaders = players.slice(0, 3);
+  medalsLeaders = medalsLeaders.map((data) => {
+    return {
+      player: data.player.player,
+      stat: data.player.stats.extended.totalMedals,
+      teamName: data.teamName,
+    };
+  });
 
   return (
     <div style={elementWrapperStyle}>
@@ -136,6 +176,11 @@ const ActivityLeaderBoard = (props) => {
       <div style={leaderRowStyle}>
         <LeaderList title="Assists" leaderData={assistsLeaders} />
         <LeaderList title="Deaths" leaderData={deathsLeaders} />
+        <LeaderList title="Precision Kills" leaderData={precisionLeaders} />
+      </div>
+      <div style={leaderRowStyle}>
+        <LeaderList title="Score" leaderData={scoreLeaders} />
+        <LeaderList title="Medals" leaderData={medalsLeaders} />
         <LeaderList title="Super Kills" leaderData={superLeaders} />
       </div>
     </div>
