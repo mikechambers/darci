@@ -104,11 +104,11 @@ const ActivityView = (props) => {
   };
 
   let gameInfoStyle = {
-    width: "50%",
+    width: "60%",
   };
 
   let matchTimeStyle = {
-    width: "50%",
+    width: "40%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
@@ -119,13 +119,6 @@ const ActivityView = (props) => {
     display: "flex",
     flexDirection: "columns",
     alignItems: "center",
-  };
-
-  let modeIconStyle = {
-    width: 70,
-    height: 70,
-    backgroundImage: `url(${details.modeInfo.icon})`,
-    backgroundSize: "cover",
   };
 
   let mapNameStyle = {
@@ -189,6 +182,18 @@ const ActivityView = (props) => {
     textTransform: "uppercase",
   };
 
+  let modeMapStyle = {
+    display: "flex",
+    flexDirection: "column",
+  };
+
+  let modeIconStyle = {
+    width: 70,
+    height: 70,
+    backgroundImage: `url(${details.modeInfo.icon})`,
+    backgroundSize: "cover",
+  };
+
   return (
     <div style={pageContainerStyle}>
       <div style={gappedStyle}>
@@ -210,7 +215,7 @@ const ActivityView = (props) => {
             <div style={gameInfoStyle}>
               <div style={modeMapContainerStyle}>
                 <div style={modeIconStyle}></div>
-                <div>
+                <div style={modeMapStyle}>
                   <div style={mapNameStyle}>{details.map.name}</div>
                   <div>
                     <hr style={dividerStyle} />
