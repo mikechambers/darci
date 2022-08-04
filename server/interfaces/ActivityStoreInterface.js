@@ -712,11 +712,12 @@ class ActivityStoreInterface {
       });
 
     let extended = {
-      precision: activityRow.precision_kills,
+      precisionKills: activityRow.precision_kills,
       abilityKills: activityRow.weapon_kills_ability,
       grenadeKills: activityRow.weapon_kills_grenade,
       meleeKills: activityRow.weapon_kills_melee,
       superKills: activityRow.weapon_kills_super,
+      totalMedals: activityRow.all_medals_earned,
 
       weapons: weapons,
       medals: medals,
