@@ -1,8 +1,11 @@
 import Medal, { MEDIUM } from "../../../components/Medal";
 
 const elementStyle = {
-  display: "flex",
-  flexDirection: "columns",
+  display: "grid",
+  gridTemplateColumns: "200px 200px 200px",
+  //flexDirection: "column",
+  //gridAutoColumns: "200px",
+  //gridAutoFlow: "column",
   gap: 36,
   flexWrap: "wrap",
 };
@@ -19,6 +22,7 @@ const playerEntryStyle = {
   display: "flex",
   flexDirection: "column",
   gap: 8,
+  width: 200,
 };
 
 const teamStyle = {
