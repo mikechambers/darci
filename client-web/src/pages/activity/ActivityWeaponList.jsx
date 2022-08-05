@@ -53,6 +53,7 @@ const titleStyle = {
   gridTemplateColumns: "161px 25px 10px",
   columnGap: 10,
   marginBottom: 6,
+  font: "var(--font-title-name)",
 };
 
 const killsStyle = {
