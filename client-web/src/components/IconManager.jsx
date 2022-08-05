@@ -10,6 +10,9 @@ import { ReactComponent as PlayerIcon } from "./images/tabler/player_icon.svg";
 import { ReactComponent as LeaderboardIcon } from "./images/tabler/leaderboard_icon.svg";
 import { ReactComponent as SearchIcon } from "./images/tabler/search_icon.svg";
 
+import { ReactComponent as ChevronsDown } from "./images/tabler/chevrons-down.svg";
+import { ReactComponent as ChevronsUp } from "./images/tabler/chevrons-up.svg";
+
 export const PRECISION_ICON = "PRECISION_ICON";
 export const GRENADE_ICON = "GRENADE_ICON";
 export const MELEE_ICON = "MELEE_ICON";
@@ -21,6 +24,9 @@ export const ABOUT_ICON = "ABOUT_ICON";
 export const PLAYER_ICON = "PLAYER_ICON";
 export const LEADERBOARD_ICON = "LEADERBOARD_ICON";
 export const SEARCH_ICON = "SEARCH_ICON";
+
+export const CHEVRONS_DOWN = "CHEVRONS_DOWN";
+export const CHEVRONS_UP = "CHEVRONS_UP";
 
 const IconManager = (props) => {
   let icon = props.icon;
@@ -56,6 +62,12 @@ const IconManager = (props) => {
       break;
     case SEARCH_ICON:
       out = <SearchIcon title={title} width={width} style={style} />;
+      break;
+    case CHEVRONS_DOWN:
+      out = <ChevronsDown title={title} width={width} style={style} />;
+      break;
+    case CHEVRONS_UP:
+      out = <ChevronsUp title={title} width={width} style={style} />;
       break;
     case BLANK_ICON:
     //fall through

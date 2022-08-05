@@ -1,78 +1,134 @@
-import React from "react";
+import React, { useState } from "react";
 import IconManager, {
+  CHEVRONS_DOWN,
+  CHEVRONS_UP,
   PLAYER_ICON,
   PRECISION_ICON,
 } from "../../components/IconManager";
 
+const elementStyle = {
+  display: "flex",
+  flexDirection: "column",
+};
+
+const weaponContainerStyle = {
+  display: "grid",
+  gridTemplateColumns: "16px 135px 25px 10px",
+  font: "var(--font-small-name)",
+  columnGap: 10,
+  rowGap: 6,
+};
+
+const iconStyleBase = {
+  width: 16,
+  height: 16,
+  backgroundSize: "cover",
+  borderRadius: 4,
+};
+const nameStyle = {
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  display: "flex",
+  alignItems: "center",
+};
+
+const precisionStyle = {
+  font: "var(--light) 12px 'Roboto', sans-serif",
+  display: "flex",
+  justifyContent: "flex-end",
+  opacity: 0.5,
+  alignItems: "center",
+};
+
+const countStyle = {
+  font: "var(--light) 12px 'Roboto', sans-serif",
+  display: "flex",
+  opacity: 0.5,
+  alignItems: "center",
+};
+
+const titleStyle = {
+  borderBottom: "1px #ffffff66 solid",
+  display: "grid",
+  gridTemplateColumns: "161px 25px 10px",
+  columnGap: 10,
+  marginBottom: 6,
+};
+
+const killsStyle = {
+  display: "flex",
+  opacity: 0.8,
+  alignItems: "center",
+  justifyContent: "flex-end",
+};
+
+const chevronStyle = {
+  opacity: 0.5,
+};
+
 const ActivityWeaponList = (props) => {
   const title = props.title;
-  const weapons = props.weapons;
+  let weapons = props.weapons;
 
-  const elementStyle = {
+  const [expanded, setExpanded] = useState(false);
+
+  const expandedDivStyle = {
     display: "flex",
-    flexDirection: "column",
-  };
-
-  const weaponContainerStyle = {
-    display: "grid",
-    gridTemplateColumns: "16px 135px 25px 10px",
-    font: "var(--font-small-name)",
-    columnGap: 10,
-    rowGap: 6,
-  };
-
-  const iconStyleBase = {
-    width: 16,
-    height: 16,
-    backgroundSize: "cover",
-    borderRadius: 4,
-  };
-  const nameStyle = {
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    display: "flex",
-    alignItems: "center",
-  };
-
-  const precisionStyle = {
-    font: "var(--light) 12px 'Roboto', sans-serif",
-    display: "flex",
-    justifyContent: "flex-end",
-    opacity: 0.5,
-    alignItems: "center",
-  };
-
-  const countStyle = {
-    font: "var(--light) 12px 'Roboto', sans-serif",
-    display: "flex",
-    opacity: 0.5,
-    alignItems: "center",
-  };
-
-  const titleStyle = {
-    borderBottom: "1px #ffffff66 solid",
-    display: "grid",
-    gridTemplateColumns: "161px 25px 10px",
-    columnGap: 10,
-    marginBottom: 6,
-  };
-
-  const killsStyle = {
-    display: "flex",
-    opacity: 0.8,
-    alignItems: "center",
+    flexDirection: "row",
     justifyContent: "flex-end",
   };
+
+  const onExpandedClick = (e) => {
+    setExpanded(!expanded);
+  };
+
+  let expandedDiv = "";
+
+  if (props.weapons.length >= 5) {
+    if (!expanded) {
+      expandedDiv = (
+        <div
+          title="Expand list"
+          onClick={onExpandedClick}
+          style={expandedDivStyle}
+          className="link icon_link"
+        >
+          <IconManager icon={CHEVRONS_DOWN} width="14" />
+        </div>
+      );
+
+      weapons = weapons.slice(0, 5);
+    } else {
+      expandedDiv = (
+        <div
+          title="Collapse list"
+          onClick={onExpandedClick}
+          style={expandedDivStyle}
+          className="link icon_link"
+        >
+          <IconManager icon={CHEVRONS_UP} width="14" />
+        </div>
+      );
+    }
+  }
   return (
     <div style={elementStyle}>
       <div style={titleStyle}>
         <div>{title}</div>
-        <div className="label_small" style={killsStyle}>
+        <div
+          className="label_small"
+          style={killsStyle}
+          title="Total kills for all players"
+        >
           kills
         </div>
         <div style={countStyle}>
-          <IconManager icon={PLAYER_ICON} width="12" />
+          <IconManager
+            icon={PLAYER_ICON}
+            width="12"
+            title="Number of players using the weapon"
+          />
         </div>
       </div>
       <div style={weaponContainerStyle}>
@@ -93,6 +149,7 @@ const ActivityWeaponList = (props) => {
           );
         })}
       </div>
+      {expandedDiv}
     </div>
   );
 };
