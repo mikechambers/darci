@@ -3,7 +3,6 @@ import IconManager, {
   CHEVRONS_DOWN,
   CHEVRONS_UP,
   PLAYER_ICON,
-  PRECISION_ICON,
 } from "../../components/IconManager";
 
 const elementStyle = {
@@ -13,7 +12,7 @@ const elementStyle = {
 
 const weaponContainerStyle = {
   display: "grid",
-  gridTemplateColumns: "16px 135px 25px 10px",
+  gridTemplateColumns: "16px 145px 15px 10px",
   font: "var(--font-small-name)",
   columnGap: 10,
   rowGap: 6,
@@ -29,8 +28,7 @@ const nameStyle = {
   whiteSpace: "nowrap",
   overflow: "hidden",
   textOverflow: "ellipsis",
-  display: "flex",
-  alignItems: "center",
+  flexWrap: "nowrap",
 };
 
 const precisionStyle = {
@@ -46,6 +44,7 @@ const countStyle = {
   display: "flex",
   opacity: 0.5,
   alignItems: "center",
+  justifyContent: "flex-end",
 };
 
 const titleStyle = {
@@ -63,8 +62,16 @@ const killsStyle = {
   justifyContent: "flex-end",
 };
 
+const expandedDivStyle = {
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "flex-end",
+};
+
 const chevronStyle = {
-  opacity: 0.5,
+  //hack to link up icon on right with text and overcoming
+  //the padding in the svg
+  marginRight: -3,
 };
 
 const ActivityWeaponList = (props) => {
@@ -72,12 +79,6 @@ const ActivityWeaponList = (props) => {
   let weapons = props.weapons;
 
   const [expanded, setExpanded] = useState(false);
-
-  const expandedDivStyle = {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  };
 
   const onExpandedClick = (e) => {
     setExpanded(!expanded);
@@ -94,7 +95,7 @@ const ActivityWeaponList = (props) => {
           style={expandedDivStyle}
           className="link icon_link"
         >
-          <IconManager icon={CHEVRONS_DOWN} width="14" />
+          <IconManager icon={CHEVRONS_DOWN} width="14" style={chevronStyle} />
         </div>
       );
 
@@ -107,7 +108,7 @@ const ActivityWeaponList = (props) => {
           style={expandedDivStyle}
           className="link icon_link"
         >
-          <IconManager icon={CHEVRONS_UP} width="14" />
+          <IconManager icon={CHEVRONS_UP} width="14" style={chevronStyle} />
         </div>
       );
     }
