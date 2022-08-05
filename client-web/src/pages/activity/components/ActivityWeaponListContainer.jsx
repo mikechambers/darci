@@ -1,4 +1,3 @@
-import WeaponList from "../player/components/WeaponList";
 import ActivityWeaponList from "./ActivityWeaponList";
 
 const WeaponListContainer = (props) => {

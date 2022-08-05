@@ -6,7 +6,7 @@ import PageViewNavigation from "../player/components/PageViewNavigation";
 import ActivityDetails from "./components/ActivityDetails";
 import ActivityLeaderBoard from "./components/ActivityLeaderBoard";
 import GoldMedalsList from "./components/GoldMedalsList";
-import ActivityWeaponListContainer from "./ActivityWeaponListContainer";
+import ActivityWeaponListContainer from "./components/ActivityWeaponListContainer";
 
 const pageContainerStyle = {
   minWidth: "720px",
@@ -44,28 +44,20 @@ const ActivityView = (props) => {
 
   const pageLinks = [
     {
-      value: "Overview",
-      id: "overview",
+      value: "Leaderboard",
+      id: "leaders",
+    },
+    {
+      value: "Medals",
+      id: "medals",
     },
     {
       value: "Weapons",
       id: "weapons",
     },
     {
-      value: "Meta Weapons",
-      id: "meta",
-    },
-    {
-      value: "medals",
-      id: "medals",
-    },
-    {
-      value: "maps",
-      id: "maps",
-    },
-    {
-      value: "games",
-      id: "games",
+      value: "Links",
+      id: "links",
     },
   ];
 
@@ -84,7 +76,7 @@ const ActivityView = (props) => {
   }
 
   return (
-    <div style={pageContainerStyle}>
+    <div style={pageContainerStyle} id="page_nav">
       <div style={gappedStyle}>
         <PageViewNavigation links={pageLinks} />
         <ActivityDetails details={details} teams={teams} />

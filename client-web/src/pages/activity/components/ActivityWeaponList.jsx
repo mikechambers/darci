@@ -3,7 +3,7 @@ import IconManager, {
   CHEVRONS_DOWN,
   CHEVRONS_UP,
   PLAYER_ICON,
-} from "../../components/IconManager";
+} from "../../../components/IconManager";
 
 const elementStyle = {
   display: "flex",
