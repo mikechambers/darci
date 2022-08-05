@@ -11,6 +11,7 @@ const leaderRowStyle = {
   display: "flex",
   flexDirection: "columns",
   gap: 36,
+  flexWrap: "wrap",
 };
 
 const ActivityLeaderBoard = (props) => {

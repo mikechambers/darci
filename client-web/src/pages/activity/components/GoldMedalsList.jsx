@@ -12,6 +12,7 @@ const medalEntryStyle = {
   alignItems: "center",
   justifyContent: "flex-start",
   gap: 8,
+  font: "var(--font-small-name)",
 };
 
 const playerEntryStyle = {

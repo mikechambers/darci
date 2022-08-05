@@ -6,6 +6,7 @@ import PageViewNavigation from "../player/components/PageViewNavigation";
 import ActivityDetails from "./components/ActivityDetails";
 import ActivityLeaderBoard from "./components/ActivityLeaderBoard";
 import GoldMedalsList from "./components/GoldMedalsList";
+import ActivityWeaponListContainer from "./ActivityWeaponListContainer";
 
 const pageContainerStyle = {
   minWidth: "720px",
@@ -104,6 +105,15 @@ const ActivityView = (props) => {
             description="Gold medals"
           />
           <GoldMedalsList players={players} />
+        </div>
+
+        <div>
+          <PageSectionTitle
+            id="weapons"
+            title="Weapons"
+            description="Weapons"
+          />
+          <ActivityWeaponListContainer teams={teams} />
         </div>
 
         <div>
