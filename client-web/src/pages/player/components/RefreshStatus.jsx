@@ -39,8 +39,14 @@ const RefreshStatus = (props) => {
       return;
     }
 
+    let isMounted = true;
+
     let lastUpdateMs = lastUpdate.getTime();
     const frameCallback = (elapsed) => {
+      //this is to keep setState being called after component is removed
+      if (!isMounted) {
+        return;
+      }
       let t = Date.now() - lastUpdateMs;
 
       setElapsedTime(t);
@@ -56,6 +62,7 @@ const RefreshStatus = (props) => {
 
     //todo: issue is we only capture the first interval
     return () => {
+      isMounted = false;
       window.cancelAnimationFrame(intervalId);
     };
   }, [lastUpdate, refreshInterval]);
