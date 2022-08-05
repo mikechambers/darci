@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import IconManager, {
   CHEVRONS_DOWN,
   CHEVRONS_UP,
+  LEADERBOARD_ICON,
   PLAYER_ICON,
 } from "../../../components/IconManager";
 
@@ -127,7 +128,7 @@ const ActivityWeaponList = (props) => {
         </div>
         <div style={countStyle}>
           <IconManager
-            icon={PLAYER_ICON}
+            icon={LEADERBOARD_ICON}
             width="12"
             title="Number of players using the weapon"
           />
