@@ -2,14 +2,8 @@ import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 import LeaderList from "./LeaderList";
 
 const elementWrapperStyle = {
-  display: "flex",
-  flexDirection: "column",
-  gap: 24,
-};
-
-const leaderRowStyle = {
-  display: "flex",
-  flexDirection: "columns",
+  display: "grid",
+  gridTemplateColumns: "min-content min-content min-content",
   gap: 36,
   flexWrap: "wrap",
 };
@@ -160,25 +154,19 @@ const ActivityLeaderBoard = (props) => {
 
   return (
     <div style={elementWrapperStyle}>
-      <div style={leaderRowStyle}>
-        {" "}
-        <LeaderList
-          title="Opponents Defeated"
-          leaderData={opponentsDefeatedLeaders}
-        />
-        <LeaderList title="KD" leaderData={killsDeathsLeaders} />
-        <LeaderList title="Efficiency" leaderData={efficiencyLeaders} />
-      </div>
-      <div style={leaderRowStyle}>
-        <LeaderList title="Assists" leaderData={assistsLeaders} />
-        <LeaderList title="Precision Kills" leaderData={precisionLeaders} />
-        <LeaderList title="Deaths" leaderData={deathsLeaders} />
-      </div>
-      <div style={leaderRowStyle}>
-        <LeaderList title="Score" leaderData={scoreLeaders} />
-        <LeaderList title="Medals" leaderData={medalsLeaders} />
-        <LeaderList title="Super Kills" leaderData={superLeaders} />
-      </div>
+      {" "}
+      <LeaderList
+        title="Opponents Defeated"
+        leaderData={opponentsDefeatedLeaders}
+      />
+      <LeaderList title="KD" leaderData={killsDeathsLeaders} />
+      <LeaderList title="Efficiency" leaderData={efficiencyLeaders} />
+      <LeaderList title="Assists" leaderData={assistsLeaders} />
+      <LeaderList title="Precision Kills" leaderData={precisionLeaders} />
+      <LeaderList title="Deaths" leaderData={deathsLeaders} />
+      <LeaderList title="Score" leaderData={scoreLeaders} />
+      <LeaderList title="Medals" leaderData={medalsLeaders} />
+      <LeaderList title="Super Kills" leaderData={superLeaders} />
     </div>
   );
 };

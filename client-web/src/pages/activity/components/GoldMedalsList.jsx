@@ -2,10 +2,7 @@ import Medal, { MEDIUM } from "../../../components/Medal";
 
 const elementStyle = {
   display: "grid",
-  gridTemplateColumns: "200px 200px 200px",
-  //flexDirection: "column",
-  //gridAutoColumns: "200px",
-  //gridAutoFlow: "column",
+  gridTemplateColumns: "min-content min-content min-content",
   gap: 36,
   flexWrap: "wrap",
 };
