@@ -82,7 +82,7 @@ const ActivityWeaponList = (props) => {
             backgroundImage: `url(${data.weapon.icon})`,
           };
           return (
-            <React.Fragment>
+            <React.Fragment key={data.weapon.id}>
               <div style={s}></div>
               <div style={nameStyle}>{data.weapon.name}</div>
 
