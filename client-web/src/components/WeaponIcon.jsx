@@ -1,4 +1,4 @@
-import { ItemSubType } from "shared";
+import { ItemSubType, type } from "shared";
 import { ReactComponent as AutoRifleIcon } from "./images/autorifle_icon.svg";
 import { ReactComponent as BowIcon } from "./images/bow_icon.svg";
 import { ReactComponent as FusionRifleIcon } from "./images/fusion_rifle_icon.svg";
@@ -19,63 +19,61 @@ import { ReactComponent as TraceRifleIcon } from "./images/trace_rifle_icon.svg"
 import { ReactComponent as BlankIcon } from "./images/blank_icon.svg";
 
 const WeaponIcon = (props) => {
-  let itemSubType = props.itemSubType;
+  let type = props.type;
   let width = props.width ? props.width : 22;
 
   let out;
-  switch (itemSubType) {
+  switch (type) {
     case ItemSubType.AUTO_RIFLE:
-      out = <AutoRifleIcon title={itemSubType.label} width={width} />;
+      out = <AutoRifleIcon title={type.label} width={width} />;
       break;
     case ItemSubType.FUSION_RIFLE:
-      out = <FusionRifleIcon title={itemSubType.label} width={width} />;
+      out = <FusionRifleIcon title={type.label} width={width} />;
       break;
     case ItemSubType.BOW:
-      out = <BowIcon title={itemSubType.label} width={width} />;
+      out = <BowIcon title={type.label} width={width} />;
       break;
     case ItemSubType.GLAIVE:
-      out = <Glaivecon title={itemSubType.label} width={width} />;
+      out = <Glaivecon title={type.label} width={width} />;
       break;
     case ItemSubType.HAND_CANNON:
-      out = <HandCanonIcon title={itemSubType.label} width={width} />;
+      out = <HandCanonIcon title={type.label} width={width} />;
       break;
     case ItemSubType.GRENADE_LAUNCHER:
-      out = (
-        <HeavyGrenadeLauncherIcon title={itemSubType.label} width={width} />
-      );
+      out = <HeavyGrenadeLauncherIcon title={type.label} width={width} />;
       break;
     case ItemSubType.LINEAR_FUSION_RIFLE:
-      out = <LinearFusionRifleIcon title={itemSubType.label} width={width} />;
+      out = <LinearFusionRifleIcon title={type.label} width={width} />;
       break;
     case ItemSubType.MACHINE_GUN:
-      out = <MachineGunIcon title={itemSubType.label} width={width} />;
+      out = <MachineGunIcon title={type.label} width={width} />;
       break;
     case ItemSubType.PULSE_RIFLE:
-      out = <PulseRifleIcon title={itemSubType.label} width={width} />;
+      out = <PulseRifleIcon title={type.label} width={width} />;
       break;
     case ItemSubType.ROCKET_LAUNCHER:
-      out = <RocketLauncherIcon title={itemSubType.label} width={width} />;
+      out = <RocketLauncherIcon title={type.label} width={width} />;
       break;
     case ItemSubType.SCOUT_RIFLE:
-      out = <ScoutRifleIcon title={itemSubType.label} width={width} />;
+      out = <ScoutRifleIcon title={type.label} width={width} />;
       break;
     case ItemSubType.SHOTGUN:
-      out = <ShotgunIcon title={itemSubType.label} width={width} />;
+      out = <ShotgunIcon title={type.label} width={width} />;
       break;
     case ItemSubType.SIDEARM:
-      out = <SidearmIcon title={itemSubType.label} width={width} />;
+      out = <SidearmIcon title={type.label} width={width} />;
       break;
     case ItemSubType.SNIPER_RIFLE:
-      out = <SniperRifleIcon title={itemSubType.label} width={width} />;
+      out = <SniperRifleIcon title={type.label} width={width} />;
       break;
     case ItemSubType.SUBMACHINE_GUN:
-      out = <SubmachineGunIcon title={itemSubType.label} width={width} />;
+      out = <SubmachineGunIcon title={type.label} width={width} />;
       break;
     case ItemSubType.SWORD:
-      out = <SwordIcon title={itemSubType.label} width={width} />;
+      out = <SwordIcon title={type.label} width={width} />;
       break;
     case ItemSubType.TRACE_RIFLE:
-      out = <TraceRifleIcon title={itemSubType.label} width={width} />;
+      out = <TraceRifleIcon title={type.label} width={width} />;
       break;
     default:
       out = <BlankIcon width={width} />;

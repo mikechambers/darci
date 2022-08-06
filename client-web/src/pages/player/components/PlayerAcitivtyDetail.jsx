@@ -202,7 +202,7 @@ const PlayerActivityDetail = (props) => {
               return (
                 <React.Fragment key={weapon.id}>
                   <div>
-                    <WeaponIcon itemSubType={weapon.item.itemSubType} />
+                    <WeaponIcon type={weapon.item.itemSubType} />
                   </div>
                   <div className="overflow">{weapon.item.name}</div>
                   <div style={killsStyle}>{weapon.kills}</div>

@@ -1,8 +1,10 @@
-import ActivityWeaponList from "./ActivityWeaponList";
+import WeaponIcon from "../../../components/WeaponIcon";
+import ActivityWeaponList, { WEAPON_TYPE } from "./ActivityWeaponList";
 
 const WeaponListContainer = (props) => {
   let teams = props.teams;
 
+  //aggregate weapons by team
   let map = new Map();
   for (const t of teams) {
     let weaponMap = new Map();
@@ -10,13 +12,15 @@ const WeaponListContainer = (props) => {
       for (const w of p.stats.extended.weapons) {
         let id = w.id;
         let item = weaponMap.get(id);
-
         if (!item) {
           item = {
-            weapon: w.item,
+            id: w.item.id,
+            name: w.item.name,
+            icon: w.item.icon,
             count: 1,
             kills: w.kills,
             precision: w.precision,
+            itemSubType: w.item.itemSubType,
           };
         } else {
           item.count++;
@@ -30,16 +34,25 @@ const WeaponListContainer = (props) => {
     map.set(t.name, weaponMap);
   }
 
+  //aggregate weapons by all players
   const allWeaponsMap = new Map();
-  for (const [key, value] of map) {
+  for (const value of map.values()) {
     for (const [mKey, mValue] of value) {
       let item = allWeaponsMap.get(mKey);
 
       if (!item) {
-        item = { ...mValue };
+        item = {
+          id: mValue.id,
+          name: mValue.name,
+          icon: mValue.icon,
+          kills: mValue.kills,
+          count: mValue.count,
+          precision: mValue.precision,
+          itemSubType: mValue.itemSubType,
+        };
       } else {
         item = {
-          ...mValue,
+          ...item,
           kills: mValue.kills + item.kills,
           count: mValue.count + item.count,
           precision: mValue.precision + item.precision,
@@ -50,10 +63,37 @@ const WeaponListContainer = (props) => {
     }
   }
 
+  //aggregate by weapon type
+  const allWeaponTypesMap = new Map();
+  for (const value of allWeaponsMap.values()) {
+    let id = value.itemSubType.id;
+    let item = allWeaponTypesMap.get(id);
+
+    if (!item) {
+      item = {
+        id: id,
+        name: value.itemSubType.label,
+        kills: value.kills,
+        count: value.count,
+        precision: value.precision,
+        itemSubType: value.itemSubType,
+      };
+    } else {
+      item = {
+        ...item,
+        kills: value.kills + item.kills,
+        count: value.count + item.count,
+        precision: value.precision + item.precision,
+      };
+    }
+
+    allWeaponTypesMap.set(id, item);
+  }
+
   const elementStyle = {
     display: "flex",
     flexDirection: "row",
-    columnGap: 24,
+    columnGap: 12,
   };
 
   const sort = (a, b) => {
@@ -62,11 +102,16 @@ const WeaponListContainer = (props) => {
 
   let alphaWeapons = Array.from(map.get("Alpha").values()).sort(sort);
   let bravoWeapons = Array.from(map.get("Bravo").values()).sort(sort);
-  let allWeapons = Array.from(allWeaponsMap.values()).sort(sort);
+  //let allWeapons = Array.from(allWeaponsMap.values()).sort(sort);
+  let allWeaponTypes = Array.from(allWeaponTypesMap.values()).sort(sort);
 
   return (
     <div style={elementStyle}>
-      <ActivityWeaponList weapons={allWeapons} title="All Players" />
+      <ActivityWeaponList
+        weapons={allWeaponTypes}
+        title="Weapon Types"
+        type={WEAPON_TYPE}
+      />
       <ActivityWeaponList weapons={alphaWeapons} title="Alpha Team" />
       <ActivityWeaponList weapons={bravoWeapons} title="Bravo Team" />
     </div>

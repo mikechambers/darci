@@ -1,16 +1,22 @@
 import React, { useState } from "react";
+import { ItemSubType } from "shared";
 import IconManager, {
   CHEVRONS_DOWN,
   CHEVRONS_UP,
   LEADERBOARD_ICON,
-  PLAYER_ICON,
 } from "../../../components/IconManager";
+import WeaponIcon from "../../../components/WeaponIcon";
 
 const elementStyle = {
   display: "flex",
   flexDirection: "column",
+  borderRadius: 4,
+  backgroundColor: "var(--list-item-background-color)",
+  padding: 8,
+  height: "min-content",
 };
 
+//16
 const weaponContainerStyle = {
   display: "grid",
   gridTemplateColumns: "16px 145px 15px 10px",
@@ -76,9 +82,13 @@ const chevronStyle = {
   marginRight: -3,
 };
 
+export const WEAPON = "WEAPON";
+export const WEAPON_TYPE = "WEAPON_TYPE";
+
 const ActivityWeaponList = (props) => {
   const title = props.title;
   let weapons = props.weapons;
+  let type = props.type ? props.type : WEAPON;
 
   const [expanded, setExpanded] = useState(false);
 
@@ -115,6 +125,7 @@ const ActivityWeaponList = (props) => {
       );
     }
   }
+
   return (
     <div style={elementStyle}>
       <div style={titleStyle}>
@@ -136,14 +147,26 @@ const ActivityWeaponList = (props) => {
       </div>
       <div style={weaponContainerStyle}>
         {weapons.map((data) => {
-          const s = {
-            ...iconStyleBase,
-            backgroundImage: `url(${data.weapon.icon})`,
-          };
+          let iconDiv;
+          if (type === WEAPON) {
+            const s = {
+              ...iconStyleBase,
+              backgroundImage: `url(${data.icon})`,
+            };
+            iconDiv = <div style={s}></div>;
+          } else {
+            console.log(data.itemSubType);
+            iconDiv = (
+              <div>
+                <WeaponIcon type={data.itemSubType} width="16" />
+              </div>
+            );
+          }
+
           return (
-            <React.Fragment key={data.weapon.id}>
-              <div style={s}></div>
-              <div style={nameStyle}>{data.weapon.name}</div>
+            <React.Fragment key={data.id}>
+              {iconDiv}
+              <div style={nameStyle}>{data.name}</div>
 
               <div className="right">{data.kills}</div>
 
