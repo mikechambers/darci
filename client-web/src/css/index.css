@@ -52,7 +52,7 @@
   --font-section-header: var(--medium) 18px 'Roboto', sans-serif;
   --font-subsection-header: var(--medium) 16px 'Roboto', sans-serif;
 
-  --font-label: 400 12px 'Roboto', sans-serif;
+  --font-label: var(--regular) 12px 'Roboto', sans-serif;
   --font-data : var(--font);
 
   --font-small:var(--regular) 12px 'Roboto', sans-serif;
