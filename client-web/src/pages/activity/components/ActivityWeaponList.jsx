@@ -155,7 +155,6 @@ const ActivityWeaponList = (props) => {
             };
             iconDiv = <div style={s}></div>;
           } else {
-            console.log(data.itemSubType);
             iconDiv = (
               <div>
                 <WeaponIcon type={data.itemSubType} width="16" />
