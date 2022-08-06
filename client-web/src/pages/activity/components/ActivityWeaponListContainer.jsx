@@ -35,6 +35,9 @@ const WeaponListContainer = (props) => {
   }
 
   //aggregate weapons by all players
+  //note we could skip this step since we are not using the all players
+  //data right now, but keeping it here in case we want to come back to it
+  /*
   const allWeaponsMap = new Map();
   for (const value of map.values()) {
     for (const [mKey, mValue] of value) {
@@ -61,11 +64,18 @@ const WeaponListContainer = (props) => {
 
       allWeaponsMap.set(mKey, item);
     }
+  }*/
+
+  let allWeapons = [];
+
+  //combine all team players into a single list
+  for (const value of map.values()) {
+    allWeapons = allWeapons.concat(Array.from(value.values()));
   }
 
   //aggregate by weapon type
   const allWeaponTypesMap = new Map();
-  for (const value of allWeaponsMap.values()) {
+  for (const value of allWeapons) {
     let id = value.itemSubType.id;
     let item = allWeaponTypesMap.get(id);
 
