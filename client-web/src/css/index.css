@@ -314,7 +314,7 @@ a {
 
 .activity_details {
   /*animation: fade-in 0.2s cubic-bezier(0.950, 0.050, 0.795, 0.035) both;*/
-  animation: fade-in 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+  animation: fade-in .5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
 }
 
 .scale-in-tl {

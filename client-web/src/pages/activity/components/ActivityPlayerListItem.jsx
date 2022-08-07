@@ -1,57 +1,29 @@
-import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
-import { SMALL } from "../../../components/Medal";
-import MedalsView from "../../player/components/MedalsView";
-import PlayerStatusView from "../../player/components/PlayerStatusView";
-import ItemStatContainer from "./ItemStatContainer";
-import PlayerInfoView from "./PlayerInfoView";
+import { useState } from "react";
+import ActivityPlayerListItemDrawer from "./ActivityPlayerListItemDrawer";
+import ActivityPlayerListItemHeader from "./ActivityPlayerListItemHeader";
 
-const rootStyle = {
-  display: "grid",
-  width: 700,
-  gridTemplateColumns: "200px 340px 60px 100px",
-  flexDirection: "row",
-  alignItems: "center",
-  columnGap: 12,
-  //justifyContent: "center",
-};
+const rootStyle = { width: "min-content" };
 
 const ActivityPlayerListItem = (props) => {
   const player = props.player;
 
-  const data = [
-    { value: player.stats.score, label: "score" },
-    { value: player.stats.kills, label: "kills" },
-    { value: player.stats.assists, label: "assists" },
-    { value: player.stats.opponentsDefeated, label: "defeats" },
-    { value: player.stats.deaths, label: "deaths" },
-    {
-      value: calculateKillsDeathsRatio(
-        player.stats.kills,
-        player.stats.deaths
-      ).toFixed(2),
-      label: "kd",
-    },
-    {
-      value: calculateEfficiency(
-        player.stats.kills,
-        player.stats.deaths,
-        player.stats.assists
-      ).toFixed(2),
-      label: "eff",
-    },
-  ];
+  const [expanded, setExpanded] = useState(false);
 
-  const goldMedals = player.stats.extended.medals.filter((m) => m.info.isGold);
+  let drawer;
+  if (expanded) {
+    drawer = <ActivityPlayerListItemDrawer player={player} />;
+  } else {
+    drawer = <div></div>;
+  }
+
+  const handleOnClick = (e) => {
+    setExpanded(!expanded);
+  };
 
   return (
-    <div className="list_item" style={rootStyle}>
-      <PlayerInfoView player={player} />
-      <ItemStatContainer data={data} />
-      <PlayerStatusView
-        completed={player.stats.completed}
-        joinedLate={player.stats.joinedLate}
-      />
-      <MedalsView medals={goldMedals} size={SMALL} />
+    <div style={rootStyle} id={player.player.getFullName()}>
+      <ActivityPlayerListItemHeader player={player} onClick={handleOnClick} />
+      {drawer}
     </div>
   );
 };

@@ -5,7 +5,7 @@ const EmblemIconDisplay = (props) => {
     width: 50,
     height: 50,
     backgroundColor: "#000000",
-    backgroundImage: `url(${emblem.secondaryOverlay})`,
+    backgroundImage: `url(${emblem.icon})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     borderRadius: 4,
