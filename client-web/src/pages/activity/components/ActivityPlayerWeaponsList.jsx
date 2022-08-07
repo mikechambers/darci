@@ -58,7 +58,7 @@ const ActivityPlayerWeaponsList = (props) => {
 
       {weapons.map((weapon) => {
         return (
-          <div style={weaponEntryStyle} id={weapon.id}>
+          <div style={weaponEntryStyle} key={weapon.id}>
             <div key={weapon.id}>
               <WeaponImage weapon={weapon} size={SMALL} />
             </div>
