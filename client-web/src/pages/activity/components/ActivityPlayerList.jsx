@@ -3,7 +3,7 @@ import ActivityPlayerListItem from "./ActivityPlayerListItem";
 const elementStyle = {
   display: "flex",
   flexDirection: "column",
-  rowGap: 8,
+  rowGap: 2,
 };
 const ActivityPlayerList = (props) => {
   const players = props.players;

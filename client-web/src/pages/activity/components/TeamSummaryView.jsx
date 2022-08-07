@@ -2,6 +2,7 @@ import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 import Stat, { LARGE_STYLE } from "../../player/components/Stat";
 
 import { ReactComponent as AlphaTeamIcon } from "../../../components/images/alpha_team_logo.svg";
+import { ReactComponent as BravoTeamIcon } from "../../../components/images/bravo_team_logo.svg";
 import StatDetailBase from "../../player/components/StatDetailBase";
 
 const teamBarStyle = {
@@ -18,7 +19,7 @@ const statHighlightsStyle = {
   display: "flex",
   flexDirection: "row",
   width: "min-content",
-  columnGap: 36,
+  columnGap: 48,
   justifyContent: "center",
 };
 
@@ -136,13 +137,22 @@ const TeamSummaryView = (props) => {
     },
   ];
 
+  let teamClassName;
+  let teamLogo;
+
+  if (team.name === "Alpha") {
+    teamClassName = "alpha";
+    teamLogo = <AlphaTeamIcon width="60" height="60" />;
+  } else {
+    teamClassName = "bravo";
+    teamLogo = <BravoTeamIcon width="60" height="60" />;
+  }
+
   return (
     <div style={elementStyle}>
-      <div style={teamBarStyle} className={team.name.toLowerCase()}></div>
+      <div style={teamBarStyle} className={teamClassName}></div>
       <div style={statHighlightsStyle}>
-        <div>
-          <AlphaTeamIcon width="60" height="60" />
-        </div>
+        <div>{teamLogo}</div>
         <div>
           <Stat styleName={LARGE_STYLE} label="Score" value={team.score} />
         </div>

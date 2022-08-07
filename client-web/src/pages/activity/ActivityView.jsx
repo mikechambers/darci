@@ -118,22 +118,18 @@ const ActivityView = (props) => {
           />
         </div>
 
-        <div>
-          <PageSectionTitle
-            id="alpha"
-            title="Alpha Team"
-            description="Alpha Team details"
-          />
-          <TeamDetailsView team={teams[0]} />
-        </div>
-
-        <div>
-          <PageSectionTitle
-            id="bravo"
-            title="Bravo Team"
-            description="Bravo Team details"
-          />
-        </div>
+        {teams.map((team) => {
+          return (
+            <div key={team.name}>
+              <PageSectionTitle
+                id={team.name}
+                title={`${team.name} Team`}
+                description={`${team.name} Team details`}
+              />
+              <TeamDetailsView team={team} />
+            </div>
+          );
+        })}
 
         <div>
           <PageSectionTitle
