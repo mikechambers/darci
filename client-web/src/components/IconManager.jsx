@@ -37,37 +37,74 @@ const IconManager = (props) => {
   let out;
   switch (icon) {
     case PRECISION_ICON:
-      out = <PrecisionIcon title={title} width={width} style={style} />;
+      out = (
+        <PrecisionIcon
+          title={title}
+          width={width}
+          height={width}
+          style={style}
+        />
+      );
       break;
     case GRENADE_ICON:
-      out = <GrenadeIcon title={title} width={width} style={style} />;
+      out = (
+        <GrenadeIcon title={title} width={width} height={width} style={style} />
+      );
       break;
     case MELEE_ICON:
-      out = <MeleeIcon title={title} width={width} style={style} />;
+      out = (
+        <MeleeIcon title={title} width={width} height={width} style={style} />
+      );
       break;
     case SUPER_ICON:
-      out = <SuperIcon title={title} width={width} style={style} />;
+      out = (
+        <SuperIcon title={title} width={width} height={width} style={style} />
+      );
       break;
     case DESTINY_LOGO:
-      out = <DestinyLogo title={title} width={width} style={style} />;
+      out = (
+        <DestinyLogo title={title} width={width} height={width} style={style} />
+      );
       break;
     case ABOUT_ICON:
-      out = <AboutIcon title={title} width={width} style={style} />;
+      out = (
+        <AboutIcon title={title} width={width} height={width} style={style} />
+      );
       break;
     case PLAYER_ICON:
-      out = <PlayerIcon title={title} width={width} style={style} />;
+      out = (
+        <PlayerIcon title={title} width={width} height={width} style={style} />
+      );
       break;
     case LEADERBOARD_ICON:
-      out = <LeaderboardIcon title={title} width={width} style={style} />;
+      out = (
+        <LeaderboardIcon
+          title={title}
+          width={width}
+          height={width}
+          style={style}
+        />
+      );
       break;
     case SEARCH_ICON:
-      out = <SearchIcon title={title} width={width} style={style} />;
+      out = (
+        <SearchIcon title={title} width={width} height={width} style={style} />
+      );
       break;
     case CHEVRONS_DOWN:
-      out = <ChevronsDown title={title} width={width} style={style} />;
+      out = (
+        <ChevronsDown
+          title={title}
+          width={width}
+          height={width}
+          style={style}
+        />
+      );
       break;
     case CHEVRONS_UP:
-      out = <ChevronsUp title={title} width={width} style={style} />;
+      out = (
+        <ChevronsUp title={title} width={width} height={width} style={style} />
+      );
       break;
     case BLANK_ICON:
     //fall through

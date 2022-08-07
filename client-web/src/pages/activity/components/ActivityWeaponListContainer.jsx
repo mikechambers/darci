@@ -1,4 +1,3 @@
-import WeaponIcon from "../../../components/WeaponIcon";
 import ActivityWeaponList, { WEAPON_TYPE } from "./ActivityWeaponList";
 
 const WeaponListContainer = (props) => {

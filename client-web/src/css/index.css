@@ -20,6 +20,8 @@
   --data-title-weight:700;
 
 
+  --color-label:#FFFFFF88;
+
   --light:300;
   --regular:400;
   --medium:500;
@@ -46,6 +48,8 @@
   --font-activity-period:var(--light) 14px 'Roboto', sans-serif;
   --font-activity-score-box:var(--bold) 22px 'Roboto', sans-serif;
   --font-activity-completion-reason:var(--medium) 16px 'Roboto', sans-serif;
+
+  --font-section-entry:var(--light) 14px 'Roboto', sans-serif;
 
   --font-page-title: var(--medium) 32px 'Roboto', sans-serif;
   --font-page-subtitle: var(--light) 20px 'Roboto', sans-serif;
@@ -99,6 +103,24 @@
   --divider-border:1px solid #ffffff;
 
   --background-blur: blur(2px);
+}
+
+.subsection_header {
+  font:var(--font-subsection-header);
+}
+
+.label_small {
+  font:var(--font-label-small);
+  text-transform: uppercase;
+  color:var(--label-color);
+}
+
+.label_icon {
+  opacity:0.5;
+}
+
+.section_entry {
+  font:var(--font-section-entry);
 }
 
 body {
@@ -315,6 +337,10 @@ a {
 .activity_details {
   /*animation: fade-in 0.2s cubic-bezier(0.950, 0.050, 0.795, 0.035) both;*/
   animation: fade-in .5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+  background-color: var(--list-item-background-color);
+  border:1px solid #ffffff44;
+  padding:4px;
+
 }
 
 .scale-in-tl {

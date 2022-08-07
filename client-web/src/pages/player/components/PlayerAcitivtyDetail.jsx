@@ -8,7 +8,7 @@ import IconManager, {
   SUPER_ICON,
 } from "../../../components/IconManager";
 import Medal, { SMALL } from "../../../components/Medal";
-import WeaponIcon from "../../../components/WeaponIcon";
+import WeaponIconManager from "../../../components/WeaponIconManager";
 import { calculatePercent } from "../../../utils";
 import { humanDuration } from "../../../utils/date";
 import Stat, { SMALL_STYLE } from "./Stat";
@@ -202,7 +202,7 @@ const PlayerActivityDetail = (props) => {
               return (
                 <React.Fragment key={weapon.id}>
                   <div>
-                    <WeaponIcon type={weapon.item.itemSubType} />
+                    <WeaponIconManager type={weapon.item.itemSubType} />
                   </div>
                   <div className="overflow">{weapon.item.name}</div>
                   <div style={killsStyle}>{weapon.kills}</div>

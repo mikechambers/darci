@@ -5,7 +5,7 @@ import IconManager, {
   CHEVRONS_UP,
   LEADERBOARD_ICON,
 } from "../../../components/IconManager";
-import WeaponIcon from "../../../components/WeaponIcon";
+import WeaponIconManager from "../../../components/WeaponIconManager";
 
 const elementStyle = {
   display: "flex",
@@ -157,7 +157,7 @@ const ActivityWeaponList = (props) => {
           } else {
             iconDiv = (
               <div>
-                <WeaponIcon type={data.itemSubType} width="16" />
+                <WeaponIconManager type={data.itemSubType} width="16" />
               </div>
             );
           }

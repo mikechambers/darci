@@ -8,6 +8,8 @@ const elementStyle = {
 const ActivityPlayerList = (props) => {
   const players = props.players;
 
+  players.sort((a, b) => b.stats.score - a.stats.score);
+
   return (
     <div style={elementStyle}>
       {players.map((player) => {

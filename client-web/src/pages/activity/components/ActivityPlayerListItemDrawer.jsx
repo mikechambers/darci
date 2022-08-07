@@ -1,13 +1,14 @@
+import ActivityPlayerWeaponsList from "./ActivityPlayerWeaponsList";
+
 const ActivityPlayerListItemDrawer = (props) => {
   const rootStyle = {
-    height: 100,
-    backgroundColor: "#FFFFFF66",
+    height: "min-content",
   };
   const player = props.player;
 
   return (
     <div style={rootStyle} className="activity_details">
-      <div>Im a drawer!</div>
+      <ActivityPlayerWeaponsList weapons={player.stats.extended.weapons} />
     </div>
   );
 };
