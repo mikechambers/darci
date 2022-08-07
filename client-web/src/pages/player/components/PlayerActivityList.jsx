@@ -1,6 +1,6 @@
 import { DateTime, Interval } from "luxon";
 import React from "react";
-import ActivityListItem from "./ActivityListItem";
+import PlayerActivityListItem from "./PlayerActivityListItem";
 
 const WIDTH = 735;
 
@@ -32,7 +32,7 @@ const dateStyle = {
   paddingTop: "24px",
 };
 
-const ActivityList = (props) => {
+const PlayerActivityList = (props) => {
   let activities = props.activities;
   let summary = props.summary;
 
@@ -69,7 +69,7 @@ const ActivityList = (props) => {
           return (
             <React.Fragment key={game.activity.activityId}>
               {dateDiv}
-              <ActivityListItem
+              <PlayerActivityListItem
                 activity={game}
                 summary={summary}
                 key={game.activity.activityId}
@@ -82,4 +82,4 @@ const ActivityList = (props) => {
   );
 };
 
-export default ActivityList;
+export default PlayerActivityList;

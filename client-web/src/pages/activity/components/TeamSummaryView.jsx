@@ -32,7 +32,7 @@ const dividerStyle = {
   opacity: 0.5,
 };
 
-const TeamDetails = (props) => {
+const TeamSummaryView = (props) => {
   const team = props.team;
 
   let playerCount = team.players.length;
@@ -170,4 +170,4 @@ const TeamDetails = (props) => {
   );
 };
 
-export default TeamDetails;
+export default TeamSummaryView;

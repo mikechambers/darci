@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { CompletionReason, Standing } from "shared";
 import PlayerActivityDetail from "./PlayerAcitivtyDetail";
 import Stat from "./Stat";
 import { useNavigate } from "react-router-dom";
 
-import { ReactComponent as JoinedLateIcon } from "../../../components/images/tabler/joined_late_icon.svg";
-import { ReactComponent as JoinedLateLeftEarlyIcon } from "../../../components/images/tabler/joined_late_left_early_icon.svg";
-import { ReactComponent as MercyIcon } from "../../../components/images/tabler/mercy_icon.svg";
 import { ReactComponent as ChevronRight } from "../../../components/images/tabler/chevron-right.svg";
-import Medal, { SMALL } from "../../../components/Medal";
+import { SMALL } from "../../../components/Medal";
+import PlayerStatusView from "./PlayerStatusView";
+import ActivityCompletionReasonView from "./ActivityCompletionReasonView";
+import MedalsView from "./MedalsView";
+import { Standing } from "shared";
 
 const resultWinStyle = {
   backgroundColor: "#3FD445",
@@ -88,8 +88,6 @@ const medalsStyle = {
   display: "flex",
   justifyContent: "flex-start",
   alignItems: "center",
-  flexWrap: "wrap",
-  columnGap: "4px",
 };
 
 const gameDetailNavStyle = {
@@ -107,8 +105,7 @@ const chevronIconStyle = {
   height: 16,
 };
 
-const rotateStyle = { transform: "rotate(180deg)" };
-const ActivityListItem = (props) => {
+const PlayerActivityListItem = (props) => {
   let activity = props.activity;
   let summary = props.summary;
 
@@ -126,46 +123,6 @@ const ActivityListItem = (props) => {
     activity.stats.standing === Standing.VICTORY
       ? resultWinStyle
       : resultLossStyle;
-
-  let dimen = 18;
-  let mercyIcon =
-    activity.stats.completionReason === CompletionReason.MERCY ? (
-      <MercyIcon width={dimen} height={dimen} title="Game ended in mercy" />
-    ) : (
-      ""
-    );
-
-  let statusIcon = "";
-  if (!activity.stats.completed) {
-    statusIcon = (
-      <JoinedLateIcon
-        style={rotateStyle}
-        width={dimen}
-        height={dimen}
-        title="Left game before completion"
-      />
-    );
-  }
-
-  if (activity.stats.joinedLate) {
-    statusIcon = (
-      <JoinedLateIcon
-        width={dimen}
-        height={dimen}
-        title="Joined game in progress"
-      />
-    );
-  }
-
-  if (!activity.stats.completed && activity.stats.joinedLate) {
-    statusIcon = (
-      <JoinedLateLeftEarlyIcon
-        width={dimen}
-        height={dimen}
-        title="Joined game in progress and left before completion"
-      />
-    );
-  }
 
   let gm = new Map();
   for (let m of activity.stats.extended.medals) {
@@ -267,20 +224,21 @@ const ActivityListItem = (props) => {
         </div>
 
         <div style={statusStyleWrapper}>
-          <div style={statusStyle}>{statusIcon}</div>
-          <div style={mercyStyle}>{mercyIcon}</div>
+          <div style={statusStyle}>
+            <PlayerStatusView
+              completed={activity.stats.completed}
+              joinedLate={activity.stats.joinedLate}
+            />
+          </div>
+          <div style={mercyStyle}>
+            <ActivityCompletionReasonView
+              completionReason={activity.stats.completionReason}
+            />
+          </div>
         </div>
+
         <div style={medalsStyle}>
-          {goldMedals.map((medal, index) => {
-            return (
-              <Medal
-                key={medal.id}
-                medal={medal.info}
-                count={medal.count}
-                size={SMALL}
-              />
-            );
-          })}
+          <MedalsView medals={goldMedals} size={SMALL} />
         </div>
         <div
           style={gameDetailNavStyle}
@@ -294,4 +252,4 @@ const ActivityListItem = (props) => {
   );
 };
 
-export default ActivityListItem;
+export default PlayerActivityListItem;

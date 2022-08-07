@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import ActivityList from "./components/ActivityList";
+import PlayerActivityList from "./components/PlayerActivityList";
 import WeaponsDetail from "./components/WeaponsDetail";
 import WeaponMetaDetail from "./components/WeaponMetaDetail";
 import MapsDetail from "./components/MapsDetail";
@@ -238,7 +238,7 @@ const PlayerView = () => {
           id="games"
           title="Games"
         />
-        <ActivityList
+        <PlayerActivityList
           activities={activities}
           summary={summary}
           isLoading={isActivitiesLoading}

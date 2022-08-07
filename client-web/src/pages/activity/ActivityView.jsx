@@ -7,7 +7,8 @@ import ActivityDetails from "./components/ActivityDetails";
 import ActivityLeaderBoard from "./components/ActivityLeaderBoard";
 import GoldMedalsList from "./components/GoldMedalsList";
 import ActivityWeaponListContainer from "./components/ActivityWeaponListContainer";
-import TeamDetails from "./components/TeamDetails";
+import TeamSummaryView from "./components/TeamSummaryView";
+import TeamDetailsView from "./components/TeamDetailsView";
 
 const pageContainerStyle = {
   minWidth: "720px",
@@ -123,7 +124,7 @@ const ActivityView = (props) => {
             title="Alpha Team"
             description="Alpha Team details"
           />
-          <TeamDetails team={teams[0]} />
+          <TeamDetailsView team={teams[0]} />
         </div>
 
         <div>
