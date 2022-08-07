@@ -7,7 +7,7 @@ import { ReactComponent as ChevronRight } from "../../../components/images/table
 import { SMALL } from "../../../components/Medal";
 import PlayerStatusView from "./PlayerStatusView";
 import ActivityCompletionReasonView from "./ActivityCompletionReasonView";
-import MedalsView from "./MedalsView";
+import MedalsList from "./MedalsList";
 import { Standing } from "shared";
 
 const resultWinStyle = {
@@ -238,7 +238,7 @@ const PlayerActivityListItem = (props) => {
         </div>
 
         <div style={medalsStyle}>
-          <MedalsView medals={goldMedals} size={SMALL} />
+          <MedalsList medals={goldMedals} size={SMALL} />
         </div>
         <div
           style={gameDetailNavStyle}

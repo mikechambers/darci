@@ -2,15 +2,14 @@ import Medal from "../../../components/Medal";
 
 const elementStyle = {
   display: "flex",
+  flexDirection: "row",
   flexWrap: "wrap",
   columnGap: "4px",
 };
 
-const MedalsView = (props) => {
+const MedalsList = (props) => {
   const medals = props.medals;
   const size = props.size;
-  const showDivider = !!props.title;
-  const title = props.title ? props.title : "";
 
   return (
     <div style={elementStyle}>
@@ -28,4 +27,4 @@ const MedalsView = (props) => {
   );
 };
 
-export default MedalsView;
+export default MedalsList;

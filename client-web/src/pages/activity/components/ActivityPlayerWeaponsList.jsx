@@ -15,7 +15,6 @@ const rootStyle = {
 const headerStyle = {
   display: "grid",
   gridTemplateColumns: "244px 35px 35px 39px",
-  borderBottom: "1px solid #ffffff88",
   alignItems: "end",
   columnGap: 4,
 };
@@ -47,7 +46,10 @@ const ActivityPlayerWeaponsList = (props) => {
 
   return (
     <div style={rootStyle}>
-      <div style={headerStyle}>
+      <div
+        style={headerStyle}
+        className="subsection_header subsection_header_underline"
+      >
         <div className="subsection_header">Weapons</div>
         <div className="label_small right">kills</div>
         <div className="label_icon" style={iconStyle}>

@@ -35,9 +35,6 @@ const LeaderList = (props) => {
 
   const nameStyle = {
     font: "var(--font-small-name)",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
   };
 
   const nameCodeStyle = {
@@ -61,7 +58,11 @@ const LeaderList = (props) => {
                 style={teamStyle}
                 title={`${item.teamName} team`}
               ></div>
-              <div style={nameStyle} title={item.player.getFullName()}>
+              <div
+                className="overflow"
+                style={nameStyle}
+                title={item.player.getFullName()}
+              >
                 {item.player.bungieDisplayName}
                 <span className="bungie_name_code" style={nameCodeStyle}>
                   #{item.player.bungieDisplayNameCode}

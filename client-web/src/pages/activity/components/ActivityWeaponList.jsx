@@ -31,12 +31,6 @@ const iconStyleBase = {
   backgroundSize: "cover",
   borderRadius: 4,
 };
-const nameStyle = {
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  flexWrap: "nowrap",
-};
 
 const precisionStyle = {
   font: "var(--light) 12px 'Roboto', sans-serif",
@@ -165,9 +159,9 @@ const ActivityWeaponList = (props) => {
           return (
             <React.Fragment key={data.id}>
               {iconDiv}
-              <div style={nameStyle}>{data.name}</div>
+              <div className="section_entry overflow">{data.name}</div>
 
-              <div className="right">{data.kills}</div>
+              <div className="section_entry right">{data.kills}</div>
 
               <div style={countStyle}>{data.count}</div>
             </React.Fragment>
