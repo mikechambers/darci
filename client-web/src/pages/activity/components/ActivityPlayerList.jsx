@@ -11,7 +11,12 @@ const ActivityPlayerList = (props) => {
   return (
     <div style={elementStyle}>
       {players.map((player) => {
-        return <ActivityPlayerListItem player={player} />;
+        return (
+          <ActivityPlayerListItem
+            player={player}
+            key={player.player.memberId}
+          />
+        );
       })}
     </div>
   );

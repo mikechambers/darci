@@ -45,7 +45,6 @@ const TeamSummaryView = (props) => {
   let superKills = 0;
   let weaponKills = 0;
   for (const p of team.players) {
-    console.log(p);
     kills += p.stats.kills;
     assists += p.stats.assists;
     deaths += p.stats.deaths;

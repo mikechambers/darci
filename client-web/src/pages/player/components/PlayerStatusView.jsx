@@ -5,9 +5,10 @@ const rotateStyle = { transform: "rotate(180deg)" };
 const PlayerStatusView = (props) => {
   const joinedLate = props.joinedLate;
   const completed = props.completed;
+
   const dimension = props.dimension ? props.dimension : 18;
 
-  let statusIcon = "";
+  let statusIcon = <div></div>;
   if (!completed) {
     statusIcon = (
       <JoinedLateIcon
