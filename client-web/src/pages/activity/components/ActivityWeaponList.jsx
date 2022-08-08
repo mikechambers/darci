@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { ItemSubType } from "shared";
 import IconManager, {
   CHEVRONS_DOWN,
   CHEVRONS_UP,

@@ -1,5 +1,5 @@
 import { MEDIUM, SMALL } from "../../../components/Medal";
-import PlayerMedalsView from "../PlayerMedalsView";
+import PlayerMedalsView from "./PlayerMedalsView";
 import ActivityPlayerStatBreakdownView from "./ActivityPlayerStatBreakdownView";
 import ActivityPlayerWeaponsList from "./ActivityPlayerWeaponsList";
 import DestinyTrackerLink from "./DestinyTrackerLink";
@@ -15,9 +15,10 @@ const ActivityPlayerListItemDrawer = (props) => {
   };
 
   const statsContainterStyle = {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
+    display: "grid",
+    gridTemplateColumns: "60% 20% 20%",
+    //flexDirection: "row",
+    //justifyContent: "space-between",
   };
 
   const infoContainerStyle = {
@@ -25,8 +26,15 @@ const ActivityPlayerListItemDrawer = (props) => {
     flexDirection: "row",
     justifyContent: "space-between",
   };
+
+  const linksStyle = {
+    display: "flex",
+    flexDirection: "row",
+    columnGap: 4,
+  };
+
   const player = props.player;
-  console.log(player.player);
+
   return (
     <div style={rootStyle} className="activity_details">
       <div style={statsContainterStyle}>
@@ -38,7 +46,7 @@ const ActivityPlayerListItemDrawer = (props) => {
         <div>
           <DurationView duration={player.stats.timePlayedSeconds * 1000} />
         </div>
-        <div>
+        <div style={linksStyle}>
           <DestinyTrackerLink
             url={`https://destinytracker.com/destiny-2/profile/bungie/${player.player.memberId}/overview`}
             desription="View player on Destiny Tracker."

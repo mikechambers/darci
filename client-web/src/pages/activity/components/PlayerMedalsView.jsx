@@ -1,11 +1,17 @@
-import { SMALL } from "../../components/Medal";
-import MedalsList from "../player/components/MedalsList";
+import { SMALL } from "../../../components/Medal";
+import MedalsList from "../../player/components/MedalsList";
+
+const rootStyle = {
+  display: "flex",
+  flexDirection: "column",
+  rowGap: 4,
+};
 
 const PlayerMedalsView = (props) => {
   const medals = props.medals;
 
   return (
-    <div>
+    <div style={rootStyle}>
       <div className="subsection_header subsection_header_underline">
         Medals
       </div>

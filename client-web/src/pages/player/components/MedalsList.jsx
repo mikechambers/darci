@@ -4,7 +4,8 @@ const elementStyle = {
   display: "flex",
   flexDirection: "row",
   flexWrap: "wrap",
-  columnGap: "4px",
+  columnGap: 4,
+  rowGap: 4,
 };
 
 const MedalsList = (props) => {

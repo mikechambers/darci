@@ -41,8 +41,6 @@ const gappedStyle = {
 const pageContainerStyle = {
   minWidth: "720px",
   padding: "0px var(--page-container-padding)",
-  background:
-    "linear-gradient(180deg, var(--background-color) 0%, rgba(54,54,54,1) 100%)",
 };
 
 const itemDetailsStyle = {

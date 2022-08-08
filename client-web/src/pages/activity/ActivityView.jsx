@@ -7,14 +7,11 @@ import ActivityDetails from "./components/ActivityDetails";
 import ActivityLeaderBoard from "./components/ActivityLeaderBoard";
 import GoldMedalsList from "./components/GoldMedalsList";
 import ActivityWeaponListContainer from "./components/ActivityWeaponListContainer";
-import TeamSummaryView from "./components/TeamSummaryView";
 import TeamDetailsView from "./components/TeamDetailsView";
 
 const pageContainerStyle = {
   minWidth: "720px",
   padding: "0px var(--page-container-padding)",
-  background:
-    "linear-gradient(180deg, var(--background-color) 0%, rgba(54,54,54,1) 100%)",
 };
 
 const gappedStyle = {
@@ -56,6 +53,10 @@ const ActivityView = (props) => {
     {
       value: "Weapons",
       id: "weapons",
+    },
+    {
+      value: "Players",
+      id: "players",
     },
     {
       value: "Links",
@@ -110,17 +111,14 @@ const ActivityView = (props) => {
           <ActivityWeaponListContainer teams={teams} />
         </div>
 
-        <div>
-          <PageSectionTitle
-            id="insight"
-            title="Insight"
-            description="Data insight into match"
-          />
-        </div>
+        {teams.map((team, index) => {
+          let id = "";
+          if (!index) {
+            id = "players";
+          }
 
-        {teams.map((team) => {
           return (
-            <div key={team.name}>
+            <div key={team.name} id={id}>
               <PageSectionTitle
                 id={team.name}
                 title={`${team.name} Team`}
@@ -137,21 +135,26 @@ const ActivityView = (props) => {
             title="Links"
             description="Links to game details on other sites."
           />
-          <div>
-            <a href={`https://destinytracker.com/destiny-2/pgcr/${activityId}`}>
-              Destiny Tracker
-            </a>
-          </div>
-          <div>
-            <a href={`https://www.bungie.net/en/PGCR/${params.activityId}`}>
-              Bungie PGCR
-            </a>
-          </div>
-          <div>
-            <a href={`https://crucible.report/pgcr/${params.activityId}`}>
-              Trials Report
-            </a>
-          </div>
+
+          <ul>
+            <li>
+              <a
+                href={`https://destinytracker.com/destiny-2/pgcr/${activityId}`}
+              >
+                View Game on Destiny Tracker
+              </a>
+            </li>
+            <li>
+              <a href={`https://www.bungie.net/en/PGCR/${params.activityId}`}>
+                View game at Bungie
+              </a>
+            </li>
+            <li>
+              <a href={`https://crucible.report/pgcr/${params.activityId}`}>
+                View Game on Trials Report
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>

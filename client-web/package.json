@@ -5,6 +5,8 @@
   "proxy": "http://127.0.0.1:8080",
   "dependencies": {
     "@mantine/hooks": "^5.0.2",
+    "@nivo/core": "^0.79.0",
+    "@nivo/pie": "^0.79.1",
     "luxon": "^3.0.1",
     "npm-check": "^6.0.1",
     "react": "^17.0.2",

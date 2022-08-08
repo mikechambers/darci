@@ -132,7 +132,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--base-font-color);
-  background: var(--background-color);
+  /*background: var(--background-color);*/
+  background:
+  linear-gradient(180deg, var(--background-color) 0%, rgba(54,54,54,1) 100%) fixed;
+
   /*background: linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(136,136,136,1) 100%);*/
 
   margin:0px;
@@ -253,6 +256,12 @@ h2, .section_header {
 
 a {
   color: var(--link-color);
+
+  text-decoration-color: #fbfbfb66;
+}
+a:hover {
+
+  text-decoration-color: #fbfbfb;
 }
 
 .weapon_list_icon{
