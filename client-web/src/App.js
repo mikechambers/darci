@@ -78,7 +78,7 @@ const App = (props) => {
   const currentViewStyle = {
     flexGrow: "2",
     height: "inherit",
-    maxWidth: 800,
+    maxWidth: 900,
   };
 
   const footerStyle = {
