@@ -13,7 +13,6 @@ const NoMatchView = (props) => {
 
   let s2 = {
     opacity: "0.5",
-    textShadow: "var(--text-shadow)",
   };
 
   return (

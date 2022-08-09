@@ -12,47 +12,50 @@ import { Standing } from "shared";
 
 const resultWinStyle = {
   backgroundColor: "#3FD445",
-  width: "6px",
-  borderRadius: "4px 0px 0px 4px",
+  //width: "6px",
+  borderRadius: "var(--border-radius) 0px 0px var(--border-radius)",
 };
 
 const resultLossStyle = {
   backgroundColor: "#E92626",
-  width: "6px",
-  borderRadius: "4px 0px 0px 4px",
+  //width: "6px",
+  borderRadius: "var(--border-radius) 0px 0px var(--border-radius)",
 };
 
 const statsStyle = {
   //display: "flex",
   //flexDirection: "row",
   //justifyContent: "space-between",
-  width: "480px",
+  //width: "450px",
 
   alignItems: "center",
 
   display: "grid",
-  gridTemplateColumns: "repeat(6, 1fr)",
+  gridTemplateColumns: "repeat(6, 50px)",
+  columnGap: "var(--stat-item-gap)",
 };
 
 //todo: remove this here or in parent
-const WIDTH = 735;
 
 const gameContainerStyle = {
-  display: "flex",
-  flexDirection: "row",
-  width: `${WIDTH}px`,
+  //display: "flex",
+  //flexDirection: "row",
+
   height: "46px",
-  backgroundColor: "var(--list-item-background-color)",
-  border: "var(--list-item-border)",
-  borderLeftWidth: "0px",
-  borderRadius: "4px",
+
+  //borderLeftWidth: "0px",
+
+  display: "grid",
+  gridTemplateColumns: "6px 170px 400px 39px 75px 10px",
+  flexDirection: "row",
+
   cursor: "pointer",
 };
 
 const gameTitleStyle = {
   display: "flex",
   flexDirection: "column",
-  width: "158px",
+  //width: "160px",
   justifyContent: "center",
   paddingLeft: "4px",
 };
@@ -64,7 +67,7 @@ const gameContainerWrapper = {
 };
 
 const statusStyleWrapper = {
-  width: "35px",
+  //width: "35px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -84,7 +87,7 @@ const statusStyle = {
 };
 
 const medalsStyle = {
-  width: "60px",
+  //width: "60px",
   display: "flex",
   justifyContent: "flex-start",
   alignItems: "center",
@@ -93,7 +96,7 @@ const medalsStyle = {
 const gameDetailNavStyle = {
   backgroundColor: "#FFFFFFee",
   width: "10px",
-  borderRadius: "0px 4px 4px 0px",
+  borderRadius: "0px var(--border-radius) var(--border-radius) 0px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -113,10 +116,7 @@ const PlayerActivityListItem = (props) => {
 
   const onGameDetailNavClick = (e, activityId) => {
     e.stopPropagation();
-    //console.log(activityId, e);
-    ///activity/11244274172
     navigate(`/activity/${activityId}`);
-    //console.log("click", e);
   };
 
   let resultStyle =
@@ -170,14 +170,18 @@ const PlayerActivityListItem = (props) => {
   };
 
   let detailsDiv = isExpanded ? (
-    <PlayerActivityDetail width={WIDTH - 10} activity={activity} />
+    <PlayerActivityDetail activity={activity} />
   ) : (
     ""
   );
 
   return (
     <div style={gameContainerWrapper}>
-      <div style={gameContainerStyle} onClick={onItemClick}>
+      <div
+        className="list_item_header"
+        style={gameContainerStyle}
+        onClick={onItemClick}
+      >
         <div style={resultStyle}></div>
         <div style={gameTitleStyle}>
           <div className="subsection_header">{activity.activity.map.name}</div>

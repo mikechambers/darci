@@ -2,7 +2,11 @@ import { useState } from "react";
 import ActivityPlayerListItemDrawer from "./ActivityPlayerListItemDrawer";
 import ActivityPlayerListItemHeader from "./ActivityPlayerListItemHeader";
 
-const rootStyle = { width: "min-content" };
+const rootStyle = {
+  width: "min-content",
+  display: "flex",
+  flexDirection: "column",
+};
 
 const ActivityPlayerListItem = (props) => {
   const player = props.player;

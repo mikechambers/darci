@@ -108,13 +108,6 @@ const weaponEntryStyle = {
 };
 
 let detailStyleBase = {
-  backgroundColor: "var(--list-item-detail-background-color)",
-
-  border: "var(--list-item-border)",
-  borderTopWidth: "0px",
-  borderRadius: "0px 0px 4px 4px",
-
-  selfAlign: "center",
   display: "flex",
   flexDirection: "row",
 
@@ -123,12 +116,10 @@ let detailStyleBase = {
 };
 
 const PlayerActivityDetail = (props) => {
-  let width = props.width;
   let activity = props.activity;
 
   const detailStyle = {
     ...detailStyleBase,
-    width: `${width}px`,
   };
 
   const backgroundStyle = {
@@ -185,7 +176,7 @@ const PlayerActivityDetail = (props) => {
     );
 
   return (
-    <div className="activity_details" style={detailStyle}>
+    <div className="list_item_drawer" style={detailStyle}>
       <div style={backgroundStyle}>{scoreDiv}</div>
 
       <div style={dataContainerWrapperStyle}>

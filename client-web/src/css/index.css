@@ -61,6 +61,7 @@
   
 
   /* expose these via classes */
+  --stat-item-gap:16px;
   --list-item-gap: 12px;
   --border-radius: 4px;
   --page-container-padding:  45px;
@@ -70,7 +71,7 @@
 
   /* expose these via classes */
   --list-item-background-color: #00000033;
-  --list-item-detail-background-color:#1C1C1C66;
+  --list-item-detail-background-color:#ffffff11;
 
   --list-item-border: 1px solid #ffffff33;
   --divider-border:1px solid #ffffff;
@@ -78,7 +79,27 @@
   --background-blur: blur(2px);
 }
 
+.list_item_header {
+  background-color: var(--list-item-background-color);
+  border: var(--list-item-border);
+  border-radius: 4px;
+  padding:4px;
+  width:700px
+}
 
+.list_item_drawer {
+  background-color: var(--list-item-detail-background-color);
+  border: var(--list-item-border);
+
+  border-top-width: 0px;
+  border-radius: 0px 0px 4px 4px;
+  align-self: center;
+  width:98%;
+
+  animation: fade-in .5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+
+  padding:4px;
+}
 
 .label_icon {
   opacity:0.5;
@@ -370,14 +391,6 @@ a:hover {
   }
 }
 
-.activity_details {
-  animation: fade-in .5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
-  background-color: var(--list-item-background-color);
-  border:1px solid #ffffff44;
-  padding:4px;
-
-}
-
 .alpha_team {
   background-color: #1a9ee8;
 }
@@ -405,13 +418,6 @@ a:hover {
 
 .icon_link:active {
   translate: 0px 1px;
-}
-
-.list_item{
-  background-color:#2E2E2E;
-  border-radius:4px;
-  border:1px solid #ffffff44;
-  padding:4px;
 }
 
 /******* form controls ********/

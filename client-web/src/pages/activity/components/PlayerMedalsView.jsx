@@ -12,7 +12,7 @@ const PlayerMedalsView = (props) => {
 
   return (
     <div style={rootStyle}>
-      <div className="subsection_header">Medals</div>
+      <div className="subsection_header underline">Medals</div>
       <MedalsList size={SMALL} medals={medals} />
     </div>
   );

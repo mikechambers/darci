@@ -17,8 +17,6 @@ const ActivityPlayerListItemDrawer = (props) => {
   const statsContainterStyle = {
     display: "grid",
     gridTemplateColumns: "60% 20% 20%",
-    //flexDirection: "row",
-    //justifyContent: "space-between",
   };
 
   const infoContainerStyle = {
@@ -36,7 +34,7 @@ const ActivityPlayerListItemDrawer = (props) => {
   const player = props.player;
 
   return (
-    <div style={rootStyle} className="activity_details">
+    <div style={rootStyle} className="list_item_drawer">
       <div style={statsContainterStyle}>
         <ActivityPlayerWeaponsList weapons={player.stats.extended.weapons} />
         <ActivityPlayerStatBreakdownView stats={player.stats} />

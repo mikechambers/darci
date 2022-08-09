@@ -7,7 +7,6 @@ import PlayerInfoView from "./PlayerInfoView";
 
 const rootStyle = {
   display: "grid",
-  width: 700,
   gridTemplateColumns: "200px 340px 60px 100px",
   flexDirection: "row",
   alignItems: "center",
@@ -19,7 +18,7 @@ const ActivityPlayerListItemHeader = (props) => {
   const player = props.player;
   const onClick = props.onClick;
 
-  let className = props.onClick ? "list_item link" : "list_item";
+  let className = props.onClick ? "list_item_header link" : "list_item_header";
 
   const data = [
     { value: player.stats.score, label: "score" },

@@ -59,7 +59,6 @@ const dividerStyle = {
 
 const periodStyle = {
   font: "var(--font-activity-period)",
-  textShadow: "var(--text-shadow)",
 };
 
 const teamScoresStyle = {
