@@ -25,7 +25,7 @@ const rootStyle = {
   flexDirection: "column",
   rowGap: 4,
   borderRadius: 4,
-  backgroundColor: "var(--list-item-background-color)",
+  backgroundColor: "var(--color-list-item-background)",
   padding: 8,
 };
 

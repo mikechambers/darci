@@ -1,30 +1,22 @@
 import { DateTime, Interval } from "luxon";
 import React from "react";
-import PlayerActivityListItem from "./PlayerActivityListItem";
-
-const WIDTH = 735;
+import PlayerActivityListItemHeader from "./PlayerActivityListItemHeader";
 
 const containerStyle = {
-  width: `${WIDTH}px`,
   display: "flex",
   flexDirection: "column",
-  //padding: "var(--page-container-padding)",
 };
 
 const wrapperStyle = {
   display: "flex",
   flexDirection: "column",
-  /*gap: "var(--list-item-gap)"*/
   gap: "2px",
 };
 
 const dateStyleFirst = {
-  width: "735px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
-  textTransform: "capitalize",
-  font: "var(--font-subsection-header)",
 };
 
 const dateStyle = {
@@ -63,13 +55,17 @@ const PlayerActivityList = (props) => {
             }
             let style = !index ? dateStyleFirst : dateStyle;
 
-            dateDiv = <div style={style}>{s}</div>;
+            dateDiv = (
+              <div style={style} className="subsection_header">
+                {s}
+              </div>
+            );
           }
 
           return (
             <React.Fragment key={game.activity.activityId}>
               {dateDiv}
-              <PlayerActivityListItem
+              <PlayerActivityListItemHeader
                 activity={game}
                 summary={summary}
                 key={game.activity.activityId}

@@ -2,17 +2,17 @@ import Stat from "./Stat";
 
 const containerStyle = {
   display: "flex",
-  backgroundColor: "var(--list-item-background-color)",
-  borderRadius: "var(--border-radius)",
+  backgroundColor: "var(--color-list-item-background)",
+  borderRadius: "var(--radius-border)",
   padding: "12px",
   maxHeight: `110px`,
-  columnGap: "var(--list-item-gap)",
+  columnGap: "var(--gap-list-item)",
   itemAlign: "flex-start",
-  //gap: "var(--list-item-gap)",
+  //gap: "var(--gap-list-item)",
 };
 
 const gapStyle = {
-  height: "var(--list-item-gap)",
+  height: "var(--gap-list-item)",
 };
 
 const dataContainerStyle = {
@@ -34,7 +34,7 @@ const valuesStyle = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
-  gap: "var(--list-item-gap)",
+  gap: "var(--gap-list-item)",
 };
 
 const descriptionStyle = {

@@ -115,7 +115,7 @@ let detailStyleBase = {
   gap: `${GAP}px`,
 };
 
-const PlayerActivityDetail = (props) => {
+const PlayerActivityListItemDrawer = (props) => {
   let activity = props.activity;
 
   const detailStyle = {
@@ -140,7 +140,6 @@ const PlayerActivityDetail = (props) => {
   const metaDataStyle = {
     display: "flex",
     alignItems: "center",
-    //font: "var(--font-small)",
     justifyContent: "space-between",
   };
 
@@ -280,10 +279,6 @@ const PlayerActivityDetail = (props) => {
                 return "";
               }
 
-              let countLabel = "";
-              if (medal.count > 1) {
-                countLabel = `${medal.count} x `;
-              }
               return (
                 <Medal
                   key={medal.id}
@@ -336,4 +331,4 @@ const PlayerActivityDetail = (props) => {
   );
 };
 
-export default PlayerActivityDetail;
+export default PlayerActivityListItemDrawer;

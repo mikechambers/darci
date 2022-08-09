@@ -10,10 +10,10 @@ const style = {
   columnGap: "40px",
   backgroundColor: "rgba(0,0,0,0.1)",
   padding: "10px",
-  borderRadius: "var(--border-radius)",
+  borderRadius: "var(--radius-border)",
   width: "max-content",
-  //border: "var(--list-item-border)",
-  backdropFilter: "var(--background-blur)",
+  //border: "var(--border-list-item)",
+  backdropFilter: "var(--blur-background)",
 };
 
 const StatDetails = (props) => {

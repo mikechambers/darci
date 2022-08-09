@@ -3,7 +3,7 @@ import { humanDuration } from "../../../utils/date";
 import { capitalize } from "../../../utils/string";
 
 const scoreStyle = {
-  padding: "var(--content-padding)",
+  padding: "var(--padding-content)",
   height: "33%",
   display: "flex",
   flexDirection: "column",
@@ -23,7 +23,7 @@ const gameInfoContainterStyle = {
   alignItems: "flex-end",
 
   backgroundColor: "#00000044",
-  padding: "var(--content-padding)",
+  padding: "var(--padding-content)",
 };
 
 const gameInfoStyle = {
@@ -44,21 +44,8 @@ const modeMapContainerStyle = {
   alignItems: "center",
 };
 
-const mapNameStyle = {
-  font: "var(--font-activity-map-name)",
-};
-
-const modeNameStyle = {
-  font: "var(--font-activity-mode-name)",
-  textTransform: "uppercase",
-};
-
 const dividerStyle = {
   margin: 0,
-};
-
-const periodStyle = {
-  font: "var(--font-activity-period)",
 };
 
 const teamScoresStyle = {
@@ -67,25 +54,10 @@ const teamScoresStyle = {
   gap: "10px",
 };
 
-const scoreBoxStyle = {
-  width: 60,
-  height: 30,
-  border: "1px solid #ffffff88",
-  font: "var(--font-activity-score-box)",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-};
-
 const scoreDivider = {
   borderColor: "#ffffff",
   borderStyle: "solid",
   borderWidth: "0px 1px 0px 0px",
-};
-
-const completionReasonStyle = {
-  font: "var(--font-activity-completion-reason)",
-  textTransform: "uppercase",
 };
 
 const summaryStyleBase = {
@@ -147,17 +119,13 @@ const ActivityDetails = (props) => {
   return (
     <div style={summaryStyle}>
       <div style={scoreStyle}>
-        <div style={completionReasonStyle}>
+        <div className="activity_completion_reason">
           {details.completionReason.label}
         </div>
         <div style={teamScoresStyle}>
-          <div className="alpha_team" style={scoreBoxStyle}>
-            {alphaTeam.score}
-          </div>
+          <div className="alpha_team activity_score_box">{alphaTeam.score}</div>
           <div style={scoreDivider}></div>
-          <div className="bravo_team" style={scoreBoxStyle}>
-            {betaTeam.score}
-          </div>
+          <div className="bravo_team activity_score_box">{betaTeam.score}</div>
         </div>
         <div>{activityDuration}</div>
       </div>
@@ -171,12 +139,12 @@ const ActivityDetails = (props) => {
               <div>
                 <hr style={dividerStyle} />
               </div>
-              <div style={modeNameStyle}>{details.modeInfo.name}</div>
+              <div className="activity_mode_name">{details.modeInfo.name}</div>
             </div>
           </div>
         </div>
         <div style={matchTimeStyle}>
-          <div style={periodStyle}>{periodHuman}</div>
+          <div>{periodHuman}</div>
         </div>
       </div>
     </div>

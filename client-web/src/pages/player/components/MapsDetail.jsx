@@ -7,13 +7,13 @@ import Stat from "./Stat";
 const containerStyle = {
   display: "flex",
   flexDirection: "column",
-  //padding: "var(--page-container-padding)",
+  //padding: "var(--padding-page-container)",
 };
 
 const wrapperStyle = {
   display: "flex",
   flexDirection: "row",
-  gap: "var(--list-item-gap)",
+  gap: "var(--gap-list-item)",
   //gap: "20px",
   flexWrap: "wrap",
 };
@@ -27,8 +27,8 @@ const headerStyle = {
 const elementStyle = {
   width: "235px",
   height: "310px",
-  borderRadius: "var(--border-radius)",
-  //border: "var(--list-item-border)",
+  borderRadius: "var(--radius-border)",
+  //border: "var(--border-list-item)",
   //backgroundPosition: "0px 49px, center",
   //backgroundSize: "contain, cover", //contain cover
   //backgroundRepeat: "repeat, no-repeat",
@@ -45,10 +45,10 @@ const datacontainerStyle = {
   height: "265px",
   width: "100%",
 
-  //backgroundColor: "var(--list-item-background-color)",
+  //backgroundColor: "var(--color-list-item-background)",
   backgroundColor: "#1C1C1Cee",
-  backdropFilter: "var(--background-blur)",
-  borderRadius: "0px 0px var(--border-radius) var(--border-radius)",
+  backdropFilter: "var(--blur-background)",
+  borderRadius: "0px 0px var(--radius-border) var(--radius-border)",
 
   display: "flex",
   flexDirection: "column",

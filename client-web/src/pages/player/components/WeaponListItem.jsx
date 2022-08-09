@@ -2,14 +2,14 @@ import Stat from "./Stat";
 
 const containerStyle = {
   display: "flex",
-  backgroundColor: "var(--list-item-background-color)",
-  borderRadius: "var(--border-radius)",
+  backgroundColor: "var(--color-list-item-background)",
+  borderRadius: "var(--radius-border)",
   padding: "12px",
-  //gap: "var(--list-item-gap)",
+  //gap: "var(--gap-list-item)",
 };
 
 const gapStyle = {
-  width: "var(--list-item-gap)",
+  width: "var(--gap-list-item)",
 };
 
 const dataContainerStyle = {

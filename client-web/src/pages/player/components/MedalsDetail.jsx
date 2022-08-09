@@ -3,7 +3,7 @@ import MedalListItem from "./MedalListItem";
 import { useState } from "react";
 
 const elementStyle = {
-  //padding: "var(--page-container-padding)",
+  //padding: "var(--padding-page-container)",
   width: "422px",
 };
 

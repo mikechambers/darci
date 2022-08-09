@@ -11,7 +11,7 @@ import TeamDetailsView from "./components/TeamDetailsView";
 
 const pageContainerStyle = {
   minWidth: "720px",
-  padding: "0px var(--page-container-padding)",
+  padding: "0px var(--padding-page-container)",
 };
 
 const gappedStyle = {

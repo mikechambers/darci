@@ -64,7 +64,7 @@ const App = (props) => {
   }
   /*
   const style = {
-    padding: "var(--page-container-padding)",
+    padding: "var(--padding-page-container)",
     borderBottom: "1px solid #FFFFFF66",
     display: "flex",
     alignItems: "center",

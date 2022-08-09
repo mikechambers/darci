@@ -7,7 +7,7 @@ const ItemStatContainer = (props) => {
   let rootStyle = {
     display: "grid",
     gridTemplateColumns: `repeat(${data.length}, 1fr)`,
-    columnGap: "var(--stat-item-gap)",
+    columnGap: "var(--gap-stat-item)",
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PlayerActivityDetail from "./PlayerAcitivtyDetail";
+import PlayerActivityListItemDrawer from "./PlayerActivityListItemDrawer";
 import Stat from "./Stat";
 import { useNavigate } from "react-router-dom";
 
@@ -13,13 +13,13 @@ import { Standing } from "shared";
 const resultWinStyle = {
   backgroundColor: "#3FD445",
   //width: "6px",
-  borderRadius: "var(--border-radius) 0px 0px var(--border-radius)",
+  borderRadius: "var(--radius-border) 0px 0px var(--radius-border)",
 };
 
 const resultLossStyle = {
   backgroundColor: "#E92626",
   //width: "6px",
-  borderRadius: "var(--border-radius) 0px 0px var(--border-radius)",
+  borderRadius: "var(--radius-border) 0px 0px var(--radius-border)",
 };
 
 const statsStyle = {
@@ -32,19 +32,13 @@ const statsStyle = {
 
   display: "grid",
   gridTemplateColumns: "repeat(6, 50px)",
-  columnGap: "var(--stat-item-gap)",
+  columnGap: "var(--gap-stat-item)",
 };
 
 //todo: remove this here or in parent
 
 const gameContainerStyle = {
-  //display: "flex",
-  //flexDirection: "row",
-
   height: "46px",
-
-  //borderLeftWidth: "0px",
-
   display: "grid",
   gridTemplateColumns: "6px 170px 400px 39px 75px 10px",
   flexDirection: "row",
@@ -55,7 +49,6 @@ const gameContainerStyle = {
 const gameTitleStyle = {
   display: "flex",
   flexDirection: "column",
-  //width: "160px",
   justifyContent: "center",
   paddingLeft: "4px",
 };
@@ -63,7 +56,8 @@ const gameTitleStyle = {
 const gameContainerWrapper = {
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
+
+  width: "min-content",
 };
 
 const statusStyleWrapper = {
@@ -96,7 +90,7 @@ const medalsStyle = {
 const gameDetailNavStyle = {
   backgroundColor: "#FFFFFFee",
   width: "10px",
-  borderRadius: "0px var(--border-radius) var(--border-radius) 0px",
+  borderRadius: "0px var(--radius-border) var(--radius-border) 0px",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
@@ -108,7 +102,7 @@ const chevronIconStyle = {
   height: 16,
 };
 
-const PlayerActivityListItem = (props) => {
+const PlayerActivityListItemHeader = (props) => {
   let activity = props.activity;
   let summary = props.summary;
 
@@ -170,7 +164,7 @@ const PlayerActivityListItem = (props) => {
   };
 
   let detailsDiv = isExpanded ? (
-    <PlayerActivityDetail activity={activity} />
+    <PlayerActivityListItemDrawer activity={activity} />
   ) : (
     ""
   );
@@ -256,4 +250,4 @@ const PlayerActivityListItem = (props) => {
   );
 };
 
-export default PlayerActivityListItem;
+export default PlayerActivityListItemHeader;

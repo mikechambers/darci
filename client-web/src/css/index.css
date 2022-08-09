@@ -35,7 +35,6 @@
   --font-activity-mode-name:var(--bold) 36px 'Roboto', sans-serif;
  
   /* activity page */
-  --font-activity-period:var(--light) 14px 'Roboto', sans-serif;
   --font-activity-score-box:var(--bold) 22px 'Roboto', sans-serif;
   --font-activity-completion-reason:var(--medium) 16px 'Roboto', sans-serif;
 
@@ -47,45 +46,48 @@
   --font-player-name:var(--regular) 14px 'Roboto', sans-serif;
 
   /* colors */
-  --font-color:#ffffff;
-  --label-color:#ffffff88;
-  --player-name-code-color:#58ccff;
-  --link-color:#fbfbfb;
-  --light-level-color:#FFD600;
-  --base-font-dark-color:#000000;
-  --background-color:rgb(34,34,34);
+  --color-font:#ffffff;
+  --color-label:#ffffff88;
+  --color-player-name-code:#58ccff;
+  --color-link:#fbfbfb;
+  --color-light-level:#FFD600;
+  --color-base-font-dark:#000000;
+  --color-background:rgb(34,34,34);
   
 
   /* expose these via classes */
-  --stat-item-gap:16px;
-  --list-item-gap: 12px;
-  --border-radius: 4px;
-  --page-container-padding:  45px;
-  --content-padding:20px;
+  --gap-stat-item:16px;
+  --gap-list-item: 12px;
+  --radius-border: 4px;
+  --padding-page-container:  45px;
+  --padding-content:20px;
 
   --text-shadow:1px 1px 1px black;
 
   /* expose these via classes */
-  --list-item-background-color: #00000033;
-  --list-item-detail-background-color:#ffffff11;
+  --color-list-item-background: #00000033;
+  --color-list-item-detail-background:#ffffff11;
 
-  --list-item-border: 1px solid #ffffff33;
-  --divider-border:1px solid #ffffff;
 
-  --background-blur: blur(2px);
+  /* borders */
+  --border-list-item: 1px solid #ffffff33;
+  --border-divider:1px solid #ffffff;
+  --border-regular:1px solid #ffffff88;
+
+  --blur-background: blur(2px);
 }
 
 .list_item_header {
-  background-color: var(--list-item-background-color);
-  border: var(--list-item-border);
+  background-color: var(--color-list-item-background);
+  border: var(--border-list-item);
   border-radius: 4px;
   padding:4px;
   width:700px
 }
 
 .list_item_drawer {
-  background-color: var(--list-item-detail-background-color);
-  border: var(--list-item-border);
+  background-color: var(--color-list-item-detail-background);
+  border: var(--border-list-item);
 
   border-top-width: 0px;
   border-radius: 0px 0px 4px 4px;
@@ -109,10 +111,10 @@ html {
 body {
 
   font:var(--font);
-  color: var(--font-color);
+  color: var(--color-font);
 
   background:
-  linear-gradient(180deg, var(--background-color) 0%, rgba(54,54,54,1) 100%) fixed;
+  linear-gradient(180deg, var(--color-background) 0%, rgba(54,54,54,1) 100%) fixed;
 
   margin:0px;
   padding:0px;
@@ -143,7 +145,7 @@ body {
 }
 
 .label {
-  color: var(--label-color);
+  color: var(--color-label);
   text-transform: uppercase;
   font:var(--font-label);
 }
@@ -154,7 +156,7 @@ body {
 
 .label_highlight {
   font:var(--font-label-highlight);
-  color: var(--label-color);
+  color: var(--color-label);
   text-transform: uppercase;
 }
 
@@ -164,13 +166,13 @@ body {
 
 .label_small {
   font:var(--font-label-small);
-  color: var(--label-color);
+  color: var(--color-label);
   text-transform: uppercase;
 }
 
 .light_level {
   font:var(  --font-small);
-  color:var(--light-level-color);
+  color:var(--color-light-level);
 }
 
 .announce {
@@ -198,7 +200,7 @@ body {
 /************* core layout css ********************/
 
 .page_containter {
-  padding: 0px var(--page-container-padding);
+  padding: 0px var(--padding-page-container);
   max-width: 900px;
 }
 
@@ -211,6 +213,21 @@ body {
 .activity_mode_name {
   font:var(--font-activity-mode-name);
   text-transform: uppercase;
+}
+
+.activity_completion_reason {
+  font:var(--font-activity-completion-reason);
+  text-transform:uppercase;
+}
+
+.activity_score_box {
+  width: 60px;
+  height: 30px;
+  border: var(--border-regular);
+  font: var(--font-activity-score-box);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /************ main navigation ****************/
@@ -280,7 +297,7 @@ body {
 }
 
 .nav_option {
-  color:var(--base-font-dark-color);
+  color:var(--color-base-font-dark);
   /* right align options */
   direction: rtl;
   
@@ -308,7 +325,7 @@ hr.page_section_title {
 
 .player_name_code_small {
   font:var(--font-player-name-code-small);
-  color:var(--player-name-code-color);
+  color:var(--color-player-name-code);
 }
 
 .player_name_large {
@@ -317,7 +334,7 @@ hr.page_section_title {
 
 .player_name_code_large {
   font:var(--font-player-name-code-large);
-  color:var(--player-name-code-color);
+  color:var(--color-player-name-code);
 }
 
 .player_name {
@@ -325,17 +342,17 @@ hr.page_section_title {
 }
 
 .player_name_code {
-  color:var(--player-name-code-color);
+  color:var(--color-player-name-code);
 }
 
 .underline {
-  border-bottom: 1px solid var(--label-color);
+  border-bottom: 1px solid var(--color-label);
 }
 
 /* start here / fix subtitle underlines */
 
 a {
-  color: var(--link-color);
+  color: var(--color-link);
   text-decoration-color: #fbfbfb66;
 }
 
@@ -347,7 +364,7 @@ a:hover {
 .weapon_list_icon{
   width: 64px;
   height: 64px;
-  border-radius: var(--border-radius);
+  border-radius: var(--radius-border);
   border-color:#00000000;
   
   background-size: cover;

@@ -3,7 +3,7 @@ import { FixedSizeList as List } from "react-window";
 import WeaponListItem from "./WeaponListItem";
 
 const elementStyle = {
-  //padding: "var(--page-container-padding)",
+  //padding: "var(--padding-page-container)",
   width: "422px",
 };
 

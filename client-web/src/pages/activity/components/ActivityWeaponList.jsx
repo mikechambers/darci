@@ -10,7 +10,7 @@ const elementStyle = {
   display: "flex",
   flexDirection: "column",
   borderRadius: 4,
-  backgroundColor: "var(--list-item-background-color)",
+  backgroundColor: "var(--color-list-item-background)",
   padding: 8,
   height: "min-content",
 };

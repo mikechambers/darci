@@ -28,7 +28,7 @@ const navIndicatorStyleBase = {
   right: "0px",
   width: "30px",
   height: "1px",
-  borderTop: "var(--divider-border)",
+  borderTop: "var(--border-divider)",
 };
 
 const NavItemContainer = (props) => {

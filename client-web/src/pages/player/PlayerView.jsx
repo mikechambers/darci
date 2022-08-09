@@ -23,7 +23,7 @@ import PageViewNavigation from "./components/PageViewNavigation";
 const { useQuery } = require("../../hooks/browser");
 
 const invalidParametersStyle = {
-  padding: "var(--page-container-padding)",
+  padding: "var(--padding-page-container)",
   display: "flex",
   width: "100%",
   height: "100%",

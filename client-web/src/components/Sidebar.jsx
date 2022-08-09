@@ -16,7 +16,7 @@ const sidebarStyle = {
 
   //add 1 pixel as the border takes a pixel on the right
   width: "213px",
-  borderRight: "var(--divider-border)",
+  borderRight: "var(--border-divider)",
   backgroundImage: `url(${SidebarBackground})`,
   backgroundRepeat: "repeat",
   height: "100vh",
