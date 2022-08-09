@@ -20,11 +20,6 @@ const valueStyle = {
   justifyContent: "flex-end",
 };
 
-const titleStyle = {
-  font: "var(--font-subsection-header)",
-  borderBottom: "1px #ffffff66 solid",
-};
-
 const rootStyle = {
   display: "flex",
   flexDirection: "column",
@@ -40,7 +35,7 @@ const LeaderList = (props) => {
 
   return (
     <div style={rootStyle}>
-      <div style={titleStyle}>{title}</div>
+      <div className="subsection_header underline">{title}</div>
       <div style={itemWrapperStyle}>
         {leaderData.map((item) => {
           return (
