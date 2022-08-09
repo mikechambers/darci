@@ -194,9 +194,7 @@ const PlayerViewConfig = (props) => {
         label="moment"
         maxLabelLength={maxLabelLength}
       />
-      <button onClick={onClick} className="b">
-        View
-      </button>
+      <button onClick={onClick}>View</button>
     </div>
   );
 };

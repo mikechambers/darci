@@ -54,7 +54,7 @@ const LeaderList = (props) => {
           return (
             <React.Fragment key={item.player.memberId}>
               <div
-                className={item.teamName.toLowerCase()}
+                className={`${item.teamName.toLowerCase()}_team`}
                 style={teamStyle}
                 title={`${item.teamName} team`}
               ></div>

@@ -82,7 +82,7 @@ const GoldMedalsList = (props) => {
             <div style={headerStyle}>
               <div
                 style={teamStyle}
-                className={item.teamName.toLowerCase()}
+                className={`${item.teamName.toLowerCase()}_team`}
               ></div>
               <div style={nameStyle} title={item.player.player.getFullName()}>
                 {item.player.player.bungieDisplayName}

@@ -15,7 +15,6 @@ const DestinyTrackerLink = (props) => {
           alt={descriptipn}
           title={descriptipn}
           style={siteIconStyle}
-          className="icon_glow"
         />
       </a>
     </div>

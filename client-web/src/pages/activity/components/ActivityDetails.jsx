@@ -152,11 +152,11 @@ const ActivityDetails = (props) => {
           {details.completionReason.label}
         </div>
         <div style={teamScoresStyle}>
-          <div className="alpha" style={scoreBoxStyle}>
+          <div className="alpha_team" style={scoreBoxStyle}>
             {alphaTeam.score}
           </div>
           <div style={scoreDivider}></div>
-          <div className="bravo" style={scoreBoxStyle}>
+          <div className="bravo_team" style={scoreBoxStyle}>
             {betaTeam.score}
           </div>
         </div>
