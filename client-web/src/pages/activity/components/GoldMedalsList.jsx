@@ -12,7 +12,6 @@ const medalEntryStyle = {
   alignItems: "center",
   justifyContent: "flex-start",
   gap: 8,
-  font: "var(--font-small-name)",
 };
 
 const playerEntryStyle = {
@@ -35,11 +34,6 @@ const headerStyle = {
   rowGap: 2,
   alignItems: "center",
   borderBottom: "1px #ffffff66 solid",
-};
-
-const nameStyle = { font: "var(--font-title-name)" };
-const nameCodeStyle = {
-  font: "var(--font-title-name-code)",
 };
 
 const GoldMedalsList = (props) => {
@@ -84,9 +78,12 @@ const GoldMedalsList = (props) => {
                 style={teamStyle}
                 className={`${item.teamName.toLowerCase()}_team`}
               ></div>
-              <div style={nameStyle} title={item.player.player.getFullName()}>
+              <div
+                className="player_name_large"
+                title={item.player.player.getFullName()}
+              >
                 {item.player.player.bungieDisplayName}
-                <span className="bungie_name_code" style={nameCodeStyle}>
+                <span className="player_name_code_large">
                   #{item.player.player.bungieDisplayNameCode}
                 </span>
               </div>

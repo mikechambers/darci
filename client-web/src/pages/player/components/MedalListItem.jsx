@@ -38,7 +38,6 @@ const valuesStyle = {
 };
 
 const descriptionStyle = {
-  font: "var(--font-description)",
   overflow: "hidden",
   textOverflow: "ellipsis",
   maxHeight: "50px",

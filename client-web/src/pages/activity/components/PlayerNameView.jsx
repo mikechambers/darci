@@ -1,18 +1,10 @@
-const nameCodeStyle = {
-  font: "var(--font-player-name-code)",
-};
-
-const elementStyle = {
-  font: "var(--font-player-name)",
-};
-
 const PlayerNameView = (props) => {
   const player = props.player;
 
   return (
-    <div style={elementStyle}>
+    <div className="player_name">
       {player.bungieDisplayName}
-      <span className="bungie_name_code" style={nameCodeStyle}>
+      <span className="player_name_code_small">
         #{player.bungieDisplayNameCode}
       </span>
     </div>

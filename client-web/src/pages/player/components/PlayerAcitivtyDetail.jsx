@@ -27,7 +27,6 @@ let abilitiesContainerStyle = {
   //gridTemplateRows: `repeat(3, 1fr)`,
   width: "50px",
   gridGap: `${GAP}px`,
-  font: "var(--font-data-small)",
   alignContent: "start",
 };
 
@@ -104,7 +103,6 @@ const weaponEntryStyle = {
   display: "grid",
   gridTemplateColumns: "25px 100px 15px 55px",
   gridGap: `${GAP}px`,
-  font: "var(--font-data-small)",
   width: "190px",
   alignContent: "start",
 };
@@ -151,11 +149,8 @@ const PlayerActivityDetail = (props) => {
   const metaDataStyle = {
     display: "flex",
     alignItems: "center",
-    font: "var(--font-small)",
+    //font: "var(--font-small)",
     justifyContent: "space-between",
-    //backgroundColor: "#FFFFFF11",
-    //padding: "0px 4px",
-    //borderRadius: "var(--border-radius)",
   };
 
   const linksStyle = {
@@ -195,7 +190,7 @@ const PlayerActivityDetail = (props) => {
 
       <div style={dataContainerWrapperStyle}>
         <div style={dataContainerStyle}>
-          <div style={weaponEntryStyle}>
+          <div style={weaponEntryStyle} className="data_small">
             {weapons.map((weapon, index) => {
               totalWeaponKills += weapon.kills;
 
@@ -216,7 +211,7 @@ const PlayerActivityDetail = (props) => {
               );
             })}
           </div>
-          <div style={abilitiesContainerStyle}>
+          <div style={abilitiesContainerStyle} className="data_small">
             <div style={abilitiesStyle}>
               {activity.stats.extended.meleeKills}
             </div>
@@ -310,7 +305,7 @@ const PlayerActivityDetail = (props) => {
           </div>
         </div>
         <div style={metaDataStyle}>
-          <div style={timePlayedStyle}>
+          <div style={timePlayedStyle} className="section_entry">
             {humanDuration(activity.stats.activityDurationSeconds * 1000)}
           </div>
           <div style={linksStyle}>
@@ -321,7 +316,6 @@ const PlayerActivityDetail = (props) => {
                 alt="View game on Crucible Report"
                 title="View game on Crucible Report"
                 style={siteIconStyle}
-                className="icon_glow"
               />
             </a>
             &nbsp;
@@ -332,13 +326,11 @@ const PlayerActivityDetail = (props) => {
                 alt="View game on DestinyTracker.com"
                 title="View game on DestinyTracker.com"
                 style={siteIconStyle}
-                className="icon_glow"
               />
             </a>
             &nbsp;
             <a
               href={`https://www.bungie.net/en/PGCR/${activityId}?character=${characterId}`}
-              className="icon_glow"
             >
               <IconManager
                 icon={DESTINY_LOGO}

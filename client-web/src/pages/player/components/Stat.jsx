@@ -24,6 +24,14 @@ const Stat = (props) => {
     valueClassName = `${valueClassName}_${styleName}`;
   }
 
+  if (styleName === SMALL_STYLE) {
+    labelClassName = "label_small";
+    valueClassName = "data";
+  } else if (styleName === LARGE_STYLE) {
+    labelClassName = "label_highlight";
+    valueClassName = "data_highlight";
+  }
+
   let s = {
     textAlign: align,
   };

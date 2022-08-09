@@ -9,98 +9,66 @@
   --bold:700;
 
   /* core fonts / styles */
-  --font: var(--regular) 16px var(--font-family);
+  --font: var(--light) 14px 'Roboto', sans-serif;
   --font-page-section: var(--medium) 18px var(--font-family);
   --font-subsection-header: var(--medium) 16px var(--font-family);
   --font-section-entry:var(--light) 14px var(--font-family);
   --font-data: var(--regular) 16px var(--font-family);
   --font-label:var(--light) 12px var(--font-family);
   --font-data-highlight:var(--bold) 42px var(--font-family);
-  --font-data-highlight-label:var(--medium) 17px var(--font-family);
+  --font-label-highlight:var(--medium) 17px var(--font-family);
+
+  --font-data-small:var(--light) 12px 'Roboto', sans-serif;
+  --font-label-small:var(--light) 10px 'Roboto', sans-serif;
+
   --font-label-small:var(--light) 10px var(--font-family);
   --font-announce: var(--medium) 64px var(--font-family);
   --font-main-nav: var(--regular) 16px 'Roboto', sans-serif;
   --font-page-nav:var(--regular) 14px 'Roboto', sans-serif;
   --font-controls: var(--light) 14px 'Roboto', sans-serif;
+  --font-page-alert: var(--medium) 32px 'Roboto', sans-serif;
 
   --font-list-subtitle: var(--bold) 12px 'Roboto', sans-serif;
 
   /* activity detail specific */
   --font-activity-map-name:var(--light) 36px 'Roboto', sans-serif;
   --font-activity-mode-name:var(--bold) 36px 'Roboto', sans-serif;
-
-
-  --font-color:#ffffff;
-  --label-color:#ffffff88;
-
-
-  --bungie-name-code-color:#58ccff;
-  --link-color:#fbfbfb;
-  --light-level-color:#FFD600;
-
-
-  --color-label:#FFFFFF88;
-  
-  --base-font-dark-color:#000000;
-  --data-label-color:#FFFFFF66;
-  --data-label-weight:400;
-  --data-label-font-size:16px;
-  --data-title-weight:700;
-
-
-  
-
-
-
-  --border-radius: 4px;
-
-  --page-container-padding:  45px;
-  --content-padding:20px;
-
  
-
-
-
+  /* activity page */
   --font-activity-period:var(--light) 14px 'Roboto', sans-serif;
   --font-activity-score-box:var(--bold) 22px 'Roboto', sans-serif;
   --font-activity-completion-reason:var(--medium) 16px 'Roboto', sans-serif;
 
-  --font-page-alert: var(--medium) 32px 'Roboto', sans-serif;
-
-  --font-small:var(--regular) 12px 'Roboto', sans-serif;
-
+  /* progress bar */
   --font-progress:var(--light) 16px 'Roboto', sans-serif;
-  --font-small-name:var(--light) 16px 'Roboto', sans-serif;
-  --font-small-name-code:var(--light) 12px 'Roboto', sans-serif;
 
 
-  --font-title-name:var(--font-subsection-header);
-  --font-title-name-code:var(--light) 14px 'Roboto', sans-serif;
+  /* bungie names */
+  --font-player-name-small:var(--light) 16px 'Roboto', sans-serif;
+  --font-player-name-code-small:var(--light) 12px 'Roboto', sans-serif;
+  --font-player-name-large:var(--font-subsection-header);
+  --font-player-name-code-large:var(--light) 14px 'Roboto', sans-serif;
+  --font-player-name:var(--regular) 14px 'Roboto', sans-serif;
 
-  --font-player-name:var(--light) 14px 'Roboto', sans-serif;
-  --font-player-name-code:var(--light) 10px 'Roboto', sans-serif;
+  /* colors */
+  --font-color:#ffffff;
+  --label-color:#ffffff88;
+  --player-name-code-color:#58ccff;
+  --link-color:#fbfbfb;
+  --light-level-color:#FFD600;
+  --base-font-dark-color:#000000;
+  --background-color:rgb(34,34,34);
+  
 
-
-  --font-description:var(--light) 14px 'Roboto', sans-serif;
-  --font-data-small:var(--light) 12px 'Roboto', sans-serif;
-  --font-label-small:var(--light) 10px 'Roboto', sans-serif;
-
-  --font-table-header:400 16px 'Roboto', sans-serif;
-
-  --underline: 1px solid #FFFFFF;
+  /* expose these via classes */
+  --list-item-gap: 12px;
+  --border-radius: 4px;
+  --page-container-padding:  45px;
+  --content-padding:20px;
 
   --text-shadow:1px 1px 1px black;
 
-  /* t, r, b, l */
-  --table-cell-padding: 4px 0px 0px 16px;
-
-  --background-color:rgb(34,34,34);
-  /*--background-color:#131313;*/
-
-  /**gap between items in a list. Such as weapons / maps */
-  --list-item-gap: 12px;
-
-  /*2E2E2E*/
+  /* expose these via classes */
   --list-item-background-color: #00000033;
   --list-item-detail-background-color:#1C1C1C66;
 
@@ -165,13 +133,16 @@ body {
 
 .data_highlight {
   font:var(--font-data-highlight);
-  text-shadow: var(--text-shadow);
 }
 
 .data_highlight_label {
-  font:var(--font-data-highlight-label);
+  font:var(--font-label-highlight);
   color: var(--label-color);
   text-transform: uppercase;
+}
+
+.data_small {
+  font:var(--font-data-small);
 }
 
 .label_small {
@@ -314,8 +285,30 @@ hr.page_section_title {
   margin-left: 0px;
 }
 
-.bungie_name_code {
-  color:var(--bungie-name-code-color);
+.player_name_small {
+  font:var(--font-player-name-small);
+}
+
+.player_name_code_small {
+  font:var(--font-player-name-code-small);
+  color:var(--player-name-code-color);
+}
+
+.player_name_large {
+  font:var(--font-player-name-large);
+}
+
+.player_name_code_large {
+  font:var(--font-player-name-code-large);
+  color:var(--player-name-code-color);
+}
+
+.player_name {
+  font:var(--font-player-name);
+}
+
+.player_name_code {
+  color:var(--player-name-code-color);
 }
 
 .underline {

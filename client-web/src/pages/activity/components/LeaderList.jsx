@@ -25,14 +25,6 @@ const titleStyle = {
   borderBottom: "1px #ffffff66 solid",
 };
 
-const nameStyle = {
-  font: "var(--font-small-name)",
-};
-
-const nameCodeStyle = {
-  font: "var(--font-small-name-code)",
-};
-
 const rootStyle = {
   display: "flex",
   flexDirection: "column",
@@ -59,12 +51,11 @@ const LeaderList = (props) => {
                 title={`${item.teamName} team`}
               ></div>
               <div
-                className="overflow"
-                style={nameStyle}
+                className="overflow player_name_small"
                 title={item.player.getFullName()}
               >
                 {item.player.bungieDisplayName}
-                <span className="bungie_name_code" style={nameCodeStyle}>
+                <span className="player_name_code_small">
                   #{item.player.bungieDisplayNameCode}
                 </span>
               </div>

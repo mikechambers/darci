@@ -19,7 +19,6 @@ const elementStyle = {
 const weaponContainerStyle = {
   display: "grid",
   gridTemplateColumns: "16px 145px 15px 10px",
-  font: "var(--font-small-name)",
   columnGap: 10,
   rowGap: 6,
 };
@@ -29,14 +28,6 @@ const iconStyleBase = {
   height: 16,
   backgroundSize: "cover",
   borderRadius: 4,
-};
-
-const precisionStyle = {
-  font: "var(--light) 12px 'Roboto', sans-serif",
-  display: "flex",
-  justifyContent: "flex-end",
-  opacity: 0.5,
-  alignItems: "center",
 };
 
 const countStyle = {
@@ -53,7 +44,6 @@ const titleStyle = {
   gridTemplateColumns: "161px 25px 10px",
   columnGap: 10,
   marginBottom: 6,
-  font: "var(--font-title-name)",
 };
 
 const killsStyle = {
@@ -121,7 +111,7 @@ const ActivityWeaponList = (props) => {
 
   return (
     <div style={elementStyle}>
-      <div style={titleStyle}>
+      <div style={titleStyle} className="subection_header">
         <div>{title}</div>
         <div
           className="label_small"

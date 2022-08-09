@@ -51,7 +51,7 @@ const PlayerActivitiesOverview = (props) => {
     <div style={elementStyle}>
       <div className="page_alert">
         <span>{playerName}</span>
-        <span className="bungie_name_code">#{playerNameCode}</span>{" "}
+        <span className="player_name_code">#{playerNameCode}</span>{" "}
       </div>
 
       <hr className="title" />
