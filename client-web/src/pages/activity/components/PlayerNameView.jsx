@@ -1,8 +1,13 @@
 const PlayerNameView = (props) => {
   const player = props.player;
 
+  const rootStyle = {
+    display: "flex",
+    flexWrap: "wrap",
+  };
+
   return (
-    <div className="player_name">
+    <div style={rootStyle} className="player_name">
       {player.bungieDisplayName}
       <span className="player_name_code_small">
         #{player.bungieDisplayNameCode}

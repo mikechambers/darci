@@ -156,7 +156,7 @@ body {
   font:var(--font-data-highlight);
 }
 
-.data_highlight_label {
+.label_highlight {
   font:var(--font-label-highlight);
   color: var(--label-color);
   text-transform: uppercase;
