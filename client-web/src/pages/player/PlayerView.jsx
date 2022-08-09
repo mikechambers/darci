@@ -127,7 +127,7 @@ const PlayerView = () => {
 
     return (
       <div style={invalidParametersStyle}>
-        <div className="page_alert">Invalid Parameters</div>
+        <div className="page_title">Invalid Parameters</div>
         <div>Please select Player parameters:</div>
         <div>
           <PlayerViewConfig onUpdate={onPlayerConfigUpdate} />
@@ -145,7 +145,7 @@ const PlayerView = () => {
   if (playerSummaryLoadError) {
     return (
       <div style={invalidParametersStyle}>
-        <div className="page_alert">Error loading Activities</div>
+        <div className="page_title">Error loading Activities</div>
         <div>{playerSummaryLoadError.toString()}</div>
         <div>{playerSummaryLoadError.stack}</div>
       </div>

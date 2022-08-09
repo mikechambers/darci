@@ -39,10 +39,6 @@
   --font-activity-score-box:var(--bold) 22px 'Roboto', sans-serif;
   --font-activity-completion-reason:var(--medium) 16px 'Roboto', sans-serif;
 
-  /* progress bar */
-  --font-progress:var(--light) 16px 'Roboto', sans-serif;
-
-
   /* bungie names */
   --font-player-name-small:var(--light) 16px 'Roboto', sans-serif;
   --font-player-name-code-small:var(--light) 12px 'Roboto', sans-serif;
@@ -186,7 +182,7 @@ body {
   font-style: italic;
 }
 
-.page_alert {
+.page_title {
   font: var(--font-page-alert);
 }
 

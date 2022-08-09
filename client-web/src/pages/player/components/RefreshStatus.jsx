@@ -6,14 +6,11 @@ const barContainerStyle = {
   width: "50%",
   backgroundColor: "#FFFFFF22",
 };
-const timeElapsedStyle = {
-  font: "var(--font-progress)",
-};
 
 const elementStyleBase = {
-  //padding: "24px",
   display: "flex",
   flexDirection: "column",
+  rowGap: 4,
 };
 
 const barStyleBase = {
@@ -92,7 +89,7 @@ const RefreshStatus = (props) => {
       <div style={barContainerStyle}>
         <div style={barStyle}></div>
       </div>
-      <div style={timeElapsedStyle}>{s}</div>
+      <div>{s}</div>
     </div>
   );
 };
