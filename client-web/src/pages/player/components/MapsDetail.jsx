@@ -224,7 +224,7 @@ const MapsDetail = (props) => {
 
           return (
             <div key={map.referenceId} style={h}>
-              <div className="list_title" style={headerStyle}>
+              <div className="subsection_header" style={headerStyle}>
                 <span style={mapNameStyle}>{map.map.name}</span>
               </div>
 

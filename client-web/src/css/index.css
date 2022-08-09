@@ -1,18 +1,46 @@
-/*
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Roboto Mono', monospace;
-*/
-
-
-
 
 :root {
 
+  --font-family:'Roboto', sans-serif;
+
+  --light:300;
+  --regular:400;
+  --medium:500;
+  --bold:700;
+
+  /* core fonts / styles */
+  --font: var(--regular) 16px var(--font-family);
+  --font-page-section: var(--medium) 18px var(--font-family);
+  --font-subsection-header: var(--medium) 16px var(--font-family);
+  --font-section-entry:var(--light) 14px var(--font-family);
+  --font-data: var(--regular) 16px var(--font-family);
+  --font-label:var(--light) 12px var(--font-family);
+  --font-data-highlight:var(--bold) 42px var(--font-family);
+  --font-data-highlight-label:var(--medium) 17px var(--font-family);
+  --font-label-small:var(--light) 10px var(--font-family);
+  --font-announce: var(--medium) 64px var(--font-family);
+  --font-main-nav: var(--regular) 16px 'Roboto', sans-serif;
+  --font-page-nav:var(--regular) 14px 'Roboto', sans-serif;
+  --font-controls: var(--light) 14px 'Roboto', sans-serif;
+
+  --font-list-subtitle: var(--bold) 12px 'Roboto', sans-serif;
+
+  /* activity detail specific */
+  --font-activity-map-name:var(--light) 36px 'Roboto', sans-serif;
+  --font-activity-mode-name:var(--bold) 36px 'Roboto', sans-serif;
+
+
+  --font-color:#ffffff;
+  --label-color:rgba(255, 255, 255, .5);
+
+
   --bungie-name-code-color:#58ccff;
-
   --link-color:#fbfbfb;
+  --light-level-color:#FFD600;
 
-  --base-font-color:#ffffff;
+
+  --color-label:#FFFFFF88;
+  
   --base-font-dark-color:#000000;
   --data-label-color:#FFFFFF66;
   --data-label-weight:400;
@@ -20,44 +48,24 @@
   --data-title-weight:700;
 
 
-  --color-label:#FFFFFF88;
+  
 
-  --light:300;
-  --regular:400;
-  --medium:500;
-  --bold:700;
+
 
   --border-radius: 4px;
 
   --page-container-padding:  45px;
   --content-padding:20px;
 
-  --font-family:'Roboto', sans-serif;
-  --font: var(--regular) 16px 'Roboto', sans-serif;
+ 
 
-  --font-main-nav: var(--regular) 16px 'Roboto', sans-serif;
-  --font-page-nav:var(--regular) 14px 'Roboto', sans-serif;
 
-  --font-nav: var(--regular) 18px 'Roboto', sans-serif;
-
-  --font-controls: var(--light) 14px 'Roboto', sans-serif;
-
-  --font-activity-map-name:var(--light) 36px 'Roboto', sans-serif;
-  --font-activity-mode-name:var(--bold) 36px 'Roboto', sans-serif;
 
   --font-activity-period:var(--light) 14px 'Roboto', sans-serif;
   --font-activity-score-box:var(--bold) 22px 'Roboto', sans-serif;
   --font-activity-completion-reason:var(--medium) 16px 'Roboto', sans-serif;
 
-  --font-section-entry:var(--light) 14px 'Roboto', sans-serif;
-
-  --font-page-title: var(--medium) 32px 'Roboto', sans-serif;
-  --font-page-subtitle: var(--light) 20px 'Roboto', sans-serif;
-  --font-section-header: var(--medium) 18px 'Roboto', sans-serif;
-  --font-subsection-header: var(--medium) 16px 'Roboto', sans-serif;
-
-  --font-label: var(--regular) 10px 'Roboto', sans-serif;
-  --font-data : var(--font);
+  --font-page-alert: var(--medium) 32px 'Roboto', sans-serif;
 
   --font-small:var(--regular) 12px 'Roboto', sans-serif;
 
@@ -76,9 +84,6 @@
   --font-description:var(--light) 14px 'Roboto', sans-serif;
   --font-data-small:var(--light) 12px 'Roboto', sans-serif;
   --font-label-small:var(--light) 10px 'Roboto', sans-serif;
-
-  --font-data-highlight: 700 42px 'Roboto', sans-serif;
-  --font-label-highlight: 500 17px 'Roboto', sans-serif;
 
   --font-table-header:400 16px 'Roboto', sans-serif;
 
@@ -105,38 +110,24 @@
   --background-blur: blur(2px);
 }
 
-.subsection_header {
-  font:var(--font-subsection-header);
-}
-.subsection_header_underline {
-  border-bottom: 1px solid #ffffff88;
-}
 
-.label_small {
-  font:var(--font-label-small);
-  text-transform: uppercase;
-  color:var(--label-color);
-}
 
 .label_icon {
   opacity:0.5;
 }
 
-.section_entry {
-  font:var(--font-section-entry);
+
+html {
+  height:100%;
 }
 
 body {
 
   font:var(--font);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: var(--base-font-color);
-  /*background: var(--background-color);*/
+  color: var(--font-color);
+
   background:
   linear-gradient(180deg, var(--background-color) 0%, rgba(54,54,54,1) 100%) fixed;
-
-  /*background: linear-gradient(180deg, rgba(34,34,34,1) 0%, rgba(136,136,136,1) 100%);*/
 
   margin:0px;
   padding:0px;
@@ -145,38 +136,137 @@ body {
 
 }
 
+/************* text styles ********************/
 
-hr {
-  border-top: 1px solid #FFFFFF;
+
+.page_section {
+  font:var(--font-page-section);
+  color: rgba(255, 255, 255, .6);
+  text-transform: uppercase;
 }
 
-hr.title {
-  width: 100%;
-  margin-left: 0px;
+.subsection_header {
+  font:var(--font-subsection-header);
+  border-bottom: 1px solid #ffffff88;
 }
 
-/**************** main layout *********************/
-html {
-  height:100%;
+.section_entry {
+  font:var(--font-section-entry);
 }
 
-#root {
-  /*background-color: #58ccff;*/
-  margin:0px 0px;
+.data {
+  font:var(--font-data);
 }
 
-#current_view {
-  /*background-color: #00ff00;*/
-  height: 100%;
+.label {
+  color: var(--label-color);
+  text-transform: uppercase;
+  font:var(--font-label);
 }
 
-/************ select box styling *****************/
+.data_highlight {
+  font:var(--font-data-highlight);
+  text-shadow: var(--text-shadow);
+}
+
+.data_highlight_label {
+  font:var(--font-data-highlight-label);
+  color: var(--label-color);
+  text-transform: uppercase;
+}
+
+.label_small {
+  font:var(--font-label-small);
+  text-transform: uppercase;
+}
 
 .light_level {
   font:var(  --font-small);
-  color:#FFD600
+  color:var(--light-level-color);
 }
 
+.announce {
+  font:var(--font-announce);
+  text-transform: uppercase;
+}
+
+.emphasis {
+  font-style: italic;
+}
+
+.page_alert {
+  font: var(--font-page-alert);
+}
+
+.list_subtitle {
+  font:var(--font-list-subtitle);
+  text-transform: uppercase;
+  color:#BFBFBF;
+}
+
+
+/************* end text styles ********************/
+
+/************* core layout css ********************/
+
+.page_containter {
+  padding: 0px var(--page-container-padding);
+  max-width: 900px;
+}
+
+/************ activity detail ****************/
+
+.activity_map_name{
+  font:var(--font-activity-map-name);
+}
+
+.activity_mode_name {
+  font:var(--font-activity-mode-name);
+  text-transform: uppercase;
+}
+
+/************ main navigation ****************/
+
+.nav {
+  font:var(--font-main-nav);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity .5s ease-in-out;
+}
+
+.nav:hover {
+  text-decoration: underline;
+}
+
+.nav_active {
+  opacity:1;
+}
+
+.nav_inactive {
+  opacity: 0.5;
+}
+
+.nav_transition {
+  transition: top .4s ease-in-out;
+}
+
+.page_nav_transition {
+  transition: left .4s ease-in-out;
+}
+
+.page_nav_icon {
+  color:#ffffffbb;
+}
+.page_nav_icon:hover {
+  cursor: pointer;
+  color:#ffffff;
+}
+
+.page_nav_icon:active {
+  translate: 0px 1px;
+}
+
+/******** form elements for nav **********/
 .nav_button {
   font:var(--font-controls);
   background: #FFFFFF00;
@@ -208,51 +298,27 @@ html {
   
 }
 
-
 /***************** player activity overview layout ****************/
 
 
-.export {
-  font:var(--font-label);
+/************* end core layout css ********************/
+
+/*
+hr {
+  border-top: 1px solid #FFFFFF;
+}
+*/
+
+hr.page_section_title {
+  width: 100%;
+  margin-left: 0px;
 }
 
 .bungie_name_code {
   color:var(--bungie-name-code-color);
 }
 
-.page_title {
-  font: var(--font-page-title);
-}
-
-.medal {
-  color:#ECEFF1;
-}
-
-.page_subtitle {
-  font:var(--font-page-subtitle);
-}
-
-h2, .section_header {
-  color: rgba(255, 255, 255, .6);
-  font:var(--font-section-header);
-  text-transform: uppercase;
-}
-
-.list_title {
-  font:var(--font);
-  font-weight: 500;
-  font-size: 15px;
-}
-
-.list_subtitle {
-  font:var(--font);
-  font-weight: var(--bold);
-  font-size: 12px;
-  text-transform: uppercase;
-  color:#BFBFBF;
-}
-
-
+/* start here / fix subtitle underlines */
 
 a {
   color: var(--link-color);
@@ -370,13 +436,6 @@ a:hover {
 
 }
 
-.NavBar {
-  position: sticky;
-  top: 0;
-  background-color: var(--background-color);
-  z-index: 1;
-}
-
 .outline {
   filter: drop-shadow(1px 0 0 white) 
   drop-shadow(0 1px 0 white)
@@ -461,51 +520,7 @@ select {
   translate: 0px 1px;
 }
 
-.nav {
-  font:var(--font-main-nav);
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: opacity .5s ease-in-out;
-}
 
-.nav.page {
-  font:var(--font-page-nav);
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: opacity .5s ease-in-out;
-}
-
-.nav:hover {
-  text-decoration: underline;
-}
-
-.nav_active {
-  opacity:1;
-}
-
-.nav_inactive {
-  opacity: 0.5;
-}
-
-.nav_transition {
-  transition: top .4s ease-in-out;
-}
-
-.page_nav_transition {
-  transition: left .4s ease-in-out;
-}
-
-.page_nav_icon {
-  color:#ffffffbb;
-}
-.page_nav_icon:hover {
-  cursor: pointer;
-  color:#ffffff;
-}
-
-.page_nav_icon:active {
-  translate: 0px 1px;
-}
 
 .alpha {
   background-color: #1a9ee8;
@@ -544,18 +559,6 @@ select {
 }
 
 
-
-.label {
-  color: rgba(255, 255, 255, .5);
-  text-transform: uppercase;
-  font:var(--font-label);
-}
-
-.data {
-  font:var(--font-data);
-  text-shadow: var(--text-shadow);
-}
-
 .data_small {
   font:var(--font-data-small);
   text-shadow: var(--text-shadow);
@@ -563,17 +566,6 @@ select {
 
 .label_small {
   font:var(--font-label-small);
-  color: rgba(255, 255, 255, .5);
-  text-transform: uppercase;
-}
-
-.data_large {
-  font:var(--font-data-highlight);
-  text-shadow: var(--text-shadow);
-}
-
-.label_large {
-  font: var(--font-label-highlight);
   color: rgba(255, 255, 255, .5);
   text-transform: uppercase;
 }

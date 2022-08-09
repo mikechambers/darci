@@ -52,7 +52,7 @@ const WeaponListItem = (props) => {
         <div className="weapon_list_icon" style={iconStyle}></div>
         <div id="data_container" style={dataContainerStyle}>
           <div id="header_containter" style={headerStyle}>
-            <div className="list_title">{item.title}</div>
+            <div className="subsection_header">{item.title}</div>
             <div className="list_subtitle">{item.subtitle}</div>
           </div>
           <div id="values_containter" style={valuesStyle}>

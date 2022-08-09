@@ -1,7 +1,7 @@
 const NoMatchView = (props) => {
-  let s = {
+  const rootStyle = {
     display: "flex",
-    width: "100%",
+    width: "100%", //bit of a hack right now
     height: "100%",
     flexDirection: "column",
     justifyContent: "center",
@@ -13,22 +13,17 @@ const NoMatchView = (props) => {
 
   let s2 = {
     opacity: "0.5",
-    font: "var(--font-section-header)",
-    fontSize: "64px",
-    textTransform: "uppercase",
     textShadow: "var(--text-shadow)",
   };
 
-  let s3 = {
-    fontStyle: "italic",
-  };
-
   return (
-    <div style={s}>
-      <div title="404" className="not_found" style={s2}>
+    <div style={rootStyle}>
+      <div title="404" className="announce" style={s2}>
         unknown space
       </div>
-      <div style={s3}>The Nine have sent an Emissary to test Guardians</div>
+      <div className="emphasis">
+        The Nine have sent an Emissary to test Guardians
+      </div>
     </div>
   );
 };

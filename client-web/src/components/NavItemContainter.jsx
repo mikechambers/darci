@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const navContainerStyle = {
   display: "flex",
   flexDirection: "row",
@@ -33,12 +31,8 @@ const navIndicatorStyleBase = {
   borderTop: "var(--divider-border)",
 };
 
-export const MAIN_NAV = "main";
-export const PAGE_NAV = "page";
-
 const NavItemContainer = (props) => {
   const items = props.items;
-  const type = props.type ? props.type : MAIN_NAV;
   const onChange = props.onChange;
   const selectedIndex = props.selectedIndex;
 
@@ -66,23 +60,8 @@ const NavItemContainer = (props) => {
     };
   });
 
-  const indicator = (
-    <div style={navIndicatorContainerStyle}>
-      <div className="nav_transition" style={navIndicatorStyle}></div>
-    </div>
-  );
-
-  let leftIndicator = "";
-  let rightIndicator = indicator;
-
-  if (type === PAGE_NAV) {
-    rightIndicator = "";
-    leftIndicator = indicator;
-  }
-
   return (
     <div style={navContainerStyle}>
-      {leftIndicator}
       <div style={navItemContainterStyle}>
         {links.map((link, index) => {
           return (
@@ -99,7 +78,9 @@ const NavItemContainer = (props) => {
           );
         })}
       </div>
-      {rightIndicator}
+      <div style={navIndicatorContainerStyle}>
+        <div className="nav_transition" style={navIndicatorStyle}></div>
+      </div>
     </div>
   );
 };

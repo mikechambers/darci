@@ -46,10 +46,7 @@ const ActivityPlayerWeaponsList = (props) => {
 
   return (
     <div style={rootStyle}>
-      <div
-        style={headerStyle}
-        className="subsection_header subsection_header_underline"
-      >
+      <div style={headerStyle} className="subsection_header">
         <div className="subsection_header">Weapons</div>
         <div className="label_small right">kills</div>
         <div className="label_icon" style={iconStyle}>

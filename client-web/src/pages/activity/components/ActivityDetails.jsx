@@ -89,11 +89,6 @@ const completionReasonStyle = {
   textTransform: "uppercase",
 };
 
-const modeMapStyle = {
-  display: "flex",
-  flexDirection: "column",
-};
-
 const summaryStyleBase = {
   width: 700,
   height: 400,
@@ -172,8 +167,8 @@ const ActivityDetails = (props) => {
         <div style={gameInfoStyle}>
           <div style={modeMapContainerStyle}>
             <div style={modeIconStyle}></div>
-            <div style={modeMapStyle}>
-              <div style={mapNameStyle}>{details.map.name}</div>
+            <div className="activity_mode_name">
+              <div className="activity_map_name">{details.map.name}</div>
               <div>
                 <hr style={dividerStyle} />
               </div>

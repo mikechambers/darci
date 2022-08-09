@@ -30,9 +30,7 @@ const ActivityPlayerStatBreakdownView = (props) => {
 
   return (
     <div style={rootStyle}>
-      <div className="subsection_header subsection_header_underline">
-        Breakdown
-      </div>
+      <div className="subsection_header">Breakdown</div>
       <div style={rowStyle}>
         <Stat label="weapon" value={weaponKills} title="Weapon final blows" />
 

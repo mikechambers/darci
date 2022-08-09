@@ -180,7 +180,7 @@ const PlayerActivityListItem = (props) => {
       <div style={gameContainerStyle} onClick={onItemClick}>
         <div style={resultStyle}></div>
         <div style={gameTitleStyle}>
-          <div className="list_title">{activity.activity.map.name}</div>
+          <div className="subsection_header">{activity.activity.map.name}</div>
           <div className="list_subtitle">{activity.activity.mode.label}</div>
         </div>
 

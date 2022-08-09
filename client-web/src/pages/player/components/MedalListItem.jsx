@@ -81,7 +81,7 @@ const MedalListItem = (props) => {
         </div>
         <div id="data_container" style={dataContainerStyle}>
           <div id="header_containter" style={headerStyle}>
-            <div className="list_title">{item.info.name}</div>
+            <div className="subsection_header">{item.info.name}</div>
           </div>
           <div style={descriptionStyle}>{item.info.description}</div>
         </div>

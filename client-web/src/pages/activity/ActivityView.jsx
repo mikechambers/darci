@@ -11,7 +11,6 @@ import TeamDetailsView from "./components/TeamDetailsView";
 
 const pageContainerStyle = {
   minWidth: "720px",
-  padding: "0px var(--page-container-padding)",
 };
 
 const gappedStyle = {
@@ -79,7 +78,7 @@ const ActivityView = (props) => {
   }
 
   return (
-    <div style={pageContainerStyle} id="page_nav">
+    <div className="page_containter" style={pageContainerStyle} id="page_nav">
       <div style={gappedStyle}>
         <PageViewNavigation links={pageLinks} />
         <ActivityDetails details={details} teams={teams} />

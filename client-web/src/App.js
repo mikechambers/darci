@@ -77,8 +77,8 @@ const App = (props) => {
 
   const currentViewStyle = {
     flexGrow: "2",
-    height: "inherit",
-    maxWidth: 900,
+    height: "100%",
+    //maxWidth: 900,
   };
 
   const footerStyle = {
@@ -94,7 +94,7 @@ const App = (props) => {
           <div style={style}>
             <Sidebar />
 
-            <div id="current_view" style={currentViewStyle}>
+            <div style={currentViewStyle}>
               <Outlet />
               <div style={footerStyle}></div>
             </div>

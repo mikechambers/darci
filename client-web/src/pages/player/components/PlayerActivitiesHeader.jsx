@@ -49,14 +49,14 @@ const PlayerActivitiesOverview = (props) => {
 
   return (
     <div style={elementStyle}>
-      <div className="page_title">
+      <div className="page_alert">
         <span>{playerName}</span>
         <span className="bungie_name_code">#{playerNameCode}</span>{" "}
       </div>
 
       <hr className="title" />
 
-      <div className="page_subtitle">
+      <div>
         {mode.label} stats for {formatCharacterClass(classSelection)} since{" "}
         {moment.label} ({humanMoment})
       </div>

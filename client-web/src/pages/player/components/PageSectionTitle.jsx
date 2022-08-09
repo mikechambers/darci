@@ -12,11 +12,11 @@ const PageSectionTitle = (props) => {
 
   return (
     <div id={id} style={headerStyle}>
-      <div className="section_header" title={description}>
+      <div className="page_section" title={description}>
         {title}
       </div>
 
-      <hr className="title" />
+      <hr className="page_section_title" />
     </div>
   );
 };
