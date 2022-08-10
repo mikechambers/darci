@@ -86,12 +86,7 @@ const statContainerStyle = {
   gap: "16px",
 };
 
-const footerStyle = {
-  display: "flex",
-  justifyContent: "space-between",
-};
-
-const MapsDetail = (props) => {
+const PlayerMapSummaryList = (props) => {
   let maps = props.maps ? props.maps : [];
 
   let description =
@@ -328,4 +323,4 @@ const MapsDetail = (props) => {
   );
 };
 
-export default MapsDetail;
+export default PlayerMapSummaryList;
