@@ -1,5 +1,3 @@
-const { CharacterClass } = require("shared");
-
 export const parseWeaponsFromServer = (weapons, manifest) => {
   let out = [];
   for (const w of weapons) {

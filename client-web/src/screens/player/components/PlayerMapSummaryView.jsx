@@ -1,7 +1,7 @@
-import { humanDuration } from "../../../utils/date";
+import { humanDuration } from "../../../core/utils/date";
 import Stat from "./Stat";
+import { calculatePercent, calculateAverage } from "../../../core/utils";
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
-import { calculatePercent, calculateAverage } from "../../../core/utils/index";
 
 const headerStyle = {
   display: "flex",
@@ -26,7 +26,6 @@ const datacontainerStyle = {
   height: "265px",
   width: "100%",
 
-  //backgroundColor: "var(--color-list-item-background)",
   backgroundColor: "#1C1C1Cee",
   backdropFilter: "var(--blur-background)",
   borderRadius: "0px 0px var(--radius-border) var(--radius-border)",
@@ -34,10 +33,6 @@ const datacontainerStyle = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
-  /*
-    alignItems: "center",
-    padding: "0px 12px",
-    */
 };
 
 const topContainerDataStyle = {
@@ -69,6 +64,7 @@ const statContainerStyle = {
 
 const PlayerMapSummaryView = (props) => {
   let map = props.map;
+  let totalGames = props.totalGames;
 
   let h = {
     ...elementStyle,
