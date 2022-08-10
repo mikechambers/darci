@@ -1,17 +1,15 @@
 import React from "react";
 import PlayerMapSummaryView from "./PlayerMapSummaryView";
 
-const containerStyle = {
+const rootStyle = {
   display: "flex",
   flexDirection: "column",
-  //padding: "var(--padding-page-container)",
 };
 
 const wrapperStyle = {
   display: "flex",
   flexDirection: "row",
   gap: "var(--gap-list-item)",
-  //gap: "20px",
   flexWrap: "wrap",
 };
 
@@ -28,7 +26,7 @@ const PlayerMapSummaryList = (props) => {
   );
 
   return (
-    <div style={containerStyle}>
+    <div style={rootStyle}>
       <div style={wrapperStyle}>
         {maps.map((map, index) => {
           return (
