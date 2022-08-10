@@ -9,8 +9,8 @@ import IconManager, {
 } from "../../../components/IconManager";
 import Medal, { SMALL } from "../../../components/Medal";
 import WeaponIconManager from "../../../components/WeaponIconManager";
-import { calculatePercent } from "../../../utils";
-import { humanDuration } from "../../../utils/date";
+import { calculatePercent } from "../../../core/utils";
+import { humanDuration } from "../../../core/utils/date";
 import Stat, { SMALL_STYLE } from "./Stat";
 
 const GAP = 4;

@@ -1,5 +1,4 @@
 import { CharacterClass } from "shared";
-import { parseCharacterFromServer } from "../utils/activity";
 
 const GLORY_PROGRESSION_ID = "1647151960";
 

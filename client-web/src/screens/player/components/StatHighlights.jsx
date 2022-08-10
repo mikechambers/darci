@@ -1,4 +1,4 @@
-import { calculatePercent } from "../../../utils";
+import { calculatePercent } from "../../../core/utils";
 import Stat, { ALIGN_RIGHT, LARGE_STYLE } from "./Stat";
 import { calculateKillsDeathsRatio, calculateEfficiency } from "shared";
 

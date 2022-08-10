@@ -1,5 +1,5 @@
 import React from "react";
-import { humanDuration } from "../../../utils/date";
+import { humanDuration } from "../../../core/utils/date";
 
 const TimePlayed = (props) => {
   let seconds = props.seconds;

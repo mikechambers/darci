@@ -4,11 +4,11 @@ import "./css/index.css";
 import App from "./App";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import PlayerView from "./pages/player/PlayerView";
-import ActivityView from "./pages/activity/ActivityView";
-import HomeView from "./pages/home/HomeView";
-import AboutView from "./pages/about/AboutView";
-import NoMatchView from "./pages/404/NoMatchView";
+import PlayerView from "./screens/player/index";
+import ActivityView from "./screens/activity/index";
+import HomeView from "./screens/home/index";
+import AboutView from "./screens/about/index";
+import NoMatchView from "./screens/404/index";
 
 ReactDOM.render(
   <React.StrictMode>

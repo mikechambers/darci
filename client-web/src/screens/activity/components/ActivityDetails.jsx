@@ -1,6 +1,6 @@
 import { DateTime, Interval } from "luxon";
-import { humanDuration } from "../../../utils/date";
-import { capitalize } from "../../../utils/string";
+import { humanDuration } from "../../../core/utils/date";
+import { capitalize } from "../../../core/utils/string";
 
 const scoreStyle = {
   padding: "var(--padding-content)",

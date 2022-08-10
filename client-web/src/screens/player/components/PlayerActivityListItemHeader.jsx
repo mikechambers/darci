@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as ChevronRight } from "../../../components/images/tabler/chevron-right.svg";
 import { SMALL } from "../../../components/Medal";
 import PlayerStatusView from "./PlayerStatusView";
-import ActivityCompletionReasonView from "./ActivityCompletionReasonView";
+import ActivityCompletionReasonView from "../../../components/CompletionReasonView";
 import MedalsList from "./MedalsList";
 import { Standing } from "shared";
 
@@ -23,13 +23,7 @@ const resultLossStyle = {
 };
 
 const statsStyle = {
-  //display: "flex",
-  //flexDirection: "row",
-  //justifyContent: "space-between",
-  //width: "450px",
-
   alignItems: "center",
-
   display: "grid",
   gridTemplateColumns: "repeat(6, 50px)",
   columnGap: "var(--gap-stat-item)",

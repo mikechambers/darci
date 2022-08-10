@@ -1,7 +1,7 @@
 import React from "react";
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
-import { humanDuration } from "../../../utils/date";
-import { calculatePercent, calculateAverage } from "../../../utils/index";
+import { humanDuration } from "../../../core/utils/date";
+import { calculatePercent, calculateAverage } from "../../../core/utils/index";
 import Stat from "./Stat";
 
 const containerStyle = {

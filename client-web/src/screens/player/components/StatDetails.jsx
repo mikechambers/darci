@@ -2,7 +2,7 @@ import GamesDetail from "./GamesDetail";
 import KillsStatDetail from "./KillsStatDetail";
 import StatDetail from "./StatDetail";
 
-import { calculateAverage } from "../../../utils";
+import { calculateAverage } from "../../../core/utils";
 
 const style = {
   display: "flex",

@@ -1,22 +1,22 @@
 {
   "name": "dcliserv",
   "version": "1.0.0",
-  "description": "dcliserv is a web wrapper for dcli.",
+  "description": "darci is a web wrapper for dcli.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mikechambers/dcliserv.git"
+    "url": "git+https://github.com/mikechambers/darci.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mikechambers/dcliserv/issues"
+    "url": "https://github.com/mikechambers/darci/issues"
   },
-  "homepage": "https://github.com/mikechambers/dcliserv#readme",
+  "homepage": "https://github.com/mikechambers/darci#readme",
   "dependencies": {
     "better-sqlite3": "^7.4.6",
     "express": "^4.17.2"

@@ -16,7 +16,7 @@ import MedalsDetail from "./components/MedalsDetail";
 import PlayerViewConfig from "../../components/PlayerViewConfig";
 import React, { useEffect, useState } from "react";
 import RefreshStatus from "./components/RefreshStatus";
-import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../consts";
+import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../core/consts";
 import PlayerOverview from "./components/PlayerOverview";
 import PageSectionTitle from "./components/PageSectionTitle";
 import PageViewNavigation from "./components/PageViewNavigation";

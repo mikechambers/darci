@@ -1,16 +1,16 @@
 import { GlobalContext } from "../contexts/GlobalContext";
-import PlayerSummary from "../data/PlayerSummary";
-import PlayerProfile from "../data/PlayerProfile";
-import Activity from "../data/Activity";
+import PlayerSummary from "../core/data/PlayerSummary";
+import PlayerProfile from "../core/data/PlayerProfile";
+import Activity from "../core/data/Activity";
 
 import { useState, useContext, useEffect } from "react";
-import Manifest from "../data/Manifest";
+import Manifest from "../core/data/Manifest";
 
-import { MANIFEST_CHECK_INTERVAL } from "../consts";
-import { fetchApi, fetchDestinyApi } from "../utils/remote";
+import { MANIFEST_CHECK_INTERVAL } from "../core/consts";
+import { fetchApi, fetchDestinyApi } from "../core/utils/remote";
 
-import Player from "../data/Player";
-import PlayerActivities from "../data/PlayerActivities";
+import Player from "../core/data/Player";
+import PlayerActivities from "../core/data/PlayerActivities";
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 const STORAGE_MANIFEST_LAST_CHECK_KEY = "STORAGE_MANIFEST_LAST_CHECK_KEY";

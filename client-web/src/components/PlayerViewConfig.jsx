@@ -4,7 +4,7 @@ import EnumSelectBase from "./EnumSelectBase";
 import { useFetchPlayers } from "../hooks/remote";
 import { useLocalStorage } from "@mantine/hooks";
 import { useState } from "react";
-import Player from "../data/Player";
+import Player from "../core/data/Player";
 
 const createUrl = function (player, classSelection, mode, moment) {
   let ts = new Date().getTime();

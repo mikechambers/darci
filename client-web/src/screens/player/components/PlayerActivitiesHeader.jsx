@@ -1,5 +1,5 @@
 import { CharacterClassSelection } from "shared";
-import { dateIsToday, dateIsWithinLastWeek } from "../../../utils/date";
+import { dateIsToday, dateIsWithinLastWeek } from "../../../core/utils/date";
 import React from "react";
 import { DateTime } from "luxon";
 

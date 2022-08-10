@@ -3,7 +3,7 @@ import IconManager, { PRECISION_ICON } from "../../../components/IconManager";
 import { SMALL } from "../../../components/Medal";
 import WeaponIconManager from "../../../components/WeaponIconManager";
 import WeaponImage from "./WeaponImage";
-import { calculatePercent } from "../../../utils";
+import { calculatePercent } from "../../../core/utils";
 
 const rootStyle = {
   width: 365,

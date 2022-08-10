@@ -1,6 +1,6 @@
 import { CompletionReason } from "shared";
-import { ReactComponent as MercyIcon } from "../../../components/images/tabler/mercy_icon.svg";
-const ActivityCompletionReasonView = (props) => {
+import { ReactComponent as MercyIcon } from "./images/tabler/mercy_icon.svg";
+const CompletionReasonView = (props) => {
   const completionReason = props.completionReason;
   const dimension = props.dimension ? props.dimension : 18;
 
@@ -18,4 +18,4 @@ const ActivityCompletionReasonView = (props) => {
   return mercyIcon;
 };
 
-export default ActivityCompletionReasonView;
+export default CompletionReasonView;

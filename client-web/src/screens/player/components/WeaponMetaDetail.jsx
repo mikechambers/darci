@@ -1,4 +1,4 @@
-import { calculatePercent, calculateAverage } from "../../../utils/index";
+import { calculatePercent, calculateAverage } from "../../../core/utils/index";
 import WeaponList from "./WeaponList";
 
 const WeaponsDetail = (props) => {

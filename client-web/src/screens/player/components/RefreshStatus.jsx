@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
-import { calculatePercent } from "../../../utils";
+import { calculatePercent } from "../../../core/utils";
 
 const barContainerStyle = {
   width: "50%",

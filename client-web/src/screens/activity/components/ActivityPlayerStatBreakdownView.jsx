@@ -1,5 +1,5 @@
 import { calculateRatio } from "shared";
-import { calculatePercent } from "../../../utils";
+import { calculatePercent } from "../../../core/utils";
 import Stat, { ALIGN_RIGHT } from "../../player/components/Stat";
 
 const rootStyle = {

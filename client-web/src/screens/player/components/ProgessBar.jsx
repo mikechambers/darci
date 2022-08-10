@@ -1,4 +1,4 @@
-import { calculatePercent } from "../../../utils";
+import { calculatePercent } from "../../../core/utils";
 
 const ProgressBar = (props) => {
   let progress = props.progress;

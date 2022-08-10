@@ -1,5 +1,5 @@
 import React from "react";
-import { truncate } from "../utils";
+import { truncate } from "../core/utils";
 
 const EnumSelectBase = (props) => {
   let options = props.options;
