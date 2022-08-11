@@ -1,5 +1,5 @@
 import { humanDuration } from "../core/utils/date";
-import Stat from "../screens/player/components/Stat";
+import StatView from "./StatView";
 import { calculatePercent, calculateAverage } from "../core/utils";
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 
@@ -82,15 +82,15 @@ const MapSummaryView = (props) => {
       <div style={datacontainerStyle}>
         <div style={topContainerDataStyle}>
           <div style={statContainerStyle}>
-            <Stat
+            <StatView
               label="win"
               value={`${calculatePercent(
                 map.summary.wins,
                 map.summary.activityCount
               ).toFixed()}%`}
             />
-            <Stat label="games" value={map.summary.activityCount} />
-            <Stat
+            <StatView label="games" value={map.summary.activityCount} />
+            <StatView
               label="total"
               value={`${calculatePercent(
                 map.summary.activityCount,
@@ -98,7 +98,7 @@ const MapSummaryView = (props) => {
               ).toFixed()}%`}
             />
 
-            <Stat
+            <StatView
               label="mercy"
               value={`${calculatePercent(
                 map.summary.mercies,
@@ -107,7 +107,7 @@ const MapSummaryView = (props) => {
             />
           </div>
           <div style={statContainerStyle}>
-            <Stat
+            <StatView
               label="kd"
               value={calculateKillsDeathsRatio(
                 map.summary.kills,
@@ -115,7 +115,7 @@ const MapSummaryView = (props) => {
               ).toFixed(2)}
               align="center"
             />
-            <Stat
+            <StatView
               label="kills"
               value={calculateAverage(
                 map.summary.kills,
@@ -123,7 +123,7 @@ const MapSummaryView = (props) => {
               ).toFixed(2)}
               align="center"
             />
-            <Stat
+            <StatView
               label="defeats"
               value={calculateAverage(
                 map.summary.opponentsDefeated,
@@ -133,7 +133,7 @@ const MapSummaryView = (props) => {
             />
           </div>
           <div style={statContainerStyle}>
-            <Stat
+            <StatView
               label="eff"
               value={calculateEfficiency(
                 map.summary.kills,
@@ -142,7 +142,7 @@ const MapSummaryView = (props) => {
               ).toFixed(2)}
               align="right"
             />
-            <Stat
+            <StatView
               label="assists"
               value={calculateAverage(
                 map.summary.assists,
@@ -150,7 +150,7 @@ const MapSummaryView = (props) => {
               ).toFixed(2)}
               align="right"
             />
-            <Stat
+            <StatView
               label="deaths"
               value={calculateAverage(
                 map.summary.deaths,
@@ -162,14 +162,14 @@ const MapSummaryView = (props) => {
         </div>
 
         <div style={bottomContainerDataStyle}>
-          <Stat
+          <StatView
             label="completed"
             value={`${calculatePercent(
               map.summary.completed,
               map.summary.activityCount
             ).toFixed()}%`}
           />
-          <Stat label="time played" value={timePlayed} align="right" />
+          <StatView label="time played" value={timePlayed} align="right" />
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { calculatePercent } from "../../../core/utils";
 
-import StatDetailBase from "./StatDetailBase";
+import StatCollectionView from "../../../components/StatCollectionView";
 
 const GamesDetail = (props) => {
   let wins = props.wins;
@@ -23,7 +23,7 @@ const GamesDetail = (props) => {
     },
   ];
 
-  return <StatDetailBase title="Games" values={values} />;
+  return <StatCollectionView title="Games" values={values} />;
 };
 
 export default GamesDetail;

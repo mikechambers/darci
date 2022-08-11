@@ -1,6 +1,6 @@
 import GamesDetail from "./GamesDetail";
-import KillsStatDetail from "./KillsStatDetail";
-import StatDetail from "./StatDetail";
+import PlayerAbilityStatSummaryView from "./PlayerAbilityStatSummaryView";
+import StatDetail from "../../../components/StatSummaryView";
 
 import { calculateAverage } from "../../../core/utils";
 
@@ -16,7 +16,7 @@ const style = {
   backdropFilter: "var(--blur-background)",
 };
 
-const StatDetails = (props) => {
+const PlayerStatsView = (props) => {
   const summary = props.summary;
 
   return (
@@ -60,7 +60,7 @@ const StatDetails = (props) => {
         title="Deaths"
       />
 
-      <KillsStatDetail
+      <PlayerAbilityStatSummaryView
         total={summary.kills}
         weapons={summary.weaponKills}
         supers={summary.superKills}
@@ -70,4 +70,4 @@ const StatDetails = (props) => {
   );
 };
 
-export default StatDetails;
+export default PlayerStatsView;

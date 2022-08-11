@@ -1,6 +1,6 @@
 import MedalHighlights from "./MedalHighlights";
-import StatDetails from "./StatDetails";
-import StatHighlights from "./StatHighlights";
+import StatDetails from "./PlayerStatsView";
+import PlayerHighlightsView from "./PlayerHighlightsView";
 import TimePlayed from "./TimePlayed";
 
 import PlayerOverviewBackgroundImage from "../images/player_overview_background.png";
@@ -20,13 +20,13 @@ const elementStyle = {
   padding: "var(--padding-content)",
 };
 
-const PlayerOverview = (props) => {
+const PlayerPerformanceSummaryView = (props) => {
   const summary = props.summary;
   const medals = props.medals;
 
   return (
     <div style={elementStyle}>
-      <StatHighlights summary={summary} />
+      <PlayerHighlightsView summary={summary} />
       <StatDetails summary={summary} />
       <MedalHighlights medals={medals} />
       <TimePlayed seconds={summary.timePlayedSeconds} />
@@ -34,4 +34,4 @@ const PlayerOverview = (props) => {
   );
 };
 
-export default PlayerOverview;
+export default PlayerPerformanceSummaryView;

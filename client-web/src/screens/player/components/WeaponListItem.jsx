@@ -1,4 +1,4 @@
-import Stat from "./Stat";
+import StatView from "../../../components/StatView";
 
 const containerStyle = {
   display: "flex",
@@ -59,7 +59,7 @@ const WeaponListItem = (props) => {
             {item.items.map((stat, i) => {
               let align = i === item.items.length - 1 ? "right" : "left";
               return (
-                <Stat
+                <StatView
                   value={stat.value}
                   label={stat.label}
                   align={align}

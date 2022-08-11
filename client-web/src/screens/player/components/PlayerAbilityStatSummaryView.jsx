@@ -1,8 +1,8 @@
 import { calculatePercent } from "../../../core/utils";
 
-import StatDetailBase from "./StatDetailBase";
+import StatCollectionView from "../../../components/StatCollectionView";
 
-const KillsStatDetail = (props) => {
+const PlayerAbilityStatSummaryView = (props) => {
   let total = props.total;
   let weapons = props.weapons;
   let melees = props.melees;
@@ -23,7 +23,7 @@ const KillsStatDetail = (props) => {
     },
   ];
 
-  return <StatDetailBase title="Kills Breakdown" values={values} />;
+  return <StatCollectionView title="Kills Breakdown" values={values} />;
 };
 
-export default KillsStatDetail;
+export default PlayerAbilityStatSummaryView;

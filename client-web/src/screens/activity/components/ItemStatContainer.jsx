@@ -1,5 +1,5 @@
 import React from "react";
-import Stat from "../../player/components/Stat";
+import Stat from "../../../components/StatView";
 
 const ItemStatContainer = (props) => {
   const data = props.data;

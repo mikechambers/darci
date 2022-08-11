@@ -1,5 +1,8 @@
 import { calculatePercent } from "../../../core/utils";
-import Stat, { ALIGN_RIGHT, LARGE_STYLE } from "./Stat";
+import StatView, {
+  ALIGN_RIGHT,
+  LARGE_STYLE,
+} from "../../../components/StatView";
 import { calculateKillsDeathsRatio, calculateEfficiency } from "shared";
 
 const style = {
@@ -9,12 +12,12 @@ const style = {
   gap: "100px",
 };
 
-const StatHighlights = (props) => {
+const PlayerHighlightsView = (props) => {
   const summary = props.summary;
 
   return (
     <div style={style}>
-      <Stat
+      <StatView
         styleName={LARGE_STYLE}
         label="win%"
         value={`${calculatePercent(
@@ -23,7 +26,7 @@ const StatHighlights = (props) => {
         ).toFixed()}%`}
         align={ALIGN_RIGHT}
       />
-      <Stat
+      <StatView
         styleName={LARGE_STYLE}
         label="KD"
         value={calculateKillsDeathsRatio(summary.kills, summary.deaths).toFixed(
@@ -32,7 +35,7 @@ const StatHighlights = (props) => {
         align={ALIGN_RIGHT}
       />
 
-      <Stat
+      <StatView
         styleName={LARGE_STYLE}
         label="EFF"
         value={calculateEfficiency(
@@ -46,4 +49,4 @@ const StatHighlights = (props) => {
   );
 };
 
-export default StatHighlights;
+export default PlayerHighlightsView;

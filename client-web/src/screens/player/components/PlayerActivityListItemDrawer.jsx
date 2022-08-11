@@ -11,7 +11,7 @@ import Medal, { SMALL } from "../../../components/Medal";
 import WeaponIconManager from "../../../components/WeaponIconManager";
 import { calculatePercent } from "../../../core/utils";
 import { humanDuration } from "../../../core/utils/date";
-import Stat, { SMALL_STYLE } from "./Stat";
+import StatView, { SMALL_STYLE } from "../../../components/StatView";
 
 const GAP = 4;
 
@@ -223,7 +223,7 @@ const PlayerActivityListItemDrawer = (props) => {
           </div>
           <div style={statsContainterStyle}>
             <div>
-              <Stat
+              <StatView
                 label="weapons"
                 styleName={SMALL_STYLE}
                 value={`${calculatePercent(
@@ -233,7 +233,7 @@ const PlayerActivityListItemDrawer = (props) => {
               />
             </div>
             <div>
-              <Stat
+              <StatView
                 label="supers"
                 value={`${calculatePercent(
                   activity.stats.extended.superKills,
@@ -243,7 +243,7 @@ const PlayerActivityListItemDrawer = (props) => {
               />
             </div>
             <div>
-              <Stat
+              <StatView
                 label="melee"
                 value={`${calculatePercent(
                   activity.stats.extended.meleeKills,
@@ -253,7 +253,7 @@ const PlayerActivityListItemDrawer = (props) => {
               />
             </div>
             <div>
-              <Stat
+              <StatView
                 label="grenades"
                 value={`${calculatePercent(
                   activity.stats.extended.grenadeKills,
@@ -263,7 +263,7 @@ const PlayerActivityListItemDrawer = (props) => {
               />
             </div>
             <div style={killsAssistStyle}>
-              <Stat
+              <StatView
                 label="k/a"
                 value={`${calculateRatio(
                   activity.stats.kills,

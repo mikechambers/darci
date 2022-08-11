@@ -1,11 +1,11 @@
 import React from "react";
-import Stat from "./Stat";
+import StatView from "./StatView";
 
 const style = {
   paddingBottom: "20px",
 };
 
-const StatDetailBase = (props) => {
+const StatCollectionView = (props) => {
   let title = props.title;
   let values = props.values;
 
@@ -21,7 +21,7 @@ const StatDetailBase = (props) => {
       {values.map((v, index) => {
         return (
           <div style={style} key={index}>
-            <Stat value={v.value.toLocaleString()} label={v.label} />
+            <StatView value={v.value.toLocaleString()} label={v.label} />
           </div>
         );
       })}
@@ -29,4 +29,4 @@ const StatDetailBase = (props) => {
   );
 };
 
-export default StatDetailBase;
+export default StatCollectionView;

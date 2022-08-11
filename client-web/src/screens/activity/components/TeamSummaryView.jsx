@@ -1,9 +1,9 @@
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
-import Stat, { LARGE_STYLE } from "../../player/components/Stat";
+import Stat, { LARGE_STYLE } from "../../../components/StatView";
 
 import { ReactComponent as AlphaTeamIcon } from "../../../components/images/alpha_team_logo.svg";
 import { ReactComponent as BravoTeamIcon } from "../../../components/images/bravo_team_logo.svg";
-import StatDetailBase from "../../player/components/StatDetailBase";
+import StatCollectionView from "../../../components/StatCollectionView";
 
 const teamBarStyle = {
   height: 10,
@@ -167,13 +167,13 @@ const TeamSummaryView = (props) => {
         <hr style={dividerStyle} />
       </div>
       <div style={statDetailsStyle}>
-        <StatDetailBase values={killsData} title="Kills" />
-        <StatDetailBase values={assistsData} title="Assists" />
-        <StatDetailBase values={opponentsDefeatedData} title="Defeats" />
-        <StatDetailBase values={deathsData} title="Deaths" />
-        <StatDetailBase values={meleeData} title="Melees" />
-        <StatDetailBase values={grenadeData} title="Grenades" />
-        <StatDetailBase values={superData} title="Supers" />
+        <StatCollectionView values={killsData} title="Kills" />
+        <StatCollectionView values={assistsData} title="Assists" />
+        <StatCollectionView values={opponentsDefeatedData} title="Defeats" />
+        <StatCollectionView values={deathsData} title="Deaths" />
+        <StatCollectionView values={meleeData} title="Melees" />
+        <StatCollectionView values={grenadeData} title="Grenades" />
+        <StatCollectionView values={superData} title="Supers" />
       </div>
     </div>
   );

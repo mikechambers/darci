@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PlayerActivityListItemDrawer from "./PlayerActivityListItemDrawer";
-import Stat from "./Stat";
+import StatView from "../../../components/StatView";
 import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as ChevronRight } from "../../../components/images/tabler/chevron-right.svg";
@@ -177,37 +177,37 @@ const PlayerActivityListItemHeader = (props) => {
         </div>
 
         <div style={statsStyle}>
-          <Stat
+          <StatView
             label="kills"
             value={activity.stats.kills}
             highlight={killsHighlight}
             title={killsTitle}
           />
-          <Stat
+          <StatView
             label="assists"
             value={activity.stats.assists}
             highlight={assistsHighlight}
             title={assistsTitle}
           />
-          <Stat
+          <StatView
             label="defeats"
             value={activity.stats.opponentsDefeated}
             highlight={defeatsHighlight}
             title={defeatsTitle}
           />
-          <Stat
+          <StatView
             label="deaths"
             value={activity.stats.deaths}
             highlight={deathsHighlight}
             title={deathsTitle}
           />
-          <Stat
+          <StatView
             label="kd"
             value={activity.stats.killsDeathsRatio.toFixed(2)}
             highlight={kdHighlight}
             title={kdTitle}
           />
-          <Stat
+          <StatView
             label="eff"
             value={activity.stats.efficiency.toFixed(2)}
             highlight={effHighlight}

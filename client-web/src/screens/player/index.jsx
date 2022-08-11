@@ -17,7 +17,7 @@ import PlayerViewConfig from "../../components/PlayerViewConfig";
 import React, { useEffect, useState } from "react";
 import RefreshStatus from "./components/RefreshStatus";
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../core/consts";
-import PlayerOverview from "./components/PlayerOverview";
+import PlayerOverview from "./components/PlayerPerformanceSummaryView";
 import PageSectionTitle from "./components/PageSectionTitle";
 import PageViewNavigation from "./components/PageViewNavigation";
 const { useQuery } = require("../../hooks/browser");

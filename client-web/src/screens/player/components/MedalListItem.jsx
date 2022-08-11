@@ -1,4 +1,4 @@
-import Stat from "./Stat";
+import StatView from "../../../components/StatView";
 
 const containerStyle = {
   display: "flex",
@@ -85,13 +85,13 @@ const MedalListItem = (props) => {
           <div style={descriptionStyle}>{item.info.description}</div>
         </div>
         <div style={valuesStyle}>
-          <Stat
+          <StatView
             value={item.count}
             label="count"
             title="Total medals"
             align="right"
           />
-          <Stat
+          <StatView
             value={Math.ceil(activityCount / item.count)}
             label="games/m"
             align="right"

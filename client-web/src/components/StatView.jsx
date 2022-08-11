@@ -7,7 +7,7 @@ export const REGULAR_STYLE = undefined;
 export const ALIGN_RIGHT = "right";
 export const ALIGN_LEFT = "left";
 
-const Stat = (props) => {
+const StatView = (props) => {
   const label = props.label;
   const value = props.value;
   const styleName = props.styleName;
@@ -57,4 +57,4 @@ const Stat = (props) => {
   );
 };
 
-export default Stat;
+export default StatView;
