@@ -1,6 +1,6 @@
-import { humanDuration } from "../../../core/utils/date";
-import Stat from "./Stat";
-import { calculatePercent, calculateAverage } from "../../../core/utils";
+import { humanDuration } from "../core/utils/date";
+import Stat from "../screens/player/components/Stat";
+import { calculatePercent, calculateAverage } from "../core/utils";
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 
 const headerStyle = {
@@ -62,7 +62,7 @@ const statContainerStyle = {
   gap: "16px",
 };
 
-const PlayerMapSummaryView = (props) => {
+const MapSummaryView = (props) => {
   let map = props.map;
   let totalGames = props.totalGames;
 
@@ -176,4 +176,4 @@ const PlayerMapSummaryView = (props) => {
   );
 };
 
-export default PlayerMapSummaryView;
+export default MapSummaryView;

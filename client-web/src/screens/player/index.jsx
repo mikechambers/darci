@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import PlayerActivityList from "./components/PlayerActivityList";
 import WeaponsDetail from "./components/WeaponsDetail";
 import WeaponMetaDetail from "./components/WeaponMetaDetail";
-import PlayerMapSummaryList from "./components/PlayerMapSummaryList";
+import MapSummaryList from "../../components/MapSummaryList";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
 
 import {
@@ -229,7 +229,7 @@ const PlayerView = () => {
             description="Stats broken down by map"
             title="Maps"
           />
-          <PlayerMapSummaryList maps={maps} />
+          <MapSummaryList maps={maps} />
         </div>
         <PageSectionTitle
           description="Most recent matches"
