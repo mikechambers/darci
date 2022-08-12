@@ -43,7 +43,7 @@ const descriptionStyle = {
   maxHeight: "50px",
 };
 
-const MedalListItem = (props) => {
+const PlayerMedalsDetailListItem = (props) => {
   let medals = props.data.medals;
   let style = props.style;
   let index = props.index;
@@ -104,4 +104,4 @@ const MedalListItem = (props) => {
   );
 };
 
-export default MedalListItem;
+export default PlayerMedalsDetailListItem;

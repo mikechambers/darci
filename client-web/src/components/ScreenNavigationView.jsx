@@ -1,5 +1,5 @@
 import React from "react";
-import { ReactComponent as NavigationIcon } from "../../../components/images/tabler/map.svg";
+import { ReactComponent as NavigationIcon } from "./images/tabler/map.svg";
 
 const navigationIconWrapperStyle = {
   position: "sticky",
@@ -20,7 +20,7 @@ const onPageHomeClick = function () {
   let e = document.getElementById("page_nav");
   e.scrollIntoView({ behavior: "smooth", block: "start" });
 };
-const PageViewNavigation = (props) => {
+const ScreenNavigationView = (props) => {
   const links = props.links;
 
   const elementStyle = {};
@@ -32,31 +32,10 @@ const PageViewNavigation = (props) => {
     justifyContent: "space-apart",
   };
 
-  //const [indicatorProps, setIndicatorProps] = useState({ width: 50, left: 0 });
-
   const onClick = (index) => {
-    /*
-    let e = document.getElementById(`page_view_nav_${index}`);
-
-    let leftOffset = 0;
-    for (let i = 0; i < index; i++) {
-      let element = document.getElementById(`page_view_nav_${i}`);
-      leftOffset += element.clientWidth + 24;
-    }
-    */
-
     let section = document.getElementById(links[index].id);
     section.scrollIntoView({ behavior: "smooth", block: "start" });
-    //setIndicatorProps({ width: e.clientWidth, left: leftOffset });
   };
-
-  /*
-  let underlineStyle = {
-    ...underlineStyleBase,
-    width: indicatorProps.width,
-    left: indicatorProps.left,
-  };
-  */
 
   return (
     <React.Fragment>
@@ -87,10 +66,4 @@ const PageViewNavigation = (props) => {
   );
 };
 
-export default PageViewNavigation;
-
-/*
-     <div>
-        <div className="page_nav_transition" style={underlineStyle}></div>
-      </div>
-*/
+export default ScreenNavigationView;

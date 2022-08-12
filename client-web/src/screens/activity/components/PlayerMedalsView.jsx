@@ -1,5 +1,5 @@
+import CompactMedalsList from "../../../components/CompactMedalsList";
 import { SMALL } from "../../../components/Medal";
-import MedalsList from "../../player/components/MedalsList";
 
 const rootStyle = {
   display: "flex",
@@ -13,7 +13,7 @@ const PlayerMedalsView = (props) => {
   return (
     <div style={rootStyle}>
       <div className="subsection_header underline">Medals</div>
-      <MedalsList size={SMALL} medals={medals} />
+      <CompactMedalsList size={SMALL} medals={medals} />
     </div>
   );
 };

@@ -1,8 +1,8 @@
-import { ReactComponent as JoinedLateIcon } from "../../../components/images/tabler/joined_late_icon.svg";
-import { ReactComponent as JoinedLateLeftEarlyIcon } from "../../../components/images/tabler/joined_late_left_early_icon.svg";
+import { ReactComponent as JoinedLateIcon } from "./images/tabler/joined_late_icon.svg";
+import { ReactComponent as JoinedLateLeftEarlyIcon } from "./images/tabler/joined_late_left_early_icon.svg";
 
 const rotateStyle = { transform: "rotate(180deg)" };
-const PlayerStatusView = (props) => {
+const StatusView = (props) => {
   const joinedLate = props.joinedLate;
   const completed = props.completed;
 
@@ -43,4 +43,4 @@ const PlayerStatusView = (props) => {
   return statusIcon;
 };
 
-export default PlayerStatusView;
+export default StatusView;

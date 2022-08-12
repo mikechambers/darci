@@ -32,7 +32,7 @@ const valuesStyle = {
   justifyContent: "space-between",
 };
 
-const WeaponListItem = (props) => {
+const PlayerWeaponsDetailListItem = (props) => {
   let weapons = props.data;
   let style = props.style;
   let index = props.index;
@@ -75,4 +75,4 @@ const WeaponListItem = (props) => {
   );
 };
 
-export default WeaponListItem;
+export default PlayerWeaponsDetailListItem;

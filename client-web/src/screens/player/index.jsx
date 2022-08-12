@@ -1,7 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PlayerActivityList from "./components/PlayerActivityList";
-import WeaponsDetail from "./components/WeaponsDetail";
-import WeaponMetaDetail from "./components/WeaponMetaDetail";
+import PlayerWeaponsDetailView from "./components/PlayerWeaponsDetailView";
 import MapSummaryList from "../../components/MapSummaryList";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
 
@@ -11,15 +10,14 @@ import {
 } from "../../hooks/remote";
 
 import { CharacterClassSelection, Mode, Moment } from "shared";
-
-import MedalsDetail from "./components/MedalsDetail";
+import PlayerMedalsDetailList from "./components/PlayerMedalsDetailList";
 import PlayerViewConfig from "../../components/PlayerViewConfig";
 import React, { useEffect, useState } from "react";
-import RefreshStatus from "./components/RefreshStatus";
+import RefreshStatusView from "../../components/RefreshStatusView";
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../core/consts";
 import PlayerOverview from "./components/PlayerPerformanceSummaryView";
-import PageSectionTitle from "./components/PageSectionTitle";
-import PageViewNavigation from "./components/PageViewNavigation";
+import PageSectionTitle from "../../components/PageSectionTitle";
+import ScreenNavigationView from "../../components/ScreenNavigationView";
 const { useQuery } = require("../../hooks/browser");
 
 const invalidParametersStyle = {
@@ -175,8 +173,8 @@ const PlayerView = () => {
   return (
     <div id="page_nav" className="page_containter" style={pageContainerStyle}>
       <div style={gappedStyle}>
-        <PageViewNavigation links={pageLinks} />
-        <RefreshStatus
+        <ScreenNavigationView links={pageLinks} />
+        <RefreshStatusView
           lastUpdate={lastUpdate}
           refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
           align="left"
@@ -201,7 +199,7 @@ const PlayerView = () => {
               title="Weapons"
               description="Your weapon stats"
             />
-            <WeaponsDetail weapons={weapons} />
+            <PlayerWeaponsDetailView weapons={weapons} />
           </div>
           <div>
             <PageSectionTitle
@@ -209,7 +207,7 @@ const PlayerView = () => {
               title="Meta Weapons"
               description="Weapon meta from your matches excluding you and your fireteam members"
             />
-            <WeaponMetaDetail weapons={meta} />
+            <PlayerWeaponsDetailView weapons={meta} />
           </div>
           <div>
             <PageSectionTitle
@@ -217,7 +215,7 @@ const PlayerView = () => {
               title="Medals"
               description="Medals earned in matches"
             />
-            <MedalsDetail
+            <PlayerMedalsDetailList
               medals={medals}
               activityCount={summary.activityCount}
             />

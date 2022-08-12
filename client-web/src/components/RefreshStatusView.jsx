@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
-import { calculatePercent } from "../../../core/utils";
+import { calculatePercent } from "../core/utils";
 
 const barContainerStyle = {
   width: "50%",
@@ -18,7 +18,7 @@ const barStyleBase = {
   height: "2px",
 };
 
-const RefreshStatus = (props) => {
+const RefreshStatusView = (props) => {
   const lastUpdate = props.lastUpdate;
   const refreshInterval = props.refreshInterval;
   const align = props.align;
@@ -94,4 +94,4 @@ const RefreshStatus = (props) => {
   );
 };
 
-export default RefreshStatus;
+export default RefreshStatusView;

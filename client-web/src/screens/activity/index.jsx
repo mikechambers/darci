@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useFetchActivity } from "../../hooks/remote";
 
-import PageSectionTitle from "../player/components/PageSectionTitle";
-import PageViewNavigation from "../player/components/PageViewNavigation";
+import PageSectionTitle from "../../components/PageSectionTitle";
+import ScreenNavigationView from "../../components/ScreenNavigationView";
 import ActivityDetails from "./components/ActivityDetails";
 import ActivityLeaderBoard from "./components/ActivityLeaderBoard";
 import GoldMedalsList from "./components/GoldMedalsList";
@@ -81,7 +81,7 @@ const ActivityView = (props) => {
   return (
     <div style={pageContainerStyle} id="page_nav">
       <div style={gappedStyle}>
-        <PageViewNavigation links={pageLinks} />
+        <ScreenNavigationView links={pageLinks} />
         <ActivityDetails details={details} teams={teams} />
 
         <div>

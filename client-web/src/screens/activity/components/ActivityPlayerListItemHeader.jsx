@@ -1,7 +1,7 @@
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 import { SMALL } from "../../../components/Medal";
-import MedalsList from "../../player/components/MedalsList";
-import PlayerStatusView from "../../player/components/PlayerStatusView";
+import CompactMedalsList from "../../../components/CompactMedalsList";
+import StatusView from "../../../components/StatusView";
 import ItemStatContainer from "./ItemStatContainer";
 import PlayerInfoView from "./PlayerInfoView";
 
@@ -57,11 +57,11 @@ const ActivityPlayerListItemHeader = (props) => {
     <div className={className} style={rootStyle} onClick={handleOnClick}>
       <PlayerInfoView player={player} />
       <ItemStatContainer data={data} />
-      <PlayerStatusView
+      <StatusView
         completed={player.stats.completed}
         joinedLate={player.stats.joinedLate}
       />
-      <MedalsList medals={goldMedals} size={SMALL} />
+      <CompactMedalsList medals={goldMedals} size={SMALL} />
     </div>
   );
 };

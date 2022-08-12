@@ -1,7 +1,7 @@
 import { calculatePercent, calculateAverage } from "../../../core/utils/index";
-import WeaponList from "./WeaponList";
+import PlayerWeaponsDetailList from "./PlayerWeaponsDetailList";
 
-const WeaponsDetail = (props) => {
+const PlayerWeaponsDetailView = (props) => {
   let weapons = props.weapons ? props.weapons : [];
 
   let description = "Weapons you have used ordered by kills.";
@@ -45,7 +45,7 @@ const WeaponsDetail = (props) => {
   let sortLabels = ["games", "kills", "kills/g", "precision"];
 
   return (
-    <WeaponList
+    <PlayerWeaponsDetailList
       weapons={data}
       title="weapons"
       description={description}
@@ -54,4 +54,4 @@ const WeaponsDetail = (props) => {
   );
 };
 
-export default WeaponsDetail;
+export default PlayerWeaponsDetailView;

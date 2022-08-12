@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as ChevronRight } from "../../../components/images/tabler/chevron-right.svg";
 import { SMALL } from "../../../components/Medal";
-import PlayerStatusView from "./PlayerStatusView";
+import StatusView from "../../../components/StatusView";
 import ActivityCompletionReasonView from "../../../components/CompletionReasonView";
-import MedalsList from "./MedalsList";
+
 import { Standing } from "shared";
+import CompactMedalsList from "../../../components/CompactMedalsList";
 
 const resultWinStyle = {
   backgroundColor: "#3FD445",
@@ -217,7 +218,7 @@ const PlayerActivityListItemHeader = (props) => {
 
         <div style={statusStyleWrapper}>
           <div style={statusStyle}>
-            <PlayerStatusView
+            <StatusView
               completed={activity.stats.completed}
               joinedLate={activity.stats.joinedLate}
             />
@@ -230,7 +231,7 @@ const PlayerActivityListItemHeader = (props) => {
         </div>
 
         <div style={medalsStyle}>
-          <MedalsList medals={goldMedals} size={SMALL} />
+          <CompactMedalsList medals={goldMedals} size={SMALL} />
         </div>
         <div
           style={gameDetailNavStyle}

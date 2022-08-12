@@ -13,13 +13,11 @@ const medal_style = {
   padding: "0px 20px 20px 0px",
 };
 
-const MedalHighlights = (props) => {
+const GoldMedalSummaryView = (props) => {
   let medals = props.medals ? props.medals : [];
   let max = props.max ? props.max : 5;
 
   medals.sort((a, b) => {
-    //return b.kills - a.kills;
-
     if (b.info.isGold === a.info.isGold) {
       return b.count - a.count;
     }
@@ -57,13 +55,4 @@ const MedalHighlights = (props) => {
   );
 };
 
-export default MedalHighlights;
-
-/*
-            <img
-              height="32"
-              width="32"
-              title={m.info.description}
-              alt={m.info.description}
-              src={m.info.icon}
-            />*/
+export default GoldMedalSummaryView;

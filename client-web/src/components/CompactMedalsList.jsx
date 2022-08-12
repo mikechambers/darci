@@ -1,4 +1,4 @@
-import Medal from "../../../components/Medal";
+import Medal from "./Medal";
 
 const elementStyle = {
   display: "flex",
@@ -8,7 +8,7 @@ const elementStyle = {
   rowGap: 4,
 };
 
-const MedalsList = (props) => {
+const CompactMedalsList = (props) => {
   const medals = props.medals;
   const size = props.size;
 
@@ -28,4 +28,4 @@ const MedalsList = (props) => {
   );
 };
 
-export default MedalsList;
+export default CompactMedalsList;

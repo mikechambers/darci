@@ -1,15 +1,9 @@
 import { FixedSizeList as List } from "react-window";
-import MedalListItem from "./MedalListItem";
+import PlayerMedalsDetailListItem from "./PlayerMedalsDetailListItem";
 import { useState } from "react";
 
 const elementStyle = {
-  //padding: "var(--padding-page-container)",
   width: "422px",
-};
-
-const footerStyle = {
-  display: "flex",
-  justifyContent: "space-between",
 };
 
 const titleStyle = {
@@ -20,7 +14,7 @@ const titleStyle = {
 
 const ITEM_HEIGHT = 122;
 const MAX_HEIGHT = 488;
-const MedalsDetail = (props) => {
+const PlayerMedalsDetailList = (props) => {
   let medals = props.medals;
   let activityCount = props.activityCount;
 
@@ -105,10 +99,10 @@ const MedalsDetail = (props) => {
         itemSize={ITEM_HEIGHT}
         itemKey={itemKey}
       >
-        {MedalListItem}
+        {PlayerMedalsDetailListItem}
       </List>
     </div>
   );
 };
 
-export default MedalsDetail;
+export default PlayerMedalsDetailList;

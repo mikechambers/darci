@@ -1,13 +1,11 @@
-import MedalHighlights from "./MedalHighlights";
+import MedalHighlights from "./GoldMedalSummaryView";
 import StatDetails from "./PlayerStatsView";
 import PlayerHighlightsView from "./PlayerHighlightsView";
-import TimePlayed from "./TimePlayed";
+import { humanDuration } from "../../../core/utils/date";
 
 import PlayerOverviewBackgroundImage from "../images/player_overview_background.png";
 
 const elementStyle = {
-  //padding: "var(--padding-page-container)",
-  //height: "460px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-around",
@@ -24,12 +22,14 @@ const PlayerPerformanceSummaryView = (props) => {
   const summary = props.summary;
   const medals = props.medals;
 
+  let timePlayed = humanDuration(summary.timePlayedSeconds * 1000);
+
   return (
     <div style={elementStyle}>
       <PlayerHighlightsView summary={summary} />
       <StatDetails summary={summary} />
       <MedalHighlights medals={medals} />
-      <TimePlayed seconds={summary.timePlayedSeconds} />
+      <div>{timePlayed}</div>
     </div>
   );
 };

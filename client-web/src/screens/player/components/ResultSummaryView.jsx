@@ -2,7 +2,7 @@ import { calculatePercent } from "../../../core/utils";
 
 import StatCollectionView from "../../../components/StatCollectionView";
 
-const GamesDetail = (props) => {
+const ResultSummaryView = (props) => {
   let wins = props.wins;
   let mercies = props.mercies;
   let activityCount = props.activityCount;
@@ -26,4 +26,4 @@ const GamesDetail = (props) => {
   return <StatCollectionView title="Games" values={values} />;
 };
 
-export default GamesDetail;
+export default ResultSummaryView;

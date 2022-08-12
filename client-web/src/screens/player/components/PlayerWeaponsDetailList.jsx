@@ -1,15 +1,9 @@
 import React, { useState } from "react";
 import { FixedSizeList as List } from "react-window";
-import WeaponListItem from "./WeaponListItem";
+import PlayerWeaponsDetailListItem from "./PlayerWeaponsDetailListItem";
 
 const elementStyle = {
-  //padding: "var(--padding-page-container)",
   width: "422px",
-};
-
-const footerStyle = {
-  display: "flex",
-  justifyContent: "space-between",
 };
 
 const titleStyle = {
@@ -20,7 +14,7 @@ const titleStyle = {
 
 const ITEM_HEIGHT = 100;
 const MAX_HEIGHT = 488;
-const WeaponList = (props) => {
+const PlayerWeaponsDetailList = (props) => {
   let weapons = props.weapons;
 
   let sortLabels = props.sortLabels;
@@ -75,10 +69,10 @@ const WeaponList = (props) => {
         itemSize={ITEM_HEIGHT}
         itemKey={itemKey}
       >
-        {WeaponListItem}
+        {PlayerWeaponsDetailListItem}
       </List>
     </div>
   );
 };
 
-export default WeaponList;
+export default PlayerWeaponsDetailList;

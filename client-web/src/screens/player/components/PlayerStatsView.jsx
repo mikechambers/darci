@@ -1,6 +1,6 @@
-import GamesDetail from "./GamesDetail";
+import ResultSummaryView from "./ResultSummaryView";
 import PlayerAbilityStatSummaryView from "./PlayerAbilityStatSummaryView";
-import StatDetail from "../../../components/StatSummaryView";
+import StatSummaryView from "../../../components/StatSummaryView";
 
 import { calculateAverage } from "../../../core/utils";
 
@@ -21,20 +21,20 @@ const PlayerStatsView = (props) => {
 
   return (
     <div style={style}>
-      <GamesDetail
+      <ResultSummaryView
         wins={summary.wins}
         mercies={summary.mercies}
         activityCount={summary.activityCount}
       />
 
-      <StatDetail
+      <StatSummaryView
         avg={calculateAverage(summary.kills, summary.activityCount).toFixed(2)}
         total={summary.kills}
         high={summary.highestKills}
         title="Kills"
       />
 
-      <StatDetail
+      <StatSummaryView
         avg={calculateAverage(summary.assists, summary.activityCount).toFixed(
           2
         )}
@@ -43,7 +43,7 @@ const PlayerStatsView = (props) => {
         title="Assists"
       />
 
-      <StatDetail
+      <StatSummaryView
         avg={calculateAverage(
           summary.opponentsDefeated,
           summary.activityCount
@@ -53,7 +53,7 @@ const PlayerStatsView = (props) => {
         title="Defeats"
       />
 
-      <StatDetail
+      <StatSummaryView
         avg={calculateAverage(summary.deaths, summary.activityCount).toFixed(2)}
         total={summary.deaths}
         high={summary.highestDeaths}
