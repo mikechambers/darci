@@ -1,6 +1,6 @@
 import ActivityWeaponList, { WEAPON_TYPE } from "./ActivityWeaponList";
 
-const WeaponListContainer = (props) => {
+const ActivityWeaponsView = (props) => {
   let teams = props.teams;
 
   //aggregate weapons by team
@@ -32,38 +32,6 @@ const WeaponListContainer = (props) => {
     }
     map.set(t.name, weaponMap);
   }
-
-  //aggregate weapons by all players
-  //note we could skip this step since we are not using the all players
-  //data right now, but keeping it here in case we want to come back to it
-  /*
-  const allWeaponsMap = new Map();
-  for (const value of map.values()) {
-    for (const [mKey, mValue] of value) {
-      let item = allWeaponsMap.get(mKey);
-
-      if (!item) {
-        item = {
-          id: mValue.id,
-          name: mValue.name,
-          icon: mValue.icon,
-          kills: mValue.kills,
-          count: mValue.count,
-          precision: mValue.precision,
-          itemSubType: mValue.itemSubType,
-        };
-      } else {
-        item = {
-          ...item,
-          kills: mValue.kills + item.kills,
-          count: mValue.count + item.count,
-          precision: mValue.precision + item.precision,
-        };
-      }
-
-      allWeaponsMap.set(mKey, item);
-    }
-  }*/
 
   let allWeapons = [];
 
@@ -127,4 +95,4 @@ const WeaponListContainer = (props) => {
   );
 };
 
-export default WeaponListContainer;
+export default ActivityWeaponsView;

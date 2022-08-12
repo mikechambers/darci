@@ -3,11 +3,11 @@ import { useFetchActivity } from "../../hooks/remote";
 
 import PageSectionTitle from "../../components/PageSectionTitle";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
-import ActivityDetails from "./components/ActivityDetails";
-import ActivityLeaderBoard from "./components/ActivityLeaderBoard";
-import GoldMedalsList from "./components/GoldMedalsList";
-import ActivityWeaponListContainer from "./components/ActivityWeaponListContainer";
-import TeamDetailsView from "./components/TeamDetailsView";
+import ActivitySummaryView from "./components/ActivitySummaryView";
+import ActivityLeadersView from "./components/ActivityLeadersView";
+import ActivityGoldMedalsView from "./components/ActivityGoldMedalsView";
+import ActivityWeaponListContainer from "./components/ActivityWeaponsView";
+import ActivityTeamDetailsView from "./components/ActivityTeamDetailsView";
 
 const pageContainerStyle = {
   minWidth: "720px",
@@ -82,7 +82,7 @@ const ActivityView = (props) => {
     <div style={pageContainerStyle} id="page_nav">
       <div style={gappedStyle}>
         <ScreenNavigationView links={pageLinks} />
-        <ActivityDetails details={details} teams={teams} />
+        <ActivitySummaryView details={details} teams={teams} />
 
         <div>
           <PageSectionTitle
@@ -90,7 +90,7 @@ const ActivityView = (props) => {
             title="Leaderboard"
             description="Top players in activity"
           />
-          <ActivityLeaderBoard players={players} />
+          <ActivityLeadersView players={players} />
         </div>
 
         <div>
@@ -99,7 +99,7 @@ const ActivityView = (props) => {
             title="Gold Medals"
             description="Gold medals"
           />
-          <GoldMedalsList players={players} />
+          <ActivityGoldMedalsView players={players} />
         </div>
 
         <div>
@@ -124,7 +124,7 @@ const ActivityView = (props) => {
                 title={`${team.name} Team`}
                 description={`${team.name} Team details`}
               />
-              <TeamDetailsView team={team} />
+              <ActivityTeamDetailsView team={team} />
             </div>
           );
         })}

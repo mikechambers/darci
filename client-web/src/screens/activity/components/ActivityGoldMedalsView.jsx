@@ -36,7 +36,7 @@ const headerStyle = {
   borderBottom: "1px #ffffff66 solid",
 };
 
-const GoldMedalsList = (props) => {
+const ActivityGoldMedalsView = (props) => {
   const players = props.players;
 
   let goldMedals = [];
@@ -104,4 +104,4 @@ const GoldMedalsList = (props) => {
   );
 };
 
-export default GoldMedalsList;
+export default ActivityGoldMedalsView;

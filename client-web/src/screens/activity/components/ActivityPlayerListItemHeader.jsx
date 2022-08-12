@@ -2,8 +2,8 @@ import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 import { SMALL } from "../../../components/Medal";
 import CompactMedalsList from "../../../components/CompactMedalsList";
 import StatusView from "../../../components/StatusView";
-import ItemStatContainer from "./ItemStatContainer";
-import PlayerInfoView from "./PlayerInfoView";
+import ActivityPlayerStatsView from "./ActivityPlayerStatsView";
+import PlayerInfoView from "./ActivityPlayerInfoView";
 
 const rootStyle = {
   display: "grid",
@@ -56,7 +56,7 @@ const ActivityPlayerListItemHeader = (props) => {
   return (
     <div className={className} style={rootStyle} onClick={handleOnClick}>
       <PlayerInfoView player={player} />
-      <ItemStatContainer data={data} />
+      <ActivityPlayerStatsView data={data} />
       <StatusView
         completed={player.stats.completed}
         joinedLate={player.stats.joinedLate}

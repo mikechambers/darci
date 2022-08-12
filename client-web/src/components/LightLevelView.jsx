@@ -1,4 +1,4 @@
-import { ReactComponent as LightLevelIcon } from "../../../components/images/light_level_icon.svg";
+import { ReactComponent as LightLevelIcon } from "./images/light_level_icon.svg";
 
 const elementStyle = {
   display: "flex",

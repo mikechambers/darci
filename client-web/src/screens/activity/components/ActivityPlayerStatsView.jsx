@@ -1,7 +1,7 @@
 import React from "react";
 import Stat from "../../../components/StatView";
 
-const ItemStatContainer = (props) => {
+const ActivityPlayerStatsView = (props) => {
   const data = props.data;
 
   let rootStyle = {
@@ -27,4 +27,4 @@ const ItemStatContainer = (props) => {
   );
 };
 
-export default ItemStatContainer;
+export default ActivityPlayerStatsView;

@@ -1,6 +1,6 @@
-import EmblemIconDisplay from "./EmblemIconDisplay";
-import LightLevelView from "./LightLevelView";
-import PlayerNameView from "./PlayerNameView";
+import EmblemImageView from "../../../components/EmblemImageView";
+import LightLevelView from "../../../components/LightLevelView";
+import PlayerNameView from "../../../components/PlayerNameView";
 
 const elementStyle = {
   display: "flex",
@@ -15,13 +15,13 @@ const detailsStyle = {
   rowGap: 4,
 };
 
-const PlayerInfoView = (props) => {
+const ActivityPlayerInfoView = (props) => {
   const player = props.player.player;
   const character = player.character;
   return (
     <div style={elementStyle}>
       <div>
-        <EmblemIconDisplay emblem={character.emblem} />
+        <EmblemImageView emblem={character.emblem} />
       </div>
       <div style={detailsStyle}>
         <PlayerNameView player={player} />
@@ -31,4 +31,4 @@ const PlayerInfoView = (props) => {
   );
 };
 
-export default PlayerInfoView;
+export default ActivityPlayerInfoView;

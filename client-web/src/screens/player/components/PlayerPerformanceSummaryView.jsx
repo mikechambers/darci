@@ -4,6 +4,7 @@ import PlayerHighlightsView from "./PlayerHighlightsView";
 import { humanDuration } from "../../../core/utils/date";
 
 import PlayerOverviewBackgroundImage from "../images/player_overview_background.png";
+import DurationView from "../../../components/DurationView";
 
 const elementStyle = {
   display: "flex",
@@ -22,14 +23,12 @@ const PlayerPerformanceSummaryView = (props) => {
   const summary = props.summary;
   const medals = props.medals;
 
-  let timePlayed = humanDuration(summary.timePlayedSeconds * 1000);
-
   return (
     <div style={elementStyle}>
       <PlayerHighlightsView summary={summary} />
       <StatDetails summary={summary} />
       <MedalHighlights medals={medals} />
-      <div>{timePlayed}</div>
+      <DurationView duration={summary.timePlayedSeconds * 1000} />
     </div>
   );
 };

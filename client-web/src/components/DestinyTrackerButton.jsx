@@ -2,7 +2,7 @@ const siteIconStyle = {
   verticalAlign: "middle",
 };
 
-const DestinyTrackerLink = (props) => {
+const DestinyTrackerButton = (props) => {
   const url = props.url;
   const descriptipn = props.descriptipn ? props.descriptipn : "Trials Report";
 
@@ -21,4 +21,4 @@ const DestinyTrackerLink = (props) => {
   );
 };
 
-export default DestinyTrackerLink;
+export default DestinyTrackerButton;

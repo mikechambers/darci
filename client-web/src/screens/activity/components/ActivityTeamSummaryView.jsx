@@ -33,7 +33,7 @@ const dividerStyle = {
   opacity: 0.5,
 };
 
-const TeamSummaryView = (props) => {
+const ActivityTeamSummaryView = (props) => {
   const team = props.team;
 
   let playerCount = team.players.length;
@@ -179,4 +179,4 @@ const TeamSummaryView = (props) => {
   );
 };
 
-export default TeamSummaryView;
+export default ActivityTeamSummaryView;

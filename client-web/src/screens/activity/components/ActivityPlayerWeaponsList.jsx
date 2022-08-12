@@ -2,7 +2,7 @@ import React from "react";
 import IconManager, { PRECISION_ICON } from "../../../components/IconManager";
 import { SMALL } from "../../../components/Medal";
 import WeaponIconManager from "../../../components/WeaponIconManager";
-import WeaponImage from "./WeaponImage";
+import WeaponImageView from "../../../components/WeaponImageView";
 import { calculatePercent } from "../../../core/utils";
 
 const rootStyle = {
@@ -59,7 +59,7 @@ const ActivityPlayerWeaponsList = (props) => {
         return (
           <div style={weaponEntryStyle} key={weapon.id}>
             <div key={weapon.id}>
-              <WeaponImage weapon={weapon} size={SMALL} />
+              <WeaponImageView weapon={weapon} size={SMALL} />
             </div>
             <div className="section_entry overflow">{weapon.item.name}</div>
             <div style={weaponIconStyle}>

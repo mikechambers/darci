@@ -15,7 +15,7 @@ import PlayerViewConfig from "../../components/PlayerViewConfig";
 import React, { useEffect, useState } from "react";
 import RefreshStatusView from "../../components/RefreshStatusView";
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../core/consts";
-import PlayerOverview from "./components/PlayerPerformanceSummaryView";
+import PlayerPerformanceSummaryView from "./components/PlayerPerformanceSummaryView";
 import PageSectionTitle from "../../components/PageSectionTitle";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 const { useQuery } = require("../../hooks/browser");
@@ -189,7 +189,7 @@ const PlayerView = () => {
           />
         </div>
 
-        <PlayerOverview summary={summary} medals={medals} />
+        <PlayerPerformanceSummaryView summary={summary} medals={medals} />
 
         <div style={itemDetailsStyle}>
           <div>

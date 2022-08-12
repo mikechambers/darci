@@ -1,16 +1,16 @@
 import ActivityPlayerList from "./ActivityPlayerList";
-import TeamSummaryView from "./TeamSummaryView";
+import ActivityTeamSummaryView from "./ActivityTeamSummaryView";
 
-const TeamDetailsView = (props) => {
+const ActivityTeamDetailsView = (props) => {
   const team = props.team;
   const players = team.players;
 
   return (
     <div>
-      <TeamSummaryView team={team} />
+      <ActivityTeamSummaryView team={team} />
       <ActivityPlayerList players={players} />
     </div>
   );
 };
 
-export default TeamDetailsView;
+export default ActivityTeamDetailsView;

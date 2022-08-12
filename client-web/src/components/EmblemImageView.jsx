@@ -1,4 +1,4 @@
-const EmblemIconDisplay = (props) => {
+const EmblemImageView = (props) => {
   const emblem = props.emblem;
 
   const elementStyle = {
@@ -13,4 +13,4 @@ const EmblemIconDisplay = (props) => {
   return <div style={elementStyle}></div>;
 };
 
-export default EmblemIconDisplay;
+export default EmblemImageView;

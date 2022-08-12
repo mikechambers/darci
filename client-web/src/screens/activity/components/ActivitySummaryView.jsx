@@ -1,4 +1,5 @@
 import { DateTime, Interval } from "luxon";
+import DurationView from "../../../components/DurationView";
 import { humanDuration } from "../../../core/utils/date";
 import { capitalize } from "../../../core/utils/string";
 
@@ -78,7 +79,7 @@ const modeIconStyleBase = {
   backgroundSize: "cover",
 };
 
-const ActivityDetails = (props) => {
+const ActivitySummaryView = (props) => {
   const details = props.details;
   const teams = props.teams;
 
@@ -112,10 +113,6 @@ const ActivityDetails = (props) => {
     periodHuman = period.toFormat("LLLL d 'at' t");
   }
 
-  const activityDuration = humanDuration(
-    details.activityDurationSeconds * 1000
-  );
-
   return (
     <div style={summaryStyle}>
       <div style={scoreStyle}>
@@ -127,7 +124,7 @@ const ActivityDetails = (props) => {
           <div style={scoreDivider}></div>
           <div className="bravo_team activity_score_box">{betaTeam.score}</div>
         </div>
-        <div>{activityDuration}</div>
+        <DurationView duration={details.activityDurationSeconds * 1000} />
       </div>
       <div style={spacerContainerStyle}></div>
       <div style={gameInfoContainterStyle}>
@@ -151,4 +148,4 @@ const ActivityDetails = (props) => {
   );
 };
 
-export default ActivityDetails;
+export default ActivitySummaryView;

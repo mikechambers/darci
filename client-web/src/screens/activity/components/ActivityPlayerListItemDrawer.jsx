@@ -1,10 +1,10 @@
 import { MEDIUM, SMALL } from "../../../components/Medal";
-import PlayerMedalsView from "./PlayerMedalsView";
+import ActivityPlayerMedalsView from "./ActivityPlayerMedalsView";
 import ActivityPlayerStatBreakdownView from "./ActivityPlayerStatBreakdownView";
 import ActivityPlayerWeaponsList from "./ActivityPlayerWeaponsList";
-import DestinyTrackerLink from "./DestinyTrackerLink";
-import DurationView from "./DurationView";
-import TrialsReportLink from "./TrialsReportLink";
+import DestinyTrackerButton from "../../../components/DestinyTrackerButton";
+import DurationView from "../../../components/DurationView";
+import TrialsReportButton from "../../../components/TrialsReportButton";
 
 const ActivityPlayerListItemDrawer = (props) => {
   const rootStyle = {
@@ -38,18 +38,21 @@ const ActivityPlayerListItemDrawer = (props) => {
       <div style={statsContainterStyle}>
         <ActivityPlayerWeaponsList weapons={player.stats.extended.weapons} />
         <ActivityPlayerStatBreakdownView stats={player.stats} />
-        <PlayerMedalsView medals={player.stats.extended.medals} size={SMALL} />
+        <ActivityPlayerMedalsView
+          medals={player.stats.extended.medals}
+          size={SMALL}
+        />
       </div>
       <div style={infoContainerStyle}>
         <div>
           <DurationView duration={player.stats.timePlayedSeconds * 1000} />
         </div>
         <div style={linksStyle}>
-          <DestinyTrackerLink
+          <DestinyTrackerButton
             url={`https://destinytracker.com/destiny-2/profile/bungie/${player.player.memberId}/overview`}
             desription="View player on Destiny Tracker."
           />
-          <TrialsReportLink
+          <TrialsReportButton
             url={`https://destinytrialsreport.com/report/${player.player.platformId}/${player.player.memberId}`}
             descrption="View player on Trials Report"
           />

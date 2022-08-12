@@ -1,4 +1,4 @@
-import { humanDuration } from "../../../core/utils/date";
+import { humanDuration } from "../core/utils/date";
 
 const DurationView = (props) => {
   const duration = props.duration;

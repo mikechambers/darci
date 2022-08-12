@@ -2,7 +2,7 @@ const siteIconStyle = {
   verticalAlign: "middle",
 };
 
-const TrialsReportLink = (props) => {
+const TrialsReportButton = (props) => {
   const url = props.url;
   const descriptipn = props.descriptipn ? props.descriptipn : "Trials Report";
 
@@ -21,4 +21,4 @@ const TrialsReportLink = (props) => {
   );
 };
 
-export default TrialsReportLink;
+export default TrialsReportButton;

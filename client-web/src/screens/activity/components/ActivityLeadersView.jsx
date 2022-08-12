@@ -1,5 +1,5 @@
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
-import LeaderList from "./LeaderList";
+import ActivityLeadersList from "./ActivityLeadersList";
 
 const elementWrapperStyle = {
   display: "grid",
@@ -8,7 +8,7 @@ const elementWrapperStyle = {
   flexWrap: "wrap",
 };
 
-const ActivityLeaderBoard = (props) => {
+const ActivityLeadersView = (props) => {
   const players = props.players;
 
   players.sort(
@@ -155,20 +155,23 @@ const ActivityLeaderBoard = (props) => {
   return (
     <div style={elementWrapperStyle}>
       {" "}
-      <LeaderList
+      <ActivityLeadersList
         title="Opponents Defeated"
         leaderData={opponentsDefeatedLeaders}
       />
-      <LeaderList title="KD" leaderData={killsDeathsLeaders} />
-      <LeaderList title="Efficiency" leaderData={efficiencyLeaders} />
-      <LeaderList title="Assists" leaderData={assistsLeaders} />
-      <LeaderList title="Precision Kills" leaderData={precisionLeaders} />
-      <LeaderList title="Deaths" leaderData={deathsLeaders} />
-      <LeaderList title="Score" leaderData={scoreLeaders} />
-      <LeaderList title="Medals" leaderData={medalsLeaders} />
-      <LeaderList title="Super Kills" leaderData={superLeaders} />
+      <ActivityLeadersList title="KD" leaderData={killsDeathsLeaders} />
+      <ActivityLeadersList title="Efficiency" leaderData={efficiencyLeaders} />
+      <ActivityLeadersList title="Assists" leaderData={assistsLeaders} />
+      <ActivityLeadersList
+        title="Precision Kills"
+        leaderData={precisionLeaders}
+      />
+      <ActivityLeadersList title="Deaths" leaderData={deathsLeaders} />
+      <ActivityLeadersList title="Score" leaderData={scoreLeaders} />
+      <ActivityLeadersList title="Medals" leaderData={medalsLeaders} />
+      <ActivityLeadersList title="Super Kills" leaderData={superLeaders} />
     </div>
   );
 };
 
-export default ActivityLeaderBoard;
+export default ActivityLeadersView;

@@ -29,7 +29,7 @@ const rootStyle = {
   padding: 8,
 };
 
-const LeaderList = (props) => {
+const ActivityLeadersList = (props) => {
   let title = props.title;
   let leaderData = props.leaderData;
 
@@ -63,4 +63,4 @@ const LeaderList = (props) => {
   );
 };
 
-export default LeaderList;
+export default ActivityLeadersList;

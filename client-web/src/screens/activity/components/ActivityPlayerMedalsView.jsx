@@ -7,7 +7,7 @@ const rootStyle = {
   rowGap: 4,
 };
 
-const PlayerMedalsView = (props) => {
+const ActivityPlayerMedalsView = (props) => {
   const medals = props.medals;
 
   return (
@@ -18,4 +18,4 @@ const PlayerMedalsView = (props) => {
   );
 };
 
-export default PlayerMedalsView;
+export default ActivityPlayerMedalsView;

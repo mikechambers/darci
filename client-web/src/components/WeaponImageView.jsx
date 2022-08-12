@@ -1,6 +1,6 @@
-import { SMALL } from "../../../components/Medal";
+import { SMALL } from "./Medal";
 
-const WeaponImage = (props) => {
+const WeaponImageView = (props) => {
   const weapon = props.weapon;
   const size = SMALL;
 
@@ -16,4 +16,4 @@ const WeaponImage = (props) => {
   return <div style={rootStyle}></div>;
 };
 
-export default WeaponImage;
+export default WeaponImageView;

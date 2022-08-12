@@ -12,6 +12,7 @@ import WeaponIconManager from "../../../components/WeaponIconManager";
 import { calculatePercent } from "../../../core/utils";
 import { humanDuration } from "../../../core/utils/date";
 import StatView, { SMALL_STYLE } from "../../../components/StatView";
+import DurationView from "../../../components/DurationView";
 
 const GAP = 4;
 
@@ -292,7 +293,9 @@ const PlayerActivityListItemDrawer = (props) => {
         </div>
         <div style={metaDataStyle}>
           <div style={timePlayedStyle} className="section_entry">
-            {humanDuration(activity.stats.activityDurationSeconds * 1000)}
+            <DurationView
+              duration={activity.stats.activityDurationSeconds * 1000}
+            />
           </div>
           <div style={linksStyle}>
             <a href={`https://crucible.report/pgcr/${activityId}`}>
