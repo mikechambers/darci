@@ -7,21 +7,14 @@ const rootStyle = {
 };
 
 const SingleBarChart = (props) => {
-  //const data = props.data;
+  const data = props.data;
 
   let keys = [];
-  const data = [
-    { label: "Mercy", value: 25 },
-    { label: "Objective Complete", value: 60 },
-    { label: "Time Expired", value: 15 },
-  ];
 
   let d = { d: "d" };
 
   for (const item of data) {
     d[item.label] = item.value;
-    //d[item.label + "Color"] = "hsl(58, 70%, 50%)";
-
     keys.push(item.label);
   }
 
