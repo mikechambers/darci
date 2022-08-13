@@ -17,6 +17,7 @@ const dateStyleFirst = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
+  textTransform: "capitalize",
 };
 
 const dateStyle = {
