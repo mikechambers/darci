@@ -1,5 +1,4 @@
 const rootStyle = {
-  backgroundColor: "#FFFFFF",
   padding: "2px 4px",
   borderRadius: 4,
   display: "flex",
@@ -12,15 +11,14 @@ const NivoTooltip = (props) => {
   const color = props.color;
 
   let colorStyle = {
-    width: 12,
-    height: 12,
-    borderRadius: 4,
     backgroundColor: color,
   };
 
+  console.log(colorStyle);
+
   return (
     <div style={rootStyle} className="nivo_tooltip">
-      <div style={colorStyle}></div>
+      <div style={colorStyle} className="tooltip_color_swatch"></div>
       {label} : {value}
     </div>
   );

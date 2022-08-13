@@ -4,6 +4,7 @@ const PlayerNameView = (props) => {
   const rootStyle = {
     display: "flex",
     flexWrap: "wrap",
+    alignItems: "flex-end",
   };
 
   return (

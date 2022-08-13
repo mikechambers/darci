@@ -8,6 +8,7 @@ import ActivityLeadersView from "./components/ActivityLeadersView";
 import ActivityGoldMedalsView from "./components/ActivityGoldMedalsView";
 import ActivityWeaponListContainer from "./components/ActivityWeaponsView";
 import ActivityTeamDetailsView from "./components/ActivityTeamDetailsView";
+import ActivityPlayerEffectivenessView from "./components/ActivityPlayerEffectivenessView";
 
 const pageContainerStyle = {
   minWidth: "720px",
@@ -49,6 +50,10 @@ const ActivityView = (props) => {
     {
       value: "Medals",
       id: "medals",
+    },
+    {
+      value: "Analysis",
+      id: "analysis",
     },
     {
       value: "Weapons",
@@ -100,6 +105,15 @@ const ActivityView = (props) => {
             description="Gold medals"
           />
           <ActivityGoldMedalsView players={players} />
+        </div>
+
+        <div>
+          <PageSectionView
+            id="analysis"
+            title="Analysis"
+            description="Plot chart showing player effectiveness (kills and deaths relative to efficiency)"
+          />
+          <ActivityPlayerEffectivenessView teams={teams} />
         </div>
 
         <div>

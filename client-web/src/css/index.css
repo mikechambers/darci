@@ -50,6 +50,7 @@
   /* colors */
   --color-font:#ffffff;
   --color-label:#ffffff88;
+  --color-label-dark: #333333cc;
   --color-player-name-code:#58ccff;
   --color-link:#fbfbfb;
   --color-light-level:#FFD600;
@@ -172,6 +173,10 @@ body {
   text-transform: uppercase;
 }
 
+.label_dark {
+  color:var( --color-label-dark);
+}
+
 .light_level {
   font:var(  --font-small);
   color:var(--color-light-level);
@@ -197,10 +202,17 @@ body {
 }
 
 .nivo_tooltip {
+  background-color: #FFFFFF;
   color: #333333;
   font:var(--font-tooltip);
+  border: 1px solid #33333333;
 }
 
+.tooltip_color_swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+}
 
 /************* end text styles ********************/
 
