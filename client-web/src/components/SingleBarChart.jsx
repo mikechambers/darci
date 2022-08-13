@@ -24,7 +24,8 @@ const SingleBarChart = (props) => {
         data={[d]}
         keys={keys}
         indexBy="d"
-        margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
+        borderRadius={4}
+        margin={{ top: 0, right: 12, bottom: 0, left: 12 }}
         minValue={0}
         maxValue={100}
         layout="horizontal"
