@@ -72,22 +72,8 @@ const SingleBarChart = (props) => {
         }}
         axisTop={null}
         axisRight={null}
-        axisBottom={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "country",
-          legendPosition: "middle",
-          legendOffset: 32,
-        }}
-        axisLeft={{
-          tickSize: 5,
-          tickPadding: 5,
-          tickRotation: 0,
-          legend: "food",
-          legendPosition: "middle",
-          legendOffset: -40,
-        }}
+        axisBotton={null}
+        axisLeft={null}
         enableGridY={false}
         theme={{
           tooltip: {
@@ -102,36 +88,9 @@ const SingleBarChart = (props) => {
           from: "color",
           modifiers: [["darker", 1.6]],
         }}
-        legends={[
-          {
-            dataFrom: "keys",
-            anchor: "bottom-right",
-            direction: "column",
-            justify: false,
-            translateX: 120,
-            translateY: 0,
-            itemsSpacing: 2,
-            itemWidth: 100,
-            itemHeight: 20,
-            itemDirection: "left-to-right",
-            itemOpacity: 0.85,
-            symbolSize: 20,
-            effects: [
-              {
-                on: "hover",
-                style: {
-                  itemOpacity: 1,
-                },
-              },
-            ],
-          },
-        ]}
         role="application"
         isFocusable={true}
         ariaLabel=""
-        barAriaLabel={function (e) {
-          return e.id + ": " + e.formattedValue + " in FOO: " + e.indexValue;
-        }}
         label={function (e) {
           return e.formattedValue + "%";
         }}
