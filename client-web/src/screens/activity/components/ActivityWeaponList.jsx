@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import IconManager, {
+import Icon, {
   CHEVRONS_DOWN,
   CHEVRONS_UP,
   LEADERBOARD_ICON,
-} from "../../../components/IconManager";
-import WeaponIconManager from "../../../components/WeaponIconManager";
+} from "../../../components/Icon";
+import WeaponIcon from "../../../components/WeaponIcon";
 
 const elementStyle = {
   display: "flex",
@@ -90,7 +90,7 @@ const ActivityWeaponList = (props) => {
           style={expandedDivStyle}
           className="link icon_link"
         >
-          <IconManager icon={CHEVRONS_DOWN} width="14" style={chevronStyle} />
+          <Icon icon={CHEVRONS_DOWN} width="14" style={chevronStyle} />
         </div>
       );
 
@@ -103,7 +103,7 @@ const ActivityWeaponList = (props) => {
           style={expandedDivStyle}
           className="link icon_link"
         >
-          <IconManager icon={CHEVRONS_UP} width="14" style={chevronStyle} />
+          <Icon icon={CHEVRONS_UP} width="14" style={chevronStyle} />
         </div>
       );
     }
@@ -121,7 +121,7 @@ const ActivityWeaponList = (props) => {
           kills
         </div>
         <div style={countStyle}>
-          <IconManager
+          <Icon
             icon={LEADERBOARD_ICON}
             width="12"
             title="Number of players using the weapon"
@@ -140,7 +140,7 @@ const ActivityWeaponList = (props) => {
           } else {
             iconDiv = (
               <div>
-                <WeaponIconManager type={data.itemSubType} width="16" />
+                <WeaponIcon type={data.itemSubType} width="16" />
               </div>
             );
           }

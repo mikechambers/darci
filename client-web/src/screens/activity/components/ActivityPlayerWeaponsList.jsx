@@ -1,7 +1,7 @@
 import React from "react";
-import IconManager, { PRECISION_ICON } from "../../../components/IconManager";
+import Icon, { PRECISION_ICON } from "../../../components/Icon";
 import { SMALL } from "../../../components/Medal";
-import WeaponIconManager from "../../../components/WeaponIconManager";
+import WeaponIcon from "../../../components/WeaponIcon";
 import WeaponImageView from "../../../components/WeaponImageView";
 import { calculatePercent } from "../../../core/utils";
 
@@ -50,7 +50,7 @@ const ActivityPlayerWeaponsList = (props) => {
         <div className="subsection_header">Weapons</div>
         <div className="label_small right">kills</div>
         <div className="label_icon" style={iconStyle}>
-          <IconManager width="10" icon={PRECISION_ICON} />
+          <Icon width="10" icon={PRECISION_ICON} />
         </div>
         <div>&nbsp;</div>
       </div>
@@ -63,7 +63,7 @@ const ActivityPlayerWeaponsList = (props) => {
             </div>
             <div className="section_entry overflow">{weapon.item.name}</div>
             <div style={weaponIconStyle}>
-              <WeaponIconManager type={weapon.item.itemSubType} />
+              <WeaponIcon type={weapon.item.itemSubType} />
             </div>
             <div className="right section_entry">{weapon.kills}</div>
             <div className="right section_entry">{weapon.precision}</div>

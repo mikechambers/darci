@@ -1,5 +1,5 @@
 import React from "react";
-import MapSummaryView from "./MapSummaryView";
+import PlayerMapSummaryView from "./PlayerMapSummaryView";
 
 const rootStyle = {
   display: "flex",
@@ -13,7 +13,7 @@ const wrapperStyle = {
   flexWrap: "wrap",
 };
 
-const MapSummaryList = (props) => {
+const PlayerMapSummaryList = (props) => {
   let maps = props.maps ? props.maps : [];
 
   maps.sort((a, b) => {
@@ -30,7 +30,7 @@ const MapSummaryList = (props) => {
       <div style={wrapperStyle}>
         {maps.map((map, index) => {
           return (
-            <MapSummaryView
+            <PlayerMapSummaryView
               map={map}
               totalGames={totalGames}
               key={map.referenceId}
@@ -42,4 +42,4 @@ const MapSummaryList = (props) => {
   );
 };
 
-export default MapSummaryList;
+export default PlayerMapSummaryList;

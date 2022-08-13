@@ -28,7 +28,7 @@ export const SEARCH_ICON = "SEARCH_ICON";
 export const CHEVRONS_DOWN = "CHEVRONS_DOWN";
 export const CHEVRONS_UP = "CHEVRONS_UP";
 
-const IconManager = (props) => {
+const Icon = (props) => {
   let icon = props.icon;
   let width = props.width ? props.width : 10;
   let style = props.style;
@@ -115,4 +115,4 @@ const IconManager = (props) => {
   return out;
 };
 
-export default IconManager;
+export default Icon;

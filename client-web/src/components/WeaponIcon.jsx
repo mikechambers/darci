@@ -18,7 +18,7 @@ import { ReactComponent as SwordIcon } from "./images/sword_icon.svg";
 import { ReactComponent as TraceRifleIcon } from "./images/trace_rifle_icon.svg";
 import { ReactComponent as BlankIcon } from "./images/blank_icon.svg";
 
-const WeaponIconManager = (props) => {
+const WeaponIcon = (props) => {
   let type = props.type;
   let width = props.width ? props.width : 22;
 
@@ -82,4 +82,4 @@ const WeaponIconManager = (props) => {
   return out;
 };
 
-export default WeaponIconManager;
+export default WeaponIcon;

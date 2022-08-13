@@ -1,7 +1,7 @@
 import React from "react";
 import { truncate } from "../core/utils";
 
-const EnumSelectBase = (props) => {
+const EnumSelect = (props) => {
   let options = props.options;
   let selected = props.selected;
   let label = props.label;
@@ -50,34 +50,4 @@ const EnumSelectBase = (props) => {
   );
 };
 
-export default EnumSelectBase;
-
-/*
-      <NativeSelect
-        onChange={handleOnChange}
-        label={label}
-        description={description}
-        defaultValue={defaultValue}
-        data={options}
-        size="xs"
-        variant="filled"
-        styles={(theme) => ({
-          input: { opacity: "0.8" },
-          label: { color: "#ffffff", textTransform: "uppercase" },
-        })}
-      />
-
-      <NativeSelect
-        onChange={handleOnChange}
-        label={label}
-        description={description}
-        defaultValue={defaultValue}
-        data={options}
-        size="xs"
-        variant="filled"
-        styles={(theme) => ({
-          input: { opacity: "0.8" },
-          label: { color: "#ffffff", textTransform: "uppercase" },
-        })}
-      />
-      */
+export default EnumSelect;

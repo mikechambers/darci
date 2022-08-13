@@ -1,6 +1,6 @@
 import { CharacterClassSelection, Mode, Moment } from "shared";
 import React, { useEffect } from "react";
-import EnumSelectBase from "./EnumSelectBase";
+import EnumSelect from "./EnumSelect";
 import { useFetchPlayers } from "../hooks/remote";
 import { useLocalStorage } from "@mantine/hooks";
 import { useState } from "react";
@@ -13,7 +13,7 @@ const createUrl = function (player, classSelection, mode, moment) {
   return url;
 };
 
-const PlayerViewConfig = (props) => {
+const PlayerSelectView = (props) => {
   const style = props.style;
   const onUpdate = props.onUpdate;
   const maxLabelLength = props.maxLabelLength ? props.maxLabelLength : 100;
@@ -165,7 +165,7 @@ const PlayerViewConfig = (props) => {
 
   return (
     <div style={s}>
-      <EnumSelectBase
+      <EnumSelect
         onChange={playerOnChange}
         options={players}
         selected={selected}
@@ -173,21 +173,21 @@ const PlayerViewConfig = (props) => {
         maxLabelLength={maxLabelLength}
       />
 
-      <EnumSelectBase
+      <EnumSelect
         onChange={classOnChange}
         options={classes}
         selected={classSelection}
         label="class"
         maxLabelLength={maxLabelLength}
       />
-      <EnumSelectBase
+      <EnumSelect
         onChange={modeOnChange}
         options={modes}
         selected={mode}
         label="mode"
         maxLabelLength={maxLabelLength}
       />
-      <EnumSelectBase
+      <EnumSelect
         onChange={momentOnChange}
         options={moments}
         selected={moment}
@@ -199,4 +199,4 @@ const PlayerViewConfig = (props) => {
   );
 };
 
-export default PlayerViewConfig;
+export default PlayerSelectView;

@@ -31,7 +31,7 @@ const navIndicatorStyleBase = {
   borderTop: "var(--border-divider)",
 };
 
-const NavItemContainer = (props) => {
+const SiteNavigationView = (props) => {
   const items = props.items;
   const onChange = props.onChange;
   const selectedIndex = props.selectedIndex;
@@ -85,4 +85,4 @@ const NavItemContainer = (props) => {
   );
 };
 
-export default NavItemContainer;
+export default SiteNavigationView;

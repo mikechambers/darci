@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import IconManager, {
+import Icon, {
   ABOUT_ICON,
   LEADERBOARD_ICON,
   PLAYER_ICON,
   SEARCH_ICON,
-} from "./IconManager";
+} from "./Icon";
 import SidebarBackground from "./images/nav_background_tg.png";
-import NavItemContainer from "./NavItemContainter";
-import PlayerViewConfig from "./PlayerViewConfig";
+import SiteNavigationView from "./SiteNavigationView";
+import PlayerSelectView from "./PlayerSelectView";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const sidebarStyle = {
@@ -31,7 +31,7 @@ const sidebarStyle = {
 };
 
 //12, 42, 72, 102
-const Sidebar = (props) => {
+const SidebarView = (props) => {
   const location = useLocation();
   const [navIndex, setNavIndex] = useState(0);
 
@@ -39,22 +39,22 @@ const Sidebar = (props) => {
     {
       title: "Leaderboard",
       path: "/",
-      icon: <IconManager icon={LEADERBOARD_ICON} width="16" />,
+      icon: <Icon icon={LEADERBOARD_ICON} width="16" />,
     },
     {
       title: "Player",
       path: "/player",
-      icon: <IconManager icon={PLAYER_ICON} width="16" />,
+      icon: <Icon icon={PLAYER_ICON} width="16" />,
     },
     {
       title: "Search",
       path: "/search",
-      icon: <IconManager icon={SEARCH_ICON} width="16" />,
+      icon: <Icon icon={SEARCH_ICON} width="16" />,
     },
     {
       title: "About",
       path: "/about",
-      icon: <IconManager icon={ABOUT_ICON} width="16" />,
+      icon: <Icon icon={ABOUT_ICON} width="16" />,
     },
   ];
 
@@ -96,14 +96,14 @@ const Sidebar = (props) => {
   return (
     <div style={sidebarStyle}>
       <div>DARCI</div>
-      <NavItemContainer
+      <SiteNavigationView
         items={items}
         selectedIndex={navIndex}
         onChange={onNavChange}
       />
-      <PlayerViewConfig onUpdate={onPlayerConfigUpdate} maxLabelLength="22" />
+      <PlayerSelectView onUpdate={onPlayerConfigUpdate} maxLabelLength="22" />
     </div>
   );
 };
 
-export default Sidebar;
+export default SidebarView;

@@ -1,19 +1,9 @@
-import { SMALL } from "./Medal";
+import ImageView from "./ImageView";
 
 const WeaponImageView = (props) => {
   const weapon = props.weapon;
-  const size = SMALL;
 
-  let rootStyle = {
-    width: 16,
-    height: 16,
-    borderRadius: 4,
-    backgroundImage: `url(${weapon.item.icon})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-  };
-
-  return <div style={rootStyle}></div>;
+  return <ImageView width="16" heigh="16" image={weapon.item.icon} />;
 };
 
 export default WeaponImageView;

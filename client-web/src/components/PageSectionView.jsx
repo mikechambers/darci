@@ -1,11 +1,9 @@
 const headerStyle = {
   display: "flex",
   flexDirection: "column",
-  //justifyContent: "flex-start",
-  //alignItems: "flex-start",
 };
 
-const PageSectionTitle = (props) => {
+const PageSectionView = (props) => {
   const description = props.description;
   const title = props.title;
   const id = props.id ? props.id : "";
@@ -21,4 +19,4 @@ const PageSectionTitle = (props) => {
   );
 };
 
-export default PageSectionTitle;
+export default PageSectionView;

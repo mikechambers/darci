@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PlayerActivityList from "./components/PlayerActivityList";
 import PlayerWeaponsDetailView from "./components/PlayerWeaponsDetailView";
-import MapSummaryList from "../../components/MapSummaryList";
+import PlayerMapSummaryList from "./components/PlayerMapSummaryList";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
 
 import {
@@ -11,12 +11,12 @@ import {
 
 import { CharacterClassSelection, Mode, Moment } from "shared";
 import PlayerMedalsDetailList from "./components/PlayerMedalsDetailList";
-import PlayerViewConfig from "../../components/PlayerViewConfig";
+import PlayerSelectView from "../../components/PlayerSelectView";
 import React, { useEffect, useState } from "react";
 import RefreshStatusView from "../../components/RefreshStatusView";
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../core/consts";
 import PlayerPerformanceSummaryView from "./components/PlayerPerformanceSummaryView";
-import PageSectionTitle from "../../components/PageSectionTitle";
+import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 const { useQuery } = require("../../hooks/browser");
 
@@ -128,7 +128,7 @@ const PlayerView = () => {
         <div className="page_title">Invalid Parameters</div>
         <div>Please select Player parameters:</div>
         <div>
-          <PlayerViewConfig onUpdate={onPlayerConfigUpdate} />
+          <PlayerSelectView onUpdate={onPlayerConfigUpdate} />
         </div>
       </div>
     );
@@ -194,7 +194,7 @@ const PlayerView = () => {
         <div style={itemDetailsStyle}>
           <div>
             {" "}
-            <PageSectionTitle
+            <PageSectionView
               id="weapons"
               title="Weapons"
               description="Your weapon stats"
@@ -202,7 +202,7 @@ const PlayerView = () => {
             <PlayerWeaponsDetailView weapons={weapons} />
           </div>
           <div>
-            <PageSectionTitle
+            <PageSectionView
               id="meta"
               title="Meta Weapons"
               description="Weapon meta from your matches excluding you and your fireteam members"
@@ -210,7 +210,7 @@ const PlayerView = () => {
             <PlayerWeaponsDetailView weapons={meta} />
           </div>
           <div>
-            <PageSectionTitle
+            <PageSectionView
               id="medals"
               title="Medals"
               description="Medals earned in matches"
@@ -222,14 +222,14 @@ const PlayerView = () => {
           </div>
         </div>
         <div>
-          <PageSectionTitle
+          <PageSectionView
             id="maps"
             description="Stats broken down by map"
             title="Maps"
           />
-          <MapSummaryList maps={maps} />
+          <PlayerMapSummaryList maps={maps} />
         </div>
-        <PageSectionTitle
+        <PageSectionView
           description="Most recent matches"
           id="games"
           title="Games"

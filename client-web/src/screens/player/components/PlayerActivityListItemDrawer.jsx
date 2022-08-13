@@ -1,14 +1,14 @@
 import React from "react";
 import { calculateRatio } from "shared";
-import IconManager, {
+import Icon, {
   DESTINY_LOGO,
   GRENADE_ICON,
   MELEE_ICON,
   PRECISION_ICON,
   SUPER_ICON,
-} from "../../../components/IconManager";
+} from "../../../components/Icon";
 import Medal, { SMALL } from "../../../components/Medal";
-import WeaponIconManager from "../../../components/WeaponIconManager";
+import WeaponIcon from "../../../components/WeaponIcon";
 import { calculatePercent } from "../../../core/utils";
 import { humanDuration } from "../../../core/utils/date";
 import StatView, { SMALL_STYLE } from "../../../components/StatView";
@@ -188,7 +188,7 @@ const PlayerActivityListItemDrawer = (props) => {
               return (
                 <React.Fragment key={weapon.id}>
                   <div>
-                    <WeaponIconManager type={weapon.item.itemSubType} />
+                    <WeaponIcon type={weapon.item.itemSubType} />
                   </div>
                   <div className="overflow">{weapon.item.name}</div>
                   <div style={killsStyle}>{weapon.kills}</div>
@@ -196,7 +196,7 @@ const PlayerActivityListItemDrawer = (props) => {
                     {calculatePercent(weapon.precision, weapon.kills).toFixed(
                       0
                     )}
-                    % &nbsp; <IconManager icon={PRECISION_ICON} />
+                    % &nbsp; <Icon icon={PRECISION_ICON} />
                   </div>
                 </React.Fragment>
               );
@@ -207,19 +207,19 @@ const PlayerActivityListItemDrawer = (props) => {
               {activity.stats.extended.meleeKills}
             </div>
             <div style={abilitiesIconStyle}>
-              <IconManager icon={MELEE_ICON} width="16" />
+              <Icon icon={MELEE_ICON} width="16" />
             </div>
             <div style={abilitiesStyle}>
               {activity.stats.extended.grenadeKills}
             </div>
             <div style={abilitiesIconStyle}>
-              <IconManager icon={GRENADE_ICON} />
+              <Icon icon={GRENADE_ICON} />
             </div>
             <div style={abilitiesStyle}>
               {activity.stats.extended.superKills}
             </div>
             <div style={abilitiesIconStyle}>
-              <IconManager icon={SUPER_ICON} width="14" />
+              <Icon icon={SUPER_ICON} width="14" />
             </div>
           </div>
           <div style={statsContainterStyle}>
@@ -321,7 +321,7 @@ const PlayerActivityListItemDrawer = (props) => {
             <a
               href={`https://www.bungie.net/en/PGCR/${activityId}?character=${characterId}`}
             >
-              <IconManager
+              <Icon
                 icon={DESTINY_LOGO}
                 style={siteIconStyle}
                 title="View game on Bungie.com"

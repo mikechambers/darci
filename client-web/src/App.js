@@ -10,7 +10,7 @@ import {
   useGlobalContext,
   GlobalAction,
 } from "./contexts/GlobalContext";
-import Sidebar from "./components/Sidebar";
+import SidebarView from "./components/SidebarView";
 const { useQuery } = require("./hooks/browser");
 
 const App = (props) => {
@@ -62,14 +62,6 @@ const App = (props) => {
   } else if (isLoading) {
     initializingContent = <div>Initializing Manifest</div>;
   }
-  /*
-  const style = {
-    padding: "var(--padding-page-container)",
-    borderBottom: "1px solid #FFFFFF66",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  };*/
 
   const style = {
     display: "flex",
@@ -92,7 +84,7 @@ const App = (props) => {
           initializingContent
         ) : (
           <div style={style}>
-            <Sidebar />
+            <SidebarView />
 
             <div style={currentViewStyle}>
               <Outlet />

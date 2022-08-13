@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useFetchActivity } from "../../hooks/remote";
 
-import PageSectionTitle from "../../components/PageSectionTitle";
+import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import ActivitySummaryView from "./components/ActivitySummaryView";
 import ActivityLeadersView from "./components/ActivityLeadersView";
@@ -85,7 +85,7 @@ const ActivityView = (props) => {
         <ActivitySummaryView details={details} teams={teams} />
 
         <div>
-          <PageSectionTitle
+          <PageSectionView
             id="leaders"
             title="Leaderboard"
             description="Top players in activity"
@@ -94,7 +94,7 @@ const ActivityView = (props) => {
         </div>
 
         <div>
-          <PageSectionTitle
+          <PageSectionView
             id="medals"
             title="Gold Medals"
             description="Gold medals"
@@ -103,11 +103,7 @@ const ActivityView = (props) => {
         </div>
 
         <div>
-          <PageSectionTitle
-            id="weapons"
-            title="Weapons"
-            description="Weapons"
-          />
+          <PageSectionView id="weapons" title="Weapons" description="Weapons" />
           <ActivityWeaponListContainer teams={teams} />
         </div>
 
@@ -119,7 +115,7 @@ const ActivityView = (props) => {
 
           return (
             <div key={team.name} id={id}>
-              <PageSectionTitle
+              <PageSectionView
                 id={team.name}
                 title={`${team.name} Team`}
                 description={`${team.name} Team details`}
@@ -130,7 +126,7 @@ const ActivityView = (props) => {
         })}
 
         <div>
-          <PageSectionTitle
+          <PageSectionView
             id="links"
             title="Links"
             description="Links to game details on other sites."
