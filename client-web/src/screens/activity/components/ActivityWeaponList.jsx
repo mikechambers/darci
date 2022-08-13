@@ -4,6 +4,7 @@ import Icon, {
   CHEVRONS_UP,
   LEADERBOARD_ICON,
 } from "../../../components/Icon";
+import ImageView from "../../../components/ImageView";
 import WeaponIcon from "../../../components/WeaponIcon";
 
 const elementStyle = {
@@ -136,7 +137,7 @@ const ActivityWeaponList = (props) => {
               ...iconStyleBase,
               backgroundImage: `url(${data.icon})`,
             };
-            iconDiv = <div style={s}></div>;
+            iconDiv = <ImageView width={16} height={16} image={data.icon} />;
           } else {
             iconDiv = (
               <div>
