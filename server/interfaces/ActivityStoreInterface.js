@@ -183,6 +183,8 @@ class ActivityStoreInterface {
     sum(time_played_seconds) as timePlayedSeconds,
     sum(standing = 0) as wins,
     sum( character_activity_stats.completion_reason = 4) as mercies,
+    sum( character_activity_stats.completion_reason = 0) as objectiveCompleted,
+    sum( character_activity_stats.completion_reason = 1) as timeExpired,
     sum(completed) as completed,
     sum(assists) as assists,
     sum(character_activity_stats.kills) as kills,

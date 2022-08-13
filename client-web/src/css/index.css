@@ -30,6 +30,8 @@
 
   --font-list-subtitle: var(--bold) 12px 'Roboto', sans-serif;
 
+  --font-tooltip:var(--light) 12px 'Roboto', sans-serif;
+
   /* activity detail specific */
   --font-activity-map-name:var(--light) 36px 'Roboto', sans-serif;
   --font-activity-mode-name:var(--bold) 36px 'Roboto', sans-serif;
@@ -192,6 +194,11 @@ body {
   font:var(--font-list-subtitle);
   text-transform: uppercase;
   color:#BFBFBF;
+}
+
+.nivo_tooltip {
+  color: #333333;
+  font:var(--font-tooltip);
 }
 
 
