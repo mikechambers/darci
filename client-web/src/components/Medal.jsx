@@ -1,6 +1,5 @@
-export const LARGE = "large";
-export const MEDIUM = "medium";
-export const SMALL = "small";
+import { LARGE, MEDIUM, SMALL } from "../core/consts";
+
 const Medal = (props) => {
   const medal = props.medal;
   const count = props.count;

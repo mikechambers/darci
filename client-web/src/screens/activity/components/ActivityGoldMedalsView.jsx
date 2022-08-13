@@ -1,4 +1,5 @@
-import Medal, { MEDIUM } from "../../../components/Medal";
+import Medal from "../../../components/Medal";
+import { MEDIUM } from "../../../core/consts";
 
 const elementStyle = {
   display: "grid",

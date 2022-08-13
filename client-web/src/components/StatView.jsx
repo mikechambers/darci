@@ -1,18 +1,12 @@
 import React from "react";
-
-export const SMALL_STYLE = "small";
-export const LARGE_STYLE = "large";
-export const REGULAR_STYLE = undefined;
-
-export const ALIGN_RIGHT = "right";
-export const ALIGN_LEFT = "left";
+import { LARGE, LEFT, SMALL } from "../core/consts";
 
 const StatView = (props) => {
   const label = props.label;
   const value = props.value;
   const styleName = props.styleName;
 
-  const align = props.align ? props.align : ALIGN_LEFT;
+  const align = props.align ? props.align : LEFT;
   const highlight = props.highlight === true ? true : false;
   const title = props.title ? props.title : "";
 
@@ -24,10 +18,10 @@ const StatView = (props) => {
     valueClassName = `${valueClassName}_${styleName}`;
   }
 
-  if (styleName === SMALL_STYLE) {
+  if (styleName === SMALL) {
     labelClassName = "label_small";
     valueClassName = "data";
-  } else if (styleName === LARGE_STYLE) {
+  } else if (styleName === LARGE) {
     labelClassName = "label_highlight";
     valueClassName = "data_highlight";
   }

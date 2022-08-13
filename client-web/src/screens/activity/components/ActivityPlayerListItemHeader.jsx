@@ -1,9 +1,9 @@
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
-import { SMALL } from "../../../components/Medal";
 import CompactMedalsList from "../../../components/CompactMedalsList";
 import StatusView from "../../../components/StatusView";
 import ActivityPlayerStatsView from "./ActivityPlayerStatsView";
 import PlayerInfoView from "./ActivityPlayerInfoView";
+import { SMALL } from "../../../core/consts";
 
 const rootStyle = {
   display: "grid",

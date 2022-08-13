@@ -1,9 +1,9 @@
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
-import Stat, { LARGE_STYLE } from "../../../components/StatView";
-
 import { ReactComponent as AlphaTeamIcon } from "../../../components/images/alpha_team_logo.svg";
 import { ReactComponent as BravoTeamIcon } from "../../../components/images/bravo_team_logo.svg";
 import StatCollectionView from "../../../components/StatCollectionView";
+import StatView from "../../../components/StatView";
+import { LARGE } from "../../../core/consts";
 
 const teamBarStyle = {
   height: 10,
@@ -154,13 +154,13 @@ const ActivityTeamSummaryView = (props) => {
       <div style={statHighlightsStyle}>
         <div>{teamLogo}</div>
         <div>
-          <Stat styleName={LARGE_STYLE} label="Score" value={team.score} />
+          <StatView styleName={LARGE} label="Score" value={team.score} />
         </div>
         <div>
-          <Stat styleName={LARGE_STYLE} label="KD" value={kd} />
+          <StatView styleName={LARGE} label="KD" value={kd} />
         </div>
         <div>
-          <Stat styleName={LARGE_STYLE} label="EFF" value={eff} />
+          <StatView styleName={LARGE} label="EFF" value={eff} />
         </div>
       </div>
       <div>

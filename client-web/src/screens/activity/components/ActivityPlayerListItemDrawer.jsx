@@ -1,10 +1,10 @@
-import { MEDIUM, SMALL } from "../../../components/Medal";
 import ActivityPlayerMedalsView from "./ActivityPlayerMedalsView";
 import ActivityPlayerStatBreakdownView from "./ActivityPlayerStatBreakdownView";
 import ActivityPlayerWeaponsList from "./ActivityPlayerWeaponsList";
 import DestinyTrackerButton from "../../../components/DestinyTrackerButton";
 import DurationView from "../../../components/DurationView";
 import TrialsReportButton from "../../../components/TrialsReportButton";
+import { SMALL } from "../../../core/consts";
 
 const ActivityPlayerListItemDrawer = (props) => {
   const rootStyle = {

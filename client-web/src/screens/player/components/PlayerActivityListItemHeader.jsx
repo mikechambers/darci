@@ -4,12 +4,12 @@ import StatView from "../../../components/StatView";
 import { useNavigate } from "react-router-dom";
 
 import { ReactComponent as ChevronRight } from "../../../components/images/tabler/chevron-right.svg";
-import { SMALL } from "../../../components/Medal";
 import StatusView from "../../../components/StatusView";
 import ActivityCompletionReasonView from "../../../components/CompletionReasonView";
 
 import { Standing } from "shared";
 import CompactMedalsList from "../../../components/CompactMedalsList";
+import { SMALL } from "../../../core/consts";
 
 const resultWinStyle = {
   backgroundColor: "#3FD445",

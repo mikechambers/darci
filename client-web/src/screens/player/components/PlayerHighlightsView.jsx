@@ -1,9 +1,7 @@
 import { calculatePercent } from "../../../core/utils";
-import StatView, {
-  ALIGN_RIGHT,
-  LARGE_STYLE,
-} from "../../../components/StatView";
+import StatView from "../../../components/StatView";
 import { calculateKillsDeathsRatio, calculateEfficiency } from "shared";
+import { LARGE, RIGHT } from "../../../core/consts";
 
 const style = {
   display: "flex",
@@ -18,32 +16,32 @@ const PlayerHighlightsView = (props) => {
   return (
     <div style={style}>
       <StatView
-        styleName={LARGE_STYLE}
+        styleName={LARGE}
         label="win%"
         value={`${calculatePercent(
           summary.wins,
           summary.activityCount
         ).toFixed()}%`}
-        align={ALIGN_RIGHT}
+        align={RIGHT}
       />
       <StatView
-        styleName={LARGE_STYLE}
+        styleName={LARGE}
         label="KD"
         value={calculateKillsDeathsRatio(summary.kills, summary.deaths).toFixed(
           2
         )}
-        align={ALIGN_RIGHT}
+        align={RIGHT}
       />
 
       <StatView
-        styleName={LARGE_STYLE}
+        styleName={LARGE}
         label="EFF"
         value={calculateEfficiency(
           summary.kills,
           summary.deaths,
           summary.assists
         ).toFixed(2)}
-        align={ALIGN_RIGHT}
+        align={RIGHT}
       />
     </div>
   );

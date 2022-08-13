@@ -1,5 +1,5 @@
 import CompactMedalsList from "../../../components/CompactMedalsList";
-import { SMALL } from "../../../components/Medal";
+import { SMALL } from "../../../core/consts";
 
 const rootStyle = {
   display: "flex",

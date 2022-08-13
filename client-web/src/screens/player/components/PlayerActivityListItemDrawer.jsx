@@ -7,12 +7,12 @@ import Icon, {
   PRECISION_ICON,
   SUPER_ICON,
 } from "../../../components/Icon";
-import Medal, { SMALL } from "../../../components/Medal";
 import WeaponIcon from "../../../components/WeaponIcon";
 import { calculatePercent } from "../../../core/utils";
-import { humanDuration } from "../../../core/utils/date";
-import StatView, { SMALL_STYLE } from "../../../components/StatView";
 import DurationView from "../../../components/DurationView";
+import { SMALL } from "../../../core/consts";
+import StatView from "../../../components/StatView";
+import Medal from "../../../components/Medal";
 
 const GAP = 4;
 
@@ -226,7 +226,7 @@ const PlayerActivityListItemDrawer = (props) => {
             <div>
               <StatView
                 label="weapons"
-                styleName={SMALL_STYLE}
+                styleName={SMALL}
                 value={`${calculatePercent(
                   totalWeaponKills,
                   activity.stats.kills
@@ -240,7 +240,7 @@ const PlayerActivityListItemDrawer = (props) => {
                   activity.stats.extended.superKills,
                   activity.stats.kills
                 ).toFixed()}%`}
-                styleName={SMALL_STYLE}
+                styleName={SMALL}
               />
             </div>
             <div>
@@ -250,7 +250,7 @@ const PlayerActivityListItemDrawer = (props) => {
                   activity.stats.extended.meleeKills,
                   activity.stats.kills
                 ).toFixed()}%`}
-                styleName={SMALL_STYLE}
+                styleName={SMALL}
               />
             </div>
             <div>
@@ -260,7 +260,7 @@ const PlayerActivityListItemDrawer = (props) => {
                   activity.stats.extended.grenadeKills,
                   activity.stats.kills
                 ).toFixed()}%`}
-                styleName={SMALL_STYLE}
+                styleName={SMALL}
               />
             </div>
             <div style={killsAssistStyle}>
@@ -270,7 +270,7 @@ const PlayerActivityListItemDrawer = (props) => {
                   activity.stats.kills,
                   activity.stats.assists
                 ).toFixed(2)}`}
-                styleName={SMALL_STYLE}
+                styleName={SMALL}
               />
             </div>
           </div>

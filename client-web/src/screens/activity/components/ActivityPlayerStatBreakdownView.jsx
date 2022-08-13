@@ -1,6 +1,7 @@
 import { calculateRatio } from "shared";
 import { calculatePercent } from "../../../core/utils";
-import Stat, { ALIGN_RIGHT } from "../../../components/StatView";
+import Stat from "../../../components/StatView";
+import { RIGHT } from "../../../core/consts";
 
 const rootStyle = {
   maxWidth: 100,
@@ -45,7 +46,7 @@ const ActivityPlayerStatBreakdownView = (props) => {
 
         <Stat
           label="total"
-          align={ALIGN_RIGHT}
+          align={RIGHT}
           title="Percent of all final blows from melees"
           value={`${Math.round(calculatePercent(meleeKills, totalKills))}%`}
         />
@@ -55,7 +56,7 @@ const ActivityPlayerStatBreakdownView = (props) => {
 
         <Stat
           label="total"
-          align={ALIGN_RIGHT}
+          align={RIGHT}
           title="Percent of all final blows from grenades"
           value={`${Math.round(calculatePercent(grenadeKills, totalKills))}%`}
         />
@@ -65,7 +66,7 @@ const ActivityPlayerStatBreakdownView = (props) => {
 
         <Stat
           label="total"
-          align={ALIGN_RIGHT}
+          align={RIGHT}
           title="Percent of all final blows from supers"
           value={`${Math.round(calculatePercent(superKills, totalKills))}%`}
         />
