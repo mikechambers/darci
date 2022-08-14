@@ -5,9 +5,9 @@ const TRIALS_LIFETIME_FLAWLESS = "1765255052";
 const TRIALS_SEASON_WIN_STREAK = "957196641";
 const TRIALS_WEEKLY_WIN_STREAK = "3787323274"; //this appears to be bugged
 
-const TRIALS_WEEKLY_KILLS = "2091173752";
-const TRIALS_SEASON_KILLS = "3481560625";
-const TRIALS_LIFETIME_KILLS = "2082314848";
+const TRIALS_WEEKLY_DEFEATS = "2091173752";
+const TRIALS_SEASON_DEFEATS = "3481560625";
+const TRIALS_LIFETIME_DEFEATS = "2082314848";
 
 const TRIALS_WEEKLY_WINS = "3046315288";
 const TRIALS_SEASON_WINS = "2367472811";
@@ -18,13 +18,26 @@ const IRON_BANNER_SEASON_GOLD_MEDALS = "1196938828";
 const IRON_BANNER_SEASON_EFFICIENCY = "1509147660";
 const IRON_BANNER_SEASON_KILLS = "2161492053";
 
+const CRUCIBLE_SEASON_DEFEATS = "2935221077";
+const CRUCIBLE_WEEKLY_DEFEATS = "1766068284";
+const CRUCIBLE_LIFETIME_DEFEATS = "811894228";
+
+const CRUCIBLE_SEASON_WIN_STREAK = "1249684581";
+const CRUCIBLE_WEEK_WIN_STREAK = "4044111774";
+
+const CRUCIBLE_SEASON_KDA = "871184140";
+
+const CRUCIBLE_SEASON_WIN_RATE = "2941499201";
+
 class PlayerMetrics {
   trials;
   ironBanner;
+  crucible;
 
   constructor(options = {}) {
     this.trials = options.trials;
     this.ironBanner = options.ironBanner;
+    this.crucible = options.crucible;
   }
 
   static fromApi(data) {
@@ -46,14 +59,14 @@ class PlayerMetrics {
         data.metrics.data.metrics[TRIALS_SEASON_WIN_STREAK].objectiveProgress
           .progress,
 
-      killsWeekly:
-        data.metrics.data.metrics[TRIALS_WEEKLY_KILLS].objectiveProgress
+      defeatsWeekly:
+        data.metrics.data.metrics[TRIALS_WEEKLY_DEFEATS].objectiveProgress
           .progress,
-      killsSeason:
-        data.metrics.data.metrics[TRIALS_SEASON_KILLS].objectiveProgress
+      defeatsSeason:
+        data.metrics.data.metrics[TRIALS_SEASON_DEFEATS].objectiveProgress
           .progress,
-      killsLifetime:
-        data.metrics.data.metrics[TRIALS_LIFETIME_KILLS].objectiveProgress
+      defeatsLifetime:
+        data.metrics.data.metrics[TRIALS_LIFETIME_DEFEATS].objectiveProgress
           .progress,
 
       winsWeekly:
@@ -77,12 +90,39 @@ class PlayerMetrics {
       efficiencySeason:
         data.metrics.data.metrics[IRON_BANNER_SEASON_EFFICIENCY]
           .objectiveProgress.progress / 100,
-      killsSeason:
+      defeatsSeason:
         data.metrics.data.metrics[IRON_BANNER_SEASON_KILLS].objectiveProgress
           .progress,
     };
 
-    return new PlayerMetrics({ trials: trials, ironBanner: ironBanner });
+    const crucible = {
+      defeatsWeekly:
+        data.metrics.data.metrics[CRUCIBLE_WEEKLY_DEFEATS].objectiveProgress
+          .progress,
+      defeatsSeason:
+        data.metrics.data.metrics[CRUCIBLE_SEASON_DEFEATS].objectiveProgress
+          .progress,
+      defeatsLifetime:
+        data.metrics.data.metrics[CRUCIBLE_LIFETIME_DEFEATS].objectiveProgress
+          .progress,
+
+      winStreakWeekly:
+        data.metrics.data.metrics[CRUCIBLE_WEEK_WIN_STREAK].objectiveProgress
+          .progress,
+      winStreakSeason:
+        data.metrics.data.metrics[CRUCIBLE_SEASON_WIN_STREAK].objectiveProgress
+          .progress,
+
+      kdaSeason:
+        data.metrics.data.metrics[CRUCIBLE_SEASON_KDA].objectiveProgress
+          .progress / 100,
+
+      winRateSeason:
+        data.metrics.data.metrics[CRUCIBLE_SEASON_WIN_RATE].objectiveProgress
+          .progress,
+    };
+
+    return new PlayerMetrics({ trials, ironBanner, crucible });
   }
 }
 
