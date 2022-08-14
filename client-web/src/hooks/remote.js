@@ -290,11 +290,14 @@ export const useFetchPlayerMetrics = (players) => {
 
     const f = async () => {
       let urls = players.map(async (p) => {
-        return await fetchDestinyApi(
+        return fetchDestinyApi(
           `https://www.bungie.net/Platform/Destiny2/${p.platformId}/Profile/${p.memberId}/?components=1100`
         );
       });
 
+      //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
+      //may want all settled, then if any error out we can just ignore them, as opposed
+      //to not getting any data back
       Promise.all(urls).then((values) => {
         let out = [];
         for (let i = 0; i < values.length; i++) {

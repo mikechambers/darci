@@ -1,7 +1,7 @@
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
-import ActivityLeadersList from "./ActivityLeadersList";
+import LeaderList from "../../../components/LeaderList";
 
-const elementWrapperStyle = {
+const rootStyle = {
   display: "grid",
   gridTemplateColumns: "min-content min-content min-content",
   gap: 36,
@@ -153,23 +153,37 @@ const ActivityLeadersView = (props) => {
   );
 
   return (
-    <div style={elementWrapperStyle}>
+    <div style={rootStyle}>
       {" "}
-      <ActivityLeadersList
+      <LeaderList
         title="Opponents Defeated"
         leaderData={opponentsDefeatedLeaders}
+        showTeams={true}
       />
-      <ActivityLeadersList title="KD" leaderData={killsDeathsLeaders} />
-      <ActivityLeadersList title="Efficiency" leaderData={efficiencyLeaders} />
-      <ActivityLeadersList title="Assists" leaderData={assistsLeaders} />
-      <ActivityLeadersList
+      <LeaderList title="KD" leaderData={killsDeathsLeaders} showTeams={true} />
+      <LeaderList
+        title="Efficiency"
+        leaderData={efficiencyLeaders}
+        showTeams={true}
+      />
+      <LeaderList
+        title="Assists"
+        leaderData={assistsLeaders}
+        showTeams={true}
+      />
+      <LeaderList
         title="Precision Kills"
         leaderData={precisionLeaders}
+        showTeams={true}
       />
-      <ActivityLeadersList title="Deaths" leaderData={deathsLeaders} />
-      <ActivityLeadersList title="Score" leaderData={scoreLeaders} />
-      <ActivityLeadersList title="Medals" leaderData={medalsLeaders} />
-      <ActivityLeadersList title="Super Kills" leaderData={superLeaders} />
+      <LeaderList title="Deaths" leaderData={deathsLeaders} showTeams={true} />
+      <LeaderList title="Score" leaderData={scoreLeaders} showTeams={true} />
+      <LeaderList title="Medals" leaderData={medalsLeaders} showTeams={true} />
+      <LeaderList
+        title="Super Kills"
+        leaderData={superLeaders}
+        showTeams={true}
+      />
     </div>
   );
 };

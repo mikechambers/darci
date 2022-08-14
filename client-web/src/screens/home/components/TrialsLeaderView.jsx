@@ -1,12 +1,10 @@
-import PlayerNameView from "../../../components/PlayerNameView";
+import LeaderList from "../../../components/LeaderList";
 
 const rootStyle = {
-  width: 200,
-};
-
-const entryStyle = {
   display: "grid",
-  gridTemplateColumns: "180px 20px",
+  gridTemplateColumns: "min-content min-content min-content",
+  gap: 36,
+  flexWrap: "wrap",
 };
 
 const TrialsLeaderView = (props) => {
@@ -17,17 +15,122 @@ const TrialsLeaderView = (props) => {
   );
   metrics = metrics.filter((a) => a.metrics.trials.flawlessWeekly > 0);
 
+  let weeklyFlawless = metrics.map((a) => {
+    return {
+      player: a.player,
+      stat: a.metrics.trials.flawlessWeekly,
+    };
+  });
+
+  let seasonFlawless = metrics.map((a) => {
+    return {
+      player: a.player,
+      stat: a.metrics.trials.flawlessSeason,
+    };
+  });
+
+  let liftimeFlawless = metrics.map((a) => {
+    return {
+      player: a.player,
+      stat: a.metrics.trials.flawlessLifetime,
+    };
+  });
+
+  let weeklyTrialsWins = metrics.map((a) => {
+    return {
+      player: a.player,
+      stat: a.metrics.trials.winsWeekly,
+    };
+  });
+
+  let seasonTrialsWins = metrics.map((a) => {
+    return {
+      player: a.player,
+      stat: a.metrics.trials.winsSeason,
+    };
+  });
+
+  let lifetimeTrialsWins = metrics.map((a) => {
+    return {
+      player: a.player,
+      stat: a.metrics.trials.winsLifetime,
+    };
+  });
+
+  let weeklyTrialsKills = metrics.map((a) => {
+    return {
+      player: a.player,
+      stat: a.metrics.trials.killsWeekly,
+    };
+  });
+
+  let seasonTrialsKills = metrics.map((a) => {
+    return {
+      player: a.player,
+      stat: a.metrics.trials.killsSeason,
+    };
+  });
+
+  let lifetimeTrialsKills = metrics.map((a) => {
+    return {
+      player: a.player,
+      stat: a.metrics.trials.killsLifetime,
+    };
+  });
+
   return (
     <div style={rootStyle}>
-      <div className="subsection_header underline">Weekly Flawless Leaders</div>
-      {metrics.map((data) => {
-        return (
-          <div style={entryStyle} key={data.player.memberId}>
-            <PlayerNameView player={data.player} />
-            <div className="right">{data.metrics.trials.flawlessWeekly}</div>
-          </div>
-        );
-      })}
+      <LeaderList
+        title="Weekly Flawlesses"
+        leaderData={weeklyFlawless}
+        showTeams={false}
+      />
+
+      <LeaderList
+        title="Weekly Wins"
+        leaderData={weeklyTrialsWins}
+        showTeams={false}
+      />
+
+      <LeaderList
+        title="Weekly Kills"
+        leaderData={weeklyTrialsKills}
+        showTeams={false}
+      />
+
+      <LeaderList
+        title="Season Flawlesses"
+        leaderData={seasonFlawless}
+        showTeams={false}
+      />
+      <LeaderList
+        title="Season Wins"
+        leaderData={seasonTrialsWins}
+        showTeams={false}
+      />
+
+      <LeaderList
+        title="Season Kills"
+        leaderData={seasonTrialsKills}
+        showTeams={false}
+      />
+      <LeaderList
+        title="Life Time Flawlesses"
+        leaderData={liftimeFlawless}
+        showTeams={false}
+      />
+
+      <LeaderList
+        title="Life Time Wins"
+        leaderData={lifetimeTrialsWins}
+        showTeams={false}
+      />
+
+      <LeaderList
+        title="Life Time Kills"
+        leaderData={lifetimeTrialsKills}
+        showTeams={false}
+      />
     </div>
   );
 };

@@ -5,9 +5,9 @@ const TRIALS_LIFETIME_FLAWLESS = "1765255052";
 const TRIALS_SEASON_WIN_STREAK = "957196641";
 const TRIALS_WEEKLY_WIN_STREAK = "3787323274"; //this appears to be bugged
 
-const TRIALS_WEEKLY_DEFEATS = "2091173752";
-const TRIALS_SEASON_DEFEATS = "3481560625";
-const TRIALS_LIFETIME_DEFEATS = "2082314848";
+const TRIALS_WEEKLY_KILLS = "2091173752";
+const TRIALS_SEASON_KILLS = "3481560625";
+const TRIALS_LIFETIME_KILLS = "2082314848";
 
 const TRIALS_WEEKLY_WINS = "3046315288";
 const TRIALS_SEASON_WINS = "2367472811";
@@ -39,14 +39,14 @@ class PlayerMetrics {
         data.metrics.data.metrics[TRIALS_SEASON_WIN_STREAK].objectiveProgress
           .progress,
 
-      defeatsWeekly:
-        data.metrics.data.metrics[TRIALS_WEEKLY_DEFEATS].objectiveProgress
+      killsWeekly:
+        data.metrics.data.metrics[TRIALS_WEEKLY_KILLS].objectiveProgress
           .progress,
-      defeatsSeason:
-        data.metrics.data.metrics[TRIALS_SEASON_DEFEATS].objectiveProgress
+      killsSeason:
+        data.metrics.data.metrics[TRIALS_SEASON_KILLS].objectiveProgress
           .progress,
-      defeatsLifetime:
-        data.metrics.data.metrics[TRIALS_LIFETIME_DEFEATS].objectiveProgress
+      killsLifetime:
+        data.metrics.data.metrics[TRIALS_LIFETIME_KILLS].objectiveProgress
           .progress,
 
       winsWeekly:

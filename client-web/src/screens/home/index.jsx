@@ -1,3 +1,5 @@
+import PageSectionView from "../../components/PageSectionView";
+import ScreenNavigationView from "../../components/ScreenNavigationView";
 import { useFetchPlayerMetrics, useFetchPlayers } from "../../hooks/remote";
 import TrialsLeaderView from "./components/TrialsLeaderView";
 
@@ -18,9 +20,22 @@ const HomeView = (props) => {
   const [metrics, isMetricsLoading, isMetricsError] =
     useFetchPlayerMetrics(players);
 
+  const pageLinks = [
+    {
+      value: "Trials",
+      id: "trials",
+    },
+  ];
+
   return (
     <div id="page_nav" className="page_containter" style={pageContainerStyle}>
       <div style={gappedStyle}>
+        <ScreenNavigationView links={pageLinks} />
+        <PageSectionView
+          id="trials"
+          title="Trials of Osiris Leaderboards"
+          description="Trials of Osiris Leaderboard."
+        />
         <TrialsLeaderView metrics={metrics} />
       </div>
     </div>

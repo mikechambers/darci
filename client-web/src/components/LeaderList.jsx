@@ -1,4 +1,5 @@
 import React from "react";
+import PlayerNameView from "./PlayerNameView";
 
 const teamStyle = {
   width: 3,
@@ -6,10 +7,9 @@ const teamStyle = {
   //margin: 2,
 };
 
-const itemWrapperStyle = {
+const itemWrapperStyleBase = {
   width: 200,
   display: "grid",
-  gridTemplateColumns: "3px 148px 42px",
   columnGap: 4,
   rowGap: 2,
   alignItems: "center",
@@ -29,32 +29,42 @@ const rootStyle = {
   padding: 8,
 };
 
-const ActivityLeadersList = (props) => {
-  let title = props.title;
-  let leaderData = props.leaderData;
+const LeaderList = (props) => {
+  const title = props.title;
+  const leaderData = props.leaderData;
+  const showTeams = !!props.showTeams;
+
+  let itemWrapperStyle = {
+    ...itemWrapperStyleBase,
+  };
+
+  itemWrapperStyle.gridTemplateColumns = showTeams
+    ? "3px 148px 42px"
+    : "151px 42px";
 
   return (
     <div style={rootStyle}>
       <div className="subsection_header underline">{title}</div>
       <div style={itemWrapperStyle}>
         {leaderData.map((item) => {
-          return (
-            <React.Fragment key={item.player.memberId}>
+          let teamsDiv = "";
+          if (showTeams) {
+            teamsDiv = (
               <div
                 className={`${item.teamName.toLowerCase()}_team`}
                 style={teamStyle}
                 title={`${item.teamName} team`}
               ></div>
-              <div
-                className="overflow player_name_small"
-                title={item.player.getFullName()}
-              >
-                {item.player.bungieDisplayName}
-                <span className="player_name_code_small">
-                  #{item.player.bungieDisplayNameCode}
-                </span>
-              </div>
-              <div style={valueStyle}>{item.stat}</div>
+            );
+          }
+
+          return (
+            <React.Fragment key={item.player.memberId}>
+              {teamsDiv}
+
+              <PlayerNameView player={item.player} />
+
+              <div style={valueStyle}>{item.stat.toLocaleString()}</div>
             </React.Fragment>
           );
         })}
@@ -63,4 +73,4 @@ const ActivityLeadersList = (props) => {
   );
 };
 
-export default ActivityLeadersList;
+export default LeaderList;
