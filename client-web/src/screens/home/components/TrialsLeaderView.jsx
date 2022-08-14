@@ -1,4 +1,5 @@
 import LeaderList from "../../../components/LeaderList";
+import { filterLeaderMetrics } from "../../../core/utils/components";
 
 const rootStyle = {
   display: "grid",
@@ -10,73 +11,43 @@ const rootStyle = {
 const TrialsLeaderView = (props) => {
   let metrics = props.metrics ? props.metrics : [];
 
-  metrics = metrics.sort(
-    (a, b) => b.metrics.trials.flawlessWeekly - a.metrics.trials.flawlessWeekly
+  const weeklyFlawless = filterLeaderMetrics(
+    metrics,
+    "trials",
+    "flawlessWeekly"
   );
-  metrics = metrics.filter((a) => a.metrics.trials.flawlessWeekly > 0);
-
-  let weeklyFlawless = metrics.map((a) => {
-    return {
-      player: a.player,
-      stat: a.metrics.trials.flawlessWeekly,
-    };
-  });
-
-  let seasonFlawless = metrics.map((a) => {
-    return {
-      player: a.player,
-      stat: a.metrics.trials.flawlessSeason,
-    };
-  });
-
-  let liftimeFlawless = metrics.map((a) => {
-    return {
-      player: a.player,
-      stat: a.metrics.trials.flawlessLifetime,
-    };
-  });
-
-  let weeklyTrialsWins = metrics.map((a) => {
-    return {
-      player: a.player,
-      stat: a.metrics.trials.winsWeekly,
-    };
-  });
-
-  let seasonTrialsWins = metrics.map((a) => {
-    return {
-      player: a.player,
-      stat: a.metrics.trials.winsSeason,
-    };
-  });
-
-  let lifetimeTrialsWins = metrics.map((a) => {
-    return {
-      player: a.player,
-      stat: a.metrics.trials.winsLifetime,
-    };
-  });
-
-  let weeklyTrialsKills = metrics.map((a) => {
-    return {
-      player: a.player,
-      stat: a.metrics.trials.killsWeekly,
-    };
-  });
-
-  let seasonTrialsKills = metrics.map((a) => {
-    return {
-      player: a.player,
-      stat: a.metrics.trials.killsSeason,
-    };
-  });
-
-  let lifetimeTrialsKills = metrics.map((a) => {
-    return {
-      player: a.player,
-      stat: a.metrics.trials.killsLifetime,
-    };
-  });
+  const seasonFlawless = filterLeaderMetrics(
+    metrics,
+    "trials",
+    "flawlessSeason"
+  );
+  const liftimeFlawless = filterLeaderMetrics(
+    metrics,
+    "trials",
+    "flawlessLifetime"
+  );
+  const weeklyTrialsWins = filterLeaderMetrics(metrics, "trials", "winsWeekly");
+  const seasonTrialsWins = filterLeaderMetrics(metrics, "trials", "winsSeason");
+  const lifetimeTrialsWins = filterLeaderMetrics(
+    metrics,
+    "trials",
+    "winsLifetime"
+  );
+  const weeklyTrialsKills = filterLeaderMetrics(
+    metrics,
+    "trials",
+    "killsWeekly"
+  );
+  const seasonTrialsKills = filterLeaderMetrics(
+    metrics,
+    "trials",
+    "killsSeason"
+  );
+  const lifetimeTrialsKills = filterLeaderMetrics(
+    metrics,
+    "trials",
+    "killsLifetime"
+  );
 
   return (
     <div style={rootStyle}>

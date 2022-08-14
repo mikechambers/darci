@@ -1,6 +1,7 @@
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import { useFetchPlayerMetrics, useFetchPlayers } from "../../hooks/remote";
+import IronBannerLeaderView from "./components/IronBannerLeaderView";
 import TrialsLeaderView from "./components/TrialsLeaderView";
 
 const pageContainerStyle = {
@@ -25,6 +26,10 @@ const HomeView = (props) => {
       value: "Trials",
       id: "trials",
     },
+    {
+      value: "Iron Banner",
+      id: "iron_banner",
+    },
   ];
 
   return (
@@ -37,6 +42,13 @@ const HomeView = (props) => {
           description="Trials of Osiris Leaderboard."
         />
         <TrialsLeaderView metrics={metrics} />
+
+        <PageSectionView
+          id="iron_banner"
+          title="Iron Banner Leaderboards"
+          description="Iron Banner Leaderboards."
+        />
+        <IronBannerLeaderView metrics={metrics} />
       </div>
     </div>
   );

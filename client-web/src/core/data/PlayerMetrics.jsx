@@ -13,15 +13,22 @@ const TRIALS_WEEKLY_WINS = "3046315288";
 const TRIALS_SEASON_WINS = "2367472811";
 const TRIALS_LIFETIME_WINS = "1365664208";
 
+const IRON_BANNER_SEASON_WINS = "429382583";
+const IRON_BANNER_SEASON_GOLD_MEDALS = "1196938828";
+const IRON_BANNER_SEASON_EFFICIENCY = "1509147660";
+const IRON_BANNER_SEASON_KILLS = "2161492053";
+
 class PlayerMetrics {
   trials;
+  ironBanner;
 
   constructor(options = {}) {
     this.trials = options.trials;
+    this.ironBanner = options.ironBanner;
   }
 
   static fromApi(data) {
-    let trials = {
+    const trials = {
       flawlessWeekly:
         data.metrics.data.metrics[TRIALS_WEEKLY_FLAWLESS].objectiveProgress
           .progress,
@@ -60,7 +67,22 @@ class PlayerMetrics {
           .progress,
     };
 
-    return new PlayerMetrics({ trials: trials });
+    const ironBanner = {
+      winsSeason:
+        data.metrics.data.metrics[IRON_BANNER_SEASON_WINS].objectiveProgress
+          .progress,
+      goldMedalsSeason:
+        data.metrics.data.metrics[IRON_BANNER_SEASON_GOLD_MEDALS]
+          .objectiveProgress.progress,
+      efficiencySeason:
+        data.metrics.data.metrics[IRON_BANNER_SEASON_EFFICIENCY]
+          .objectiveProgress.progress,
+      killsSeason:
+        data.metrics.data.metrics[IRON_BANNER_SEASON_KILLS].objectiveProgress
+          .progress,
+    };
+
+    return new PlayerMetrics({ trials: trials, ironBanner: ironBanner });
   }
 }
 

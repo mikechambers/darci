@@ -304,7 +304,6 @@ export const useFetchPlayerMetrics = (players) => {
           let value = values[i];
 
           let metrics = PlayerMetrics.fromApi(value);
-          console.log(metrics);
 
           out.push({
             player: players[i],
