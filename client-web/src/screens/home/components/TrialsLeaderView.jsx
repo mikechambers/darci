@@ -10,19 +10,21 @@ const entryStyle = {
 };
 
 const TrialsLeaderView = (props) => {
-  let leaders = props.leaders ? props.leaders : [];
+  let metrics = props.metrics ? props.metrics : [];
 
-  leaders = leaders.sort((a, b) => b.flawlessCount - a.flawlessCount);
-  leaders = leaders.filter((a) => a.flawlessCount > 0);
+  metrics = metrics.sort(
+    (a, b) => b.metrics.trials.flawlessWeekly - a.metrics.trials.flawlessWeekly
+  );
+  metrics = metrics.filter((a) => a.metrics.trials.flawlessWeekly > 0);
 
   return (
     <div style={rootStyle}>
       <div className="subsection_header underline">Weekly Flawless Leaders</div>
-      {leaders.map((data) => {
+      {metrics.map((data) => {
         return (
-          <div style={entryStyle}>
+          <div style={entryStyle} key={data.player.memberId}>
             <PlayerNameView player={data.player} />
-            <div className="right">{data.flawlessCount}</div>
+            <div className="right">{data.metrics.trials.flawlessWeekly}</div>
           </div>
         );
       })}

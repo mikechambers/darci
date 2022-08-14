@@ -11,6 +11,7 @@ import { fetchApi, fetchDestinyApi } from "../core/utils/remote";
 
 import Player from "../core/data/Player";
 import PlayerActivities from "../core/data/PlayerActivities";
+import PlayerMetrics from "../core/data/PlayerMetrics";
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 const STORAGE_MANIFEST_LAST_CHECK_KEY = "STORAGE_MANIFEST_LAST_CHECK_KEY";
@@ -275,7 +276,7 @@ export const useFetchPlayers = () => {
   return [output.players, output.isLoading, output.error];
 };
 
-export const useFetchPlayerMilestones = (players) => {
+export const useFetchPlayerMetrics = (players) => {
   const [output, setOutput] = useState({
     data: null,
     isLoading: true,
@@ -289,7 +290,7 @@ export const useFetchPlayerMilestones = (players) => {
 
     const f = async () => {
       let urls = players.map(async (p) => {
-        return fetchDestinyApi(
+        return await fetchDestinyApi(
           `https://www.bungie.net/Platform/Destiny2/${p.platformId}/Profile/${p.memberId}/?components=1100`
         );
       });
@@ -299,16 +300,12 @@ export const useFetchPlayerMilestones = (players) => {
         for (let i = 0; i < values.length; i++) {
           let value = values[i];
 
-          let f = value.metrics.data.metrics["122451876"];
-
-          let count = 0;
-          if (f) {
-            count = f.objectiveProgress.progress;
-          }
+          let metrics = PlayerMetrics.fromApi(value);
+          console.log(metrics);
 
           out.push({
             player: players[i],
-            flawlessCount: count,
+            metrics: metrics,
           });
         }
 

@@ -131,8 +131,9 @@ class PlayerProfile {
                 roundsWon = obj.progress;
                 break;
               case TRIALS_FLAWLESS_ID:
-                isFlawless = obj.progress == 1;
+                isFlawless = obj.progress === 1;
                 break;
+              default:
             }
           }
 
