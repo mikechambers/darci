@@ -7,6 +7,7 @@ const PlayerAbilityStatSummaryView = (props) => {
   let weapons = props.weapons;
   let melees = props.melees;
   let supers = props.supers;
+  let grenades = props.grenades;
 
   let values = [
     {
@@ -16,6 +17,10 @@ const PlayerAbilityStatSummaryView = (props) => {
     {
       value: calculatePercent(melees, total).toFixed() + "%",
       label: "melee",
+    },
+    {
+      value: calculatePercent(grenades, total).toFixed() + "%",
+      label: "grenade",
     },
     {
       value: calculatePercent(supers, total).toFixed() + "%",

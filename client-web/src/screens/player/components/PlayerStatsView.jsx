@@ -65,6 +65,7 @@ const PlayerStatsView = (props) => {
         weapons={summary.weaponKills}
         supers={summary.superKills}
         melees={summary.meleeKills}
+        grenades={summary.grenadeKills}
       />
     </div>
   );
