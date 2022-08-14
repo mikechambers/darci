@@ -36,17 +36,17 @@ const TrialsLeaderView = (props) => {
   const weeklyTrialsKills = filterLeaderMetrics(
     metrics,
     "trials",
-    "killsWeekly"
+    "defeatsWeekly"
   );
   const seasonTrialsKills = filterLeaderMetrics(
     metrics,
     "trials",
-    "killsSeason"
+    "defeatsSeason"
   );
   const lifetimeTrialsKills = filterLeaderMetrics(
     metrics,
     "trials",
-    "killsLifetime"
+    "defeatsLifetime"
   );
 
   return (

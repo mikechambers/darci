@@ -1,6 +1,7 @@
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import { useFetchPlayerMetrics, useFetchPlayers } from "../../hooks/remote";
+import CrucibleLeaderView from "./components/CrucibleLeaderView";
 import IronBannerLeaderView from "./components/IronBannerLeaderView";
 import TrialsLeaderView from "./components/TrialsLeaderView";
 
@@ -23,6 +24,10 @@ const HomeView = (props) => {
 
   const pageLinks = [
     {
+      value: "Crucible",
+      id: "crucible",
+    },
+    {
       value: "Trials",
       id: "trials",
     },
@@ -36,6 +41,14 @@ const HomeView = (props) => {
     <div id="page_nav" className="page_containter" style={pageContainerStyle}>
       <div style={gappedStyle}>
         <ScreenNavigationView links={pageLinks} />
+
+        <PageSectionView
+          id="crucible"
+          title="Crucible Leaderboards"
+          description="Crucible Leaderboards."
+        />
+        <CrucibleLeaderView metrics={metrics} />
+
         <PageSectionView
           id="trials"
           title="Trials of Osiris Leaderboards"
