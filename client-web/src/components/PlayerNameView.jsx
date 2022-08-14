@@ -1,14 +1,14 @@
 const PlayerNameView = (props) => {
   const player = props.player;
 
-  const rootStyle = {
-    display: "flex",
-    flexWrap: "wrap",
-    alignItems: "flex-end",
-  };
+  const rootStyle = {};
 
   return (
-    <div style={rootStyle} className="player_name">
+    <div
+      style={rootStyle}
+      className="player_name overflow"
+      titlte={player.getFullName()}
+    >
       {player.bungieDisplayName}
       <span className="player_name_code_small">
         #{player.bungieDisplayNameCode}
