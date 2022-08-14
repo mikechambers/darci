@@ -76,7 +76,7 @@ class PlayerMetrics {
           .objectiveProgress.progress,
       efficiencySeason:
         data.metrics.data.metrics[IRON_BANNER_SEASON_EFFICIENCY]
-          .objectiveProgress.progress,
+          .objectiveProgress.progress / 100,
       killsSeason:
         data.metrics.data.metrics[IRON_BANNER_SEASON_KILLS].objectiveProgress
           .progress,

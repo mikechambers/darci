@@ -13,10 +13,10 @@ const IronBannerLeaderView = (props) => {
 
   let winsSeason = filterLeaderMetrics(metrics, "ironBanner", "winsSeason");
   let killsSeason = filterLeaderMetrics(metrics, "ironBanner", "killsSeason");
-  let goldMedalsSeason = filterLeaderMetrics(
+  let efficiencySeason = filterLeaderMetrics(
     metrics,
     "ironBanner",
-    "goldMedalsSeason"
+    "efficiencySeason"
   );
 
   return (
@@ -34,8 +34,8 @@ const IronBannerLeaderView = (props) => {
       />
 
       <LeaderList
-        title="Season Gold Medals"
-        leaderData={goldMedalsSeason}
+        title="Season Efficiency"
+        leaderData={efficiencySeason}
         showTeams={false}
       />
     </div>
