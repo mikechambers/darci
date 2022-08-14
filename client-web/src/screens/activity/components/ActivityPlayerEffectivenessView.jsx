@@ -22,8 +22,8 @@ const ActivityPlayerEffectivenessView = (props) => {
 
     for (const player of team.players) {
       item.data.push({
-        x: player.stats.deaths,
-        y: player.stats.kills,
+        y: player.stats.deaths,
+        x: player.stats.kills,
         z: player.stats.efficiency,
         player: player.player,
       });
@@ -58,7 +58,7 @@ const ActivityPlayerEffectivenessView = (props) => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: "Deaths",
+            legend: "Kills",
             legendPosition: "middle",
             legendOffset: 46,
           }}
@@ -67,7 +67,7 @@ const ActivityPlayerEffectivenessView = (props) => {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: "Kills",
+            legend: "Deaths",
             legendPosition: "middle",
             legendOffset: -60,
           }}
