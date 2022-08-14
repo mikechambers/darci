@@ -275,6 +275,56 @@ export const useFetchPlayers = () => {
   return [output.players, output.isLoading, output.error];
 };
 
+export const useFetchPlayerMilestones = (players) => {
+  const [output, setOutput] = useState({
+    data: null,
+    isLoading: true,
+    error: null,
+  });
+
+  useEffect(() => {
+    if (!players || !players.length) {
+      return;
+    }
+
+    const f = async () => {
+      let urls = players.map(async (p) => {
+        return fetchDestinyApi(
+          `https://www.bungie.net/Platform/Destiny2/${p.platformId}/Profile/${p.memberId}/?components=1100`
+        );
+      });
+
+      Promise.all(urls).then((values) => {
+        let out = [];
+        for (let i = 0; i < values.length; i++) {
+          let value = values[i];
+
+          let f = value.metrics.data.metrics["122451876"];
+
+          let count = 0;
+          if (f) {
+            count = f.objectiveProgress.progress;
+          }
+
+          out.push({
+            player: players[i],
+            flawlessCount: count,
+          });
+        }
+
+        let s = reducer(output, "data", out);
+
+        setOutput(s);
+      });
+    };
+    f();
+
+    //Promise.all();
+  }, [players]);
+
+  return [output.data, output.isLoading, output.error];
+};
+
 export const useFetchPlayerProfile = (
   refreshInterval,
   memberId,

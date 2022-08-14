@@ -16,7 +16,7 @@ export const fetchUrl = async (url, options) => {
     //console.log(url);
     response = await fetch(url, options);
   } catch (err) {
-    throw NetworkError(`Could not fetch url : ${url}`, { cause: err });
+    throw new NetworkError(`Could not fetch url : ${url}`, { cause: err });
   }
 
   if (!response.ok) {
