@@ -9,6 +9,7 @@ import ActivityGoldMedalsView from "./components/ActivityGoldMedalsView";
 import ActivityWeaponListContainer from "./components/ActivityWeaponsView";
 import ActivityTeamDetailsView from "./components/ActivityTeamDetailsView";
 import ActivityPlayerEffectivenessView from "./components/ActivityPlayerEffectivenessView";
+import LoadingAnimationView from "../../components/LoadingAnimationView";
 
 const pageContainerStyle = {
   minWidth: "720px",
@@ -28,7 +29,7 @@ const ActivityView = (props) => {
   const [activity, isLoading, error] = useFetchActivity(activityId);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingAnimationView message="Loading Activity data." />;
   }
 
   if (error) {

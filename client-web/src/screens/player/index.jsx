@@ -18,6 +18,7 @@ import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../core/consts";
 import PlayerPerformanceSummaryView from "./components/PlayerPerformanceSummaryView";
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
+import LoadingAnimationView from "../../components/LoadingAnimationView";
 const { useQuery } = require("../../hooks/browser");
 
 const invalidParametersStyle = {
@@ -150,8 +151,8 @@ const PlayerView = () => {
     );
   }
 
-  if (!playerSummary) {
-    return "";
+  if (isPlayerActivitiesLoading && isPlayerSummaryLoading) {
+    return <LoadingAnimationView message="Loading Player data." />;
   }
 
   let summary = playerSummary.summary;
@@ -162,7 +163,6 @@ const PlayerView = () => {
   let player = playerSummary.player;
 
   let activities = playerActivities ? playerActivities.activities : [];
-  let isActivitiesLoading = false;
 
   mode = Mode.fromString(playerSummary.query.mode);
   moment = Moment.fromString(playerSummary.query.startMoment);
@@ -234,11 +234,7 @@ const PlayerView = () => {
           id="games"
           title="Games"
         />
-        <PlayerActivityList
-          activities={activities}
-          summary={summary}
-          isLoading={isActivitiesLoading}
-        />
+        <PlayerActivityList activities={activities} summary={summary} />
       </div>
     </div>
   );

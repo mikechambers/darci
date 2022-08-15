@@ -29,10 +29,6 @@ const PlayerActivityList = (props) => {
   let activities = props.activities;
   let summary = props.summary;
 
-  if (props.isLoading) {
-    return <div>Loading...</div>;
-  }
-
   let lastDate;
   let now = DateTime.now();
   return (
