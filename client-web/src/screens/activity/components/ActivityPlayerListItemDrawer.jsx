@@ -16,7 +16,8 @@ const ActivityPlayerListItemDrawer = (props) => {
 
   const statsContainterStyle = {
     display: "grid",
-    gridTemplateColumns: "60% 20% 20%",
+    gridTemplateColumns: "55% 25% 20%",
+    justifyItems: "center",
   };
 
   const infoContainerStyle = {
