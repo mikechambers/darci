@@ -151,7 +151,7 @@ const PlayerView = () => {
     );
   }
 
-  if (isPlayerActivitiesLoading && isPlayerSummaryLoading) {
+  if (isPlayerActivitiesLoading || isPlayerSummaryLoading) {
     return <LoadingAnimationView message="Loading Player data." />;
   }
 
