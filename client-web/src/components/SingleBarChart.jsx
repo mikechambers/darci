@@ -24,6 +24,7 @@ const SingleBarChart = (props) => {
         data={[d]}
         keys={keys}
         indexBy="d"
+        animate={false}
         borderRadius={4}
         margin={{ top: 0, right: 12, bottom: 0, left: 12 }}
         minValue={0}

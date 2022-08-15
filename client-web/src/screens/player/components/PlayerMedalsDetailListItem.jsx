@@ -82,7 +82,9 @@ const PlayerMedalsDetailListItem = (props) => {
           <div id="header_containter" style={headerStyle}>
             <div className="subsection_header">{item.info.name}</div>
           </div>
-          <div style={descriptionStyle}>{item.info.description}</div>
+          <div className="section_entry" style={descriptionStyle}>
+            {item.info.description}
+          </div>
         </div>
         <div style={valuesStyle}>
           <StatView
