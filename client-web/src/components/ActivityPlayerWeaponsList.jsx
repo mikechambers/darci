@@ -1,9 +1,9 @@
 import React from "react";
-import Icon, { PRECISION_ICON } from "../../../components/Icon";
-import WeaponIcon from "../../../components/WeaponIcon";
-import WeaponImageView from "../../../components/WeaponImageView";
-import { SMALL } from "../../../core/consts";
-import { calculatePercent } from "../../../core/utils";
+import Icon, { PRECISION_ICON } from "./Icon";
+import WeaponIcon from "./WeaponIcon";
+import WeaponImageView from "./WeaponImageView";
+import { SMALL } from "../core/consts";
+import { calculatePercent } from "../core/utils";
 
 const rootStyle = {
   width: 365,

@@ -1,10 +1,10 @@
 import { calculateRatio } from "shared";
-import { calculatePercent } from "../../../core/utils";
-import Stat from "../../../components/StatView";
-import { RIGHT } from "../../../core/consts";
+import { calculatePercent } from "../core/utils";
+import Stat from "./StatView";
+import { RIGHT } from "../core/consts";
 
 const rootStyle = {
-  maxWidth: 100,
+  maxWidth: 125,
   display: "flex",
   flexDirection: "column",
   rowGap: 4,
@@ -27,6 +27,7 @@ const ActivityPlayerStatBreakdownView = (props) => {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    gap: 8,
   };
 
   return (
