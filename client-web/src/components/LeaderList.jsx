@@ -61,9 +61,7 @@ const LeaderList = (props) => {
           return (
             <React.Fragment key={item.player.memberId}>
               {teamsDiv}
-
               <PlayerNameView player={item.player} />
-
               <div style={valueStyle}>{item.stat.toLocaleString()}</div>
             </React.Fragment>
           );
