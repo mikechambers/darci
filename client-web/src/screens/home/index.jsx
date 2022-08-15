@@ -1,3 +1,4 @@
+import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import { useFetchPlayerMetrics, useFetchPlayers } from "../../hooks/remote";
@@ -36,6 +37,10 @@ const HomeView = (props) => {
       id: "iron_banner",
     },
   ];
+
+  if (isMetricsLoading) {
+    return <LoadingAnimationView message="Loading leaderboard data." />;
+  }
 
   return (
     <div id="page_nav" className="page_containter" style={pageContainerStyle}>
