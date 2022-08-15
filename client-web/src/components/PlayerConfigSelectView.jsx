@@ -5,6 +5,10 @@ import { useFetchPlayers } from "../hooks/remote";
 import { useLocalStorage } from "@mantine/hooks";
 import { useState } from "react";
 import Player from "../core/data/Player";
+import CharacterClassSelectionSelect from "./CharacterClassSelectionSelect";
+import ModeSelect from "./ModeSelect";
+import MomentSelect from "./MomentSelect";
+import PlayerSelect from "./PlayerSelect";
 
 const createUrl = function (player, classSelection, mode, moment) {
   let ts = new Date().getTime();
@@ -13,17 +17,11 @@ const createUrl = function (player, classSelection, mode, moment) {
   return url;
 };
 
-const PlayerSelectView = (props) => {
+const PlayerConfigSelectView = (props) => {
   const style = props.style;
   const onUpdate = props.onUpdate;
   const maxLabelLength = props.maxLabelLength ? props.maxLabelLength : 100;
 
-  let classes = [
-    CharacterClassSelection.ALL,
-    CharacterClassSelection.HUNTER,
-    CharacterClassSelection.TITAN,
-    CharacterClassSelection.WARLOCK,
-  ];
   const [classSelection, setClassSelection] = useLocalStorage({
     key: "config-class-type",
     defaultValue: CharacterClassSelection.ALL,
@@ -38,19 +36,6 @@ const PlayerSelectView = (props) => {
     },
   });
 
-  let modes = [
-    Mode.PVP_QUICKPLAY,
-    Mode.PVP_COMPETITIVE,
-    Mode.TRIALS_OF_OSIRIS,
-    Mode.IRON_BANNER,
-    Mode.RUMBLE,
-    Mode.CLASH,
-    Mode.MAYHEM,
-    Mode.MOMENTUM,
-    Mode.ELIMINATION,
-    Mode.PRIVATE_MATCHES_ALL,
-    Mode.ALL_PVP,
-  ];
   const [mode, setMode] = useLocalStorage({
     key: "config-mode",
     defaultValue: Mode.PVP_QUICKPLAY,
@@ -65,15 +50,6 @@ const PlayerSelectView = (props) => {
     },
   });
 
-  let moments = [
-    Moment.DAILY,
-    Moment.WEEKLY,
-    Moment.WEEKEND,
-    Moment.DAY,
-    Moment.WEEK,
-    Moment.MONTH,
-    Moment.SEASON_OF_THE_HAUNTED,
-  ];
   const [moment, setMoment] = useLocalStorage({
     key: "config-moment",
     defaultValue: Moment.WEEK,
@@ -88,8 +64,6 @@ const PlayerSelectView = (props) => {
     },
   });
 
-  const [loadedPlayers, isPlayersLoading, isPlayersError] = useFetchPlayers();
-  const [players, setPlayers] = useState();
   const [player, setPlayer] = useLocalStorage({
     key: "config-player",
     serialize: (value) => {
@@ -99,33 +73,10 @@ const PlayerSelectView = (props) => {
       if (undefined) {
         return undefined;
       }
+
       return Player.fromJson(localStorageValue);
     },
   });
-
-  let [selected, setSelected] = useState();
-
-  useEffect(() => {
-    if (!loadedPlayers) {
-      return;
-    }
-
-    let found = false;
-    for (const p of loadedPlayers) {
-      p.label = p.getFullName();
-
-      if (player && p.memberId === player.memberId) {
-        found = true;
-        setSelected(p);
-      }
-    }
-
-    if (!found && loadedPlayers.length) {
-      setPlayer(loadedPlayers[0]);
-    }
-
-    setPlayers(loadedPlayers);
-  }, [loadedPlayers, player, setPlayer]);
 
   let classOnChange = function (e) {
     setClassSelection(e);
@@ -165,38 +116,35 @@ const PlayerSelectView = (props) => {
 
   return (
     <div style={s}>
-      <EnumSelect
+      <PlayerSelect
         onChange={playerOnChange}
-        options={players}
-        selected={selected}
-        label="player"
+        selected={player}
         maxLabelLength={maxLabelLength}
+        label="player"
       />
 
-      <EnumSelect
+      <CharacterClassSelectionSelect
         onChange={classOnChange}
-        options={classes}
         selected={classSelection}
-        label="class"
         maxLabelLength={maxLabelLength}
+        label="class"
       />
-      <EnumSelect
+      <ModeSelect
         onChange={modeOnChange}
-        options={modes}
         selected={mode}
         label="mode"
         maxLabelLength={maxLabelLength}
       />
-      <EnumSelect
+      <MomentSelect
         onChange={momentOnChange}
-        options={moments}
         selected={moment}
         label="moment"
         maxLabelLength={maxLabelLength}
       />
+
       <button onClick={onClick}>View</button>
     </div>
   );
 };
 
-export default PlayerSelectView;
+export default PlayerConfigSelectView;

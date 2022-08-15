@@ -57,7 +57,6 @@ class EnumBase {
         return o;
       }
     }
-
     return undefined;
   }
 

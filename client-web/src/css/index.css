@@ -467,7 +467,7 @@ select {
   resize: none;
   box-sizing: border-box;
   font-size: 12px;
-  width: 100%;
+  width: min-content;
   color: #000;
   display: block;
   text-align: left;

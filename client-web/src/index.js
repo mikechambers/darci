@@ -9,6 +9,7 @@ import ActivityView from "./screens/activity/index";
 import HomeView from "./screens/home/index";
 import AboutView from "./screens/about/index";
 import NoMatchView from "./screens/404/index";
+import SearchView from "./screens/search";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,6 +18,7 @@ ReactDOM.render(
         <Route path="/" element={<App />}>
           <Route index path="/" element={<HomeView />} />
           <Route index path="/about" element={<AboutView />} />
+          <Route index path="/search" element={<SearchView />} />
           <Route path="player" element={<PlayerView />}>
             <Route path=":memberId" element={<PlayerView />}>
               <Route path=":platformId" element={<PlayerView />}>

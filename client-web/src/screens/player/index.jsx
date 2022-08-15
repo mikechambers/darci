@@ -11,7 +11,7 @@ import {
 
 import { CharacterClassSelection, Mode, Moment } from "shared";
 import PlayerMedalsDetailList from "./components/PlayerMedalsDetailList";
-import PlayerSelectView from "../../components/PlayerSelectView";
+import PlayerConfigSelectView from "../../components/PlayerConfigSelectView";
 import React, { useEffect, useState } from "react";
 import RefreshStatusView from "../../components/RefreshStatusView";
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../core/consts";
@@ -129,7 +129,7 @@ const PlayerView = () => {
         <div className="page_title">Invalid Parameters</div>
         <div>Please select Player parameters:</div>
         <div>
-          <PlayerSelectView onUpdate={onPlayerConfigUpdate} />
+          <PlayerConfigSelectView onUpdate={onPlayerConfigUpdate} />
         </div>
       </div>
     );

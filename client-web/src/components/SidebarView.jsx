@@ -7,7 +7,7 @@ import Icon, {
 } from "./Icon";
 import SidebarBackground from "./images/nav_background_tg.png";
 import SiteNavigationView from "./SiteNavigationView";
-import PlayerSelectView from "./PlayerSelectView";
+import PlayerConfigSelectView from "./PlayerConfigSelectView";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const sidebarStyle = {
@@ -101,7 +101,10 @@ const SidebarView = (props) => {
         selectedIndex={navIndex}
         onChange={onNavChange}
       />
-      <PlayerSelectView onUpdate={onPlayerConfigUpdate} maxLabelLength="22" />
+      <PlayerConfigSelectView
+        onUpdate={onPlayerConfigUpdate}
+        maxLabelLength="22"
+      />
     </div>
   );
 };
