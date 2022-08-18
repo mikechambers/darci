@@ -78,21 +78,28 @@ const PlayerMapSummaryView = (props) => {
     {
       label: "Mercy",
       value: calculatePercent(
-        map.summary.mercies,
+        map.summary.completionReasonMercy,
         map.summary.activityCount
       ).toFixed(),
     },
     {
       label: "Objective Complete",
       value: calculatePercent(
-        map.summary.objectiveCompleted,
+        map.summary.completionReasonObjectiveCompleted,
         map.summary.activityCount
       ).toFixed(),
     },
     {
       label: "Timer Expired",
       value: calculatePercent(
-        map.summary.timeExpired,
+        map.summary.completionReasonTimeExpired,
+        map.summary.activityCount
+      ).toFixed(),
+    },
+    {
+      label: "No Opponents",
+      value: calculatePercent(
+        map.summary.completionReasonNoOpponents,
         map.summary.activityCount
       ).toFixed(),
     },

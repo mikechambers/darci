@@ -7,11 +7,16 @@ import { SMALL } from "../../../core/consts";
 
 const rootStyle = {
   display: "grid",
-  gridTemplateColumns: "200px 340px 60px 100px",
+  gridTemplateColumns: "200px 370px 20px auto",
   flexDirection: "row",
   alignItems: "center",
   columnGap: 12,
   //justifyContent: "center",
+};
+
+const statusViewStyle = {
+  display: "flex",
+  justifyContent: "center",
 };
 
 const ActivityPlayerListItemHeader = (props) => {
@@ -57,10 +62,12 @@ const ActivityPlayerListItemHeader = (props) => {
     <div className={className} style={rootStyle} onClick={handleOnClick}>
       <PlayerInfoView player={player} />
       <ActivityPlayerStatsView data={data} />
-      <StatusView
-        completed={player.stats.completed}
-        joinedLate={player.stats.joinedLate}
-      />
+      <div style={statusViewStyle}>
+        <StatusView
+          completed={player.stats.completed}
+          joinedLate={player.stats.joinedLate}
+        />
+      </div>
       <CompactMedalsList medals={goldMedals} size={SMALL} />
     </div>
   );
