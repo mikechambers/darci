@@ -23,7 +23,7 @@ const PlayerStatsView = (props) => {
     <div style={style}>
       <ResultSummaryView
         wins={summary.wins}
-        mercies={summary.mercies}
+        mercies={summary.completionReasonMercy}
         activityCount={summary.activityCount}
       />
 
