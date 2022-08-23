@@ -14,7 +14,7 @@ const MomentSelect = (props) => {
     Moment.DAY,
     Moment.WEEK,
     Moment.MONTH,
-    Moment.SEASON_OF_THE_HAUNTED,
+    Moment.SEASON_OF_THE_PLUNDER,
   ];
 
   return (

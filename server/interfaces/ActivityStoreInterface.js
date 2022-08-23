@@ -450,7 +450,6 @@ class ActivityStoreInterface {
 
   retrieveActivities(memberId, characterSelection, mode, startDate, endDate) {
     let restrictModeId = this.getRestrictModeId(mode);
-
     const rows = this.#select_activities_for_member_since.all({
       memberId,
       restrictModeId,
