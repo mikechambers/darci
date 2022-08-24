@@ -31,7 +31,21 @@ const EnumSelect = (props) => {
       return option.value === selected.label;
     });
 
-    defaultValue = found ? found.value : options[0].value;
+    //defaultValue = found ? found.value : options[0].value;
+
+    if (found) {
+      defaultValue = found.value;
+    } else {
+      //if we get here it means that a default value was passed in
+      //that is not in the data set (happens when we remove a season option)
+      //so, we set default to the first item in the data, and then broadcast that
+      //the selected item changed. But we have to wait a frame to do it
+      //since we cant cause a re-render when the component is rendering.
+      defaultValue = options[0].value;
+      window.requestAnimationFrame(() => {
+        onChange(options[0].data);
+      });
+    }
   }
 
   return (
