@@ -44,7 +44,7 @@ const PlayerActivitiesOverview = (props) => {
   let playerNameCode = player.bungieDisplayNameCode;
 
   const f = (m) => {
-    let momentDate = startMoment.getDate();
+    let momentDate = m.getDate();
     let f = getFormatStr(momentDate);
     let dt = DateTime.fromJSDate(momentDate);
     let humanMoment = dt.toFormat(f);

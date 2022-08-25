@@ -81,13 +81,10 @@ const PlayerView = () => {
 
   let mode = Mode.fromString(params.mode);
   let startMoment = Moment.fromString(params.startMoment);
-  console.log(params.endMoment);
 
   let endMoment = params.endMoment
     ? Moment.fromString(params.endMoment)
     : Moment.NOW;
-
-  console.log(endMoment);
 
   let classSelection = CharacterClassSelection.fromString(params.classType);
   let hash = query.get("fr");
