@@ -80,7 +80,15 @@ const PlayerView = () => {
   let query = useQuery();
 
   let mode = Mode.fromString(params.mode);
-  let moment = Moment.fromString(params.moment);
+  let startMoment = Moment.fromString(params.startMoment);
+  console.log(params.endMoment);
+
+  let endMoment = params.endMoment
+    ? Moment.fromString(params.endMoment)
+    : Moment.NOW;
+
+  console.log(endMoment);
+
   let classSelection = CharacterClassSelection.fromString(params.classType);
   let hash = query.get("fr");
 
@@ -97,7 +105,8 @@ const PlayerView = () => {
       PLAYER_VIEW_REFRESH_INTERVAL,
       params.memberId,
       mode,
-      moment,
+      startMoment,
+      endMoment,
       classSelection,
       hash
     );
@@ -107,7 +116,8 @@ const PlayerView = () => {
       PLAYER_VIEW_REFRESH_INTERVAL,
       params.memberId,
       mode,
-      moment,
+      startMoment,
+      endMoment,
       classSelection,
       hash
     );
@@ -119,7 +129,12 @@ const PlayerView = () => {
   }, [playerSummary]);
 
   let navigate = useNavigate();
-  if (!params.memberId || !params.mode || !params.moment || !params.classType) {
+  if (
+    !params.memberId ||
+    !params.mode ||
+    !params.startMoment ||
+    !params.classType
+  ) {
     const onPlayerConfigUpdate = (url) => {
       navigate(url);
     };
@@ -165,7 +180,7 @@ const PlayerView = () => {
   let activities = playerActivities ? playerActivities.activities : [];
 
   mode = Mode.fromString(playerSummary.query.mode);
-  moment = Moment.fromString(playerSummary.query.startMoment);
+  startMoment = Moment.fromString(playerSummary.query.startMoment);
   classSelection = CharacterClassSelection.fromString(
     playerSummary.query.classSelection
   );
@@ -185,7 +200,8 @@ const PlayerView = () => {
             player={player}
             classSelection={classSelection}
             mode={mode}
-            moment={moment}
+            startMoment={startMoment}
+            endMoment={endMoment}
           />
         </div>
 

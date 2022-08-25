@@ -64,10 +64,10 @@ app.get("/api/activity/:activityId/", (req, res, next) => {
 ///player/member_id/class/mode/moment/end-moment/
 //can append regex to each one : https://expressjs.com/en/guide/routing.html
 app.get(
-  "/api/player/activities/:member_id/:characterClass/:mode/:moment/:endMoment?/",
+  "/api/player/activities/:member_id/:characterClass/:mode/:startMoment/:endMoment?/",
   (req, res, next) => {
     let startTime = new Date().getTime();
-    let moment = Moment.fromString(req.params.moment);
+    let startMoment = Moment.fromString(req.params.startMoment);
 
     let memberId = req.params.member_id;
 
@@ -77,22 +77,28 @@ app.get(
 
     let mode = Mode.fromString(req.params.mode);
 
-    const endMoment = Moment.NOW;
+    let endMoment =
+      req.params.endMoment !== undefined
+        ? Moment.fromString(req.params.endMoment)
+        : Moment.NOW;
+
+    const startDate = startMoment.getDate();
+    const endDate = endMoment.getDate();
 
     const activities = activityStore.retrieveActivities(
       memberId,
       characterClassSelection,
       mode,
-      moment.getDate(),
-      endMoment.getDate()
+      startDate,
+      endDate
     );
 
     const player = activityStore.retrieveMember(memberId);
 
     const query = {
-      startDate: moment.getDate(),
-      endDate: endMoment.getDate(),
-      startMoment: moment.toString(),
+      startDate: startDate,
+      endDate: endDate,
+      startMoment: startMoment.toString(),
       endMoment: endMoment.toString(),
       mode: mode.toString(),
       classSelection: characterClassSelection.toString(),
@@ -116,11 +122,11 @@ app.get(
 );
 
 app.get(
-  "/api/player/:member_id/:characterClass/:mode/:moment/:endMoment?/",
+  "/api/player/:member_id/:characterClass/:mode/:startMoment/:endMoment?/",
   (req, res, next) => {
     let startTime = new Date().getTime();
 
-    let moment = Moment.fromString(req.params.moment);
+    let startMoment = Moment.fromString(req.params.startMoment);
 
     let memberId = req.params.member_id;
     let characterClassSelection = CharacterClassSelection.fromString(
@@ -129,9 +135,12 @@ app.get(
 
     let mode = Mode.fromString(req.params.mode);
 
-    const endMoment = Moment.NOW;
+    let endMoment =
+      req.params.endMoment !== undefined
+        ? Moment.fromString(req.params.endMoment)
+        : Moment.NOW;
 
-    const startDate = moment.getDate();
+    const startDate = startMoment.getDate();
     const endDate = endMoment.getDate();
 
     const summary = activityStore.retrieveActivitySummary(
@@ -176,23 +185,13 @@ app.get(
 
     const player = activityStore.retrieveMember(memberId);
 
-    /*
-    const activities = activityStore.retrieveActivities(
-      memberId,
-      characterClassSelection,
-      mode,
-      startDate,
-      endDate
-    );
-    */
-
     summary.weapons = weapons;
     summary.medals = medals;
 
     const query = {
       startDate: startDate,
       endDate: endDate,
-      startMoment: moment.toString(),
+      startMoment: startMoment.toString(),
       endMoment: endMoment.toString(),
       mode: mode.toString(),
       classSelection: characterClassSelection.toString(),

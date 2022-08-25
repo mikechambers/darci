@@ -24,8 +24,9 @@ ReactDOM.render(
               <Route path=":platformId" element={<PlayerView />}>
                 <Route path=":classType" element={<PlayerView />}>
                   <Route path=":mode" element={<PlayerView />}>
-                    <Route path=":moment" element={<PlayerView />} />
-                    <Route />
+                    <Route path=":startMoment" element={<PlayerView />}>
+                      <Route path=":endMoment" element={<PlayerView />} />
+                    </Route>
                   </Route>
                 </Route>
               </Route>

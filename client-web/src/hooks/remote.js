@@ -142,7 +142,8 @@ export const useFetchPlayerActivities = (
   refreshInterval,
   memberId,
   mode,
-  moment,
+  startMoment,
+  endMoment,
   classSelection,
   hash = undefined
 ) => {
@@ -156,7 +157,7 @@ export const useFetchPlayerActivities = (
   const manifest = global.manifest;
 
   useEffect(() => {
-    if (!manifest || !memberId || !mode || !moment || !classSelection) {
+    if (!manifest || !memberId || !mode || !startMoment || !classSelection) {
       return;
     }
 
@@ -165,7 +166,7 @@ export const useFetchPlayerActivities = (
       let s = reducer(output, "isLoading", false);
       try {
         const data = await fetchApi(
-          `/api/player/activities/${memberId}/${classSelection.toString()}/${mode.toString()}/${moment.toString()}/`
+          `/api/player/activities/${memberId}/${classSelection.toString()}/${mode.toString()}/${startMoment.toString()}/${endMoment.toString()}/`
         );
 
         const as = PlayerActivities.fromApi(data, manifest);
@@ -184,7 +185,15 @@ export const useFetchPlayerActivities = (
     return () => {
       cleanUpTimeout(timeoutId);
     };
-  }, [classSelection, manifest, memberId, mode, moment, refreshInterval, hash]);
+  }, [
+    classSelection,
+    manifest,
+    memberId,
+    mode,
+    startMoment,
+    refreshInterval,
+    hash,
+  ]);
 
   return [output.activityStats, output.isLoading, output.error];
 };
@@ -193,7 +202,8 @@ export const useFetchPlayerSummary = (
   refreshInterval,
   memberId,
   mode,
-  moment,
+  startMoment,
+  endMoment,
   classSelection,
   hash = undefined
 ) => {
@@ -207,7 +217,7 @@ export const useFetchPlayerSummary = (
   const manifest = global.manifest;
 
   useEffect(() => {
-    if (!manifest || !memberId || !mode || !moment || !classSelection) {
+    if (!manifest || !memberId || !mode || !startMoment || !classSelection) {
       return;
     }
 
@@ -216,7 +226,7 @@ export const useFetchPlayerSummary = (
       let s = reducer(output, "isLoading", false);
       try {
         const data = await fetchApi(
-          `/api/player/${memberId}/${classSelection.toString()}/${mode.toString()}/${moment.toString()}/`
+          `/api/player/${memberId}/${classSelection.toString()}/${mode.toString()}/${startMoment.toString()}/${endMoment.toString()}/`
         );
 
         const as = PlayerSummary.fromApi(data, manifest);
@@ -235,7 +245,15 @@ export const useFetchPlayerSummary = (
     return () => {
       cleanUpTimeout(timeoutId);
     };
-  }, [classSelection, manifest, memberId, mode, moment, refreshInterval, hash]);
+  }, [
+    classSelection,
+    manifest,
+    memberId,
+    mode,
+    startMoment,
+    refreshInterval,
+    hash,
+  ]);
 
   return [output.activityStats, output.isLoading, output.error];
 };

@@ -1,4 +1,4 @@
-import { CharacterClassSelection } from "shared";
+import { CharacterClassSelection, Moment } from "shared";
 import { dateIsToday, dateIsWithinLastWeek } from "../../../core/utils/date";
 import React from "react";
 import { DateTime } from "luxon";
@@ -36,16 +36,29 @@ const elementStyle = {
 const PlayerActivitiesOverview = (props) => {
   const player = props.player;
   const mode = props.mode;
-  const moment = props.moment;
+  const startMoment = props.startMoment;
+  const endMoment = props.endMoment;
   let classSelection = props.classSelection;
 
   let playerName = player.bungieDisplayName;
   let playerNameCode = player.bungieDisplayNameCode;
 
-  let momentDate = moment.getDate();
-  let f = getFormatStr(momentDate);
-  let dt = DateTime.fromJSDate(momentDate);
-  let humanMoment = dt.toFormat(f);
+  const f = (m) => {
+    let momentDate = startMoment.getDate();
+    let f = getFormatStr(momentDate);
+    let dt = DateTime.fromJSDate(momentDate);
+    let humanMoment = dt.toFormat(f);
+    return humanMoment;
+  };
+
+  let momentStr;
+  if (endMoment === Moment.NOW) {
+    momentStr = `since ${startMoment.label} (${f(startMoment)})`;
+  } else {
+    momentStr = `from ${startMoment.label} (${f(startMoment)}) to ${
+      endMoment.label
+    } (${f(endMoment)})`;
+  }
 
   return (
     <div style={elementStyle}>
@@ -57,8 +70,8 @@ const PlayerActivitiesOverview = (props) => {
       <hr className="page_section_title" />
 
       <div>
-        {mode.label} stats for {formatCharacterClass(classSelection)} since{" "}
-        {moment.label} ({humanMoment})
+        {mode.label} stats for {formatCharacterClass(classSelection)}{" "}
+        {momentStr}
       </div>
     </div>
   );
