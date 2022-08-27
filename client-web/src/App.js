@@ -69,12 +69,8 @@ const App = (props) => {
 
   const currentViewStyle = {
     flexGrow: "2",
-    height: "100%",
+    height: "100vh",
     //maxWidth: 900,
-  };
-
-  const footerStyle = {
-    height: 100,
   };
 
   return (
@@ -88,7 +84,6 @@ const App = (props) => {
 
             <div style={currentViewStyle}>
               <Outlet />
-              <div style={footerStyle}></div>
             </div>
           </div>
         )}
