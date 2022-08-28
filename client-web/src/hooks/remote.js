@@ -308,6 +308,7 @@ export const useFetchPlayerMetrics = (players) => {
 
     const f = async () => {
       let s = reducer(output, "isLoading", false);
+
       let urls = players.map(async (p) => {
         return fetchDestinyApi(
           `https://www.bungie.net/Platform/Destiny2/${p.platformId}/Profile/${p.memberId}/?components=1100`
@@ -323,7 +324,16 @@ export const useFetchPlayerMetrics = (players) => {
           for (let i = 0; i < values.length; i++) {
             let value = values[i];
 
-            let metrics = PlayerMetrics.fromApi(value);
+            let metrics;
+
+            try {
+              metrics = PlayerMetrics.fromApi(value);
+            } catch (e) {
+              //this happens because sometimes some players will have no data
+              //not sure why
+              console.log("Error parsing metrics data. Skipping.");
+              continue;
+            }
 
             out.push({
               player: players[i],
@@ -334,6 +344,7 @@ export const useFetchPlayerMetrics = (players) => {
           s = reducer(s, "data", out);
         })
         .catch((error) => {
+          console.log(error);
           s = reducer(s, "error", error);
         })
         .finally(() => {
