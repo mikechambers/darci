@@ -344,7 +344,6 @@ export const useFetchPlayerMetrics = (players) => {
           s = reducer(s, "data", out);
         })
         .catch((error) => {
-          console.log(error);
           s = reducer(s, "error", error);
         })
         .finally(() => {
