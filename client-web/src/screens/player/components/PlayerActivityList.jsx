@@ -43,8 +43,9 @@ const PlayerActivityList = (props) => {
 
             let s;
             let diff = Interval.fromDateTimes(dt, now).length("days");
+
             if (diff < 4) {
-              s = dt.toRelativeCalendar();
+              s = dt.toRelativeCalendar({ unit: "days" });
             } else if (diff < 7) {
               s = dt.toFormat("EEEE, LLLL d");
             } else {
