@@ -25,6 +25,7 @@ const PlayerStatsView = (props) => {
         wins={summary.wins}
         mercies={summary.completionReasonMercy}
         activityCount={summary.activityCount}
+        completed={summary.completed}
       />
 
       <StatSummaryView

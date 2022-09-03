@@ -6,6 +6,7 @@ const ResultSummaryView = (props) => {
   let wins = props.wins;
   let mercies = props.mercies;
   let activityCount = props.activityCount;
+  let completed = props.completed;
   let losses = activityCount - wins;
 
   let values = [
@@ -20,6 +21,10 @@ const ResultSummaryView = (props) => {
     {
       value: calculatePercent(mercies, activityCount).toFixed() + "%",
       label: "mercy",
+    },
+    {
+      value: calculatePercent(completed, activityCount).toFixed() + "%",
+      label: "completed",
     },
   ];
 
