@@ -1,4 +1,4 @@
-const { ItemSubType } = require("shared");
+const { ItemSubType, AmmunitionType } = require("shared");
 
 const API_RESOURCE_BASE_URL = "https://www.bungie.net";
 class Manifest {
@@ -25,6 +25,7 @@ class Manifest {
       itemSubType: ItemSubType.UNKNOWN,
       id: id,
       icon: "https://www.bungie.net/common/destiny2_content/icons/f3c27772a3d98c91fef127ce32e9f1e0.png",
+      ammunitionType: AmmunitionType.UNKNOWN,
       screenshot: undefined,
     };
 
@@ -48,6 +49,7 @@ class Manifest {
     out.itemSubType = ItemSubType.fromId(d.itemSubType);
     out.icon = createResourceUrl(d.icon);
     out.screenshot = createResourceUrl(d.screenshot);
+    out.ammunitionType = AmmunitionType.fromId(d.ammunitionType);
 
     return out;
   }

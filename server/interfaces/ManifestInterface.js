@@ -195,7 +195,6 @@ class ManifestInterface {
         id: id,
       };
 
-      console.log(out);
       weaponItemDefinition[id] = out;
     }
 

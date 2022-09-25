@@ -143,6 +143,12 @@ app.get(
     const startDate = startMoment.getDate();
     const endDate = endMoment.getDate();
 
+    console.log("startMoment", startMoment, startDate);
+    console.log("endMoment", endMoment, endDate);
+    console.log("mode", mode);
+    console.log("characterClassSelection", characterClassSelection);
+    console.log("memberId", memberId);
+
     const summary = activityStore.retrieveActivitySummary(
       memberId,
       characterClassSelection,

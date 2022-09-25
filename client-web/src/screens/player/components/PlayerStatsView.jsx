@@ -3,6 +3,7 @@ import PlayerAbilityStatSummaryView from "./PlayerAbilityStatSummaryView";
 import StatSummaryView from "../../../components/StatSummaryView";
 
 import { calculateAverage } from "../../../core/utils";
+import PlayerWeaponStatSummaryView from "./PlayerWeaponStatSummaryView";
 
 const style = {
   display: "flex",
@@ -67,6 +68,13 @@ const PlayerStatsView = (props) => {
         supers={summary.superKills}
         melees={summary.meleeKills}
         grenades={summary.grenadeKills}
+      />
+
+      <PlayerWeaponStatSummaryView
+        total={summary.weaponKills}
+        primary={summary.primaryAmmoKills}
+        secondary={summary.specialAmmoKills}
+        heavy={summary.heavyAmmoKills}
       />
     </div>
   );
