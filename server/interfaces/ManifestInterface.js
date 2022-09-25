@@ -1,114 +1,114 @@
-const Database = require('better-sqlite3');
+const Database = require("better-sqlite3");
 const fs = require("fs");
 
 const MANIFEST_CHECK_INTERVAL_MS_MIN = 1000 * 60 * 60; //1 min
 class ManifestInterface {
+  #db;
 
-    #db;
+  #manifest;
+  #version;
 
-    #manifest;
-    #version;
+  #manifestCheckIntervalMs;
+  #manifestCheckIntervalId;
 
-    #manifestCheckIntervalMs;
-    #manifestCheckIntervalId;
+  #select_activity_definitions;
+  #select_weapon_item_definitions;
+  #select_medal_definitions;
+  #select_trials_inventory_item_definitions;
+  #select_activity_mode_definitions;
+  #select_emblem_definitions;
+  #select_medal_record_definition;
 
-    #select_activity_definitions;
-    #select_weapon_item_definitions;
-    #select_medal_definitions;
-    #select_trials_inventory_item_definitions;
-    #select_activity_mode_definitions;
-    #select_emblem_definitions;
-    #select_medal_record_definition;
+  #manifestDbPath;
+  #manifestInfoPath;
 
-    #manifestDbPath;
-    #manifestInfoPath;
+  constructor(
+    manifestDbPath,
+    manifestInfoPath,
+    manifestCheckIntervalMs = 1000 * 60 * 60
+  ) {
+    this.#manifestDbPath = manifestDbPath;
+    this.#manifestInfoPath = manifestInfoPath;
 
-    constructor(manifestDbPath, manifestInfoPath, manifestCheckIntervalMs = 1000 * 60 * 60) {
-        this.#manifestDbPath = manifestDbPath;
-        this.#manifestInfoPath = manifestInfoPath;
+    if (manifestCheckIntervalMs < MANIFEST_CHECK_INTERVAL_MS_MIN) {
+      console.log(
+        `ManifestInterface : Warning manifestCheckIntervalMs is below minimum (${MANIFEST_CHECK_INTERVAL_MS_MIN}). Ignoring.`
+      );
+    } else {
+      this.#manifestCheckIntervalMs = manifestCheckIntervalMs;
+    }
+  }
 
-        if (manifestCheckIntervalMs < MANIFEST_CHECK_INTERVAL_MS_MIN) {
-            console.log(
-                `ManifestInterface : Warning manifestCheckIntervalMs is below minimum (${MANIFEST_CHECK_INTERVAL_MS_MIN}). Ignoring.`
-            );
-        } else {
-            this.#manifestCheckIntervalMs = manifestCheckIntervalMs;
-        }
+  async init(version = undefined) {
+    this.#initDb();
+    this.#initStatements();
+
+    if (version === undefined) {
+      this.#version = await this.#getSystemManifestVersion();
+    } else {
+      this.#version = version;
     }
 
-    async init(version = undefined) {
-        this.#initDb();
-        this.#initStatements();
+    console.log(`Using manifest version : ${this.#version}`);
 
-        if (version === undefined) {
-            this.#version = await this.#getSystemManifestVersion();
-        } else {
-            this.#version = version;
-        }
+    this.#initManifest();
 
-        console.log(`Using manifest version : ${this.#version}`);
-
-        this.#initManifest();
-
-        if (this.#db !== undefined) {
-            this.#db.close();
-            this.#db == undefined;
-        }
-
-        if (this.#manifestCheckIntervalId != undefined) {
-            clearInterval(this.#manifestCheckIntervalId);
-        }
-
-        if (this.#manifestCheckIntervalMs >= MANIFEST_CHECK_INTERVAL_MS_MIN) {
-            this.#manifestCheckIntervalId = setInterval(async () => {
-                let v = await this.#getSystemManifestVersion();
-                if (this.hasUpdatedManifest(v)) {
-                    console.log("New manifest version found. Updating.");
-                    this.init(v);
-                }
-            }, this.#manifestCheckIntervalMs);
-        }
+    if (this.#db !== undefined) {
+      this.#db.close();
+      this.#db == undefined;
     }
 
-    #initDb() {
-        if (this.#db !== undefined) {
-            //check this
-            this.#db.close();
-        }
-
-        console.log(`Using Manifest db at: ${this.#manifestDbPath}`);
-        this.#db = new Database(this.#manifestDbPath, { readonly: true });
+    if (this.#manifestCheckIntervalId != undefined) {
+      clearInterval(this.#manifestCheckIntervalId);
     }
 
-    #initStatements() {
-        this.#select_weapon_item_definitions = this.#db.prepare(`
+    if (this.#manifestCheckIntervalMs >= MANIFEST_CHECK_INTERVAL_MS_MIN) {
+      this.#manifestCheckIntervalId = setInterval(async () => {
+        let v = await this.#getSystemManifestVersion();
+        if (this.hasUpdatedManifest(v)) {
+          console.log("New manifest version found. Updating.");
+          this.init(v);
+        }
+      }, this.#manifestCheckIntervalMs);
+    }
+  }
+
+  #initDb() {
+    if (this.#db !== undefined) {
+      //check this
+      this.#db.close();
+    }
+
+    console.log(`Using Manifest db at: ${this.#manifestDbPath}`);
+    this.#db = new Database(this.#manifestDbPath, { readonly: true });
+  }
+
+  #initStatements() {
+    this.#select_weapon_item_definitions = this.#db.prepare(`
         SELECT
             *
         FROM
         DestinyInventoryItemDefinition
         WHERE
-            json like '%"itemType":3,%'`
-        );
+            json like '%"itemType":3,%'`);
 
-        this.#select_trials_inventory_item_definitions = this.#db.prepare(`
+    this.#select_trials_inventory_item_definitions = this.#db.prepare(`
         SELECT
             *
         FROM
         DestinyInventoryItemDefinition
         WHERE
-            json like '%"itemTypeDisplayName":"Trials Passage"%'`
-        );
+            json like '%"itemTypeDisplayName":"Trials Passage"%'`);
 
-        this.#select_activity_definitions = this.#db.prepare(`
+    this.#select_activity_definitions = this.#db.prepare(`
             SELECT
                 *
             FROM
                 DestinyActivityDefinition
             WHERE
-                json like '%"placeHash":4088006058%'`
-        );
+                json like '%"placeHash":4088006058%'`);
 
-        this.#select_medal_definitions = this.#db.prepare(`
+    this.#select_medal_definitions = this.#db.prepare(`
             SELECT
                 *
             FROM
@@ -117,26 +117,24 @@ class ManifestInterface {
                 json like '%medalTierIdentifier%'
         `);
 
-        this.#select_activity_mode_definitions = this.#db.prepare(`
+    this.#select_activity_mode_definitions = this.#db.prepare(`
         SELECT
             *
         FROM
         DestinyActivityModeDefinition
         WHERE
             json like '%"activityModeCategory":2%'
-    `   );
+    `);
 
-        this.#select_emblem_definitions = this.#db.prepare(`
+    this.#select_emblem_definitions = this.#db.prepare(`
         SELECT
             *
         FROM
             DestinyInventoryItemDefinition
         WHERE
-            json like '%"itemType":14,%'`
-        );
+            json like '%"itemType":14,%'`);
 
-
-        this.#select_medal_record_definition = this.#db.prepare(`
+    this.#select_medal_record_definition = this.#db.prepare(`
         SELECT
         *
         FROM
@@ -144,245 +142,251 @@ class ManifestInterface {
         WHERE
             json like @medalNameSearch
             `);
+  }
+
+  async #getSystemManifestVersion() {
+    //todo: this is a sync call. should look at making this async again
+    let data = await fs.promises.readFile(this.#manifestInfoPath, "utf8");
+
+    let obj = JSON.parse(data);
+    let version = obj.url;
+
+    if (version === undefined) {
+      throw new Error("Manifest Info file invalid format. url is undefined.");
     }
 
-    async #getSystemManifestVersion() {
+    return version;
+  }
 
-        //todo: this is a sync call. should look at making this async again
-        let data = await fs.promises.readFile(this.#manifestInfoPath, 'utf8');
+  #initManifest() {
+    let rows = this.#select_activity_definitions.all();
 
-        let obj = JSON.parse(data);
-        let version = obj.url;
+    let activityDefinition = {};
+    for (let row of rows) {
+      let d = JSON.parse(row.json);
 
-        if (version === undefined) {
-            throw new Error("Manifest Info file invalid format. url is undefined.");
-        }
+      const id = idToHash(row.id);
 
-        return version;
+      let out = {
+        name: d.displayProperties.name,
+        image: d.pgcrImage,
+        description: d.displayProperties.description,
+        activityModeHash: d.directActivityModeHash,
+      };
+
+      activityDefinition[id] = out;
     }
 
-    #initManifest() {
-        let rows = this.#select_activity_definitions.all();
+    rows = this.#select_weapon_item_definitions.all();
 
-        let activityDefinition = {};
-        for (let row of rows) {
-            let d = JSON.parse(row.json);
+    let weaponItemDefinition = {};
+    for (let row of rows) {
+      let d = JSON.parse(row.json);
+      const id = idToHash(row.id);
 
-            const id = idToHash(row.id);
+      let out = {
+        //description: d.displayProperties.description,
+        name: d.displayProperties.name,
+        icon: d.displayProperties.icon,
+        screenshot: d.screenshot,
+        itemType: d.itemType,
+        itemSubType: d.itemSubType,
+        ammunitionType: d.equippingBlock.ammoType,
+        id: id,
+      };
 
-            let out = {
-                name: d.displayProperties.name,
-                image: d.pgcrImage,
-                description: d.displayProperties.description,
-                activityModeHash: d.directActivityModeHash,
-            };
-
-            activityDefinition[id] = out;
-        }
-
-        rows = this.#select_weapon_item_definitions.all();
-
-        let weaponItemDefinition = {};
-        for (let row of rows) {
-            let d = JSON.parse(row.json);
-            const id = idToHash(row.id);
-
-            let out = {
-                //description: d.displayProperties.description,
-                name: d.displayProperties.name,
-                icon: d.displayProperties.icon,
-                screenshot: d.screenshot,
-                itemType: d.itemType,
-                itemSubType: d.itemSubType,
-                id: id,
-            }
-
-            weaponItemDefinition[id] = out;
-        }
-
-        rows = this.#select_trials_inventory_item_definitions.all();
-
-        let trialsPassageItemDefinitions = {};
-        for (let row of rows) {
-            let d = JSON.parse(row.json);
-            const id = idToHash(row.id);
-
-            let out = {
-                name: d.displayProperties.name,
-                description: d.displayProperties.description,
-                icon: d.displayProperties.icon,
-                id: id,
-            }
-
-            trialsPassageItemDefinitions[id] = out;
-        }
-
-        rows = this.#select_medal_definitions.all();
-
-        let medalDefinitions = {};
-        for (let row of rows) {
-            let d = JSON.parse(row.json);
-            let key = row.key;
-
-            //filter out gambit medals
-            if (key.toLowerCase().startsWith("medals_pvecomp")) {
-                continue;
-            }
-
-            //IB Medals dont have a description, so we have
-            //to get it from their record definition searching by name.
-            let search = `%"name":"${d.statName}"%`
-            const record = this.#select_medal_record_definition.get({ medalNameSearch: search });
-
-            let description = d.statDescription;
-            if (record) {
-
-                //There are a couple of medals which have the same name as other
-                //records, and there is no way to differentiate between the two.
-                //So we have to hard code the descriptions for those.
-                switch (d.statName) {
-                    case "Lights Out": {
-                        description = "Rapidly defeat 4 opposing Guardians.";
-                        break;
-                    }
-                    case "Not on My Watch": {
-                        description = "Land a final blow on an opponent who has damaged an ally.";
-                        break;
-                    }
-                    case "From the Jaws of Defeat": {
-                        description = "Win a match after having trailed by a significant margin.";
-                        break;
-                    }
-                    case "Thunderstruck": {
-                        description = "efeat an opponent with Landfall while casting Stormtrance.";
-                        break;
-                    }
-                    case "Regent": {
-                        description = "Defeat two opponents with a sword without switching weapons.";
-                        break;
-                    }
-                    case "Pyrotechnics": {
-                        description = "Countdown: Set a charge that successfully detonates.";
-                        break;
-                    }
-                    case "Usurper": {
-                        description = "Shut down an opponent's streak of 20 or more.";
-                        break;
-                    }
-                    case "From the Front": {
-                        description = "Win an Iron Banner match in which your team never trailed.";
-                        break;
-                    }
-                    default: {
-                        let r = JSON.parse(record.json);
-                        if (r.displayProperties) {
-                            description = r.displayProperties.description;
-                        }
-                    }
-                }
-
-            }
-
-            let out = {
-                name: d.statName,
-                description: description,
-                icon: d.iconImage,
-                isGold: false,
-                id: key,
-            };
-
-            if (out.id === "Medals_pvp_medal_streak_extra_absurd_b"
-                || out.id === "medalStreak7x"
-                || out.id === "medalMatchUndefeated"
-                || out.id === "medalMultiEntireTeam"
-                || out.id === "medalStreakAbsurd"
-                || out.id === "Medals_pvp_medal_streak_no_damage"
-                || out.id === "medalControlPowerPlayWipe"
-                || out.id === "medalCountdownPerfect"
-                || out.id === "medalMayhemKillStreak"
-                || out.id === "Medals_pvp_medal_lockdown_3a"
-                || out.id === "medalRumbleBetterThanAllCombined"
-                || out.id === "medalShowdownUndefeated"
-                || out.id === "medalSupremacyPerfectSecureRate"
-                || out.id === "medalSurvivalTeamUndefeated"
-
-                //iron banner
-                || out.id === "Medals_pvp_medal_ib_streak_lg"
-                || out.id === "Medals_pvp_medal_ib_control_3b"
-                || out.id === "Medals_pvp_medal_ib_multi_entire_team"
-                || out.id === "Medals_pvp_medal_ib_multi_7x"
-                || out.id === "Medals_pvp_medal_ib_match_undefeated"
-                || out.id === "Medals_pvp_medal_ib_streak_shutdown_large"
-                || out.id === "Medals_pvp_medal_ib_streak_huge"
-                || out.id === "Medals_pvp_medal_ib_streak_no_damage") {
-                out.isGold = true;
-            }
-
-            medalDefinitions[key] = out;
-        }
-
-        rows = this.#select_activity_mode_definitions.all();
-
-        let activityModeDefinitions = {};
-        for (let row of rows) {
-
-            let d = JSON.parse(row.json);
-            const id = idToHash(row.id);
-
-            let out = {
-                name: d.displayProperties.name,
-                description: d.displayProperties.description,
-                icon: d.displayProperties.icon,
-                image: d.pgcrImage,
-            };
-
-            activityModeDefinitions[id] = out;
-        }
-
-        rows = this.#select_emblem_definitions.all();
-
-        let emblemDefinitions = {};
-        for (let row of rows) {
-            let d = JSON.parse(row.json);
-            const id = idToHash(row.id);
-
-            let out = {
-                name: d.displayProperties.name,
-                icon: d.displayProperties.icon,
-                secondaryIcon: d.secondaryIcon,
-                secondaryOverlay: d.secondaryOverlay,
-                secondarySpecial: d.secondarySpecial,
-            }
-
-            emblemDefinitions[id] = out;
-        }
-
-        this.#manifest = {
-            version: this.#version,
-            data: {
-                activityDefinition: activityDefinition,
-                weaponItemDefinition: weaponItemDefinition,
-                medalDefinitions: medalDefinitions,
-                trialsPassageItemDefinitions: trialsPassageItemDefinitions,
-                activityModeDefinitions: activityModeDefinitions,
-                emblemDefinitions: emblemDefinitions,
-            }
-        };
+      console.log(out);
+      weaponItemDefinition[id] = out;
     }
 
-    hasUpdatedManifest(version) {
-        return version !== this.#version;
+    rows = this.#select_trials_inventory_item_definitions.all();
+
+    let trialsPassageItemDefinitions = {};
+    for (let row of rows) {
+      let d = JSON.parse(row.json);
+      const id = idToHash(row.id);
+
+      let out = {
+        name: d.displayProperties.name,
+        description: d.displayProperties.description,
+        icon: d.displayProperties.icon,
+        id: id,
+      };
+
+      trialsPassageItemDefinitions[id] = out;
     }
 
-    get manifest() {
-        return this.#manifest;
+    rows = this.#select_medal_definitions.all();
+
+    let medalDefinitions = {};
+    for (let row of rows) {
+      let d = JSON.parse(row.json);
+      let key = row.key;
+
+      //filter out gambit medals
+      if (key.toLowerCase().startsWith("medals_pvecomp")) {
+        continue;
+      }
+
+      //IB Medals dont have a description, so we have
+      //to get it from their record definition searching by name.
+      let search = `%"name":"${d.statName}"%`;
+      const record = this.#select_medal_record_definition.get({
+        medalNameSearch: search,
+      });
+
+      let description = d.statDescription;
+      if (record) {
+        //There are a couple of medals which have the same name as other
+        //records, and there is no way to differentiate between the two.
+        //So we have to hard code the descriptions for those.
+        switch (d.statName) {
+          case "Lights Out": {
+            description = "Rapidly defeat 4 opposing Guardians.";
+            break;
+          }
+          case "Not on My Watch": {
+            description =
+              "Land a final blow on an opponent who has damaged an ally.";
+            break;
+          }
+          case "From the Jaws of Defeat": {
+            description =
+              "Win a match after having trailed by a significant margin.";
+            break;
+          }
+          case "Thunderstruck": {
+            description =
+              "efeat an opponent with Landfall while casting Stormtrance.";
+            break;
+          }
+          case "Regent": {
+            description =
+              "Defeat two opponents with a sword without switching weapons.";
+            break;
+          }
+          case "Pyrotechnics": {
+            description =
+              "Countdown: Set a charge that successfully detonates.";
+            break;
+          }
+          case "Usurper": {
+            description = "Shut down an opponent's streak of 20 or more.";
+            break;
+          }
+          case "From the Front": {
+            description =
+              "Win an Iron Banner match in which your team never trailed.";
+            break;
+          }
+          default: {
+            let r = JSON.parse(record.json);
+            if (r.displayProperties) {
+              description = r.displayProperties.description;
+            }
+          }
+        }
+      }
+
+      let out = {
+        name: d.statName,
+        description: description,
+        icon: d.iconImage,
+        isGold: false,
+        id: key,
+      };
+
+      if (
+        out.id === "Medals_pvp_medal_streak_extra_absurd_b" ||
+        out.id === "medalStreak7x" ||
+        out.id === "medalMatchUndefeated" ||
+        out.id === "medalMultiEntireTeam" ||
+        out.id === "medalStreakAbsurd" ||
+        out.id === "Medals_pvp_medal_streak_no_damage" ||
+        out.id === "medalControlPowerPlayWipe" ||
+        out.id === "medalCountdownPerfect" ||
+        out.id === "medalMayhemKillStreak" ||
+        out.id === "Medals_pvp_medal_lockdown_3a" ||
+        out.id === "medalRumbleBetterThanAllCombined" ||
+        out.id === "medalShowdownUndefeated" ||
+        out.id === "medalSupremacyPerfectSecureRate" ||
+        out.id === "medalSurvivalTeamUndefeated" ||
+        //iron banner
+        out.id === "Medals_pvp_medal_ib_streak_lg" ||
+        out.id === "Medals_pvp_medal_ib_control_3b" ||
+        out.id === "Medals_pvp_medal_ib_multi_entire_team" ||
+        out.id === "Medals_pvp_medal_ib_multi_7x" ||
+        out.id === "Medals_pvp_medal_ib_match_undefeated" ||
+        out.id === "Medals_pvp_medal_ib_streak_shutdown_large" ||
+        out.id === "Medals_pvp_medal_ib_streak_huge" ||
+        out.id === "Medals_pvp_medal_ib_streak_no_damage"
+      ) {
+        out.isGold = true;
+      }
+
+      medalDefinitions[key] = out;
     }
+
+    rows = this.#select_activity_mode_definitions.all();
+
+    let activityModeDefinitions = {};
+    for (let row of rows) {
+      let d = JSON.parse(row.json);
+      const id = idToHash(row.id);
+
+      let out = {
+        name: d.displayProperties.name,
+        description: d.displayProperties.description,
+        icon: d.displayProperties.icon,
+        image: d.pgcrImage,
+      };
+
+      activityModeDefinitions[id] = out;
+    }
+
+    rows = this.#select_emblem_definitions.all();
+
+    let emblemDefinitions = {};
+    for (let row of rows) {
+      let d = JSON.parse(row.json);
+      const id = idToHash(row.id);
+
+      let out = {
+        name: d.displayProperties.name,
+        icon: d.displayProperties.icon,
+        secondaryIcon: d.secondaryIcon,
+        secondaryOverlay: d.secondaryOverlay,
+        secondarySpecial: d.secondarySpecial,
+      };
+
+      emblemDefinitions[id] = out;
+    }
+
+    this.#manifest = {
+      version: this.#version,
+      data: {
+        activityDefinition: activityDefinition,
+        weaponItemDefinition: weaponItemDefinition,
+        medalDefinitions: medalDefinitions,
+        trialsPassageItemDefinitions: trialsPassageItemDefinitions,
+        activityModeDefinitions: activityModeDefinitions,
+        emblemDefinitions: emblemDefinitions,
+      },
+    };
+  }
+
+  hasUpdatedManifest(version) {
+    return version !== this.#version;
+  }
+
+  get manifest() {
+    return this.#manifest;
+  }
 }
 
 const idToHash = function (id) {
-
-    //return id >>> 0;
-    return id >>> 32;
-}
+  //return id >>> 0;
+  return id >>> 32;
+};
 
 module.exports = ManifestInterface;
