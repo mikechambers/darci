@@ -63,7 +63,7 @@ class ActivityStoreInterface {
                 character on character_activity_stats.character = character.id,
                 member on member.id = character.member
             WHERE
-                member.id = @memberId AND
+                member.member_id = @memberId AND
                 (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
                 period > @startMoment AND
                 period < @endMoment AND
@@ -150,7 +150,7 @@ class ActivityStoreInterface {
             character on character_activity_stats.character = character.id,
             member on member.id = character.member
           WHERE
-            member.id = @memberId AND
+            member.member_id = @memberId AND
             (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
             period > @startDate AND
             period < @endDate AND
@@ -168,7 +168,7 @@ class ActivityStoreInterface {
     character on character_activity_stats.character = character.id,
     member on member.id = character.member
   WHERE
-    member.id = @memberId AND
+    member.member_id = @memberId AND
     (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
     period > @startDate AND
     period < @endDate AND
@@ -232,7 +232,7 @@ class ActivityStoreInterface {
     character on character_activity_stats.character = character.id,
     member on member.id = character.member
     WHERE
-    member.id = @memberId AND
+    member.member_id = @memberId AND
     (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
     period > @startDate AND
     period < @endDate AND
@@ -254,7 +254,7 @@ class ActivityStoreInterface {
       character on character_activity_stats.character = character.id,
       member on member.id = character.member
       WHERE
-      member.id = @memberId AND
+      member.member_id = @memberId AND
       (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
       period > @startDate AND
       period < @endDate AND
@@ -274,7 +274,7 @@ class ActivityStoreInterface {
       character on character_activity_stats.character = character.id,
       member on member.id = character.member
       WHERE
-      member.id = @memberId AND
+      member.member_id = @memberId AND
       (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
       period > @startDate AND
       period < @endDate AND
@@ -334,7 +334,7 @@ class ActivityStoreInterface {
     character on character_activity_stats.character = character.id,
     member on member.id = character.member
     WHERE
-    member.id = @memberId AND
+    member.member_id = @memberId AND
     (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
     period > @startDate AND
     period < @endDate AND
