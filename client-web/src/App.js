@@ -17,13 +17,6 @@ const App = (props) => {
   let query = useQuery();
 
   let params = useParams();
-
-  let mode = params.mode ? Mode.fromString(params.mode) : undefined;
-  let moment = params.moment ? Moment.fromString(params.moment) : undefined;
-  let classSelection = params.classType
-    ? CharacterClassSelection.fromString(params.classType)
-    : undefined;
-
   let [player, setPlayer] = useState();
 
   //console.log(params.memberId);
