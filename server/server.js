@@ -247,7 +247,11 @@ app.get("/api/players/", (req, res, next) => {
 
 const manifestNoUpdateData = { updated: false };
 app.get("/manifest/:version/", (req, res, next) => {
-  let version = req.params.version ? atob(req.params.version) : undefined;
+  //let version = req.params.version ? atob(req.params.version) : undefined;
+
+  let version = req.params.version
+    ? Buffer.from(req.params.version).toString("base64")
+    : undefined;
   const manifestNeedsUpdating = manifestInterface.hasUpdatedManifest(version);
 
   let out = manifestNoUpdateData;
