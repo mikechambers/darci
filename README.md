@@ -91,23 +91,88 @@ much faster.
 
 If any errors occur, simply run the command again.
 
-# Download and Configure DARCI
 
+# Download and Configure Darci
 
+We are ready to download and run darci.
 
-- NodeJS
-  - install nodejs
-- DARCI SERVER
-  - Create DCLI_DB_PATH, MANIFEST_DB_PATH, MANIFEST_INFO_PATH that point to the appropriate files.
-  - `npm install nodemon --global`
-  - `server/$ npm install`
-  - `server/$ nodemon server.js`
-- DARCI CLIENT-WEB
-  - create `.env.local` file in `src/client-web` folder
-  - add `REACT_APP_DESTINY_API_KEY=YOUR_BUNGIE_API_KEY_HERE`
-  - `client-web/$ npm start`
-    \*this should launch a brower with the app running, showing a page with all users who have been synced
-    
+Install and configure [Node](https://nodejs.org/en/) (version 16.18.0 or greater). Make sure that the isntall directories are added to your system path so you can run the programs from the command line.
+
+The Node install should also install NPM. You can test the installation by running:
+
+```
+$ node --version
+$ npm --version
+```
+
+Make sure Node is at least version 16.18.0 or greater.
+
+Next Download darci. Its is recomended that you clone it using git, as it will
+make it easier to update it when new versions are out.
+
+```
+$ git clone https://github.com/mikechambers/darci.git
+```
+
+This will create a directory named *darci* and sync the latest version of the
+code. Move into that directory:
+
+```
+$ cd darci
+```
+
+There are a number of files and directories here. The two most important for us
+are:
+
+- **server** : contains the node server code for darci.
+- **client-web** : contains the React based front end app.
+
+We need to sync all of the required packages for each app using npm.
+
+```
+$ cd server
+$ npm install
+$ cd ..
+$ cd client-web
+$ npm install
+```
+
+Finally, we are ready to start the app.
+
+To launch the server:
+
+```
+$ cd server
+$ npm start
+```
+If everything was installed and configured correctly, you should see output
+similar to:
+
+```
+Using data store at: /home/mesh/.local/share/dcli/dcli.sqlite3
+Initializing Manifest
+Using Manifest db at: /home/mesh/.local/share/dcli/manifest.sqlite3
+Using manifest version : https://www.bungie.net/common/destiny2_content/sqlite/en/world_sql_content_88d67ee6b0b13489b4df299cac1b79e2.content
+Server running at http://mesh-Laptop-12th-Gen-Intel-Core:8080/
+```
+
+If you see any errors, make sure you have setup the environment variables
+correctly (and they are avaliable in your current terminal session), and have succesfully synced the manifest via *dclim* and synced at
+least one player's data via *dclisync*.
+
+If you try and visit the server via a brower, you will see an error, since we
+have not yet started the web client.
+
+With the server running, open a new terminal window and start the web client:
+
+```
+$ cd client-web
+$ npm start
+```
+
+This should launch a browser window with the app running. If you get any errors,
+make sure that the server is running, and that you have run `npm install` in the
+*client-web* directory.
     
  
 ### Server Setup
