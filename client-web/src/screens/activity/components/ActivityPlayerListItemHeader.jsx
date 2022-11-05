@@ -7,10 +7,10 @@ import { SMALL } from "../../../core/consts";
 
 const rootStyle = {
   display: "grid",
-  gridTemplateColumns: "200px 370px 20px auto",
+  gridTemplateColumns: "6px 218px 370px 20px auto",
   flexDirection: "row",
   alignItems: "center",
-  columnGap: 12,
+  columnGap: 6,
   //justifyContent: "center",
 };
 
@@ -19,9 +19,16 @@ const statusViewStyle = {
   justifyContent: "center",
 };
 
+//todo
+const teamStyleBase = {
+  height: "100%",
+  borderRadius: "var(--radius-border) 0px 0px var(--radius-border)",
+};
+
 const ActivityPlayerListItemHeader = (props) => {
   const player = props.player;
   const onClick = props.onClick;
+  const teamColor = props.teamColor;
 
   let className = props.onClick ? "list_item_header link" : "list_item_header";
 
@@ -58,8 +65,16 @@ const ActivityPlayerListItemHeader = (props) => {
 
   const goldMedals = player.stats.extended.medals.filter((m) => m.info.isGold);
 
+  let teamStyleColor = teamColor ? teamColor : "#00000000";
+
+  const teamStyle = {
+    ...teamStyleBase,
+    backgroundColor: teamStyleColor,
+  };
+
   return (
     <div className={className} style={rootStyle} onClick={handleOnClick}>
+      <div style={teamStyle} title="Fireteam"></div>
       <PlayerInfoView player={player} />
       <ActivityPlayerStatsView data={data} />
       <div style={statusViewStyle}>

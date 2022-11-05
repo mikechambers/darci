@@ -14,8 +14,6 @@ const NivoTooltip = (props) => {
     backgroundColor: color,
   };
 
-  console.log(colorStyle);
-
   return (
     <div style={rootStyle} className="nivo_tooltip">
       <div style={colorStyle} className="tooltip_color_swatch"></div>

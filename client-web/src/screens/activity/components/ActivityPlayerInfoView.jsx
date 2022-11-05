@@ -23,7 +23,7 @@ const ActivityPlayerInfoView = (props) => {
       <div>
         <EmblemImageView emblem={character.emblem} />
       </div>
-      <div style={detailsStyle}>
+      <div style={detailsStyle} class="overflow">
         <PlayerNameView player={player} />
         <LightLevelView level={character.lightLevel} />
       </div>
