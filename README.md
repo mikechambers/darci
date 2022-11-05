@@ -16,18 +16,85 @@ It is built around three main parts:
 
 ## Development Installation and Configuration
 
-- Bungie API Key
-  - Get a bungie api key
-  - Set origin to `*`
-  - Create two environment variables named DESTINY_API_KEY and REACT_APP_DESTINY_API_KEY both of which which contains the key. These will be needed for both syncing data using dci, as well as the web frontend.
-- DCLI
-  - Download and install dcli (requires v0.8.0 or greater)
-  - place into path
-  - run dclim
-    - note data directory output
-  - Add players to sync using dclisync
-  - Sync bungie account data using dclisync (may take a few minutes)
-  - Optionally set up batch file to update automatically
+### Set up Destiny 2 API Keys and Environment
+
+In order to sync your data and use DARCI, you must first get a free Destiny 2
+API key from Bungie, set it up in your system's environment.
+
+Go to Bungie and register for an [Destiny 2 API key](https://www.bungie.net/en/Application). Use the following settings:
+- Application Name : Whatever you want
+- Website : Use your own domain if you have one, otherwise try localhost.
+- Application Status : Can be Private
+- OAuth Client Type : Not Applicable
+- Redirect URL : Leave Empty
+- Scope : You do not need to give any additional scopes
+- Origin Header : Set to '*' (just an asterix, no quotes)
+
+Once you have your API key, you need to set it as an environment variable on
+your system.
+
+Create two environment variables named `DESTINY_API_KEY` and `REACT_APP_DESTINY_API_KEY` that both point to your API key, and confirm that the variables are set correctly. These are used both to sync the data using DCLI, and to enable to web frontend of DARCI to call the Destiny 2 APIs directly. 
+
+### Download and Configure DCLI
+
+Download [dcli](https://github.com/mikechambers/dcli) and place the files in
+your system path so they can be called via the command line.
+
+Once downloaded, sync the Destiny 2 manifest by running dclim:
+
+```
+$ dclim
+```
+
+Note the directory that the `manifest.sqlite3` files is stored in.
+
+The manifest is a database from Bungie that contains information about Destiny
+2, including map and weapon info, images, urls, etc... and is updated by Bungie
+from time to time. 
+
+Create the following environment variables, replacing `/home/mesh/.local/share/dcli/` with the past where your `manifest.sqlite3` was created.
+
+```
+export DCLI_DB_PATH='/home/mesh/.local/share/dcli/dcli.sqlite3'
+export MANIFEST_DB_PATH='/home/mesh/.local/share/dcli/manifest.sqlite3'
+export MANIFEST_INFO_PATH='/home/mesh/.local/share/dcli/manifest_info.json'
+export DCLI_FIX_DATA=true
+```
+
+The DCLI_FIX_DATA` variable is used when syncing activity data. When set to `true` dclisync will make additional
+API calls when syncing data if there is missing data in the API (which happens sometimes). This can
+siginificantly slow down the initial sync, but is recomended as it can help
+prevent missing data.
+
+At this point, we are ready to do the initial data sync. The first sync can take
+some time, and thus its suggested you sync one player first, and get everything
+else setup, then add additional players.
+
+To add a player to sync, run:
+
+```
+$ dclisync --add mesh#3230
+```
+Replacing `mesh#3230` with the Bungie ID you want to sync. You can add multiple
+Bungie Ids at a time.
+
+Once you have added an id to sync, you can do the initial data sync by running:
+
+```
+$ dclisync --sync
+```
+
+This will sync all pvp activities for players who have been added to dclisync.
+The initial sync may take some time depending on the number of games the player
+has played, and whether DCLI_FIX_DATA is enabled. Subsequent data syncs will be
+much faster.
+
+If any errors occur, simply run the command again.
+
+# Download and Configure DARCI
+
+
+
 - NodeJS
   - install nodejs
 - DARCI SERVER
