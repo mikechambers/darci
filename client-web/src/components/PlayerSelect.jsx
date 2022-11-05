@@ -18,20 +18,32 @@ const PlayerSelect = (props) => {
       return;
     }
 
+	let proxySetSelected = function(s) {
+		if(s && props.onChange) {
+			onChange(s);
+		}
+		
+		setSelected(s);
+	}
+
+	let s;
     let out = [];
     for (const p of loadedPlayers) {
       p.label = p.getFullName();
       out.push(p);
 
       if (player && p.memberId === player.memberId) {
-        setSelected(p);
+        s = p;
+		proxySetSelected(p);
       }
     }
 
+	if(!s) {
+		proxySetSelected(out[0]);
+	}
+
     setPlayers(out);
   }, [loadedPlayers, player]);
-
-  //console.log(players);
 
   return (
     <EnumSelect
