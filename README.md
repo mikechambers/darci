@@ -175,7 +175,14 @@ make sure that the server is running, and that you have run `npm install` in the
 *client-web* directory.
     
  
-### Server Setup
+### Server Deployment
+
+The instructions below will get Darci up and running in debug mode (which is
+fine if you are just running locally). However, if you want to deploy to a
+server for access to multiple users, there are a number of additional steps and
+configurations you should take.
+
+#### Schedule Manifest Check (dclim)
 
 The following crontab entries will run dclim once an hour (to check for an udpated manifest), and log output to a log directory in the specified home directory.
 
@@ -190,3 +197,10 @@ BASH_ENV="/home/mesh/.profile"
 #remove the log file once a day at 00:05
 5 0 * * * rm /home/mesh/logs/cron.log
 ```
+
+#### Create DCLISYNC service
+
+#### Configure Web Server and Proxy
+
+
+
