@@ -22,13 +22,13 @@ In order to sync your data and use DARCI, you must first get a free Destiny 2
 API key from Bungie, set it up in your system's environment.
 
 Go to Bungie and register for an [Destiny 2 API key](https://www.bungie.net/en/Application). Use the following settings:
-- Application Name : Whatever you want
-- Website : Use your own domain if you have one, otherwise try localhost.
-- Application Status : Can be Private
-- OAuth Client Type : Not Applicable
-- Redirect URL : Leave Empty
-- Scope : You do not need to give any additional scopes
-- Origin Header : Set to '*' (just an asterix, no quotes)
+- **Application Name** : Whatever you want
+- **Website** : Use your own domain if you have one, otherwise try localhost.
+- **Application Status** : Can be Private
+- **OAuth Client Type** : Not Applicable
+- **Redirect URL** : Leave Empty
+- **Scope** : You do not need to give any additional scopes
+- **Origin Header** : Set to '\*' (just an asterix, no quotes)
 
 Once you have your API key, you need to set it as an environment variable on
 your system.
@@ -61,7 +61,7 @@ export MANIFEST_INFO_PATH='/home/mesh/.local/share/dcli/manifest_info.json'
 export DCLI_FIX_DATA=true
 ```
 
-The DCLI_FIX_DATA` variable is used when syncing activity data. When set to `true` dclisync will make additional
+The `DCLI_FIX_DATA` variable is used when syncing activity data. When set to `true` dclisync will make additional
 API calls when syncing data if there is missing data in the API (which happens sometimes). This can
 siginificantly slow down the initial sync, but is recomended as it can help
 prevent missing data.
