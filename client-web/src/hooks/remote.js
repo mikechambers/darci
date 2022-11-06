@@ -151,7 +151,7 @@ export const useFetchLatestActivityIdForMember = (
   hash = undefined
 ) => {
   const [output, setOutput] = useState({
-    activityId: undefined,
+    activityData: undefined,
     isLoading: true,
     error: undefined,
   });
@@ -173,7 +173,7 @@ export const useFetchLatestActivityIdForMember = (
           throw new ActivityNotFoundError();
         }
 
-        s = reducer(s, "activityId", activityId);
+        s = reducer(s, "activityData", { activityId });
       } catch (err) {
         s = reducer(s, "error", err);
       }
@@ -190,7 +190,7 @@ export const useFetchLatestActivityIdForMember = (
     };
   }, [memberId, hash]);
 
-  return [output.activityId, output.isLoading, output.error];
+  return [output.activityData, output.isLoading, output.error];
 };
 
 export const useFetchPlayerActivities = (

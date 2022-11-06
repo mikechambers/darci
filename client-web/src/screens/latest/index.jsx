@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RefreshStatusView from "../../components/RefreshStatusView";
 import { LATEST_ACTIVITY_REFRESH_INTERVAL } from "../../core/consts";
@@ -8,10 +9,17 @@ const LatestView = (props) => {
   let params = useParams();
   let memberId = params.memberId;
 
-  let [activityId, isLoading, loadError] = useFetchLatestActivityIdForMember(
+  let [activityData, isLoading, loadError] = useFetchLatestActivityIdForMember(
     LATEST_ACTIVITY_REFRESH_INTERVAL,
     memberId
   );
+
+  let activityId = activityData ? activityData.activityId : undefined;
+
+  const [lastUpdate, setLastUpdate] = useState();
+  useEffect(() => {
+    setLastUpdate(new Date());
+  }, [activityData]);
 
   if (!activityId) {
     return <div>Loading...</div>;
@@ -28,7 +36,7 @@ const LatestView = (props) => {
     <div style={rootStyle}>
       <div style={refreshWrapperStyle}>
         <RefreshStatusView
-          lastUpdate={new Date()}
+          lastUpdate={lastUpdate}
           refreshInterval={LATEST_ACTIVITY_REFRESH_INTERVAL}
           align="left"
         />
