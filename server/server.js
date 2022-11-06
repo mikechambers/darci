@@ -46,13 +46,39 @@ app.get("/", (req, res, next) => {
 });
 */
 
+app.get("/api/player/latest/:memberId", (req, res, next) => {
+  let startTime = new Date().getTime();
+  let memberId = req.params.memberId;
+
+  let activityId = activityStore.retrieveLastestActivityIdForMember(memberId);
+
+  let out = {
+    activityId: activityId,
+  };
+
+  const query = {
+    memberId: memberId,
+    executionTime: new Date().getTime() - startTime,
+  };
+  out.query = query;
+
+  sendJsonResponse(res, out);
+});
+
 app.get("/api/activity/:activityId/", (req, res, next) => {
   let startTime = new Date().getTime();
   let activityId = req.params.activityId;
 
   let out = activityStore.retrieveActivity(activityId);
 
+  let found = true;
+  if (!out) {
+    found = false;
+    out = {};
+  }
+
   const query = {
+    found: found,
     activityId: activityId,
     executionTime: new Date().getTime() - startTime,
   };

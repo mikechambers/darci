@@ -21,6 +21,7 @@ import ScreenNavigationView from "../../components/ScreenNavigationView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 const { useQuery } = require("../../hooks/browser");
 
+const gapMargin = 30;
 const invalidParametersStyle = {
   padding: "var(--padding-page-container)",
   display: "flex",
@@ -30,6 +31,10 @@ const invalidParametersStyle = {
   justifyContent: "center",
   alignItems: "center",
   rowGap: 8,
+};
+
+const loadLatestLinkStyle = {
+  marginTop: `-${gapMargin}px`,
 };
 
 const gappedStyle = {
@@ -45,7 +50,7 @@ const pageContainerStyle = {
 const itemDetailsStyle = {
   display: "flex",
   flexWrap: "wrap",
-  gap: "30px",
+  gap: `${gapMargin}px`,
 };
 
 const pageLinks = [
@@ -121,7 +126,6 @@ const PlayerView = () => {
 
   const [lastUpdate, setLastUpdate] = useState();
   useEffect(() => {
-    //console.log("updated", new Date());
     setLastUpdate(new Date());
   }, [playerSummary]);
 
@@ -146,6 +150,12 @@ const PlayerView = () => {
       </div>
     );
   }
+
+  const onLatestActivityClick = (e, memberId) => {
+    e.stopPropagation();
+    e.preventDefault();
+    navigate(`/latest/${memberId}`);
+  };
 
   /*
     if (profileLoadError) {
@@ -247,6 +257,17 @@ const PlayerView = () => {
           id="games"
           title="Games"
         />
+        <div
+          style={loadLatestLinkStyle}
+          title="Load a page that always displays the most recent activity details"
+        >
+          <a
+            href="void()"
+            onClick={(e) => onLatestActivityClick(e, player.memberId)}
+          >
+            Monitor Most Recent Activity
+          </a>
+        </div>
         <PlayerActivityList activities={activities} summary={summary} />
       </div>
     </div>

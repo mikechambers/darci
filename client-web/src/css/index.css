@@ -63,6 +63,7 @@
   --radius-border: 4px;
   --padding-page-container:  45px;
   --padding-content:20px;
+  --page-max-width:900px;
 
   --text-shadow:1px 1px 1px black;
 
@@ -225,7 +226,7 @@ body {
 
 .page_containter {
   padding: 0px var(--padding-page-container);
-  max-width: 900px;
+  max-width: var(--page-max-width);
 }
 
 /************ activity detail ****************/

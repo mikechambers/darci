@@ -10,6 +10,7 @@ import ActivityWeaponListContainer from "./components/ActivityWeaponsView";
 import ActivityTeamDetailsView from "./components/ActivityTeamDetailsView";
 import ActivityPlayerEffectivenessView from "./components/ActivityPlayerEffectivenessView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
+import { ActivityNotFoundError } from "../../core/errors";
 
 const pageContainerStyle = {
   minWidth: "720px",
@@ -24,7 +25,9 @@ const gappedStyle = {
 
 const ActivityView = (props) => {
   const params = useParams();
-  const activityId = params.activityId;
+
+  const activityId = params.activityId ? params.activityId : props.activityId;
+  //TODO error if no activity id
 
   const [activity, isLoading, error] = useFetchActivity(activityId);
 
@@ -33,6 +36,10 @@ const ActivityView = (props) => {
   }
 
   if (error) {
+    if (error instanceof ActivityNotFoundError) {
+      return <div>Activity Not Found : {activityId}</div>;
+    }
+
     return (
       <div>
         An error occured <br />
@@ -156,12 +163,12 @@ const ActivityView = (props) => {
               </a>
             </li>
             <li>
-              <a href={`https://www.bungie.net/en/PGCR/${params.activityId}`}>
+              <a href={`https://www.bungie.net/en/PGCR/${activityId}`}>
                 View game at Bungie
               </a>
             </li>
             <li>
-              <a href={`https://crucible.report/pgcr/${params.activityId}`}>
+              <a href={`https://crucible.report/pgcr/${activityId}`}>
                 View Game on Trials Report
               </a>
             </li>

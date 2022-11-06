@@ -12,6 +12,7 @@ import { fetchApi, fetchDestinyApi } from "../core/utils/remote";
 import Player from "../core/data/Player";
 import PlayerActivities from "../core/data/PlayerActivities";
 import PlayerMetrics from "../core/data/PlayerMetrics";
+import { ActivityNotFoundError } from "../core/errors";
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 const STORAGE_MANIFEST_LAST_CHECK_KEY = "STORAGE_MANIFEST_LAST_CHECK_KEY";
@@ -123,7 +124,13 @@ export const useFetchActivity = (activityId) => {
       let s = reducer(output, "isLoading", false);
       try {
         const data = await fetchApi(`/api/activity/${activityId}/`);
+
+        if (!data.query.found) {
+          throw new ActivityNotFoundError();
+        }
+
         const a = new Activity(data, manifest);
+
         s = reducer(s, "activity", a);
       } catch (err) {
         s = reducer(s, "error", err);
@@ -136,6 +143,54 @@ export const useFetchActivity = (activityId) => {
   }, [activityId]);
 
   return [output.activity, output.isLoading, output.error];
+};
+
+export const useFetchLatestActivityIdForMember = (
+  refreshInterval,
+  memberId,
+  hash = undefined
+) => {
+  const [output, setOutput] = useState({
+    activityId: undefined,
+    isLoading: true,
+    error: undefined,
+  });
+
+  useEffect(() => {
+    if (!memberId) {
+      return;
+    }
+
+    let timeoutId;
+    const f = async () => {
+      let s = reducer(output, "isLoading", false);
+      try {
+        const data = await fetchApi(`/api/player/latest/${memberId}/`);
+
+        let activityId = data.activityId;
+
+        if (!activityId) {
+          throw new ActivityNotFoundError();
+        }
+
+        s = reducer(s, "activityId", activityId);
+      } catch (err) {
+        s = reducer(s, "error", err);
+      }
+
+      setOutput(s);
+
+      timeoutId = startTimeout(f, refreshInterval);
+    };
+
+    f();
+
+    return () => {
+      cleanUpTimeout(timeoutId);
+    };
+  }, [memberId, hash]);
+
+  return [output.activityId, output.isLoading, output.error];
 };
 
 export const useFetchPlayerActivities = (

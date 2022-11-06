@@ -38,11 +38,6 @@ export default class Activity {
   details;
   weapons;
 
-  //team weapons
-  //team summary
-
-  //highest over stats
-
   constructor(data, manifest) {
     let activity = data.activity;
 

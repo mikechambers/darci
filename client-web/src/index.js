@@ -10,6 +10,7 @@ import HomeView from "./screens/home/index";
 import AboutView from "./screens/about/index";
 import NoMatchView from "./screens/404/index";
 import SearchView from "./screens/search";
+import LatestView from "./screens/latest";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -36,6 +37,7 @@ ReactDOM.render(
             path="activity/:activityId/"
             element={<ActivityView />}
           ></Route>
+          <Route path="latest/:memberId/" element={<LatestView />}></Route>
           <Route path="*" element={<NoMatchView />} />
         </Route>
       </Routes>

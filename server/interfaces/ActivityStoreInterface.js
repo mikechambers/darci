@@ -20,6 +20,7 @@ class ActivityStoreInterface {
   #select_weapons_summary;
   #select_player_activity_summary;
   #select_medals_summary;
+  #select_latest_activity_id_for_member;
 
   constructor(dbPath) {
     this.#dbPath = dbPath;
@@ -73,6 +74,19 @@ class ActivityStoreInterface {
                 activity.period DESC
             LIMIT 50`
     );
+
+    this.#select_latest_activity_id_for_member = this.#db.prepare(`
+      SELECT
+	      max(activity_id) as activity_id
+      FROM
+        activity
+      INNER JOIN
+        character_activity_stats on character_activity_stats.activity = activity.id,
+        character on character_activity_stats.character = character.id,
+        member on character.member = member.id
+      WHERE
+        member.member_id = @memberId
+    `);
 
     this.#select_teams = this.#db.prepare(`
             SELECT
@@ -427,6 +441,18 @@ class ActivityStoreInterface {
     return weapons ? weapons : [];
   }
 
+  retrieveLastestActivityIdForMember(memberId) {
+    const data = this.#select_latest_activity_id_for_member.get({
+      memberId,
+    });
+
+    if (!data.activity_id) {
+      return undefined;
+    }
+
+    return data.activity_id;
+  }
+
   retrieveActivitySummary(
     memberId,
     characterSelection,
@@ -566,6 +592,10 @@ class ActivityStoreInterface {
 
   retrieveActivity(activityId) {
     const row = this.#select_activity.get({ activityId: activityId });
+
+    if (!row) {
+      return;
+    }
 
     let activity = this.parseActivity(row);
 
