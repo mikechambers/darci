@@ -2,9 +2,12 @@ import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import { useFetchPlayerMetrics, useFetchPlayers } from "../../hooks/remote";
+import AllTimeLeaderView from "./components/AllTimeLeaderView";
 import CrucibleLeaderView from "./components/CrucibleLeaderView";
 import IronBannerLeaderView from "./components/IronBannerLeaderView";
+import SeasonLeaderView from "./components/SeasonLeaderView";
 import TrialsLeaderView from "./components/TrialsLeaderView";
+import WeeklyLeaderView from "./components/WeeklyLeaderView";
 
 const pageContainerStyle = {
   minWidth: "720px",
@@ -25,16 +28,16 @@ const HomeView = (props) => {
 
   const pageLinks = [
     {
-      value: "Crucible",
-      id: "crucible",
+      value: "Weekly",
+      id: "weekly",
     },
     {
-      value: "Trials",
-      id: "trials",
+      value: "Season",
+      id: "season",
     },
     {
-      value: "Iron Banner",
-      id: "iron_banner",
+      value: "All Time",
+      id: "all_time",
     },
   ];
 
@@ -48,25 +51,25 @@ const HomeView = (props) => {
         <ScreenNavigationView links={pageLinks} />
 
         <PageSectionView
-          id="crucible"
-          title="Crucible Leaderboards"
-          description="Crucible Leaderboards."
+          id="weekly"
+          title="Weekly Leaderboards"
+          description="Weejkly Crucible Leaderboards."
         />
-        <CrucibleLeaderView metrics={metrics} />
+        <WeeklyLeaderView metrics={metrics} />
 
         <PageSectionView
-          id="trials"
-          title="Trials of Osiris Leaderboards"
-          description="Trials of Osiris Leaderboard."
+          id="season"
+          title="Season Leaderboards"
+          description="Season Leaderboard."
         />
-        <TrialsLeaderView metrics={metrics} />
+        <SeasonLeaderView metrics={metrics} />
 
         <PageSectionView
-          id="iron_banner"
-          title="Iron Banner Leaderboards"
-          description="Iron Banner Leaderboards."
+          id="all_time"
+          title="All Time Leaderboards"
+          description="All Time Leaderboards."
         />
-        <IronBannerLeaderView metrics={metrics} />
+        <AllTimeLeaderView metrics={metrics} />
       </div>
     </div>
   );

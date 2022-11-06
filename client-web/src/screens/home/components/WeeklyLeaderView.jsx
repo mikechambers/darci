@@ -3,12 +3,12 @@ import { filterLeaderMetrics } from "../../../core/utils/components";
 
 const rootStyle = {
   display: "grid",
-  gridTemplateColumns: "min-content min-content",
+  gridTemplateColumns: "min-content min-content min-content",
   gap: "var(--leader-view-grid-gap)",
   flexWrap: "wrap",
 };
 
-const CrucibleLeaderView = (props) => {
+const WeeklyLeaderView = (props) => {
   const metrics = props.metrics ? props.metrics : [];
 
   const defeatsWeekly = filterLeaderMetrics(
@@ -17,70 +17,60 @@ const CrucibleLeaderView = (props) => {
     "defeatsWeekly"
   );
 
-  const defeatsLifetime = filterLeaderMetrics(
-    metrics,
-    "crucible",
-    "defeatsLifetime"
-  );
-
   const winStreakWeekly = filterLeaderMetrics(
     metrics,
     "crucible",
     "winStreakWeekly"
   );
 
-  const defeatsSeason = filterLeaderMetrics(
+  const weeklyFlawless = filterLeaderMetrics(
     metrics,
-    "crucible",
-    "defeatsSeason"
+    "trials",
+    "flawlessWeekly"
   );
 
-  const winStreakSeason = filterLeaderMetrics(
+  const weeklyTrialsWins = filterLeaderMetrics(metrics, "trials", "winsWeekly");
+
+  const weeklyTrialsKills = filterLeaderMetrics(
     metrics,
-    "crucible",
-    "winStreakSeason"
+    "trials",
+    "defeatsWeekly"
   );
-  const kdaSeason = filterLeaderMetrics(metrics, "crucible", "kdaSeason");
 
   return (
     <div style={rootStyle}>
       <LeaderList
-        title="Weekly Defeats"
+        title="Crucible Defeats"
         leaderData={defeatsWeekly}
         showTeams={false}
       />
 
       <LeaderList
-        title="Weekly Win Streak"
+        title="Crucible Win Streak"
         leaderData={winStreakWeekly}
         showTeams={false}
       />
+      <div></div>
 
       <LeaderList
-        title="Season Defeats"
-        leaderData={defeatsSeason}
+        title="Trials Flawlesses"
+        leaderData={weeklyFlawless}
         showTeams={false}
       />
 
       <LeaderList
-        title="Season Win Streak"
-        leaderData={winStreakSeason}
+        title="Trials Wins"
+        leaderData={weeklyTrialsWins}
         showTeams={false}
       />
 
       <LeaderList
-        title="Lifetime Defeats"
-        leaderData={defeatsLifetime}
-        showTeams={false}
-      />
-
-      <LeaderList
-        title="Season Efficiency"
-        leaderData={kdaSeason}
+        title="Trials Kills"
+        leaderData={weeklyTrialsKills}
         showTeams={false}
       />
     </div>
   );
 };
 
-export default CrucibleLeaderView;
+export default WeeklyLeaderView;

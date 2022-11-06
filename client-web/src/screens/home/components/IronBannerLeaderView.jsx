@@ -4,7 +4,7 @@ import { filterLeaderMetrics } from "../../../core/utils/components";
 const rootStyle = {
   display: "grid",
   gridTemplateColumns: "min-content min-content min-content",
-  gap: 36,
+  gap: "var(--leader-view-grid-gap)",
   flexWrap: "wrap",
 };
 

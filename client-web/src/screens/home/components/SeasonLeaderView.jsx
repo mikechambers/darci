@@ -8,22 +8,21 @@ const rootStyle = {
   flexWrap: "wrap",
 };
 
-const TrialsLeaderView = (props) => {
-  let metrics = props.metrics ? props.metrics : [];
+const SeasonLeaderView = (props) => {
+  const metrics = props.metrics ? props.metrics : [];
 
-  const weeklyFlawless = filterLeaderMetrics(
+  const defeatsSeason = filterLeaderMetrics(
     metrics,
-    "trials",
-    "flawlessWeekly"
+    "crucible",
+    "defeatsSeason"
   );
 
-  const weeklyTrialsWins = filterLeaderMetrics(metrics, "trials", "winsWeekly");
-
-  const weeklyTrialsKills = filterLeaderMetrics(
+  const winStreakSeason = filterLeaderMetrics(
     metrics,
-    "trials",
-    "defeatsWeekly"
+    "crucible",
+    "winStreakSeason"
   );
+  const kdaSeason = filterLeaderMetrics(metrics, "crucible", "kdaSeason");
 
   const seasonTrialsWins = filterLeaderMetrics(metrics, "trials", "winsSeason");
 
@@ -39,79 +38,70 @@ const TrialsLeaderView = (props) => {
     "flawlessSeason"
   );
 
-  const liftimeFlawless = filterLeaderMetrics(
+  let ibWinsSeason = filterLeaderMetrics(metrics, "ironBanner", "winsSeason");
+  let ibDefeatsSeason = filterLeaderMetrics(
     metrics,
-    "trials",
-    "flawlessLifetime"
+    "ironBanner",
+    "defeatsSeason"
   );
-
-  const lifetimeTrialsWins = filterLeaderMetrics(
+  let ibEfficiencySeason = filterLeaderMetrics(
     metrics,
-    "trials",
-    "winsLifetime"
-  );
-
-  const lifetimeTrialsKills = filterLeaderMetrics(
-    metrics,
-    "trials",
-    "defeatsLifetime"
+    "ironBanner",
+    "efficiencySeason"
   );
 
   return (
     <div style={rootStyle}>
       <LeaderList
-        title="Weekly Flawlesses"
-        leaderData={weeklyFlawless}
+        title="Crucible Defeats"
+        leaderData={defeatsSeason}
+        showTeams={false}
+      />
+
+      <LeaderList title="KDA" leaderData={kdaSeason} showTeams={false} />
+
+      <LeaderList
+        title="Crucible Win Streak"
+        leaderData={winStreakSeason}
         showTeams={false}
       />
 
       <LeaderList
-        title="Weekly Wins"
-        leaderData={weeklyTrialsWins}
-        showTeams={false}
-      />
-
-      <LeaderList
-        title="Weekly Kills"
-        leaderData={weeklyTrialsKills}
-        showTeams={false}
-      />
-
-      <LeaderList
-        title="Season Flawlesses"
+        title="Trials Flawlesses"
         leaderData={seasonFlawless}
         showTeams={false}
       />
       <LeaderList
-        title="Season Wins"
+        title="Trials Wins"
         leaderData={seasonTrialsWins}
         showTeams={false}
       />
 
       <LeaderList
-        title="Season Kills"
+        title="Trials Kills"
         leaderData={seasonTrialsKills}
         showTeams={false}
       />
+
       <LeaderList
-        title="Life Time Flawlesses"
-        leaderData={liftimeFlawless}
+        title="Iron Banner Wins"
+        leaderData={ibWinsSeason}
         showTeams={false}
       />
 
       <LeaderList
-        title="Life Time Wins"
-        leaderData={lifetimeTrialsWins}
+        title="Iron Banner Kills"
+        leaderData={ibDefeatsSeason}
         showTeams={false}
       />
 
       <LeaderList
-        title="Life Time Kills"
-        leaderData={lifetimeTrialsKills}
+        title="Iron Banner Efficiency"
+        leaderData={ibEfficiencySeason}
         showTeams={false}
       />
     </div>
   );
 };
 
-export default TrialsLeaderView;
+export default SeasonLeaderView;
