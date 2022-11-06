@@ -64,7 +64,7 @@ const App = (props) => {
 
   const currentViewStyle = {
     flexGrow: "2",
-    height: "100vh",
+    //height: "100vh",
     //maxWidth: 900,
   };
 
@@ -80,6 +80,7 @@ const App = (props) => {
             <div style={currentViewStyle}>
               <Outlet />
             </div>
+            <div>&nbsp;</div>
           </div>
         )}
       </React.Fragment>
