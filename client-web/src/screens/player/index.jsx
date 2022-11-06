@@ -1,6 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import PlayerActivityList from "./components/PlayerActivityList";
-import PlayerWeaponsDetailView from "./components/PlayerWeaponsDetailView";
+import PlayerWeaponsDetailView, {
+  WEAPONS_DETAIL_GAME,
+  WEAPONS_DETAIL_PLAYER,
+} from "./components/PlayerWeaponsDetailView";
 import PlayerMapSummaryList from "./components/PlayerMapSummaryList";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
 
@@ -222,7 +225,10 @@ const PlayerView = () => {
               title="Weapons"
               description="Your weapon stats"
             />
-            <PlayerWeaponsDetailView weapons={weapons} />
+            <PlayerWeaponsDetailView
+              weapons={weapons}
+              type={WEAPONS_DETAIL_GAME}
+            />
           </div>
           <div>
             <PageSectionView
@@ -230,7 +236,10 @@ const PlayerView = () => {
               title="Meta Weapons"
               description="Weapon meta from your matches excluding you and your fireteam members"
             />
-            <PlayerWeaponsDetailView weapons={meta} />
+            <PlayerWeaponsDetailView
+              weapons={meta}
+              type={WEAPONS_DETAIL_PLAYER}
+            />
           </div>
           <div>
             <PageSectionView

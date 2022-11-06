@@ -1,8 +1,15 @@
 import { calculatePercent, calculateAverage } from "../../../core/utils/index";
 import PlayerWeaponsDetailList from "./PlayerWeaponsDetailList";
 
+export const WEAPONS_DETAIL_GAME = "WEAPONS_DETAIL_GAME";
+export const WEAPONS_DETAIL_PLAYER = "WEAPONS_DETAIL_PLAYER";
+
 const PlayerWeaponsDetailView = (props) => {
   let weapons = props.weapons ? props.weapons : [];
+  let type = props.type ? props.type : WEAPONS_DETAIL_GAME;
+
+  let [typeLabel, typeAbr] =
+    type === WEAPONS_DETAIL_GAME ? ["Games", "g"] : ["Players", "p"];
 
   let description = "Weapons you have used ordered by kills.";
 
@@ -15,7 +22,7 @@ const PlayerWeaponsDetailView = (props) => {
     let precision = calculatePercent(w.precision, w.kills).toFixed(2);
     let items = [
       {
-        label: "Games",
+        label: typeLabel,
         value: w.count,
       },
       {
@@ -23,7 +30,7 @@ const PlayerWeaponsDetailView = (props) => {
         value: w.kills,
       },
       {
-        label: "Kills/g",
+        label: `Kills/${typeAbr}`,
         value: calculateAverage(w.kills, w.count).toFixed(2),
       },
       {
@@ -42,7 +49,12 @@ const PlayerWeaponsDetailView = (props) => {
     });
   }
 
-  let sortLabels = ["games", "kills", "kills/g", "precision"];
+  let sortLabels = [
+    typeLabel.toLocaleLowerCase(),
+    "kills",
+    `kills/${typeAbr}`,
+    "precision",
+  ];
 
   return (
     <PlayerWeaponsDetailList
