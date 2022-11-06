@@ -1,17 +1,16 @@
 const mainStyle = {
   height: "100%",
+  padding: "var(--padding-page-container)",
 };
 
 const style = {
   display: "flex",
-  justifyContent: "center",
 };
 
 const paraStyle = {
   display: "flex",
   width: "50%",
   flexDirection: "column",
-  justifyContent: "center",
 };
 
 const AboutView = (props) => {
@@ -35,7 +34,8 @@ const AboutView = (props) => {
           <p>
             If you run into an issue, or have suggestions or feature requests
             please share them{" "}
-            <a href="https://github.com/mikechambers/darci/issues">here</a>.
+            <a href="https://github.com/mikechambers/darci/issues">here</a> or
+            on the <a href="https://discord.gg/TEDQy65hhn">darci discord</a>.
           </p>
           <p>
             Created by <a href="http://www.mikechambers.com">Mike Chambers</a>.

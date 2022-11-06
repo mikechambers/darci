@@ -28,7 +28,7 @@ const ScreenNavigationView = (props) => {
   const linkContainerStyle = {
     display: "flex",
     flexDirection: "columns",
-    gap: "24px",
+    gap: "var(--nav-item-gap)",
     justifyContent: "space-apart",
   };
 

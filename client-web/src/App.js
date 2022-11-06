@@ -11,6 +11,7 @@ import {
   GlobalAction,
 } from "./contexts/GlobalContext";
 import SidebarView from "./components/SidebarView";
+import MainNavView from "./components/MainNavView";
 const { useQuery } = require("./hooks/browser");
 
 const App = (props) => {
@@ -58,6 +59,7 @@ const App = (props) => {
 
   const style = {
     display: "flex",
+    flexDirection: "column",
   };
 
   const currentViewStyle = {
@@ -73,7 +75,7 @@ const App = (props) => {
           initializingContent
         ) : (
           <div style={style}>
-            <SidebarView />
+            <MainNavView />
 
             <div style={currentViewStyle}>
               <Outlet />

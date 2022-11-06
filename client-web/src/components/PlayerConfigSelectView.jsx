@@ -109,9 +109,10 @@ const PlayerConfigSelectView = (props) => {
   let s = {
     ...style,
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "row",
     alignItems: "flex-start",
-    rowGap: "6px",
+    columnGap: "6px",
+    justifyContent: "flex-start",
   };
 
   return (
@@ -120,25 +121,21 @@ const PlayerConfigSelectView = (props) => {
         onChange={playerOnChange}
         selected={player}
         maxLabelLength={maxLabelLength}
-        label="player"
       />
 
       <CharacterClassSelectionSelect
         onChange={classOnChange}
         selected={classSelection}
         maxLabelLength={maxLabelLength}
-        label="class"
       />
       <ModeSelect
         onChange={modeOnChange}
         selected={mode}
-        label="mode"
         maxLabelLength={maxLabelLength}
       />
       <MomentSelect
         onChange={momentOnChange}
         selected={moment}
-        label="moment"
         maxLabelLength={maxLabelLength}
       />
 

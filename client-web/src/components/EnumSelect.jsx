@@ -48,9 +48,11 @@ const EnumSelect = (props) => {
     }
   }
 
+  let labelDiv = label ? <label className="form_label">{label}</label> : "";
+
   return (
     <div>
-      <label className="form_label">{label}</label>
+      {labelDiv}
       <select onChange={handleOnChange} value={defaultValue}>
         {options.map((item) => {
           return (
