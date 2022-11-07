@@ -25,7 +25,6 @@ const getFormatStr = function (d) {
 };
 
 const elementStyle = {
-  height: "180px",
   display: "flex",
   flexDirection: "column",
   alignItems: "flex-start",

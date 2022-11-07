@@ -199,11 +199,6 @@ const PlayerView = () => {
     <div id="page_nav" className="page_containter" style={pageContainerStyle}>
       <div style={gappedStyle}>
         <ScreenNavigationView links={pageLinks} />
-        <RefreshStatusView
-          lastUpdate={lastUpdate}
-          refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
-          align="left"
-        />
 
         <div id="overview">
           <PlayerActivitiesHeader
@@ -214,6 +209,11 @@ const PlayerView = () => {
             endMoment={endMoment}
           />
         </div>
+        <RefreshStatusView
+          lastUpdate={lastUpdate}
+          refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
+          align="left"
+        />
 
         <PlayerPerformanceSummaryView summary={summary} medals={medals} />
 
