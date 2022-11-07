@@ -3,10 +3,7 @@ import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import { useFetchPlayerMetrics, useFetchPlayers } from "../../hooks/remote";
 import AllTimeLeaderView from "./components/AllTimeLeaderView";
-import CrucibleLeaderView from "./components/CrucibleLeaderView";
-import IronBannerLeaderView from "./components/IronBannerLeaderView";
 import SeasonLeaderView from "./components/SeasonLeaderView";
-import TrialsLeaderView from "./components/TrialsLeaderView";
 import WeeklyLeaderView from "./components/WeeklyLeaderView";
 
 const pageContainerStyle = {

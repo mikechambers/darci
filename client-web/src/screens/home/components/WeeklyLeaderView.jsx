@@ -5,7 +5,6 @@ const rootStyle = {
   display: "grid",
   gridTemplateColumns: "min-content min-content min-content",
   gap: "var(--leader-view-grid-gap)",
-  flexWrap: "wrap",
 };
 
 const WeeklyLeaderView = (props) => {
