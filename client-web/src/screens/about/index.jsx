@@ -3,6 +3,7 @@ import PageSectionView from "../../components/PageSectionView";
 
 const rootStyle = {
   height: "100%",
+	width: "100%",
   padding: "0px var(--padding-page-container)",
   display: "flex",
   flexDirection: "column",

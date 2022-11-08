@@ -9,7 +9,8 @@ import SeasonLeaderView from "./components/SeasonLeaderView";
 import WeeklyLeaderView from "./components/WeeklyLeaderView";
 
 const pageContainerStyle = {
-  minWidth: "720px",
+  //minWidth: "720px",
+	width:"100%"
 };
 
 const gappedStyle = {
