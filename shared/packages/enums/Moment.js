@@ -21,6 +21,7 @@ class Moment extends EnumBase {
   static ALL_TIME = new Moment("AllTime", "All Time");
   //static CUSTOM = new Moment("Custom");
   static LAUNCH = new Moment("Launch", "Destiny 2 Launch");
+  static RED_WAR = new Moment("RedWar", "Red War");
   static CURSE_OF_OSIRIS = new Moment("CurseOfOsiris", "Curse of Osiris");
   static WARMIND = new Moment("Warmind");
   static SEASON_OF_THE_OUTLAW = new Moment(
@@ -80,10 +81,7 @@ class Moment extends EnumBase {
     "Season of the Haunted"
   );
 
-  static SEASON_OF_THE_PLUNDER = new Moment(
-    "SeasonOfThePlunder",
-    "Season of the Plunder"
-  );
+  static SEASON_OF_PLUNDER = new Moment("SeasonOfPlunder", "Season of Plunder");
 
   constructor(type, label = undefined) {
     super(type, undefined, label);
@@ -190,7 +188,7 @@ class Moment extends EnumBase {
       return new Date(Date.UTC(2022, 4, 24, 17, 0, 0));
     }
 
-    if (this == Moment.SEASON_OF_THE_PLUNDER) {
+    if (this == Moment.SEASON_OF_PLUNDER) {
       return new Date(Date.UTC(2022, 7, 23, 17, 0, 0));
     }
 

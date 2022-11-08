@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import CharacterClassSelectionSelect from "../../components/CharacterClassSelectionSelect";
 import ModeSelect from "../../components/ModeSelect";
 import MomentSelect from "../../components/MomentSelect";
 import PlayerSelect from "../../components/PlayerSelect";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
+import { GlobalContext } from "../../contexts/GlobalContext";
 
 const pageContainerStyle = {
   minWidth: "720px",
@@ -32,6 +33,9 @@ const SearchView = (props) => {
   const [mode, setMode] = useState();
   const [moment, setMoment] = useState();
 
+  const { global, dispatchGlobal } = useContext(GlobalContext);
+  const players = global.players;
+
   const onPlayerSelectChange = function (p) {
     setPlayer(p);
   };
@@ -54,7 +58,11 @@ const SearchView = (props) => {
         <ScreenNavigationView links={pageLinks} />
 
         <div>
-          <PlayerSelect label="player" onChange={onPlayerSelectChange} />
+          <PlayerSelect
+            label="player"
+            onChange={onPlayerSelectChange}
+            players={players}
+          />
           <CharacterClassSelectionSelect
             label="class"
             onChange={onClassSelectChange}

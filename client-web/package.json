@@ -4,7 +4,7 @@
   "private": true,
   "proxy": "http://127.0.0.1:8080",
   "dependencies": {
-    "@mantine/hooks": "^5.0.2",
+    "@mantine/hooks": "^5.7.0",
     "@nivo/bar": "^0.79.1",
     "@nivo/core": "^0.79.0",
     "@nivo/scatterplot": "^0.79.1",

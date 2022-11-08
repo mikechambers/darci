@@ -1,7 +1,9 @@
+import { useContext } from "react";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
-import { useFetchPlayerMetrics, useFetchPlayers } from "../../hooks/remote";
+import { GlobalContext } from "../../contexts/GlobalContext";
+import { useFetchPlayerMetrics } from "../../hooks/remote";
 import AllTimeLeaderView from "./components/AllTimeLeaderView";
 import SeasonLeaderView from "./components/SeasonLeaderView";
 import WeeklyLeaderView from "./components/WeeklyLeaderView";
@@ -17,8 +19,8 @@ const gappedStyle = {
 };
 
 const HomeView = (props) => {
-  //GET https://www.bungie.net/Platform/Destiny2/1/Profile/4611686018429783292/?components=1100
-  const [players, isPlayersLoading, isPlayersError] = useFetchPlayers();
+  const { global, dispatchGlobal } = useContext(GlobalContext);
+  const players = global.players;
 
   const [metrics, isMetricsLoading, isMetricsError] =
     useFetchPlayerMetrics(players);

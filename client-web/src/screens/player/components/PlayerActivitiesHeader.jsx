@@ -2,6 +2,7 @@ import { CharacterClassSelection, Moment } from "shared";
 import { dateIsToday, dateIsWithinLastWeek } from "../../../core/utils/date";
 import React from "react";
 import { DateTime } from "luxon";
+import { MOMENT_TYPE, SEASON_TYPE } from "../../../core/consts";
 
 const formatCharacterClass = function (classSelection) {
   let out = classSelection.label;
@@ -37,6 +38,9 @@ const PlayerActivitiesOverview = (props) => {
   const mode = props.mode;
   const startMoment = props.startMoment;
   const endMoment = props.endMoment;
+  const momentType =
+    props.momentType === MOMENT_TYPE ? MOMENT_TYPE : SEASON_TYPE;
+
   let classSelection = props.classSelection;
 
   let playerName = player.bungieDisplayName;
@@ -51,14 +55,19 @@ const PlayerActivitiesOverview = (props) => {
   };
 
   let momentStr;
-  if (endMoment === Moment.NOW) {
-    momentStr = `since ${startMoment.label} (${f(startMoment)})`;
-  } else {
-    momentStr = `from ${startMoment.label} (${f(startMoment)}) to ${
-      endMoment.label
-    } (${f(endMoment)})`;
-  }
 
+  if (momentType === SEASON_TYPE) {
+    momentStr = `during ${startMoment.label}  
+    (${f(startMoment)} to ${f(endMoment)})`;
+  } else {
+    if (endMoment === Moment.NOW) {
+      momentStr = `since ${startMoment.label} (${f(startMoment)})`;
+    } else {
+      momentStr = `from ${startMoment.label} (${f(startMoment)}) to ${
+        endMoment.label
+      } (${f(endMoment)})`;
+    }
+  }
   return (
     <div style={elementStyle}>
       <div className="page_title">

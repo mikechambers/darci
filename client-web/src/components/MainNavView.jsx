@@ -25,18 +25,18 @@ const MainNavView = (props) => {
   return (
     <div style={rootStyle}>
       <div style={navStyle}>
-        <div class="nav page" onClick={() => onUpdate("/")}>
+        <div className="nav page" onClick={() => onUpdate("/")}>
           DARCI
         </div>
-        <div class="nav page" onClick={() => onUpdate("/search/")}>
+        <div className="nav page" onClick={() => onUpdate("/search/")}>
           SEARCH
         </div>
-        <div class="nav page" onClick={() => onUpdate("/about/")}>
+        <div className="nav page" onClick={() => onUpdate("/about/")}>
           ABOUT
         </div>
       </div>
       <PlayerConfigSelectView onUpdate={onUpdate} />
-      <hr class="page_section_title" />
+      <hr className="page_section_title" />
     </div>
   );
 };

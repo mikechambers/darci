@@ -12,16 +12,21 @@ import {
   useFetchPlayerSummary,
 } from "../../hooks/remote";
 
-import { CharacterClassSelection, Mode, Moment } from "shared";
+import { CharacterClassSelection, Mode, Moment, Season } from "shared";
 import PlayerMedalsDetailList from "./components/PlayerMedalsDetailList";
 import PlayerConfigSelectView from "../../components/PlayerConfigSelectView";
 import React, { useEffect, useState } from "react";
 import RefreshStatusView from "../../components/RefreshStatusView";
-import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../core/consts";
+import {
+  MOMENT_TYPE,
+  SEASON_TYPE,
+  PLAYER_VIEW_REFRESH_INTERVAL,
+} from "../../core/consts";
 import PlayerPerformanceSummaryView from "./components/PlayerPerformanceSummaryView";
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
+
 const { useQuery } = require("../../hooks/browser");
 
 const gapMargin = 30;
@@ -47,7 +52,8 @@ const gappedStyle = {
 };
 
 const pageContainerStyle = {
-  minWidth: "720px",
+  //minWidth: "720px",
+  width: "100%",
 };
 
 const itemDetailsStyle = {
@@ -88,23 +94,26 @@ const PlayerView = () => {
   let query = useQuery();
 
   let mode = Mode.fromString(params.mode);
-  let startMoment = Moment.fromString(params.startMoment);
 
-  let endMoment = params.endMoment
-    ? Moment.fromString(params.endMoment)
-    : Moment.NOW;
+  let startMoment;
+  let endMoment;
+
+  const momentType =
+    params.momentType === MOMENT_TYPE ? MOMENT_TYPE : SEASON_TYPE;
+  if (momentType === MOMENT_TYPE) {
+    startMoment = Moment.fromString(params.startMoment);
+    endMoment = params.endMoment
+      ? Moment.fromString(params.endMoment)
+      : Moment.NOW;
+  } else {
+    let s = Season.fromString(params.startMoment);
+    startMoment = s.startMoment;
+    endMoment = s.endMoment;
+  }
 
   let classSelection = CharacterClassSelection.fromString(params.classType);
   let hash = query.get("fr");
 
-  /*
-  let [profile, isProfileLoading, profileLoadError] = useFetchPlayerProfile(
-    true,
-    params.memberId,
-    params.platformId
-  );
-  */
-  //console.log(params.memberId, mode.label, moment.label, classSelection.label);
   let [playerSummary, isPlayerSummaryLoading, playerSummaryLoadError] =
     useFetchPlayerSummary(
       PLAYER_VIEW_REFRESH_INTERVAL,
@@ -207,6 +216,7 @@ const PlayerView = () => {
             mode={mode}
             startMoment={startMoment}
             endMoment={endMoment}
+            momentType={momentType}
           />
         </div>
         <RefreshStatusView

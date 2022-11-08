@@ -20,18 +20,11 @@ ReactDOM.render(
           <Route index path="/" element={<HomeView />} />
           <Route index path="/about" element={<AboutView />} />
           <Route index path="/search" element={<SearchView />} />
-          <Route path="player" element={<PlayerView />}>
-            <Route path=":memberId" element={<PlayerView />}>
-              <Route path=":platformId" element={<PlayerView />}>
-                <Route path=":classType" element={<PlayerView />}>
-                  <Route path=":mode" element={<PlayerView />}>
-                    <Route path=":startMoment" element={<PlayerView />}>
-                      <Route path=":endMoment" element={<PlayerView />} />
-                    </Route>
-                  </Route>
-                </Route>
-              </Route>
-            </Route>
+          <Route
+            path="player/:memberId/:platformId/:classType/:mode/:momentType/:startMoment/"
+            element={<PlayerView />}
+          >
+            <Route path=":endMoment" element={<PlayerView />} />
           </Route>
           <Route
             path="activity/:activityId/"

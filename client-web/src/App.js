@@ -1,36 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
-import { useFetchManifest } from "./hooks/remote";
-import { useParams } from "react-router-dom";
-import { CharacterClassSelection, Mode, Moment } from "shared";
+import { useFetchManifest, useFetchPlayers } from "./hooks/remote";
 
 import {
   GlobalContext,
   useGlobalContext,
   GlobalAction,
+  MANIFEST_UPDATED,
+  PLAYERS_UPDATED,
 } from "./contexts/GlobalContext";
-import SidebarView from "./components/SidebarView";
 import MainNavView from "./components/MainNavView";
 const { useQuery } = require("./hooks/browser");
 
 const App = (props) => {
   let query = useQuery();
-
-  let params = useParams();
-  let [player, setPlayer] = useState();
-
-  //console.log(params.memberId);
-  useEffect(() => {
-    let p;
-
-    if (params.memberId) {
-      p = {
-        memberId: params.memberId,
-      };
-      setPlayer(p);
-    }
-  }, [params.memberId]);
 
   let clearStorage = query.get("clearstorage") !== null;
 
@@ -43,11 +27,18 @@ const App = (props) => {
 
   const [global, dispatchGlobal] = useGlobalContext();
   const manifest = global.manifest;
+  const players = global.players;
 
+  const [loadedPlayers, isPlayersLoading, isPlayersError] =
+    useFetchPlayers(manifest);
   const [m, isLoading, error] = useFetchManifest();
 
   if (m && !manifest) {
-    dispatchGlobal(new GlobalAction(GlobalAction.MANIFEST_UPDATED, m));
+    dispatchGlobal(new GlobalAction(MANIFEST_UPDATED, m));
+  }
+
+  if (loadedPlayers && !players) {
+    dispatchGlobal(new GlobalAction(PLAYERS_UPDATED, loadedPlayers));
   }
 
   let initializingContent;
@@ -60,12 +51,12 @@ const App = (props) => {
   const style = {
     display: "flex",
     flexDirection: "column",
+    width: "var(--page-max-width)",
   };
 
   const currentViewStyle = {
     flexGrow: "2",
     //height: "100vh",
-    //maxWidth: 900,
   };
 
   return (

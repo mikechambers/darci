@@ -313,18 +313,22 @@ export const useFetchPlayerSummary = (
   return [output.activityStats, output.isLoading, output.error];
 };
 
-export const useFetchPlayers = () => {
-  const { global, dispatchGlobal } = useContext(GlobalContext);
-  const manifest = global.manifest;
+export const useFetchPlayers = (manifest) => {
+  //const { global, dispatchGlobal } = useContext(GlobalContext);
+  //const manifest = global.manifest;
 
   //return is [players, isLoading, error]
   const [output, setOutput] = useState({
-    players: [],
+    players: null,
     error: undefined,
     isLoading: true,
   });
 
   useEffect(() => {
+    if (!manifest) {
+      return;
+    }
+
     async function f() {
       let s = reducer(output, "isLoading", false);
       try {
@@ -344,7 +348,7 @@ export const useFetchPlayers = () => {
     }
 
     f();
-  }, []);
+  }, [manifest]);
 
   return [output.players, output.isLoading, output.error];
 };

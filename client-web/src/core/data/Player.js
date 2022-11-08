@@ -20,6 +20,10 @@ class Player {
     return `${this.bungieDisplayName}#${this.bungieDisplayNameCode}`;
   }
 
+  get label() {
+    return this.getFullName();
+  }
+
   static fromApi(data, manifest) {
     let chars = [];
     for (const c of data.characters) {

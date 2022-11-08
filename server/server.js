@@ -169,12 +169,6 @@ app.get(
     const startDate = startMoment.getDate();
     const endDate = endMoment.getDate();
 
-    console.log("startMoment", startMoment, startDate);
-    console.log("endMoment", endMoment, endDate);
-    console.log("mode", mode);
-    console.log("characterClassSelection", characterClassSelection);
-    console.log("memberId", memberId);
-
     const summary = activityStore.retrieveActivitySummary(
       memberId,
       characterClassSelection,
@@ -243,29 +237,23 @@ app.get(
   }
 );
 
-const PLAYERS_ROW_CACHE = "PLAYERS_ROW_CACHE";
 app.get("/api/players/", (req, res, next) => {
-  //let startTime = new Date().getTime();
-  let rows = cache.get(PLAYERS_ROW_CACHE);
+  let startTime = new Date().getTime();
+  let players = activityStore.retrieveSyncMembers();
 
-  if (!rows) {
-    rows = activityStore.retrieveSyncMembers();
-
-    try {
-      rows.sort((a, b) =>
-        a.bungieDisplayName.localeCompare(b.bungieDisplayName)
-      );
-    } catch (e) {
-      console.log("/api/players error sorting", e);
-    }
-
-    cache.add(rows, PLAYERS_ROW_CACHE, PLAYERS_ROW_CACHE_LIFETIME);
+  try {
+    players.sort((a, b) =>
+      a.bungieDisplayName.localeCompare(b.bungieDisplayName)
+    );
+  } catch (e) {
+    console.log("/api/players error sorting", e);
   }
 
   //TODO: add query data to players return to be standard with other calls
 
-  let out = {
-    players: rows,
+  const out = {
+    query: { executionTime: new Date().getTime() - startTime },
+    players: players,
   };
 
   sendJsonResponse(res, out);

@@ -7,6 +7,7 @@ const Standing = require("./packages/enums/Standing");
 const CompletionReason = require("./packages/enums/CompletionReason");
 const ItemSubType = require("./packages/enums/ItemSubType");
 const AmmunitionType = require("./packages/enums/AmmunitionType");
+const Season = require("./packages/enums/Season");
 
 const {
   calculateEfficiency,
@@ -19,6 +20,7 @@ module.exports = {
   EnumBase: EnumBase,
   Mode: Mode,
   Moment: Moment,
+  Season: Season,
   CharacterClass: CharacterClass,
   CharacterClassSelection: CharacterClassSelection,
   Standing: Standing,
