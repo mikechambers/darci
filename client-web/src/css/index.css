@@ -484,6 +484,11 @@ select {
   opacity: 0.8;
 }
 
+select:disabled {
+  cursor: not-allowed;
+  background-color: #666;
+}
+
 .form_label {
   display: inline-block;
   font-size: 12px;
@@ -529,6 +534,7 @@ button {
 
   user-select: none;
   appearance: none;
+  width:min-content;
 }
 
 button:hover {

@@ -21,8 +21,8 @@ class AmmunitionType extends EnumBase {
     return AmmunitionType.UNKNOWN;
   }
 
-  static fromString(type) {
-    let out = super._fromString(AmmunitionType, type);
+  static fromType(type) {
+    let out = super._fromType(AmmunitionType, type);
 
     if (out != undefined) {
       return out;

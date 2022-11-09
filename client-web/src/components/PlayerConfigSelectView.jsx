@@ -7,13 +7,8 @@ import ModeSelect from "./ModeSelect";
 import MomentSelect from "./MomentSelect";
 import PlayerSelect from "./PlayerSelect";
 import { GlobalContext } from "../contexts/GlobalContext";
-
-const createUrl = function (player, classSelection, mode, moment) {
-  let ts = new Date().getTime();
-  let url = `/player/${player.memberId}/${player.platformId}/${classSelection.type}/${mode.type}/m/${moment.type}/?fr=${ts}`;
-
-  return url;
-};
+import { createPlayerUrl } from "../core/utils";
+import { MOMENT_TYPE } from "../core/consts";
 
 const PlayerConfigSelectView = (props) => {
   const style = props.style;
@@ -23,7 +18,7 @@ const PlayerConfigSelectView = (props) => {
   const { global, dispatchGlobal } = useContext(GlobalContext);
   const players = global.players;
 
-  const [classSelection, setClassSelection] = useLocalStorage({
+  const [characterClass, setCharacterClassSelection] = useLocalStorage({
     key: "config-class-type",
     defaultValue: CharacterClassSelection.ALL,
     serialize: (value) => {
@@ -33,7 +28,7 @@ const PlayerConfigSelectView = (props) => {
       if (!localStorageValue) {
         return;
       }
-      return CharacterClassSelection.fromString(localStorageValue);
+      return CharacterClassSelection.fromType(localStorageValue);
     },
   });
 
@@ -47,7 +42,7 @@ const PlayerConfigSelectView = (props) => {
       if (!localStorageValue) {
         return;
       }
-      return Mode.fromString(localStorageValue);
+      return Mode.fromType(localStorageValue);
     },
   });
 
@@ -61,7 +56,7 @@ const PlayerConfigSelectView = (props) => {
       if (!localStorageValue) {
         return;
       }
-      return Moment.fromString(localStorageValue);
+      return Moment.fromType(localStorageValue);
     },
   });
 
@@ -83,7 +78,7 @@ const PlayerConfigSelectView = (props) => {
   });
 
   let classOnChange = function (e) {
-    setClassSelection(e);
+    setCharacterClassSelection(e);
   };
 
   let modeOnChange = function (e) {
@@ -99,7 +94,13 @@ const PlayerConfigSelectView = (props) => {
   };
 
   let onClick = function (e) {
-    let url = createUrl(player, classSelection, mode, moment);
+    let url = createPlayerUrl({
+      player,
+      characterClass,
+      mode,
+      momentType: MOMENT_TYPE,
+      startMoment: moment,
+    });
 
     //the fr indicates its from this navigation, and passes a timestamp, so receivers
     //can differentiate between different calls
@@ -130,7 +131,7 @@ const PlayerConfigSelectView = (props) => {
 
       <CharacterClassSelectionSelect
         onChange={classOnChange}
-        selected={classSelection}
+        selected={characterClass}
         maxLabelLength={maxLabelLength}
       />
       <ModeSelect

@@ -8,6 +8,7 @@ const CompletionReason = require("./packages/enums/CompletionReason");
 const ItemSubType = require("./packages/enums/ItemSubType");
 const AmmunitionType = require("./packages/enums/AmmunitionType");
 const Season = require("./packages/enums/Season");
+const OrderBy = require("./packages/enums/OrderBy");
 
 const {
   calculateEfficiency,
@@ -17,6 +18,7 @@ const {
 } = require("./packages/utils");
 
 module.exports = {
+  OrderBy: OrderBy,
   EnumBase: EnumBase,
   Mode: Mode,
   Moment: Moment,

@@ -3,7 +3,7 @@ const Database = require("better-sqlite3");
 const NO_TEAMS_INDEX = 253;
 const { PLAYER_START_BUFFER, DB_SCHEMA_VERSION } = require("../config");
 
-const { Mode, Standing } = require("shared");
+const { Mode, Standing, OrderBy } = require("shared");
 
 class ActivityStoreInterface {
   #db;
@@ -474,9 +474,93 @@ class ActivityStoreInterface {
     return summary ? summary : {};
   }
 
-  retrieveActivities(memberId, characterSelection, mode, startDate, endDate) {
+  retrieveActivities(
+    memberId,
+    characterSelection,
+    mode,
+    startDate,
+    endDate,
+    orderBy
+  ) {
     let restrictModeId = this.getRestrictModeId(mode);
-    const rows = this.#select_activities_for_member_since.all({
+
+    let orderByStr;
+    switch (orderBy) {
+      case OrderBy.PERIOD: {
+        orderByStr = "activity.period";
+        break;
+      }
+      case OrderBy.KILLS: {
+        orderByStr = "character_activity_stats.kills";
+        break;
+      }
+      case OrderBy.ASSISTS: {
+        orderByStr = "character_activity_stats.assists";
+        break;
+      }
+      case OrderBy.SCORE: {
+        orderByStr = "character_activity_stats.score";
+        break;
+      }
+      case OrderBy.OPPONENTS_DEFEATED: {
+        orderByStr = "character_activity_stats.opponents_defeated";
+        break;
+      }
+      case OrderBy.DEATHS: {
+        orderByStr = "character_activity_stats.deaths";
+        break;
+      }
+      case OrderBy.PRECISION_KILLS: {
+        orderByStr = "character_activity_stats.precision_kills";
+        break;
+      }
+      case OrderBy.GRENADE_KILLS: {
+        orderByStr = "character_activity_stats.weapon_kills_grenade";
+        break;
+      }
+      case OrderBy.MELEE_KILLS: {
+        orderByStr = "character_activity_stats.weapon_kills_melee";
+        break;
+      }
+      case OrderBy.SUPER_KILLS: {
+        orderByStr = "character_activity_stats.weapon_kills_super";
+        break;
+      }
+      case OrderBy.MEDALS_EARNED: {
+        orderByStr = "character_activity_stats.all_medals_earned";
+        break;
+      }
+      default: {
+        orderByStr = "activity.period";
+      }
+    }
+
+    let queryString = `SELECT
+        *,
+        activity.mode as activity_mode,
+        activity.id as activity_index_id,
+        activity.activity_id as activity_id,
+        character_activity_stats.id as character_activity_stats_index  
+      FROM
+        character_activity_stats
+      INNER JOIN
+        activity ON character_activity_stats.activity = activity.id,
+        character on character_activity_stats.character = character.id,
+        member on member.id = character.member
+      WHERE
+        member.member_id = @memberId AND
+        (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+        period > @startMoment AND
+        period < @endMoment AND
+        exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
+        not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
+      ORDER BY
+          ${orderByStr} DESC
+      LIMIT 50`;
+
+    let query = this.#db.prepare(queryString);
+
+    const rows = query.all({
       memberId,
       restrictModeId,
       startMoment: startDate.toISOString(),

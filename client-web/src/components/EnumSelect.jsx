@@ -1,5 +1,5 @@
 import React from "react";
-import { truncate } from "../core/utils";
+import { truncate } from "../core/utils/string";
 
 const EnumSelect = (props) => {
   let options = props.options;
@@ -7,6 +7,8 @@ const EnumSelect = (props) => {
   let label = props.label;
   let onChange = props.onChange;
   let maxLabelLength = props.maxLabelLength ? props.maxLabelLength : 100;
+  const disabled =
+    props.disabled !== undefined && props.disabled ? true : false;
 
   let handleOnChange = function (e) {
     onChange(options[e.target.selectedIndex].data);
@@ -53,7 +55,11 @@ const EnumSelect = (props) => {
   return (
     <div>
       {labelDiv}
-      <select onChange={handleOnChange} value={defaultValue}>
+      <select
+        onChange={handleOnChange}
+        value={defaultValue}
+        disabled={disabled}
+      >
         {options.map((item) => {
           return (
             <option key={item.value} value={item.value}>

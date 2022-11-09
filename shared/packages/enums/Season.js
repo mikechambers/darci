@@ -130,6 +130,8 @@ class Season extends EnumBase {
     Moment.NOW
   );
 
+  static UNKNOWN = new Season("unknown", "Unknown");
+
   constructor(type, label, startMoment, endMoment) {
     super(type, undefined, label);
 
@@ -137,8 +139,8 @@ class Season extends EnumBase {
     this.#endMoment = endMoment;
   }
 
-  static fromString(type) {
-    let out = super._fromString(Season, type);
+  static fromType(type) {
+    let out = super._fromType(Season, type);
 
     if (out != undefined) {
       return out;

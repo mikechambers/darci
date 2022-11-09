@@ -13,6 +13,7 @@ import Player from "../core/data/Player";
 import PlayerActivities from "../core/data/PlayerActivities";
 import PlayerMetrics from "../core/data/PlayerMetrics";
 import { ActivityNotFoundError } from "../core/errors";
+import { OrderBy } from "shared";
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 const STORAGE_MANIFEST_LAST_CHECK_KEY = "STORAGE_MANIFEST_LAST_CHECK_KEY";
@@ -193,15 +194,16 @@ export const useFetchLatestActivityIdForMember = (
   return [output.activityData, output.isLoading, output.error];
 };
 
-export const useFetchPlayerActivities = (
-  refreshInterval,
-  memberId,
-  mode,
-  startMoment,
-  endMoment,
-  classSelection,
-  hash = undefined
-) => {
+export const useFetchPlayerActivities = (args) => {
+  let refreshInterval = args.refreshInterval;
+  let memberId = args.memberId;
+  let mode = args.mode;
+  let startMoment = args.startMoment;
+  let endMoment = args.endMoment;
+  let characterClass = args.characterClass;
+  let hash = args.hash;
+  let orderBy = args.orderBy;
+
   const [output, setOutput] = useState({
     playerActivities: undefined,
     isLoading: true,
@@ -212,16 +214,19 @@ export const useFetchPlayerActivities = (
   const manifest = global.manifest;
 
   useEffect(() => {
-    if (!manifest || !memberId || !mode || !startMoment || !classSelection) {
+    if (!manifest || !memberId || !mode || !startMoment || !characterClass) {
       return;
     }
 
     let timeoutId;
     const f = async () => {
       let s = reducer(output, "isLoading", false);
+
+      let ob =
+        orderBy && orderBy !== OrderBy.UNKNOWN ? `?orderby=${orderBy.id}` : "";
       try {
         const data = await fetchApi(
-          `/api/player/activities/${memberId}/${classSelection.toString()}/${mode.toString()}/${startMoment.toString()}/${endMoment.toString()}/`
+          `/api/player/activities/${memberId}/${characterClass.type}/${mode.type}/${startMoment.type}/${endMoment.type}/${ob}`
         );
 
         const as = PlayerActivities.fromApi(data, manifest);
@@ -241,27 +246,29 @@ export const useFetchPlayerActivities = (
       cleanUpTimeout(timeoutId);
     };
   }, [
-    classSelection,
+    characterClass,
     manifest,
     memberId,
     mode,
     startMoment,
+    endMoment,
     refreshInterval,
     hash,
+    orderBy,
   ]);
 
   return [output.activityStats, output.isLoading, output.error];
 };
 
-export const useFetchPlayerSummary = (
-  refreshInterval,
-  memberId,
-  mode,
-  startMoment,
-  endMoment,
-  classSelection,
-  hash = undefined
-) => {
+export const useFetchPlayerSummary = (args) => {
+  let refreshInterval = args.refreshInterval;
+  let memberId = args.memberId;
+  let mode = args.mode;
+  let startMoment = args.startMoment;
+  let endMoment = args.endMoment;
+  let characterClass = args.characterClass;
+  let hash = args.hash;
+
   const [output, setOutput] = useState({
     activityStats: undefined,
     isLoading: true,
@@ -272,7 +279,7 @@ export const useFetchPlayerSummary = (
   const manifest = global.manifest;
 
   useEffect(() => {
-    if (!manifest || !memberId || !mode || !startMoment || !classSelection) {
+    if (!manifest || !memberId || !mode || !startMoment || !characterClass) {
       return;
     }
 
@@ -281,7 +288,7 @@ export const useFetchPlayerSummary = (
       let s = reducer(output, "isLoading", false);
       try {
         const data = await fetchApi(
-          `/api/player/${memberId}/${classSelection.toString()}/${mode.toString()}/${startMoment.toString()}/${endMoment.toString()}/`
+          `/api/player/${memberId}/${characterClass.type}/${mode.type}/${startMoment.type}/${endMoment.type}/`
         );
 
         const as = PlayerSummary.fromApi(data, manifest);
@@ -301,7 +308,7 @@ export const useFetchPlayerSummary = (
       cleanUpTimeout(timeoutId);
     };
   }, [
-    classSelection,
+    characterClass,
     manifest,
     memberId,
     mode,

@@ -41,7 +41,7 @@ class CharacterClassSelection extends EnumBase {
     return CharacterClassSelection.UNKNOWN;
   }
 
-  static fromString(type) {
+  static fromType(type) {
     if (!type) {
       return undefined;
     }
@@ -49,7 +49,7 @@ class CharacterClassSelection extends EnumBase {
       return this.LAST_ACTIVE;
     }
 
-    let out = super._fromString(CharacterClassSelection, type);
+    let out = super._fromType(CharacterClassSelection, type);
 
     if (out != undefined) {
       return out;

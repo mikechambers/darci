@@ -8,6 +8,7 @@ const PlayerSelect = (props) => {
   const maxLabelLength = props.maxLabelLength;
   const label = props.label ? props.label : "";
   const players = props.players ? props.players : [];
+  const disabled = props.disabled;
 
   return (
     <EnumSelect
@@ -16,6 +17,7 @@ const PlayerSelect = (props) => {
       selected={selected}
       label={label}
       maxLabelLength={maxLabelLength}
+      disabled={disabled}
     />
   );
 };

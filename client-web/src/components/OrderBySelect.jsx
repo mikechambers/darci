@@ -1,14 +1,21 @@
-import { CharacterClassSelection } from "shared";
+import OrderBy from "shared/packages/enums/OrderBy";
 import EnumSelect from "./EnumSelect";
 
-const classes = [
-  CharacterClassSelection.ALL,
-  CharacterClassSelection.HUNTER,
-  CharacterClassSelection.TITAN,
-  CharacterClassSelection.WARLOCK,
+const orderByOptions = [
+  OrderBy.PERIOD,
+  OrderBy.KILLS,
+  OrderBy.ASSISTS,
+  OrderBy.SCORE,
+  OrderBy.OPPONENTS_DEFEATED,
+  OrderBy.DEATHS,
+  OrderBy.PRECISION_KILLS,
+  OrderBy.GRENADE_KILLS,
+  OrderBy.MELEE_KILLS,
+  OrderBy.SUPER_KILLS,
+  OrderBy.MEDALS_EARNED,
 ];
 
-const CharacterClassSelectionSelect = (props) => {
+const OrderBySelect = (props) => {
   const onChange = props.onChange;
   const selected = props.selected;
   const maxLabelLength = props.maxLabelLength;
@@ -18,7 +25,7 @@ const CharacterClassSelectionSelect = (props) => {
   return (
     <EnumSelect
       onChange={onChange}
-      options={classes}
+      options={orderByOptions}
       selected={selected}
       label={label}
       maxLabelLength={maxLabelLength}
@@ -27,4 +34,4 @@ const CharacterClassSelectionSelect = (props) => {
   );
 };
 
-export default CharacterClassSelectionSelect;
+export default OrderBySelect;

@@ -1,3 +1,5 @@
+import { Season } from "shared";
+
 export const FLOAT_DECIMAL_PRECISION = 2;
 export const DESTINY_API_KEY = process.env.REACT_APP_DESTINY_API_KEY;
 export const DATA_REFRESH_INTERVAL = 30 * 1000; //Every 30 seconds
@@ -16,3 +18,5 @@ export const LARGE = "LARGE";
 
 export const MOMENT_TYPE = "m";
 export const SEASON_TYPE = "s";
+
+export const CURRENT_SEASON = Season.SEASON_OF_PLUNDER;

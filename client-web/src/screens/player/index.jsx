@@ -12,7 +12,7 @@ import {
   useFetchPlayerSummary,
 } from "../../hooks/remote";
 
-import { CharacterClassSelection, Mode, Moment, Season } from "shared";
+import { CharacterClassSelection, Mode, Moment, OrderBy, Season } from "shared";
 import PlayerMedalsDetailList from "./components/PlayerMedalsDetailList";
 import PlayerConfigSelectView from "../../components/PlayerConfigSelectView";
 import React, { useEffect, useState } from "react";
@@ -93,7 +93,7 @@ const PlayerView = () => {
   let params = useParams();
   let query = useQuery();
 
-  let mode = Mode.fromString(params.mode);
+  let mode = Mode.fromType(params.mode);
 
   let startMoment;
   let endMoment;
@@ -101,40 +101,43 @@ const PlayerView = () => {
   const momentType =
     params.momentType === MOMENT_TYPE ? MOMENT_TYPE : SEASON_TYPE;
   if (momentType === MOMENT_TYPE) {
-    startMoment = Moment.fromString(params.startMoment);
+    startMoment = Moment.fromType(params.startMoment);
     endMoment = params.endMoment
-      ? Moment.fromString(params.endMoment)
+      ? Moment.fromType(params.endMoment)
       : Moment.NOW;
   } else {
-    let s = Season.fromString(params.startMoment);
+    let s = Season.fromType(params.startMoment);
     startMoment = s.startMoment;
     endMoment = s.endMoment;
   }
 
-  let classSelection = CharacterClassSelection.fromString(params.classType);
+  let characterClass = CharacterClassSelection.fromType(params.classType);
   let hash = query.get("fr");
 
+  let orderBy = OrderBy.fromId(query.get("orderby"));
+
   let [playerSummary, isPlayerSummaryLoading, playerSummaryLoadError] =
-    useFetchPlayerSummary(
-      PLAYER_VIEW_REFRESH_INTERVAL,
-      params.memberId,
+    useFetchPlayerSummary({
+      refreshInterval: PLAYER_VIEW_REFRESH_INTERVAL,
+      memberId: params.memberId,
       mode,
       startMoment,
       endMoment,
-      classSelection,
-      hash
-    );
+      characterClass,
+      hash,
+    });
 
   let [playerActivities, isPlayerActivitiesLoading, playerActivitiesLoadError] =
-    useFetchPlayerActivities(
-      PLAYER_VIEW_REFRESH_INTERVAL,
-      params.memberId,
+    useFetchPlayerActivities({
+      refreshInterval: PLAYER_VIEW_REFRESH_INTERVAL,
+      memberId: params.memberId,
       mode,
       startMoment,
       endMoment,
-      classSelection,
-      hash
-    );
+      characterClass,
+      hash,
+      orderBy,
+    });
 
   const [lastUpdate, setLastUpdate] = useState();
   useEffect(() => {
@@ -198,9 +201,9 @@ const PlayerView = () => {
 
   let activities = playerActivities ? playerActivities.activities : [];
 
-  mode = Mode.fromString(playerSummary.query.mode);
-  startMoment = Moment.fromString(playerSummary.query.startMoment);
-  classSelection = CharacterClassSelection.fromString(
+  mode = Mode.fromType(playerSummary.query.mode);
+  startMoment = Moment.fromType(playerSummary.query.startMoment);
+  characterClass = CharacterClassSelection.fromType(
     playerSummary.query.classSelection
   );
 
@@ -212,7 +215,7 @@ const PlayerView = () => {
         <div id="overview">
           <PlayerActivitiesHeader
             player={player}
-            classSelection={classSelection}
+            classSelection={characterClass}
             mode={mode}
             startMoment={startMoment}
             endMoment={endMoment}

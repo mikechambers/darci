@@ -24,6 +24,7 @@ var os = require("os");
 const ActivityStoreInterface = require("./interfaces/ActivityStoreInterface");
 const ManifestInterface = require("./interfaces/ManifestInterface");
 const { timeStamp } = require("console");
+const OrderBy = require("shared/packages/enums/OrderBy");
 
 const cache = new Cache();
 
@@ -93,19 +94,22 @@ app.get(
   "/api/player/activities/:member_id/:characterClass/:mode/:startMoment/:endMoment?/",
   (req, res, next) => {
     let startTime = new Date().getTime();
-    let startMoment = Moment.fromString(req.params.startMoment);
+
+    let orderBy = OrderBy.fromId(req.query.orderby);
+
+    let startMoment = Moment.fromType(req.params.startMoment);
 
     let memberId = req.params.member_id;
 
-    let characterClassSelection = CharacterClassSelection.fromString(
+    let characterClassSelection = CharacterClassSelection.fromType(
       req.params.characterClass
     );
 
-    let mode = Mode.fromString(req.params.mode);
+    let mode = Mode.fromType(req.params.mode);
 
     let endMoment =
       req.params.endMoment !== undefined
-        ? Moment.fromString(req.params.endMoment)
+        ? Moment.fromType(req.params.endMoment)
         : Moment.NOW;
 
     const startDate = startMoment.getDate();
@@ -116,7 +120,8 @@ app.get(
       characterClassSelection,
       mode,
       startDate,
-      endDate
+      endDate,
+      orderBy
     );
 
     const player = activityStore.retrieveMember(memberId);
@@ -152,18 +157,18 @@ app.get(
   (req, res, next) => {
     let startTime = new Date().getTime();
 
-    let startMoment = Moment.fromString(req.params.startMoment);
+    let startMoment = Moment.fromType(req.params.startMoment);
 
     let memberId = req.params.member_id;
-    let characterClassSelection = CharacterClassSelection.fromString(
+    let characterClassSelection = CharacterClassSelection.fromType(
       req.params.characterClass
     );
 
-    let mode = Mode.fromString(req.params.mode);
+    let mode = Mode.fromType(req.params.mode);
 
     let endMoment =
       req.params.endMoment !== undefined
-        ? Moment.fromString(req.params.endMoment)
+        ? Moment.fromType(req.params.endMoment)
         : Moment.NOW;
 
     const startDate = startMoment.getDate();

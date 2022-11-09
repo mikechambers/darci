@@ -175,8 +175,8 @@ class Mode extends EnumBase {
     return Mode.UNKNOWN;
   }
 
-  static fromString(type) {
-    let out = super._fromString(Mode, type);
+  static fromType(type) {
+    let out = super._fromType(Mode, type);
 
     if (out != undefined) {
       return out;

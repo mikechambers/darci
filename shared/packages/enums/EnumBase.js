@@ -39,7 +39,7 @@ class EnumBase {
     return undefined;
   }
 
-  static _fromString(classType, type) {
+  static _fromType(classType, type) {
     if (!type) {
       return undefined;
     }

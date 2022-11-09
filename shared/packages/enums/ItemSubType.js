@@ -35,8 +35,8 @@ class ItemSubType extends EnumBase {
     return ItemSubType.UNKNOWN;
   }
 
-  static fromString(type) {
-    let out = super._fromString(ItemSubType, type);
+  static fromType(type) {
+    let out = super._fromType(ItemSubType, type);
 
     if (out != undefined) {
       return out;
