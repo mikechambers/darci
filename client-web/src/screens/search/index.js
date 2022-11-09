@@ -197,7 +197,7 @@ const SearchView = (props) => {
           </fieldset>
           <div style={formSectionStyle}>
             <OrderBySelect
-              label="Order By"
+              label="Sort By"
               selected={OrderBy.PERIOD}
               onChange={onOrderBySelectChange}
             />
