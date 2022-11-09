@@ -9,6 +9,7 @@ const moments = [
   Moment.WEEK,
   Moment.MONTH,
   Moment.SEASON_OF_PLUNDER,
+  Moment.NOW,
 ];
 
 const MomentSelect = (props) => {
