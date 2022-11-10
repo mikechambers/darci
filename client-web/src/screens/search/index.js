@@ -13,200 +13,236 @@ import { useNavigate } from "react-router-dom";
 import CharacterClassSelection from "shared/packages/enums/CharacterClassSelection";
 
 const pageContainerStyle = {
-  //minWidth: "720px",
-  width: "100%",
+    //minWidth: "720px",
+    width: "100%",
 };
 
 const gappedStyle = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "30px",
-  //width: "250px",
-  width: "min-content",
+    display: "flex",
+    flexDirection: "column",
+    gap: "30px",
+    //width: "250px",
+    width: "min-content",
 };
 
 const formContainerStyle = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "16px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "16px",
 };
 
 const formSectionStyle = {
-  display: "flex",
-  gap: "16px",
+    display: "flex",
+    gap: "16px",
 };
 
 const periodContainerStyle = {
-  display: "flex",
-  flexDirection: "column",
-  gap: "16px",
-  padding: "16px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "16px",
+    padding: "16px",
 };
 
 const SearchView = (props) => {
-  const { global, dispatchGlobal } = useContext(GlobalContext);
-  const players = global.players;
+    const { global, dispatchGlobal } = useContext(GlobalContext);
+    const players = global.players;
 
-  const [player, setPlayer] = useState();
-  const [characterClass, setCharacterClass] = useState(
-    CharacterClassSelection.ALL
-  );
-  const [mode, setMode] = useState(Mode.ALL_PVP);
-  const [startMoment, setStartMoment] = useState(CURRENT_SEASON.startMoment);
-  const [endMoment, setEndMoment] = useState(Moment.NOW);
-  const [season, setSeason] = useState(CURRENT_SEASON);
-  const [orderBy, setOrderBy] = useState(OrderBy.PERIOD);
+    const [player, setPlayer] = useState();
+    const [characterClass, setCharacterClass] = useState(
+        CharacterClassSelection.ALL
+    );
+    const [mode, setMode] = useState(Mode.ALL_PVP);
+    const [startMoment, setStartMoment] = useState(CURRENT_SEASON.startMoment);
+    const [endMoment, setEndMoment] = useState(Moment.NOW);
+    const [season, setSeason] = useState(CURRENT_SEASON);
+    const [orderBy, setOrderBy] = useState(OrderBy.PERIOD);
 
-  const [periodType, setPeriodType] = useState(MOMENT_TYPE);
+    const [periodType, setPeriodType] = useState(MOMENT_TYPE);
 
-  let navigate = useNavigate();
+    const [validationMessage, setValidationMessage] = useState();
 
-  useEffect(() => {
-    if (players && players.length) {
-      setPlayer(players[0]);
-    }
-  }, [players]);
+    let navigate = useNavigate();
 
-  const onPlayerSelectChange = function (p) {
-    setPlayer(p);
-  };
+    useEffect(() => {
+        if (players && players.length) {
+            setPlayer(players[0]);
+        }
+    }, [players]);
 
-  const onClassSelectChange = function (c) {
-    setCharacterClass(c);
-  };
+    const onPlayerSelectChange = function (p) {
+        setPlayer(p);
+    };
 
-  const onModeSelectChange = function (m) {
-    setMode(m);
-  };
+    const onClassSelectChange = function (c) {
+        setCharacterClass(c);
+    };
 
-  const onStartMomentSelectChange = function (m) {
-    setStartMoment(m);
-  };
+    const onModeSelectChange = function (m) {
+        setMode(m);
+    };
 
-  const onEndMomentSelectChange = function (m) {
-    setEndMoment(m);
-  };
+    const onStartMomentSelectChange = function (m) {
+        setStartMoment(m);
+    };
 
-  const onOrderBySelectChange = function (m) {
-    setOrderBy(m);
-  };
+    const onEndMomentSelectChange = function (m) {
+        setEndMoment(m);
+    };
 
-  const onSeasonSelectChange = function (m) {
-    setSeason(m);
-  };
+    const onOrderBySelectChange = function (m) {
+        setOrderBy(m);
+    };
 
-  const onPeriodClick = function (periodType) {
-    setPeriodType(periodType);
-  };
+    const onSeasonSelectChange = function (m) {
+        setSeason(m);
+    };
 
-  const onSearchClick = function () {
-    let momentType = document.getElementById("moment_radio").checked
-      ? MOMENT_TYPE
-      : SEASON_TYPE;
+    const onPeriodClick = function (periodType) {
+        setPeriodType(periodType);
+    };
 
-    let url = createPlayerUrl({
-      player,
-      characterClass,
-      mode,
-      momentType,
-      startMoment,
-      endMoment,
-      season,
-      orderBy,
-    });
+    const validate = function () {
+        //only need to validate right now if period is set to MOMENT_TYPE
+        if (getMomentType() !== MOMENT_TYPE) {
+            return true;
+        }
 
-    navigate(url);
-  };
+        if (endMoment.getDate() > startMoment.getDate()) {
+            return true;
+        }
 
-  return (
-    <div id="page_nav" className="page_containter" style={pageContainerStyle}>
-      <div style={gappedStyle}>
-        <div style={formContainerStyle}>
-          <div style={formSectionStyle}>
-            <PlayerSelect
-              label="player"
-              onChange={onPlayerSelectChange}
-              players={players}
-            />
-            <CharacterClassSelectionSelect
-              label="class"
-              onChange={onClassSelectChange}
-              selected={CharacterClassSelection.ALL}
-            />
-          </div>
+        //update message
 
-          <ModeSelect
-            label="Mode"
-            onChange={onModeSelectChange}
-            selected={Mode.ALL_PVP}
-          />
+        setValidationMessage("Start Moment must be before End Moment");
 
-          <fieldset style={periodContainerStyle}>
-            <legend>Period</legend>
-            <div style={formSectionStyle}>
-              <div>
-                <input
-                  type="radio"
-                  value={MOMENT_TYPE}
-                  name="period"
-                  id="moment_radio"
-                  onClick={(e) => {
-                    onPeriodClick(e.target.value);
-                  }}
-                  defaultChecked={periodType === MOMENT_TYPE}
-                />
-                <label htmlFor="moment_radio">Moments</label>
-              </div>
-              <div>
-                <input
-                  type="radio"
-                  value={SEASON_TYPE}
-                  name="period"
-                  id="season_radio"
-                  onClick={(e) => {
-                    onPeriodClick(e.target.value);
-                  }}
-                  defaultChecked={periodType === SEASON_TYPE}
-                />
-                <label htmlFor="season_radio">Season</label>
-              </div>
+        return false;
+    };
+
+    const getMomentType = function () {
+        let momentType = document.getElementById("moment_radio").checked
+            ? MOMENT_TYPE
+            : SEASON_TYPE;
+
+        return momentType;
+    };
+
+    const onSearchClick = function () {
+        if (!validate()) {
+            return;
+        }
+
+        let momentType = getMomentType();
+
+        let url = createPlayerUrl({
+            player,
+            characterClass,
+            mode,
+            momentType,
+            startMoment,
+            endMoment,
+            season,
+            orderBy,
+        });
+
+        navigate(url);
+    };
+
+    return (
+        <div
+            id="page_nav"
+            className="page_containter"
+            style={pageContainerStyle}
+        >
+            <div style={gappedStyle}>
+                <div style={formContainerStyle}>
+                    <div style={formSectionStyle}>
+                        <PlayerSelect
+                            label="player"
+                            onChange={onPlayerSelectChange}
+                            players={players}
+                        />
+                        <CharacterClassSelectionSelect
+                            label="class"
+                            onChange={onClassSelectChange}
+                            selected={CharacterClassSelection.ALL}
+                        />
+                    </div>
+
+                    <ModeSelect
+                        label="Mode"
+                        onChange={onModeSelectChange}
+                        selected={Mode.ALL_PVP}
+                    />
+
+                    <fieldset style={periodContainerStyle}>
+                        <legend>Period</legend>
+                        <div style={formSectionStyle}>
+                            <div>
+                                <input
+                                    type="radio"
+                                    value={MOMENT_TYPE}
+                                    name="period"
+                                    id="moment_radio"
+                                    onClick={(e) => {
+                                        onPeriodClick(e.target.value);
+                                    }}
+                                    defaultChecked={periodType === MOMENT_TYPE}
+                                />
+                                <label htmlFor="moment_radio">Moments</label>
+                            </div>
+                            <div>
+                                <input
+                                    type="radio"
+                                    value={SEASON_TYPE}
+                                    name="period"
+                                    id="season_radio"
+                                    onClick={(e) => {
+                                        onPeriodClick(e.target.value);
+                                    }}
+                                    defaultChecked={periodType === SEASON_TYPE}
+                                />
+                                <label htmlFor="season_radio">Season</label>
+                            </div>
+                        </div>
+                        <div style={formSectionStyle}>
+                            <MomentSelect
+                                label="Start Moment"
+                                onChange={onStartMomentSelectChange}
+                                selected={CURRENT_SEASON.startMoment}
+                                disabled={periodType !== MOMENT_TYPE}
+                            />
+                            <MomentSelect
+                                label="End Moment"
+                                onChange={onEndMomentSelectChange}
+                                selected={Moment.NOW}
+                                disabled={periodType !== MOMENT_TYPE}
+                            />
+                        </div>
+
+                        <div style={formSectionStyle}>
+                            <SeasonSelect
+                                label="Season"
+                                selected={CURRENT_SEASON}
+                                onChange={onSeasonSelectChange}
+                                disabled={periodType !== SEASON_TYPE}
+                            />
+                        </div>
+                    </fieldset>
+                    <div style={formSectionStyle}>
+                        <OrderBySelect
+                            label="Sort By"
+                            selected={OrderBy.PERIOD}
+                            onChange={onOrderBySelectChange}
+                        />
+                    </div>
+                    <button onClick={onSearchClick}>View</button>
+                    <div className="form_validation_msg">
+                        {validationMessage}
+                    </div>
+                </div>
             </div>
-            <div style={formSectionStyle}>
-              <MomentSelect
-                label="Start Moment"
-                onChange={onStartMomentSelectChange}
-                selected={CURRENT_SEASON.startMoment}
-                disabled={periodType !== MOMENT_TYPE}
-              />
-              <MomentSelect
-                label="End Moment"
-                onChange={onEndMomentSelectChange}
-                selected={Moment.NOW}
-                disabled={periodType !== MOMENT_TYPE}
-              />
-            </div>
-
-            <div style={formSectionStyle}>
-              <SeasonSelect
-                label="Season"
-                selected={CURRENT_SEASON}
-                onChange={onSeasonSelectChange}
-                disabled={periodType !== SEASON_TYPE}
-              />
-            </div>
-          </fieldset>
-          <div style={formSectionStyle}>
-            <OrderBySelect
-              label="Sort By"
-              selected={OrderBy.PERIOD}
-              onChange={onOrderBySelectChange}
-            />
-          </div>
-          <button onClick={onSearchClick}>View</button>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default SearchView;

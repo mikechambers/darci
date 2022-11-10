@@ -2,51 +2,97 @@
 
 darci is a self hosted platform for aggregating, viewing and analyzing Destiny 2 PVP stats.
 
-It is built around three main parts:
+The app has the following functionality:
+
+- Overall stat leaderboard for all players tracked in the app
+- Ability to  view player stats by mode, moment / season and class
+- Detailed per player stats, including kills breakdown, weapon use, weapon meta
+  for games, maps, and activities
+- Details per activity stats, including per player stats, team stat sumamries,
+  and weapon usage
+- Search page that allows details searches of pvp data
+
+Future features being considered:
+
+- Stream overlays to show realtime PVP stats on Stream
+- View detailed stats per map
+- Ability to search by weapon usage and medals
+- Ability to compare different moments / seasons and or players
+
+## Development / Local Installation and Configuration
+
+darci built around three main parts:
 
 - [dcli](https://github.com/mikechambers/dcli) used to download and collect player pvp stats in a sqlite3 database.
 - A nodejs backend, that provides a readonly JSON API / interface to the database.
 - A react / web based front end for viewing the data.
 
-## Development Installation and Configuration
-
 ### Set up Destiny 2 API Keys and Environment
 
 In order to sync your data and use DARCI, you must first get a free Destiny 2
-API key from Bungie, set it up in your system's environment.
+API key from Bungie and set it up in your system's environment.
 
 Go to Bungie and register for an [Destiny 2 API key](https://www.bungie.net/en/Application). Use the following settings:
 
 | SETTING            | VALUE                                                        |
-| ------------------ | ------------------------------------------------------------ |
-| Application Name   | Whatever you want                                            |
-| Website            | Use your own domain if you have one, otherwise try localhost |
-| Application Status | Can be Private                                               |
-| OAuth Client Type  | Not Applicable                                               |
-| Redirect URL       | Leave Empty                                                  |
-| Scope              | You do not need to give any additional scopes                |
-| Origin Header      | Set to '\*' (just an asterisk, no quotes)                    |
+| -----------------: | ------------------------------------------------------------ |
+| **Application Name**   | Whatever you want                                            |
+| **Website**            | Use your own domain if you have one, otherwise try localhost |
+| **Application Status** | Can be Private                                               |
+| **OAuth Client Type**  | Not Applicable                                               |
+| **Redirect URL**       | Leave Empty                                                  |
+| **Scope**              | You do not need to give any additional scopes                |
+| **Origin Header**      | Set to '\*' (just an asterisk, no quotes)                    |
 
 Once you have your API key, you need to set it as an environment variable on
 your system.
 
-Create two environment variables named `DESTINY_API_KEY` and `REACT_APP_DESTINY_API_KEY` that both point to your API key, and confirm that the variables are set correctly. These are used both to sync the data using DCLI, and to enable to web frontend of DARCI to call the Destiny 2 APIs directly.
+Create two environment variables named *DESTINY_API_KEY* around 
+*REACT_APP_DESTINY_API_KEY* that both point to your API key, and confirm that 
+the variables are set correctly. These are used both to sync the data using DCLI
+DCLI, and to enable to web frontend of DARCI to call the Destiny 2 APIs directly.
+
+Once you have set the environment variables, you may need to reload your
+environemt and / or terminal.
 
 ### Download and Configure DCLI
 
+DCLI is used to sync the Destiny 2 API manifest, as well as user data.
+
 Download the latest release of [dcli](https://github.com/mikechambers/dcli) and place the files in your system path so they can be called via the command line.
 
-Once downloaded, sync the Destiny 2 manifest by running dclim:
+#### Sync the Destiny 2 Manifest
+
+The manifest is a database from Bungie that contains information about Destiny
+2, including map and weapon info, images, urls, etc... and is updated by Bungie
+from time to time.
+
+Sync the Destiny 2 manifest by running dclim:
 
 ```
 $ dclim
 ```
 
-Note the directory that the `manifest.sqlite3` files is stored in.
+You should see something similar to:
 
-The manifest is a database from Bungie that contains information about Destiny
-2, including map and weapon info, images, urls, etc... and is updated by Bungie
-from time to time.
+```
+Remote Manifest version       109859.22.11.01.1900-2-bnet.47252
+Remote Manifest url           https://www.bungie.net/common/destiny2_content/sqlite/en/world_sql_content_bdbfacc33bf82f9208ec7ba7d4ca1109.content
+Local Manifest version        109702.22.10.26.1901-1-bnet.47093
+Local Manifest url            https://www.bungie.net/common/destiny2_content/sqlite/en/world_sql_content_88d67ee6b0b13489b4df299cac1b79e2.content
+Updated manifest available    109859.22.11.01.1900-2-bnet.47252
+Downloading manifest. This may take a bit of time.
+Manifest info saved.
+/home/mesh/.local/share/dcli/manifest.sqlite3'
+```
+Note the directory that the `manifest.sqlite3` files is stored in as we will
+need that path below.
+
+The manifest is updated from time to time, and thus you will need to
+periodically call *dclim* to check for new versions. (See below for info on how
+to automate this).
+
+#### Setup Environment Variables
 
 Create the following environment variables, replacing `/home/mesh/.local/share/dcli/` with the path where your `manifest.sqlite3` was created.
 
@@ -59,9 +105,12 @@ DCLI_FIX_DATA=true
 
 The `DCLI_FIX_DATA` variable is used when syncing activity data. When set to `true` dclisync will make additional API calls when syncing data if there is missing data from the API (which happens sometimes). This can significantly slow down the initial sync, but is recommended as it can help prevent missing data.
 
+#### Sync Player Data
+
 At this point, we are ready to do the initial data sync. The first sync can take
-some time, and thus its suggested you sync one player first, and get everything
-else setup, then add additional players.
+some time, and thus its suggested you sync one player first to make sure
+everything is working. Once everything is setup you can then add and sync
+additional players.
 
 To add a player to sync, run:
 
@@ -84,11 +133,18 @@ has played, and whether DCLI_FIX_DATA environment variable is enabled. Subsequen
 
 If any errors occur, make sure you have set the _DESTINY_API_KEY_ environment variable correctly, run the command again. (Sometimes some API calls will time out. This is normal and no data will be lost. It will be correctly synced on subsequent calls).
 
-# Download and Configure darci
+Note, as a general rule, you should not kill a running dclisync process while it
+is syncing, as it may cause data corruption.
 
-We are ready to download and run darci.
+### Download and Configure darci
 
-Install and configure [Node](https://nodejs.org/en/) (version 16.18.0 or greater). Make sure that the isntall directories are added to your system path so you can run the programs from the command line.
+We are ready to download and run darci. Darci is a client / server web app
+builds around Node.js and React.
+
+Install and configure [Node.js](https://nodejs.org/en/) (version 16.18.0 or 
+greater). Make sure that the install directories are added to your system path
+so you can run the programs from the command line (this may be done
+automatically depending on how you install).
 
 The Node install should also install NPM. You can test the installation by running:
 
@@ -100,13 +156,14 @@ $ npm --version
 Make sure Node is at least version 16.18.0 or greater.
 
 Next Download darci. Its is recommended that you clone it using git, as it will
-make it easier to update it when new versions are out.
+make it easier to update it when new versions are out (you can also download as
+a zip file).
 
 ```
 $ git clone https://github.com/mikechambers/darci.git
 ```
 
-This will create a directory named _darci_ and sync the latest version of the
+This will create a directory named *darci* and sync the latest version of the
 code. Move into that directory:
 
 ```
@@ -116,7 +173,7 @@ $ cd darci
 There are a number of files and directories here. The two most important for us
 are:
 
-- **server** : contains the node server code for darci.
+- **server** : contains the Node.js server code for darci.
 - **client-web** : contains the React based front end app.
 
 We need to sync all of the required packages for each app using npm.
@@ -128,8 +185,11 @@ $ cd ..
 $ cd client-web
 $ npm install
 ```
+### Start darci
 
 Finally, we are ready to start the app.
+
+#### Launch the Server
 
 To launch the server:
 
@@ -146,15 +206,18 @@ Using data store at: /home/mesh/.local/share/dcli/dcli.sqlite3
 Initializing Manifest
 Using Manifest db at: /home/mesh/.local/share/dcli/manifest.sqlite3
 Using manifest version : https://www.bungie.net/common/destiny2_content/sqlite/en/world_sql_content_88d67ee6b0b13489b4df299cac1b79e2.content
-Server running at http://mesh-Laptop-12th-Gen-Intel-Core:8080/
+Server running at http://127.0.0.1:8080/
 ```
-
-If you see any errors, make sure you have setup the environment variables
-correctly (and they are available in your current terminal session), and have successfully synced the manifest via _dclim_ and synced at
-least one player's data via _dclisync_.
+If you see any errors, check the following:
+- The manifest has succesfully been synced via *dclim*
+- You have correctly set up the environment variables for darci, and they are
+  avaliable in the current terminal
+- You have install the required packages via `npm install` (see above)
 
 If you try and visit the server via a browser, you will see an error, since we
 have not yet started the web client.
+
+#### Launch the Web Client
 
 With the server running, open a new terminal window and start the web client:
 
@@ -163,30 +226,56 @@ $ cd client-web
 $ npm start
 ```
 
-This should launch a browser window with the app running. If you get any errors,
-make sure that the server is running, and that you have run `npm install` in the
-_client-web_ directory.
+This should launch a browser window with the app running (if it doesn't it
+should print out the url where it is running).
 
-### Server Deployment
+If you see any errors:
 
-The instructions below will get darci up and running in local / development mode (which is
+- Make sure that the server is running and that no errors have printed out in
+  the terminal running the server
+- Make sure you have run `npm install` in the *client-web* directory
+
+At this point the app should be running locally, using the data you have synced
+via *dclisync*. In order to refresh and load new data, you will need to manually
+run *dclisync* again (see below on how to automate that).
+
+## Server Deployment
+
+The instructions above will get darci up and running in local / development mode (which is
 fine if you are just running locally). However, if you want to deploy to a
 server for access to multiple users, there are a number of additional steps and
 configurations you should take.
 
 The steps include:
 
+- Setup a server and domain (outside scope of this document)
 - Automate Manifest Updates
 - Automate player activity data syncing
 - Create a release build of the React front end
+- Configure and run web server
 - Run the Node server in production mode
+
+Note, there are a lot of different ways to deploy Node.js / React apps to
+products (and plenty of resources online for it). The instructions below will
+cover setting up an [Nginx](https://www.nginx.com/) server that will proxy all calls from the node server.
+
+Instruction below assume you have a Linux based server (they were tested on an
+Ubuntu based server).
 
 #### Schedule Manifest Check (dclim)
 
-The following crontab entries will run dclim once an hour (to check for an udpated manifest), and log output to a log directory in the specified home directory.
+First, lets automate checks and downloads for new Manifest versions. For that we
+can use [crontab](https://man7.org/linux/man-pages/man5/crontab.5.html).
+
+To edit your crontab file, run:
 
 ```
-#replace /home/mesh with your own home directory
+$ crontab -e
+```
+
+and enter the following:
+
+```
 SHELL=/bin/bash
 BASH_ENV="/home/mesh/.profile"
 
@@ -196,8 +285,44 @@ BASH_ENV="/home/mesh/.profile"
 #remove the log file once a day at 00:05
 5 0 * * * rm /home/mesh/logs/cron.log
 ```
+This entries will run dclim once an hour (to check for an udpated manifest),
+and log output to a log directory in the specified home directory (update the
+path where you want the cron.log file to be place). The log file can be
+useful to confirm where the manifest is being saved to, as well as debug anything
+going wrong. If you don't care to log the output, just
+remove everything after *dclim* (included the lines below it).
+
+The `BASH_ENV` variable points to the file that sets our environment
+variables and you should update the path to point to the appropriate file on
+your system.
+
+This [page](https://crontab.guru/) has a useful app for figuring out the crontab
+time formats.
 
 #### Create DCLISYNC service
+
+Next, we need to schedule the player data syncing via *dclisync*. It is
+recomened to do this via a custom script and system service. This will allow us
+a bit more control, and ensure that we don't try to start a new data sync, while
+an existing one is still running.
+
+However, if you are just running for a single user, you could probably just
+schedule it using cron running at 1 or 2 minute intervals.
+
+Note, before we setup the dcli service, make sure to do your intial sync for all of
+the players who you will add to the app. The initial sync can take a long time,
+depending on number of players and activities, and running that sync manually
+will allow you to monitor any issues, and ensure everything is synced correctly.
+
+
+
+
+
+
+
+Updating
+
+
 
 #### Configure Web Server and Proxy
 

@@ -11,22 +11,16 @@ const {
   DB_PATH,
   MANIFEST_DB_PATH,
   MANIFEST_INFO_PATH,
-  PLAYERS_ROW_CACHE_LIFETIME,
 } = require("./config");
 
 const { ServerError } = require("./errors");
-
-const { Cache } = require("./data/Cache");
 
 const express = require("express");
 var os = require("os");
 
 const ActivityStoreInterface = require("./interfaces/ActivityStoreInterface");
 const ManifestInterface = require("./interfaces/ManifestInterface");
-const { timeStamp } = require("console");
 const OrderBy = require("shared/packages/enums/OrderBy");
-
-const cache = new Cache();
 
 const activityStore = new ActivityStoreInterface(DB_PATH);
 const manifestInterface = new ManifestInterface(
@@ -40,12 +34,6 @@ const app = express();
 const port = SERVER_PORT;
 
 var hostname = os.hostname();
-
-/*
-app.get("/", (req, res, next) => {
-  sendJsonResponse(res, {});
-});
-*/
 
 app.get("/api/player/latest/:memberId", (req, res, next) => {
   let startTime = new Date().getTime();

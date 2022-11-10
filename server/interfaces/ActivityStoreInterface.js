@@ -6,52 +6,52 @@ const { PLAYER_START_BUFFER, DB_SCHEMA_VERSION } = require("../config");
 const { Mode, Standing, OrderBy } = require("shared");
 
 class ActivityStoreInterface {
-  #db;
-  #dbPath;
-  #select_sync_members;
-  #select_activities_for_member_since;
-  #select_member;
-  #select_activity;
-  #select_teams;
-  #select_character_activity_stats_for_activity;
-  #select_version;
-  #select_meta_weapons_summary;
-  #select_map_summary;
-  #select_weapons_summary;
-  #select_player_activity_summary;
-  #select_medals_summary;
-  #select_latest_activity_id_for_member;
+    #db;
+    #dbPath;
+    #select_sync_members;
+    #select_activities_for_member_since;
+    #select_member;
+    #select_activity;
+    #select_teams;
+    #select_character_activity_stats_for_activity;
+    #select_version;
+    #select_meta_weapons_summary;
+    #select_map_summary;
+    #select_weapons_summary;
+    #select_player_activity_summary;
+    #select_medals_summary;
+    #select_latest_activity_id_for_member;
 
-  constructor(dbPath) {
-    this.#dbPath = dbPath;
+    constructor(dbPath) {
+        this.#dbPath = dbPath;
 
-    this.#initDb();
-  }
-
-  #initDb() {
-    if (this.#db !== undefined) {
-      //check this
-      this.#db.close();
+        this.#initDb();
     }
 
-    console.log(`Using data store at: ${this.#dbPath}`);
-    this.#db = new Database(this.#dbPath, { readonly: true });
-    this.#initStatements();
-  }
+    #initDb() {
+        if (this.#db !== undefined) {
+            //check this
+            this.#db.close();
+        }
 
-  checkVersion() {
-    let row = this.#select_version.get();
-
-    if (row.version !== DB_SCHEMA_VERSION) {
-      throw Error(
-        `DB Scheme Version mismatch. Expected [${DB_SCHEMA_VERSION}] found [${row.version}]`
-      );
+        console.log(`Using data store at: ${this.#dbPath}`);
+        this.#db = new Database(this.#dbPath, { readonly: true });
+        this.#initStatements();
     }
-  }
 
-  #initStatements() {
-    this.#select_activities_for_member_since = this.#db.prepare(
-      `SELECT
+    checkVersion() {
+        let row = this.#select_version.get();
+
+        if (row.version !== DB_SCHEMA_VERSION) {
+            throw Error(
+                `DB Scheme Version mismatch. Expected [${DB_SCHEMA_VERSION}] found [${row.version}]`
+            );
+        }
+    }
+
+    #initStatements() {
+        this.#select_activities_for_member_since = this.#db.prepare(
+            `SELECT
                 *,
                 activity.mode as activity_mode,
                 activity.id as activity_index_id,
@@ -73,9 +73,9 @@ class ActivityStoreInterface {
             ORDER BY
                 activity.period DESC
             LIMIT 50`
-    );
+        );
 
-    this.#select_latest_activity_id_for_member = this.#db.prepare(`
+        this.#select_latest_activity_id_for_member = this.#db.prepare(`
       SELECT
 	      max(activity_id) as activity_id
       FROM
@@ -88,7 +88,7 @@ class ActivityStoreInterface {
         member.member_id = @memberId
     `);
 
-    this.#select_teams = this.#db.prepare(`
+        this.#select_teams = this.#db.prepare(`
             SELECT
                 *
             FROM
@@ -97,15 +97,15 @@ class ActivityStoreInterface {
                 activity = @activityRowId
         `);
 
-    this.#select_sync_members = this.#db.prepare(
-      'SELECT "member_id", "platform_id", "display_name", "bungie_display_name", "bungie_display_name_code" from sync join member on sync.member = member.id'
-    );
+        this.#select_sync_members = this.#db.prepare(
+            'SELECT "member_id", "platform_id", "display_name", "bungie_display_name", "bungie_display_name_code" from sync join member on sync.member = member.id'
+        );
 
-    this.#select_member = this.#db.prepare(
-      `select * from member where member_id = @memberId`
-    );
+        this.#select_member = this.#db.prepare(
+            `select * from member where member_id = @memberId`
+        );
 
-    this.#select_activity = this.#db.prepare(`
+        this.#select_activity = this.#db.prepare(`
             SELECT
                 activity.id as activity_row_id,
                 activity.activity_id,
@@ -126,7 +126,7 @@ class ActivityStoreInterface {
                 period DESC LIMIT 1
         `);
 
-    this.#select_character_activity_stats_for_activity = this.#db.prepare(`
+        this.#select_character_activity_stats_for_activity = this.#db.prepare(`
             SELECT
                 *,
                 character_activity_stats.id as character_activity_stats_index
@@ -139,12 +139,12 @@ class ActivityStoreInterface {
                 activity = @activityRowId
         `);
 
-    this.#select_version = this.#db.prepare(`
+        this.#select_version = this.#db.prepare(`
         SELECT version from version
     `);
 
-    //here
-    this.#select_meta_weapons_summary = this.#db.prepare(`SELECT
+        //here
+        this.#select_meta_weapons_summary = this.#db.prepare(`SELECT
     reference_id as id,
     count(*) as count,
     sum(weapon_result.precision_kills) as precision,
@@ -191,7 +191,7 @@ class ActivityStoreInterface {
 	) 
     GROUP BY reference_id`);
 
-    this.#select_map_summary = this.#db.prepare(`SELECT
+        this.#select_map_summary = this.#db.prepare(`SELECT
     activity.reference_id as referenceId,
     count(*) as activityCount,
     sum(time_played_seconds) as timePlayedSeconds,
@@ -255,7 +255,7 @@ class ActivityStoreInterface {
     group by activity.reference_id
     order by activityCount`);
 
-    this.#select_weapons_summary = this.#db.prepare(`SELECT
+        this.#select_weapons_summary = this.#db.prepare(`SELECT
     weapon_result.reference_id as id,
 	count(*) as count,
     sum(weapon_result.precision_kills) as precision,
@@ -277,7 +277,7 @@ class ActivityStoreInterface {
       GROUP BY weapon_result.reference_id
 	  order by count desc`);
 
-    this.#select_medals_summary = this.#db.prepare(`SELECT
+        this.#select_medals_summary = this.#db.prepare(`SELECT
       medal_result.reference_id as id,
 	    sum(count) as count
       FROM
@@ -300,7 +300,7 @@ class ActivityStoreInterface {
       GROUP BY medal_result.reference_id
 	  order by count desc`);
 
-    this.#select_player_activity_summary = this.#db.prepare(`SELECT
+        this.#select_player_activity_summary = this.#db.prepare(`SELECT
     count(*) as activityCount,
     COALESCE(sum(time_played_seconds),0) as timePlayedSeconds,
     COALESCE(sum(character_activity_stats.standing = 0),0) as wins,
@@ -354,188 +354,196 @@ class ActivityStoreInterface {
     period < @endDate AND
     exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
     not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)`);
-  }
+    }
 
-  retrieveMetaWeaponsSummary(
-    memberId,
-    characterSelection,
-    mode,
-    startDate,
-    endDate
-  ) {
-    let restrictModeId = this.getRestrictModeId(mode);
-
-    //todo: should this be get not all?
-    let meta = this.#select_meta_weapons_summary.all({
-      memberId,
-      restrictModeId,
-      characterSelectionId: characterSelection.id,
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      modeId: mode.id,
-    });
-
-    return meta ? meta : [];
-  }
-
-  retrieveMapsSummary(memberId, characterSelection, mode, startDate, endDate) {
-    let restrictModeId = this.getRestrictModeId(mode);
-
-    let maps = this.#select_map_summary
-      .all({
+    retrieveMetaWeaponsSummary(
         memberId,
-        restrictModeId,
-        characterSelectionId: characterSelection.id,
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-        modeId: mode.id,
-      })
-      .map((m) => {
-        let out = { referenceId: m.referenceId, summary: { ...m } };
-        delete out.summary.referenceId;
-        return out;
-      });
+        characterSelection,
+        mode,
+        startDate,
+        endDate
+    ) {
+        let restrictModeId = this.getRestrictModeId(mode);
 
-    return maps ? maps : [];
-  }
+        //todo: should this be get not all?
+        let meta = this.#select_meta_weapons_summary.all({
+            memberId,
+            restrictModeId,
+            characterSelectionId: characterSelection.id,
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString(),
+            modeId: mode.id,
+        });
 
-  retrieveMedalsSummary(
-    memberId,
-    characterSelection,
-    mode,
-    startDate,
-    endDate
-  ) {
-    let restrictModeId = this.getRestrictModeId(mode);
-
-    let medals = this.#select_medals_summary.all({
-      memberId,
-      restrictModeId,
-      characterSelectionId: characterSelection.id,
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      modeId: mode.id,
-    });
-
-    return medals ? medals : [];
-  }
-
-  retrieveWeaponsSummary(
-    memberId,
-    characterSelection,
-    mode,
-    startDate,
-    endDate
-  ) {
-    let restrictModeId = this.getRestrictModeId(mode);
-
-    let weapons = this.#select_weapons_summary.all({
-      memberId,
-      restrictModeId,
-      characterSelectionId: characterSelection.id,
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      modeId: mode.id,
-    });
-
-    return weapons ? weapons : [];
-  }
-
-  retrieveLastestActivityIdForMember(memberId) {
-    const data = this.#select_latest_activity_id_for_member.get({
-      memberId,
-    });
-
-    if (!data.activity_id) {
-      return undefined;
+        return meta ? meta : [];
     }
 
-    return data.activity_id;
-  }
+    retrieveMapsSummary(
+        memberId,
+        characterSelection,
+        mode,
+        startDate,
+        endDate
+    ) {
+        let restrictModeId = this.getRestrictModeId(mode);
 
-  retrieveActivitySummary(
-    memberId,
-    characterSelection,
-    mode,
-    startDate,
-    endDate
-  ) {
-    let restrictModeId = this.getRestrictModeId(mode);
+        let maps = this.#select_map_summary
+            .all({
+                memberId,
+                restrictModeId,
+                characterSelectionId: characterSelection.id,
+                startDate: startDate.toISOString(),
+                endDate: endDate.toISOString(),
+                modeId: mode.id,
+            })
+            .map((m) => {
+                let out = { referenceId: m.referenceId, summary: { ...m } };
+                delete out.summary.referenceId;
+                return out;
+            });
 
-    const summary = this.#select_player_activity_summary.get({
-      memberId,
-      restrictModeId,
-      characterSelectionId: characterSelection.id,
-      startDate: startDate.toISOString(),
-      endDate: endDate.toISOString(),
-      modeId: mode.id,
-    });
-
-    return summary ? summary : {};
-  }
-
-  retrieveActivities(
-    memberId,
-    characterSelection,
-    mode,
-    startDate,
-    endDate,
-    orderBy
-  ) {
-    let restrictModeId = this.getRestrictModeId(mode);
-
-    let orderByStr;
-    switch (orderBy) {
-      case OrderBy.PERIOD: {
-        orderByStr = "activity.period";
-        break;
-      }
-      case OrderBy.KILLS: {
-        orderByStr = "character_activity_stats.kills";
-        break;
-      }
-      case OrderBy.ASSISTS: {
-        orderByStr = "character_activity_stats.assists";
-        break;
-      }
-      case OrderBy.SCORE: {
-        orderByStr = "character_activity_stats.score";
-        break;
-      }
-      case OrderBy.OPPONENTS_DEFEATED: {
-        orderByStr = "character_activity_stats.opponents_defeated";
-        break;
-      }
-      case OrderBy.DEATHS: {
-        orderByStr = "character_activity_stats.deaths";
-        break;
-      }
-      case OrderBy.PRECISION_KILLS: {
-        orderByStr = "character_activity_stats.precision_kills";
-        break;
-      }
-      case OrderBy.GRENADE_KILLS: {
-        orderByStr = "character_activity_stats.weapon_kills_grenade";
-        break;
-      }
-      case OrderBy.MELEE_KILLS: {
-        orderByStr = "character_activity_stats.weapon_kills_melee";
-        break;
-      }
-      case OrderBy.SUPER_KILLS: {
-        orderByStr = "character_activity_stats.weapon_kills_super";
-        break;
-      }
-      case OrderBy.MEDALS_EARNED: {
-        orderByStr = "character_activity_stats.all_medals_earned";
-        break;
-      }
-      default: {
-        orderByStr = "activity.period";
-      }
+        return maps ? maps : [];
     }
 
-    let queryString = `SELECT
+    retrieveMedalsSummary(
+        memberId,
+        characterSelection,
+        mode,
+        startDate,
+        endDate
+    ) {
+        let restrictModeId = this.getRestrictModeId(mode);
+
+        let medals = this.#select_medals_summary.all({
+            memberId,
+            restrictModeId,
+            characterSelectionId: characterSelection.id,
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString(),
+            modeId: mode.id,
+        });
+
+        return medals ? medals : [];
+    }
+
+    retrieveWeaponsSummary(
+        memberId,
+        characterSelection,
+        mode,
+        startDate,
+        endDate
+    ) {
+        let restrictModeId = this.getRestrictModeId(mode);
+
+        let weapons = this.#select_weapons_summary.all({
+            memberId,
+            restrictModeId,
+            characterSelectionId: characterSelection.id,
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString(),
+            modeId: mode.id,
+        });
+
+        return weapons ? weapons : [];
+    }
+
+    retrieveLastestActivityIdForMember(memberId) {
+        const data = this.#select_latest_activity_id_for_member.get({
+            memberId,
+        });
+
+        if (!data.activity_id) {
+            return undefined;
+        }
+
+        return data.activity_id;
+    }
+
+    retrieveActivitySummary(
+        memberId,
+        characterSelection,
+        mode,
+        startDate,
+        endDate
+    ) {
+        let restrictModeId = this.getRestrictModeId(mode);
+
+        const summary = this.#select_player_activity_summary.get({
+            memberId,
+            restrictModeId,
+            characterSelectionId: characterSelection.id,
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString(),
+            modeId: mode.id,
+        });
+
+        return summary ? summary : {};
+    }
+
+    retrieveActivities(
+        memberId,
+        characterSelection,
+        mode,
+        startDate,
+        endDate,
+        orderBy
+    ) {
+        let restrictModeId = this.getRestrictModeId(mode);
+
+        let orderByStr;
+        switch (orderBy) {
+            case OrderBy.PERIOD: {
+                orderByStr = "activity.period";
+                break;
+            }
+            case OrderBy.KILLS: {
+                orderByStr = "character_activity_stats.kills";
+                break;
+            }
+            case OrderBy.ASSISTS: {
+                orderByStr = "character_activity_stats.assists";
+                break;
+            }
+            case OrderBy.SCORE: {
+                orderByStr = "character_activity_stats.score";
+                break;
+            }
+            case OrderBy.OPPONENTS_DEFEATED: {
+                orderByStr = "character_activity_stats.opponents_defeated";
+                break;
+            }
+            case OrderBy.DEATHS: {
+                orderByStr = "character_activity_stats.deaths";
+                break;
+            }
+            case OrderBy.PRECISION_KILLS: {
+                orderByStr = "character_activity_stats.precision_kills";
+                break;
+            }
+            case OrderBy.GRENADE_KILLS: {
+                orderByStr = "character_activity_stats.weapon_kills_grenade";
+                break;
+            }
+            case OrderBy.MELEE_KILLS: {
+                orderByStr = "character_activity_stats.weapon_kills_melee";
+                break;
+            }
+            case OrderBy.SUPER_KILLS: {
+                orderByStr = "character_activity_stats.weapon_kills_super";
+                break;
+            }
+            case OrderBy.MEDALS_EARNED: {
+                orderByStr = "character_activity_stats.all_medals_earned";
+                break;
+            }
+            default: {
+                orderByStr = "activity.period";
+            }
+        }
+
+		//We can't pass in order by parameters for a precompiled query, so we
+		//need to dynamically creater the query here.
+        let queryString = `SELECT
         *,
         activity.mode as activity_mode,
         activity.id as activity_index_id,
@@ -558,24 +566,27 @@ class ActivityStoreInterface {
           ${orderByStr} DESC
       LIMIT 50`;
 
-    let query = this.#db.prepare(queryString);
+	//we compile to a prepared statement every time, since we need to dynamically generate
+	//the query (see above). We could compile and cache for each order by, but the
+	//prepare call is pretty much instant, and isnt really a performance issue
+	let query = this.#db.prepare(queryString);
 
-    const rows = query.all({
-      memberId,
-      restrictModeId,
-      startMoment: startDate.toISOString(),
-      endMoment: endDate.toISOString(),
-      modeId: mode.id,
-      characterSelectionId: characterSelection.id,
-    });
+        const rows = query.all({
+            memberId,
+            restrictModeId,
+            startMoment: startDate.toISOString(),
+            endMoment: endDate.toISOString(),
+            modeId: mode.id,
+            characterSelectionId: characterSelection.id,
+        });
 
-    const activityIds = rows.map((row) => row.activity_id);
+        const activityIds = rows.map((row) => row.activity_id);
 
-    //Note : sqlite library doesnt allow us to bind arrays to prepared statements
-    //we we have to dynamically construct them below
+        //Note : sqlite library doesnt allow us to bind arrays to prepared statements
+        //we we have to dynamically construct them below
 
-    //select all of the weapon results for the activity set we retrieved
-    const ws = `
+        //select all of the weapon results for the activity set we retrieved
+        const ws = `
       SELECT
         weapon_result.reference_id as id,
         weapon_result.kills as kills,
@@ -591,16 +602,16 @@ class ActivityStoreInterface {
       WHERE
         member.id = (select id from member where member_id = '${memberId}') AND
         (character.class = ${characterSelection.id} OR 4 = ${
-      characterSelection.id
-    }) AND
+            characterSelection.id
+        }) AND
         activity.activity_id IN (${activityIds.join(",")})`;
 
-    const weapons = this.#db.prepare(ws).all();
+        const weapons = this.#db.prepare(ws).all();
 
-    const activityRowIds = rows.map((row) => row.activity_index_id);
+        const activityRowIds = rows.map((row) => row.activity_index_id);
 
-    //select all of the team data for the activity set we retrieved
-    const t = `
+        //select all of the team data for the activity set we retrieved
+        const t = `
       SELECT
         *
       FROM
@@ -608,14 +619,14 @@ class ActivityStoreInterface {
       WHERE
         activity IN (${activityRowIds.join(",")})`;
 
-    const teamRows = this.#db.prepare(t).all();
+        const teamRows = this.#db.prepare(t).all();
 
-    //we query below by character_activity_stat ids and not activity ids
-    //because its about twice as fast
-    let characterActivityIds = rows.map(
-      (row) => row.character_activity_stats_index
-    );
-    const m = `
+        //we query below by character_activity_stat ids and not activity ids
+        //because its about twice as fast
+        let characterActivityIds = rows.map(
+            (row) => row.character_activity_stats_index
+        );
+        const m = `
       SELECT
         medal_result.reference_id as id,
         count,
@@ -634,88 +645,89 @@ class ActivityStoreInterface {
         medal_result.reference_id
           NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')`;
 
-    const medals = this.#db.prepare(m).all();
+        const medals = this.#db.prepare(m).all();
 
-    let activities = [];
-    for (let r of rows) {
-      //find the first team that isnt our team to get the opponent score
-      //note, for rumble this will return a random opponent score, but
-      //property doesnt make sense in multi-team modes
-      let tr = teamRows.find(
-        (t) => r.activity_index_id === t.activity && t.team_id != r.team
-      );
+        let activities = [];
+        for (let r of rows) {
+            //find the first team that isnt our team to get the opponent score
+            //note, for rumble this will return a random opponent score, but
+            //property doesnt make sense in multi-team modes
+            let tr = teamRows.find(
+                (t) => r.activity_index_id === t.activity && t.team_id != r.team
+            );
 
-      r.opponentTeamScore = tr !== undefined ? tr.score : -1;
+            r.opponentTeamScore = tr !== undefined ? tr.score : -1;
 
-      let stats = this.parseCrucibleStats(r, weapons, medals);
-      let player = this.parsePlayer(r);
-      let activity = this.parseActivity(r);
+            let stats = this.parseCrucibleStats(r, weapons, medals);
+            let player = this.parsePlayer(r);
+            let activity = this.parseActivity(r);
 
-      let details = {
-        activity: activity,
-        player: player,
-        stats: stats,
-      };
+            let details = {
+                activity: activity,
+                player: player,
+                stats: stats,
+            };
 
-      activities.push(details);
+            activities.push(details);
+        }
+
+        return activities;
     }
 
-    return activities;
-  }
-
-  parseActivity(data) {
-    return {
-      period: data.period,
-      activityId: data.activity_id,
-      mode: data.activity_mode,
-      platform: data.platform,
-      directorActivityHash: data.director_activity_hash,
-      referenceId: data.reference_id,
-    };
-  }
-
-  retrieveActivity(activityId) {
-    const row = this.#select_activity.get({ activityId: activityId });
-
-    if (!row) {
-      return;
+    parseActivity(data) {
+        return {
+            period: data.period,
+            activityId: data.activity_id,
+            mode: data.activity_mode,
+            platform: data.platform,
+            directorActivityHash: data.director_activity_hash,
+            referenceId: data.reference_id,
+        };
     }
 
-    let activity = this.parseActivity(row);
+    retrieveActivity(activityId) {
+        const row = this.#select_activity.get({ activityId: activityId });
 
-    let activityRowId = row.activity_row_id;
+        if (!row) {
+            return;
+        }
 
-    let teamsMap = new Map();
-    let teamRows = this.#select_teams.all({ activityRowId: activityRowId });
+        let activity = this.parseActivity(row);
 
-    let hasTeams = true;
-    if (teamRows && teamRows.length) {
-      for (let t of teamRows) {
-        teamsMap.set(t.team_id, {
-          id: t.team_id,
-          standing: t.standing,
-          score: t.score,
-          players: [],
-          name: "",
-        });
-      }
-    } else {
-      hasTeams = false;
-      //Occurs for rumble
-      teamsMap.set(NO_TEAMS_INDEX, {
-        id: -1,
-        standing: Standing.UNKNOWN.id,
-        score: 0,
-        players: [],
-        name: "",
-      });
-    }
+        let activityRowId = row.activity_row_id;
 
-    let charStatsRows = this.#select_character_activity_stats_for_activity.all({
-      activityRowId: row.activity_row_id,
-    });
+        let teamsMap = new Map();
+        let teamRows = this.#select_teams.all({ activityRowId: activityRowId });
 
-    const ws = `
+        let hasTeams = true;
+        if (teamRows && teamRows.length) {
+            for (let t of teamRows) {
+                teamsMap.set(t.team_id, {
+                    id: t.team_id,
+                    standing: t.standing,
+                    score: t.score,
+                    players: [],
+                    name: "",
+                });
+            }
+        } else {
+            hasTeams = false;
+            //Occurs for rumble
+            teamsMap.set(NO_TEAMS_INDEX, {
+                id: -1,
+                standing: Standing.UNKNOWN.id,
+                score: 0,
+                players: [],
+                name: "",
+            });
+        }
+
+        let charStatsRows =
+            this.#select_character_activity_stats_for_activity.all({
+                activityRowId: row.activity_row_id,
+            });
+
+        const ws = `
     SELECT
       weapon_result.reference_id as id,
       weapon_result.kills as kills,
@@ -729,9 +741,9 @@ class ActivityStoreInterface {
     WHERE
       activity.activity_id = (${row.activity_id})`;
 
-    const weapons = this.#db.prepare(ws).all();
+        const weapons = this.#db.prepare(ws).all();
 
-    const m = `
+        const m = `
       SELECT
         medal_result.reference_id as id,
         count,
@@ -747,155 +759,155 @@ class ActivityStoreInterface {
         medal_result.reference_id
           NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')`;
 
-    const medals = this.#db.prepare(m).all();
+        const medals = this.#db.prepare(m).all();
 
-    for (let cRow of charStatsRows) {
-      //todo : need to pass in weapons and medals
-      let stats = this.parseCrucibleStats(cRow, weapons, medals);
-      let player = this.parsePlayer(cRow);
+        for (let cRow of charStatsRows) {
+            //todo : need to pass in weapons and medals
+            let stats = this.parseCrucibleStats(cRow, weapons, medals);
+            let player = this.parsePlayer(cRow);
 
-      let teamIndex = hasTeams ? stats.team : NO_TEAMS_INDEX;
+            let teamIndex = hasTeams ? stats.team : NO_TEAMS_INDEX;
 
-      let t = teamsMap.get(teamIndex);
+            let t = teamsMap.get(teamIndex);
 
-      if (!t) {
-        console.log(`Invalid team id [${t}]. Skipping`);
-        continue;
-      }
+            if (!t) {
+                console.log(`Invalid team id [${t}]. Skipping`);
+                continue;
+            }
 
-      t.players.push({
-        player: player,
-        stats: stats,
-      });
+            t.players.push({
+                player: player,
+                stats: stats,
+            });
+        }
+
+        let teams = Array.from(teamsMap.values());
+
+        return { activity: activity, teams: teams };
     }
 
-    let teams = Array.from(teamsMap.values());
+    parseCharacter(data) {
+        let emblem = {
+            id: data.emblem_hash,
+        };
 
-    return { activity: activity, teams: teams };
-  }
+        let character = {
+            characterId: data.character_id,
+            classType: data.class,
+            lightLevel: data.light_level,
+            emblem: emblem,
+        };
 
-  parseCharacter(data) {
-    let emblem = {
-      id: data.emblem_hash,
-    };
+        return character;
+    }
 
-    let character = {
-      characterId: data.character_id,
-      classType: data.class,
-      lightLevel: data.light_level,
-      emblem: emblem,
-    };
+    parsePlayer(data) {
+        return {
+            memberId: data.member_id,
+            bungieDisplayName: data.bungie_display_name,
+            bungieDisplayNameCode: data.bungie_display_name_code,
+            platformId: data.platform_id,
 
-    return character;
-  }
+            characters: [this.parseCharacter(data)],
+        };
+    }
 
-  parsePlayer(data) {
-    return {
-      memberId: data.member_id,
-      bungieDisplayName: data.bungie_display_name,
-      bungieDisplayNameCode: data.bungie_display_name_code,
-      platformId: data.platform_id,
+    /* takes an activity row, and then the weapons and medals associated with that row */
+    parseCrucibleStats(activityRow, weaponRows, medalRows) {
+        //get just the weapons associated with the player and row
+        let weapons = weaponRows
+            .filter(
+                (weapon) =>
+                    weapon.character_activity_stats_index ===
+                    activityRow.character_activity_stats_index
+            )
+            .map((w) => {
+                //remove character_activity_stats_index property
+                //https://dev.to/darksmile92/js-use-spread-to-exclude-properties-1km9
+                const { character_activity_stats_index, ...out } = w;
+                return out;
+            });
 
-      characters: [this.parseCharacter(data)],
-    };
-  }
+        //get only medals for the character in the activity row
+        let medals = medalRows
+            .filter(
+                (medal) =>
+                    medal.character_activity_stats_index ===
+                    activityRow.character_activity_stats_index
+            )
+            .map((m) => {
+                const { character_activity_stats_index, ...out } = m;
+                return out;
+            });
 
-  /* takes an activity row, and then the weapons and medals associated with that row */
-  parseCrucibleStats(activityRow, weaponRows, medalRows) {
-    //get just the weapons associated with the player and row
-    let weapons = weaponRows
-      .filter(
-        (weapon) =>
-          weapon.character_activity_stats_index ===
-          activityRow.character_activity_stats_index
-      )
-      .map((w) => {
-        //remove character_activity_stats_index property
-        //https://dev.to/darksmile92/js-use-spread-to-exclude-properties-1km9
-        const { character_activity_stats_index, ...out } = w;
+        let extended = {
+            precisionKills: activityRow.precision_kills,
+            abilityKills: activityRow.weapon_kills_ability,
+            grenadeKills: activityRow.weapon_kills_grenade,
+            meleeKills: activityRow.weapon_kills_melee,
+            superKills: activityRow.weapon_kills_super,
+            totalMedals: activityRow.all_medals_earned,
+
+            weapons: weapons,
+            medals: medals,
+        };
+
+        //TODO: whether they completed the activity
+        //todo: start_seconds (can use to figure out if they loaded in late.)
+        const completed = activityRow.completed === 1;
+        let stats = {
+            assists: activityRow.assists,
+            score: activityRow.score,
+            kills: activityRow.kills,
+            deaths: activityRow.deaths,
+            completed: completed,
+            opponentsDefeated: activityRow.opponents_defeated,
+            activityDurationSeconds: activityRow.activity_duration_seconds,
+            standing: activityRow.standing,
+            completionReason: activityRow.completion_reason,
+            startSeconds: activityRow.start_seconds,
+            timePlayedSeconds: activityRow.time_played_seconds,
+            playerCount: activityRow.player_count,
+            team: activityRow.team,
+            teamScore: activityRow.team_score,
+            opponentTeamScore: activityRow.opponentTeamScore,
+            fireteamId: activityRow.fireteam_id,
+            joinedLate: activityRow.start_seconds > PLAYER_START_BUFFER,
+            extended: extended,
+        };
+
+        return stats;
+    }
+
+    retrieveSyncMembers() {
+        let rows = this.#select_sync_members.all();
+
+        let out = [];
+        for (let row of rows) {
+            let p = this.parsePlayer(row);
+            out.push(p);
+        }
+
         return out;
-      });
+    }
 
-    //get only medals for the character in the activity row
-    let medals = medalRows
-      .filter(
-        (medal) =>
-          medal.character_activity_stats_index ===
-          activityRow.character_activity_stats_index
-      )
-      .map((m) => {
-        const { character_activity_stats_index, ...out } = m;
+    retrieveMember(memberId) {
+        let row = this.#select_member.get({ memberId: memberId });
+
+        let out = this.parsePlayer(row);
+
         return out;
-      });
-
-    let extended = {
-      precisionKills: activityRow.precision_kills,
-      abilityKills: activityRow.weapon_kills_ability,
-      grenadeKills: activityRow.weapon_kills_grenade,
-      meleeKills: activityRow.weapon_kills_melee,
-      superKills: activityRow.weapon_kills_super,
-      totalMedals: activityRow.all_medals_earned,
-
-      weapons: weapons,
-      medals: medals,
-    };
-
-    //TODO: whether they completed the activity
-    //todo: start_seconds (can use to figure out if they loaded in late.)
-    const completed = activityRow.completed === 1;
-    let stats = {
-      assists: activityRow.assists,
-      score: activityRow.score,
-      kills: activityRow.kills,
-      deaths: activityRow.deaths,
-      completed: completed,
-      opponentsDefeated: activityRow.opponents_defeated,
-      activityDurationSeconds: activityRow.activity_duration_seconds,
-      standing: activityRow.standing,
-      completionReason: activityRow.completion_reason,
-      startSeconds: activityRow.start_seconds,
-      timePlayedSeconds: activityRow.time_played_seconds,
-      playerCount: activityRow.player_count,
-      team: activityRow.team,
-      teamScore: activityRow.team_score,
-      opponentTeamScore: activityRow.opponentTeamScore,
-      fireteamId: activityRow.fireteam_id,
-      joinedLate: activityRow.start_seconds > PLAYER_START_BUFFER,
-      extended: extended,
-    };
-
-    return stats;
-  }
-
-  retrieveSyncMembers() {
-    let rows = this.#select_sync_members.all();
-
-    let out = [];
-    for (let row of rows) {
-      let p = this.parsePlayer(row);
-      out.push(p);
     }
 
-    return out;
-  }
+    getRestrictModeId(mode) {
+        let restrictModeId = -1;
 
-  retrieveMember(memberId) {
-    let row = this.#select_member.get({ memberId: memberId });
+        if (mode.isPrivate()) {
+            restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
+        }
 
-    let out = this.parsePlayer(row);
-
-    return out;
-  }
-
-  getRestrictModeId(mode) {
-    let restrictModeId = -1;
-
-    if (mode.isPrivate()) {
-      restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
+        return restrictModeId;
     }
-
-    return restrictModeId;
-  }
 }
 
 module.exports = ActivityStoreInterface;
