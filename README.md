@@ -8,7 +8,7 @@ The app has the following functionality:
 -   Ability to view player stats by mode, moment / season and class
 -   Detailed per player stats, including kills breakdown, weapon use, weapon meta
     for games, maps, and activities
--   Details per activity stats, including per player stats, team stat sumamries,
+-   Details per activity stats, including per player stats, team stat summaries,
     and weapon usage
 -   Search page that allows details searches of pvp data
 
@@ -21,6 +21,13 @@ Future features being considered:
 -   Ability to compare different moments / seasons and or players
 
 Note that darci does not track data for ALL Destiny 2 PVP players. It only tracks the data for the players it has been configured to track.
+
+## Screenshots
+
+![image](../../images/player_thumbnail_m.png)
+![image](../../images/activity_thumbnail_m.png)
+
+[Player Details](../../images/player_details.png) | [Activity Details](../../images/activity_details.png)
 
 ## Development / Local Installation and Configuration
 
