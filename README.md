@@ -19,6 +19,7 @@ Future features being considered:
 -   View detailed stats per map
 -   Ability to search by weapon usage and medals
 -   Ability to compare different moments / seasons and or players
+-   Create a Docker container to make it easier to deploy
 
 Note that darci does not track data for ALL Destiny 2 PVP players. It only tracks the data for the players it has been configured to track.
 
