@@ -64,7 +64,7 @@ the variables are set correctly. These are used both to sync the data using DCLI
 DCLI, and to enable to web frontend of DARCI to call the Destiny 2 APIs directly.
 
 Once you have set the environment variables, you may need to reload your
-environemt and / or terminal.
+environment and / or terminal.
 
 ### Download and Configure DCLI
 
@@ -224,9 +224,9 @@ Server running at http://127.0.0.1:8080/
 
 If you see any errors, check the following:
 
--   The manifest has succesfully been synced via _dclim_
+-   The manifest has successfully been synced via _dclim_
 -   You have correctly set up the environment variables for darci, and they are
-    avaliable in the current terminal
+    available in the current terminal
 -   You have install the required packages via `npm install` (see above)
 
 If you try and visit the server via a browser, you will see an error, since we
