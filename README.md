@@ -313,7 +313,44 @@ Next, we need to schedule the player data syncing via _dclisync_. There are two 
 
 _dclisync_ includes a systemctl service, and [information on how to run dclisync as a service](https://github.com/mikechambers/dcli/tree/main/src/dclisync#run-as-a-service). Follow those directions, and then continue on the setup instructions here.
 
-#### Configure Web Server and Proxy
+#### Configure Node, Web Server to run in production
+
+The final step is to set up your server to run the app in production mode. There are a number of ways you could configure this, and plenty of resources online of how to set up Node apps for productions.
+
+We have had a good experience with using NGINX web server as a reverse proxy in front of Node (which is run and managed by the PM2 process manager). In this setup the React based front in is actually served through the Node server, and proxied via NGINX. You also should set up an SSL cert for your server if you will be running it publicly.
+
+Digital Ocean has a really good document walking through [how to set up a Node.js application for production](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-node-js-application-for-production-on-ubuntu-22-04) which covers all of these steps.
+
+Note, once you have the server setup, you will see an error until your create a production build of the app (see next).
+
+#### Create a Production Build of the App
+
+Once your have the server setup and configured you need to create a production build of the React front end. You can do this by changing into the _client-web_ directory and running:
+
+```
+npm run build
+```
+
+The Node based server app automatically looks for the product build when running in production mode.
+
+In general, when updating the code site, you do the following:
+
+-   Create a new build for the React app
+-   Update packages for web client and server
+-   Restart Server
+
+Here are some example commands that show updating the source for the app:
+
+```
+$ cd darci
+$ git pull
+$ cd client-web
+$ npm install
+$ npm run build
+$ cd ../server
+$ npm install
+$ pm2 reload darci
+```
 
 ## Questions, Feature Requests, Feedback
 
