@@ -53,7 +53,7 @@ Go to Bungie and register for a [Destiny 2 API key](https://www.bungie.net/en/Ap
 |  **OAuth Client Type** | Not Applicable                                               |
 |       **Redirect URL** | Leave Empty                                                  |
 |              **Scope** | You do not need to give any additional scopes                |
-|      **Origin Header** | Set to `*`(just an asterisk)                                 |
+|      **Origin Header** | Set to `*` (just an asterisk)                                |
 
 Once you have your API key, you need to set it as an environment variable on
 your system.
