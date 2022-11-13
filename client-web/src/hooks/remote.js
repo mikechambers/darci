@@ -1,3 +1,26 @@
+/* MIT License
+ *
+ * Copyright (c) 2022 Mike Chambers
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 import { GlobalContext } from "../contexts/GlobalContext";
 import PlayerSummary from "../core/data/PlayerSummary";
 import PlayerProfile from "../core/data/PlayerProfile";
@@ -18,475 +41,499 @@ import { OrderBy } from "shared";
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 const STORAGE_MANIFEST_LAST_CHECK_KEY = "STORAGE_MANIFEST_LAST_CHECK_KEY";
 export const useFetchManifest = () => {
-  const [output, setOutput] = useState({
-    manifest: null,
-    isLoading: true,
-    error: null,
-  });
+    const [output, setOutput] = useState({
+        manifest: null,
+        isLoading: true,
+        error: null,
+    });
 
-  useEffect(() => {
-    const storage = window.localStorage;
+    useEffect(() => {
+        const storage = window.localStorage;
 
-    let lastCheckTimeStamp = storage.getItem(STORAGE_MANIFEST_LAST_CHECK_KEY);
+        let lastCheckTimeStamp = storage.getItem(
+            STORAGE_MANIFEST_LAST_CHECK_KEY
+        );
 
-    let now = new Date().getTime();
+        let now = new Date().getTime();
 
-    //if we checked (without an error) within the last N amount of time
-    //then abort check
+        //if we checked (without an error) within the last N amount of time
+        //then abort check
 
-    if (output.manifest && lastCheckTimeStamp) {
-      if (now - lastCheckTimeStamp < MANIFEST_CHECK_INTERVAL) {
-        return;
-      }
-    }
-
-    let rawStoredData = storage.getItem(STORAGE_MANIFEST_DATA_KEY);
-    let storedData;
-
-    let version = "check";
-    if (rawStoredData) {
-      try {
-        storedData = JSON.parse(rawStoredData);
-
-        version = btoa(storedData.version);
-      } catch (err) {
-        let e = new Error("Error parsing locally stored manifest JSON.", {
-          cause: err,
-        });
-        let s = reducer(output, "error", e);
-        s = reducer(s, "isLoading", false);
-        setOutput(s);
-        return;
-      }
-    }
-
-    const f = async () => {
-      let s = reducer(output, "isLoading", false);
-      let data;
-      let error;
-      try {
-        data = await fetchApi(`/manifest/${version}/`);
-      } catch (err) {
-        error = new Error("Error fetching manifest data from server.", {
-          cause: err,
-        });
-      }
-
-      let manifest;
-      if (error) {
-        //if error occured and we have stored data, then use the stored data
-        if (storedData) {
-          manifest = new Manifest(storedData);
-          console.log(
-            "Error loading manifest data. Used stored manifest",
-            error
-          );
-          error = null;
-        }
-      } else {
-        if (data.updated) {
-          storage.setItem(STORAGE_MANIFEST_DATA_KEY, JSON.stringify(data));
-          manifest = new Manifest(data);
-        } else {
-          manifest = new Manifest(storedData);
+        if (output.manifest && lastCheckTimeStamp) {
+            if (now - lastCheckTimeStamp < MANIFEST_CHECK_INTERVAL) {
+                return;
+            }
         }
 
-        storage.setItem(STORAGE_MANIFEST_LAST_CHECK_KEY, now);
-      }
+        let rawStoredData = storage.getItem(STORAGE_MANIFEST_DATA_KEY);
+        let storedData;
 
-      s = reducer(s, "manifest", manifest);
-      s = reducer(s, "error", error);
+        let version = "check";
+        if (rawStoredData) {
+            try {
+                storedData = JSON.parse(rawStoredData);
 
-      setOutput(s);
-    };
+                version = btoa(storedData.version);
+            } catch (err) {
+                let e = new Error(
+                    "Error parsing locally stored manifest JSON.",
+                    {
+                        cause: err,
+                    }
+                );
+                let s = reducer(output, "error", e);
+                s = reducer(s, "isLoading", false);
+                setOutput(s);
+                return;
+            }
+        }
 
-    f();
-  }, []);
+        const f = async () => {
+            let s = reducer(output, "isLoading", false);
+            let data;
+            let error;
+            try {
+                data = await fetchApi(`/manifest/${version}/`);
+            } catch (err) {
+                error = new Error("Error fetching manifest data from server.", {
+                    cause: err,
+                });
+            }
 
-  return [output.manifest, output.isLoading, output.error];
+            let manifest;
+            if (error) {
+                //if error occured and we have stored data, then use the stored data
+                if (storedData) {
+                    manifest = new Manifest(storedData);
+                    console.log(
+                        "Error loading manifest data. Used stored manifest",
+                        error
+                    );
+                    error = null;
+                }
+            } else {
+                if (data.updated) {
+                    storage.setItem(
+                        STORAGE_MANIFEST_DATA_KEY,
+                        JSON.stringify(data)
+                    );
+                    manifest = new Manifest(data);
+                } else {
+                    manifest = new Manifest(storedData);
+                }
+
+                storage.setItem(STORAGE_MANIFEST_LAST_CHECK_KEY, now);
+            }
+
+            s = reducer(s, "manifest", manifest);
+            s = reducer(s, "error", error);
+
+            setOutput(s);
+        };
+
+        f();
+    }, []);
+
+    return [output.manifest, output.isLoading, output.error];
 };
 
 export const useFetchActivity = (activityId) => {
-  const [output, setOutput] = useState({
-    activity: undefined,
-    isLoading: true,
-    error: undefined,
-  });
+    const [output, setOutput] = useState({
+        activity: undefined,
+        isLoading: true,
+        error: undefined,
+    });
 
-  const { global, dispatchGlobal } = useContext(GlobalContext);
-  const manifest = global.manifest;
+    const { global, dispatchGlobal } = useContext(GlobalContext);
+    const manifest = global.manifest;
 
-  useEffect(() => {
-    if (!manifest) {
-      return;
-    }
-
-    const f = async () => {
-      let s = reducer(output, "isLoading", false);
-      try {
-        const data = await fetchApi(`/api/activity/${activityId}/`);
-
-        if (!data.query.found) {
-          throw new ActivityNotFoundError();
+    useEffect(() => {
+        if (!manifest) {
+            return;
         }
 
-        const a = new Activity(data, manifest);
+        const f = async () => {
+            let s = reducer(output, "isLoading", false);
+            try {
+                const data = await fetchApi(`/api/activity/${activityId}/`);
 
-        s = reducer(s, "activity", a);
-      } catch (err) {
-        s = reducer(s, "error", err);
-      }
+                if (!data.query.found) {
+                    throw new ActivityNotFoundError();
+                }
 
-      setOutput(s);
-    };
+                const a = new Activity(data, manifest);
 
-    f();
-  }, [activityId]);
+                s = reducer(s, "activity", a);
+            } catch (err) {
+                s = reducer(s, "error", err);
+            }
 
-  return [output.activity, output.isLoading, output.error];
+            setOutput(s);
+        };
+
+        f();
+    }, [activityId]);
+
+    return [output.activity, output.isLoading, output.error];
 };
 
 export const useFetchLatestActivityIdForMember = (
-  refreshInterval,
-  memberId,
-  hash = undefined
+    refreshInterval,
+    memberId,
+    hash = undefined
 ) => {
-  const [output, setOutput] = useState({
-    activityData: undefined,
-    isLoading: true,
-    error: undefined,
-  });
+    const [output, setOutput] = useState({
+        activityData: undefined,
+        isLoading: true,
+        error: undefined,
+    });
 
-  useEffect(() => {
-    if (!memberId) {
-      return;
-    }
-
-    let timeoutId;
-    const f = async () => {
-      let s = reducer(output, "isLoading", false);
-      try {
-        const data = await fetchApi(`/api/player/latest/${memberId}/`);
-
-        let activityId = data.activityId;
-
-        if (!activityId) {
-          throw new ActivityNotFoundError();
+    useEffect(() => {
+        if (!memberId) {
+            return;
         }
 
-        s = reducer(s, "activityData", { activityId });
-      } catch (err) {
-        s = reducer(s, "error", err);
-      }
+        let timeoutId;
+        const f = async () => {
+            let s = reducer(output, "isLoading", false);
+            try {
+                const data = await fetchApi(`/api/player/latest/${memberId}/`);
 
-      setOutput(s);
+                let activityId = data.activityId;
 
-      timeoutId = startTimeout(f, refreshInterval);
-    };
+                if (!activityId) {
+                    throw new ActivityNotFoundError();
+                }
 
-    f();
+                s = reducer(s, "activityData", { activityId });
+            } catch (err) {
+                s = reducer(s, "error", err);
+            }
 
-    return () => {
-      cleanUpTimeout(timeoutId);
-    };
-  }, [memberId, hash]);
+            setOutput(s);
 
-  return [output.activityData, output.isLoading, output.error];
+            timeoutId = startTimeout(f, refreshInterval);
+        };
+
+        f();
+
+        return () => {
+            cleanUpTimeout(timeoutId);
+        };
+    }, [memberId, hash]);
+
+    return [output.activityData, output.isLoading, output.error];
 };
 
 export const useFetchPlayerActivities = (args) => {
-  let refreshInterval = args.refreshInterval;
-  let memberId = args.memberId;
-  let mode = args.mode;
-  let startMoment = args.startMoment;
-  let endMoment = args.endMoment;
-  let characterClass = args.characterClass;
-  let hash = args.hash;
-  let orderBy = args.orderBy;
+    let refreshInterval = args.refreshInterval;
+    let memberId = args.memberId;
+    let mode = args.mode;
+    let startMoment = args.startMoment;
+    let endMoment = args.endMoment;
+    let characterClass = args.characterClass;
+    let hash = args.hash;
+    let orderBy = args.orderBy;
 
-  const [output, setOutput] = useState({
-    playerActivities: undefined,
-    isLoading: true,
-    error: undefined,
-  });
+    const [output, setOutput] = useState({
+        playerActivities: undefined,
+        isLoading: true,
+        error: undefined,
+    });
 
-  const { global, dispatchGlobal } = useContext(GlobalContext);
-  const manifest = global.manifest;
+    const { global, dispatchGlobal } = useContext(GlobalContext);
+    const manifest = global.manifest;
 
-  useEffect(() => {
-    if (!manifest || !memberId || !mode || !startMoment || !characterClass) {
-      return;
-    }
+    useEffect(() => {
+        if (
+            !manifest ||
+            !memberId ||
+            !mode ||
+            !startMoment ||
+            !characterClass
+        ) {
+            return;
+        }
 
-    let timeoutId;
-    const f = async () => {
-      let s = reducer(output, "isLoading", false);
+        let timeoutId;
+        const f = async () => {
+            let s = reducer(output, "isLoading", false);
 
-      let ob =
-        orderBy && orderBy !== OrderBy.UNKNOWN ? `?orderby=${orderBy.id}` : "";
-      try {
-        const data = await fetchApi(
-          `/api/player/activities/${memberId}/${characterClass.type}/${mode.type}/${startMoment.type}/${endMoment.type}/${ob}`
-        );
+            let ob =
+                orderBy && orderBy !== OrderBy.UNKNOWN
+                    ? `?orderby=${orderBy.id}`
+                    : "";
+            try {
+                const data = await fetchApi(
+                    `/api/player/activities/${memberId}/${characterClass.type}/${mode.type}/${startMoment.type}/${endMoment.type}/${ob}`
+                );
 
-        const as = PlayerActivities.fromApi(data, manifest);
-        s = reducer(s, "activityStats", as);
-      } catch (err) {
-        s = reducer(s, "error", err);
-      }
+                const as = PlayerActivities.fromApi(data, manifest);
+                s = reducer(s, "activityStats", as);
+            } catch (err) {
+                s = reducer(s, "error", err);
+            }
 
-      setOutput(s);
+            setOutput(s);
 
-      timeoutId = startTimeout(f, refreshInterval);
-    };
+            timeoutId = startTimeout(f, refreshInterval);
+        };
 
-    f();
+        f();
 
-    return () => {
-      cleanUpTimeout(timeoutId);
-    };
-  }, [
-    characterClass,
-    manifest,
-    memberId,
-    mode,
-    startMoment,
-    endMoment,
-    refreshInterval,
-    hash,
-    orderBy,
-  ]);
+        return () => {
+            cleanUpTimeout(timeoutId);
+        };
+    }, [
+        characterClass,
+        manifest,
+        memberId,
+        mode,
+        startMoment,
+        endMoment,
+        refreshInterval,
+        hash,
+        orderBy,
+    ]);
 
-  return [output.activityStats, output.isLoading, output.error];
+    return [output.activityStats, output.isLoading, output.error];
 };
 
 export const useFetchPlayerSummary = (args) => {
-  let refreshInterval = args.refreshInterval;
-  let memberId = args.memberId;
-  let mode = args.mode;
-  let startMoment = args.startMoment;
-  let endMoment = args.endMoment;
-  let characterClass = args.characterClass;
-  let hash = args.hash;
+    let refreshInterval = args.refreshInterval;
+    let memberId = args.memberId;
+    let mode = args.mode;
+    let startMoment = args.startMoment;
+    let endMoment = args.endMoment;
+    let characterClass = args.characterClass;
+    let hash = args.hash;
 
-  const [output, setOutput] = useState({
-    activityStats: undefined,
-    isLoading: true,
-    error: undefined,
-  });
+    const [output, setOutput] = useState({
+        activityStats: undefined,
+        isLoading: true,
+        error: undefined,
+    });
 
-  const { global, dispatchGlobal } = useContext(GlobalContext);
-  const manifest = global.manifest;
+    const { global, dispatchGlobal } = useContext(GlobalContext);
+    const manifest = global.manifest;
 
-  useEffect(() => {
-    if (!manifest || !memberId || !mode || !startMoment || !characterClass) {
-      return;
-    }
+    useEffect(() => {
+        if (
+            !manifest ||
+            !memberId ||
+            !mode ||
+            !startMoment ||
+            !characterClass
+        ) {
+            return;
+        }
 
-    let timeoutId;
-    const f = async () => {
-      let s = reducer(output, "isLoading", false);
-      try {
-        const data = await fetchApi(
-          `/api/player/${memberId}/${characterClass.type}/${mode.type}/${startMoment.type}/${endMoment.type}/`
-        );
+        let timeoutId;
+        const f = async () => {
+            let s = reducer(output, "isLoading", false);
+            try {
+                const data = await fetchApi(
+                    `/api/player/${memberId}/${characterClass.type}/${mode.type}/${startMoment.type}/${endMoment.type}/`
+                );
 
-        const as = PlayerSummary.fromApi(data, manifest);
-        s = reducer(s, "activityStats", as);
-      } catch (err) {
-        s = reducer(s, "error", err);
-      }
+                const as = PlayerSummary.fromApi(data, manifest);
+                s = reducer(s, "activityStats", as);
+            } catch (err) {
+                s = reducer(s, "error", err);
+            }
 
-      setOutput(s);
+            setOutput(s);
 
-      timeoutId = startTimeout(f, refreshInterval);
-    };
+            timeoutId = startTimeout(f, refreshInterval);
+        };
 
-    f();
+        f();
 
-    return () => {
-      cleanUpTimeout(timeoutId);
-    };
-  }, [
-    characterClass,
-    manifest,
-    memberId,
-    mode,
-    startMoment,
-    refreshInterval,
-    hash,
-  ]);
+        return () => {
+            cleanUpTimeout(timeoutId);
+        };
+    }, [
+        characterClass,
+        manifest,
+        memberId,
+        mode,
+        startMoment,
+        refreshInterval,
+        hash,
+    ]);
 
-  return [output.activityStats, output.isLoading, output.error];
+    return [output.activityStats, output.isLoading, output.error];
 };
 
 export const useFetchPlayers = (manifest) => {
-  //const { global, dispatchGlobal } = useContext(GlobalContext);
-  //const manifest = global.manifest;
+    //const { global, dispatchGlobal } = useContext(GlobalContext);
+    //const manifest = global.manifest;
 
-  //return is [players, isLoading, error]
-  const [output, setOutput] = useState({
-    players: null,
-    error: undefined,
-    isLoading: true,
-  });
+    //return is [players, isLoading, error]
+    const [output, setOutput] = useState({
+        players: null,
+        error: undefined,
+        isLoading: true,
+    });
 
-  useEffect(() => {
-    if (!manifest) {
-      return;
-    }
-
-    async function f() {
-      let s = reducer(output, "isLoading", false);
-      try {
-        const data = await fetchApi("/api/players/");
-
-        let players = [];
-        for (const p of data.players) {
-          players.push(Player.fromApi(p, manifest));
+    useEffect(() => {
+        if (!manifest) {
+            return;
         }
 
-        s = reducer(s, "players", players);
-      } catch (err) {
-        s = reducer(s, "error", err);
-      }
+        async function f() {
+            let s = reducer(output, "isLoading", false);
+            try {
+                const data = await fetchApi("/api/players/");
 
-      setOutput(s);
-    }
+                let players = [];
+                for (const p of data.players) {
+                    players.push(Player.fromApi(p, manifest));
+                }
 
-    f();
-  }, [manifest]);
+                s = reducer(s, "players", players);
+            } catch (err) {
+                s = reducer(s, "error", err);
+            }
 
-  return [output.players, output.isLoading, output.error];
+            setOutput(s);
+        }
+
+        f();
+    }, [manifest]);
+
+    return [output.players, output.isLoading, output.error];
 };
 
 export const useFetchPlayerMetrics = (players) => {
-  const [output, setOutput] = useState({
-    data: null,
-    isLoading: true,
-    error: null,
-  });
+    const [output, setOutput] = useState({
+        data: null,
+        isLoading: true,
+        error: null,
+    });
 
-  useEffect(() => {
-    if (!players || !players.length) {
-      return;
-    }
+    useEffect(() => {
+        if (!players || !players.length) {
+            return;
+        }
 
-    const f = async () => {
-      let s = reducer(output, "isLoading", false);
+        const f = async () => {
+            let s = reducer(output, "isLoading", false);
 
-      let urls = players.map(async (p) => {
-        return fetchDestinyApi(
-          `https://www.bungie.net/Platform/Destiny2/${p.platformId}/Profile/${p.memberId}/?components=1100`
-        );
-      });
-
-      //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
-      //may want all settled, then if any error out we can just ignore them, as opposed
-      //to not getting any data back
-      Promise.all(urls)
-        .then((values) => {
-          let out = [];
-          for (let i = 0; i < values.length; i++) {
-            let value = values[i];
-
-            let metrics;
-
-            try {
-              metrics = PlayerMetrics.fromApi(value);
-            } catch (e) {
-              //this happens because sometimes some players will have no data
-              //not sure why
-              console.log("Error parsing metrics data. Skipping.");
-              continue;
-            }
-
-            out.push({
-              player: players[i],
-              metrics: metrics,
+            let urls = players.map(async (p) => {
+                return fetchDestinyApi(
+                    `https://www.bungie.net/Platform/Destiny2/${p.platformId}/Profile/${p.memberId}/?components=1100`
+                );
             });
-          }
 
-          s = reducer(s, "data", out);
-        })
-        .catch((error) => {
-          s = reducer(s, "error", error);
-        })
-        .finally(() => {
-          setOutput(s);
-        });
-    };
-    f();
+            //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
+            //may want all settled, then if any error out we can just ignore them, as opposed
+            //to not getting any data back
+            Promise.all(urls)
+                .then((values) => {
+                    let out = [];
+                    for (let i = 0; i < values.length; i++) {
+                        let value = values[i];
 
-    //Promise.all();
-  }, [players]);
+                        let metrics;
 
-  return [output.data, output.isLoading, output.error];
+                        try {
+                            metrics = PlayerMetrics.fromApi(value);
+                        } catch (e) {
+                            //this happens because sometimes some players will have no data
+                            //not sure why
+                            console.log(
+                                "Error parsing metrics data. Skipping."
+                            );
+                            continue;
+                        }
+
+                        out.push({
+                            player: players[i],
+                            metrics: metrics,
+                        });
+                    }
+
+                    s = reducer(s, "data", out);
+                })
+                .catch((error) => {
+                    s = reducer(s, "error", error);
+                })
+                .finally(() => {
+                    setOutput(s);
+                });
+        };
+        f();
+
+        //Promise.all();
+    }, [players]);
+
+    return [output.data, output.isLoading, output.error];
 };
 
 export const useFetchPlayerProfile = (
-  refreshInterval,
-  memberId,
-  platformId
+    refreshInterval,
+    memberId,
+    platformId
 ) => {
-  const [output, setOutput] = useState({
-    profile: null,
-    isLoading: true,
-    error: null,
-  });
+    const [output, setOutput] = useState({
+        profile: null,
+        isLoading: true,
+        error: null,
+    });
 
-  const { global, dispatchGlobal } = useContext(GlobalContext);
-  const manifest = global.manifest;
+    const { global, dispatchGlobal } = useContext(GlobalContext);
+    const manifest = global.manifest;
 
-  useEffect(() => {
-    const f = async () => {
-      let s = reducer(output, "isLoading", false);
-      try {
-        const data = await fetchDestinyApi(
-          `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=100,200,202`
-        );
+    useEffect(() => {
+        const f = async () => {
+            let s = reducer(output, "isLoading", false);
+            try {
+                const data = await fetchDestinyApi(
+                    `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=100,200,202`
+                );
 
-        let profile = new PlayerProfile(data, manifest);
-        s = reducer(s, "profile", profile);
-      } catch (err) {
-        console.log("err", err);
-        s = reducer(s, "error", err);
-      }
+                let profile = new PlayerProfile(data, manifest);
+                s = reducer(s, "profile", profile);
+            } catch (err) {
+                console.log("err", err);
+                s = reducer(s, "error", err);
+            }
 
-      setOutput(s);
-      timeoutId = startTimeout(f, refreshInterval);
-    };
+            setOutput(s);
+            timeoutId = startTimeout(f, refreshInterval);
+        };
 
-    f();
+        f();
 
-    let timeoutId;
-    return () => {
-      cleanUpTimeout(timeoutId);
-    };
-  }, []);
+        let timeoutId;
+        return () => {
+            cleanUpTimeout(timeoutId);
+        };
+    }, []);
 
-  return [output.profile, output.isLoading, output.error];
+    return [output.profile, output.isLoading, output.error];
 };
 
 //note, we wrap these to make it easier to log, debug in a single place
 //and also remove some boiler plate code on whether they should run (refresh)
 const startTimeout = (f, interval) => {
-  if (!interval) {
-    return;
-  }
+    if (!interval) {
+        return;
+    }
 
-  const id = setTimeout(f, interval);
-  return id;
+    const id = setTimeout(f, interval);
+    return id;
 };
 
 const cleanUpTimeout = (id) => {
-  if (id) {
-    clearTimeout(id);
-  }
+    if (id) {
+        clearTimeout(id);
+    }
 };
 
 const reducer = (initial, type, payload) => {
-  let out = { ...initial };
-  out[type] = payload;
-  return out;
+    let out = { ...initial };
+    out[type] = payload;
+    return out;
 };
