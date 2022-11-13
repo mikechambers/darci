@@ -136,7 +136,7 @@ const AboutView = (props) => {
         <div style={rootStyle}>
             <div>
                 <p>
-                    darci is a self hosted platform for aggregating, viewing and
+                    DARCI is a self hosted platform for aggregating, viewing and
                     analyzing Destiny 2 PVP stats.
                 </p>
                 <p>
@@ -178,7 +178,7 @@ const AboutView = (props) => {
 
             <PageSectionView title="About" />
             <p>
-                darci is currently under development, and is
+                DARCI is currently under development, and is
                 <a href="https://github.com/mikechambers/dcli">
                     available{" "}
                 </a>{" "}

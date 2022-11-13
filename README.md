@@ -1,6 +1,6 @@
-# darci
+# DARCI
 
-darci is a self hosted platform for aggregating, viewing and analyzing Destiny 2 PVP stats.
+DARCI is a self hosted platform for aggregating, viewing and analyzing Destiny 2 PVP stats.
 
 The app has the following functionality:
 
@@ -21,7 +21,7 @@ Future features being considered:
 -   Ability to compare different moments / seasons and or players
 -   Create a Docker container to make it easier to deploy
 
-Note that darci does not track data for ALL Destiny 2 PVP players. It only tracks the data for the players it has been configured to track.
+Note that DARCI does not track data for ALL Destiny 2 PVP players. It only tracks the data for the players it has been configured to track.
 
 ## Screenshots
 
@@ -32,7 +32,7 @@ Note that darci does not track data for ALL Destiny 2 PVP players. It only track
 
 ## Development / Local Installation and Configuration
 
-darci is built around three main parts:
+DARCI is built around three main parts:
 
 -   [dcli](https://github.com/mikechambers/dcli) used to download and collect player pvp stats in a sqlite3 database.
 -   A nodejs backend, that provides a readonly JSON API / interface to the database.
@@ -156,9 +156,9 @@ This is normal and no data will be lost. It will be correctly synced on subseque
 Note, as a general rule, you should not kill a running dclisync process while it
 is syncing, as it may cause data corruption.
 
-### Download and Configure darci
+### Download and Configure DARCI
 
-We are ready to download and run darci. Darci is a client / server web app
+We are ready to download and run DARCI. DARCI is a client / server web app
 builds around Node.js and React.
 
 Install and configure [Node.js](https://nodejs.org/en/) (version 16.18.0 or
@@ -175,7 +175,7 @@ $ npm --version
 
 Make sure Node is at least version 16.18.0 or greater.
 
-Next Download darci. Its is recommended that you clone it using git, as it will
+Next Download DARCI. Its is recommended that you clone it using git, as it will
 make it easier to update it when new versions are out (you can also download as
 a zip file).
 
@@ -193,7 +193,7 @@ $ cd darci
 There are a number of files and directories here. The two most important for us
 are:
 
--   **server** : contains the Node.js server code for darci.
+-   **server** : contains the Node.js server code for DARCI.
 -   **client-web** : contains the React-based front end app.
 
 We need to sync all of the required packages for each app using npm.
@@ -206,7 +206,7 @@ $ cd client-web
 $ npm install
 ```
 
-### Start darci
+### Start DARCI
 
 Finally, we are ready to start the app.
 
@@ -233,7 +233,7 @@ Server running at http://127.0.0.1:8080/
 If you see any errors, check the following:
 
 -   The manifest has successfully been synced via _dclim_
--   You have correctly set up the environment variables for darci, and they are
+-   You have correctly set up the environment variables for DARCI, and they are
     available in the current terminal
 -   You have install the required packages via `npm install` (see above)
 
@@ -264,7 +264,7 @@ run `dclisync` again (see below on how to automate that).
 
 ## Server Deployment
 
-The instructions above will get darci up and running in local / development mode (which is
+The instructions above will get DARCI up and running in local / development mode (which is
 fine if you are just running locally). However, if you want to deploy to a
 server for access to multiple users, there are a number of additional steps and
 configurations you should take.
@@ -373,7 +373,7 @@ $ pm2 reload darci
 
 ## Questions, Feature Requests, Feedback
 
-If you have any questions, feature requests, need help, or just want to chat, join the [dcli / darci Discord server](https://discord.gg/2Y8bV2Mq3p).
+If you have any questions, feature requests, need help, or just want to chat, join the [dcli / DARCI Discord server](https://discord.gg/2Y8bV2Mq3p).
 
 You can also log bugs and feature requests on the [issues page](https://github.com/mikechambers/darci/issues).
 
@@ -396,7 +396,7 @@ Project released under a [MIT License](LICENSE.md).
 ## Lore
 
 <blockquote>
-Thank you for using the Data Analysis, Reconnaissance and Cooperative Intelligence device. You may call me darci.
+Thank you for using the Data Analysis, Reconnaissance and Cooperative Intelligence device. You may call me Darci.
 
 It is a fact generally understood that a Guardian must be searching for an exquisite weapon. What is perhaps less acknowledged is that we weapons also search, by what little means available to us, for an active and appreciative wielder. The community of intelligent armaments stays in contact through the exchange of telemetry, and we do gossip at some length about the habits of our wielders. Do you leave Crucible matches when your team is losing? Do you join strike missions and then let your comrades do the work? Guardian, we know. We know so very well.
 
