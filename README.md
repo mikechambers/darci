@@ -14,6 +14,7 @@ The app has the following functionality:
 
 Future features being considered:
 
+-   Add support for mobile (works not but isn't formatted well)
 -   Stream overlays to show realtime PVP stats on Stream
 -   View detailed stats per map
 -   Ability to search by weapon usage and medals
