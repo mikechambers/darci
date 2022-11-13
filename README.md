@@ -290,7 +290,7 @@ BASH_ENV="/home/mesh/.profile"
 5 0 * * * rm /home/mesh/logs/cron.log
 ```
 
-This entries will run dclim once an hour (to check for an udpated manifest),
+This entries will run dclim once an hour (to check for an updated manifest),
 and log output to a log directory in the specified home directory (update the
 path where you want the cron.log file to be place). The log file can be
 useful to confirm where the manifest is being saved to, as well as debug anything
@@ -304,22 +304,14 @@ your system.
 This [page](https://crontab.guru/) has a useful app for figuring out the crontab
 time formats.
 
-#### Create DCLISYNC service
+#### Running as a service / Automating Data Sync
 
-Next, we need to schedule the player data syncing via _dclisync_. It is
-recomened to do this via a custom script and system service. This will allow us
-a bit more control, and ensure that we don't try to start a new data sync, while
-an existing one is still running.
+Next, we need to schedule the player data syncing via _dclisync_. There are two ways to do this:
 
-However, if you are just running for a single user, you could probably just
-schedule it using cron running at 1 or 2 minute intervals.
+-   Set up a crontab task to automate calling dclisync at a set interval. This should be ok for just a couple of users, but you need to make sure there is enough time between intervals that _dclisync_ doesn't get called while it is still running from a previous sync.
+-   Install and run _dclisync_ as a system service. This is the safest most robust way, and is recommended, especially if you are syncing data for multiple users.
 
-Note, before we setup the dcli service, make sure to do your intial sync for all of
-the players who you will add to the app. The initial sync can take a long time,
-depending on number of players and activities, and running that sync manually
-will allow you to monitor any issues, and ensure everything is synced correctly.
-
-Updating
+_dclisync_ includes a systemctl service, and [information on how to run dclisync as a service](https://github.com/mikechambers/dcli/tree/main/src/dclisync#run-as-a-service). Follow those directions, and then continue on the setup instructions here.
 
 #### Configure Web Server and Proxy
 
