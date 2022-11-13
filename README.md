@@ -19,6 +19,8 @@ Future features being considered:
 -   Ability to search by weapon usage and medals
 -   Ability to compare different moments / seasons and or players
 
+Note that darci does not track data for ALL Destiny 2 PVP players. It only tracks the data for the players it has been configured to track.
+
 ## Development / Local Installation and Configuration
 
 darci built around three main parts:
