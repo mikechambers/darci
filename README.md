@@ -24,10 +24,10 @@ Note that darci does not track data for ALL Destiny 2 PVP players. It only track
 
 ## Screenshots
 
-![image](../../images/player_thumbnail_m.png)
-![image](../../images/activity_thumbnail_m.png)
+![image](images/player_thumbnail_m.png)
+![image](images/activity_thumbnail_m.png)
 
-[Player Details](../../images/player_details.png) | [Activity Details](../../images/activity_details.png)
+[Full Player Details](images/player_details.png) | [Full Activity Details](images/activity_details.png)
 
 ## Development / Local Installation and Configuration
 
