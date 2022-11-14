@@ -71,6 +71,16 @@ const EnumSelect = (props) => {
                 onChange(options[0].data);
             });
         }
+    } else if (options && options.length && !props.selected) {
+        //todo: this feels really hacky and there is almost certainly a better way
+        //to do this. basically this is here so wrapper of this are always insync with
+        //the values. this specific case is for when the options are loaded from the sever
+        //and no selected value is passed in. so we need to set the first item to selected
+        //and call back
+        window.requestAnimationFrame(() => {
+            console.log("hi");
+            onChange(options[0].data);
+        });
     }
 
     let labelDiv = label ? <label className="form_label">{label}</label> : "";
