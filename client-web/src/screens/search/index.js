@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { useContext, useEffect, useState } from "react";
 import { Mode, Moment, OrderBy } from "shared";
 import CharacterClassSelectionSelect from "../../components/CharacterClassSelectionSelect";
