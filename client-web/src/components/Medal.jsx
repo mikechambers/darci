@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { LARGE, MEDIUM, SMALL } from "../core/consts";
 
 const Medal = (props) => {

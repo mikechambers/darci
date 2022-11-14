@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import ImageView from "./ImageView";
 
 const EmblemImageView = (props) => {

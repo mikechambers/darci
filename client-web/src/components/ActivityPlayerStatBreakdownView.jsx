@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { calculateRatio } from "shared";
 import { calculatePercent } from "../core/utils";
 import Stat from "./StatView";

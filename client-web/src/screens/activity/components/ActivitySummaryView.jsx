@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { DateTime, Interval } from "luxon";
 import DurationView from "../../../components/DurationView";
 import { capitalize } from "../../../core/utils/string";

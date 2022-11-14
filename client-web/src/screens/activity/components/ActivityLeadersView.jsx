@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import LeaderList from "../../../components/LeaderList";
 
 const rootStyle = {

@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { ResponsiveBar } from "@nivo/bar";
 import NivoTooltip from "./NivoTooltip";
 

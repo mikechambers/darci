@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import MedalHighlights from "./GoldMedalSummaryView";
 import StatDetails from "./PlayerStatsView";
 import PlayerHighlightsView from "./PlayerHighlightsView";

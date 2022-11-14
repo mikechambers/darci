@@ -21,7 +21,9 @@
  * SOFTWARE.
  */
 
-import { ItemSubType, type } from "shared";
+import React from "react";
+
+import { ItemSubType } from "shared";
 import { ReactComponent as AutoRifleIcon } from "./images/autorifle_icon.svg";
 import { ReactComponent as BowIcon } from "./images/bow_icon.svg";
 import { ReactComponent as FusionRifleIcon } from "./images/fusion_rifle_icon.svg";

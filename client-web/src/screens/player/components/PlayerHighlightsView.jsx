@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { calculatePercent } from "../../../core/utils";
 import StatView from "../../../components/StatView";
 import { calculateKillsDeathsRatio, calculateEfficiency } from "shared";

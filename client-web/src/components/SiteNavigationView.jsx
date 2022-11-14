@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 const navContainerStyle = {
     display: "flex",
     flexDirection: "row",

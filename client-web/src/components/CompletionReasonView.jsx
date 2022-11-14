@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { CompletionReason } from "shared";
 import { ReactComponent as MercyIcon } from "./images/tabler/mercy_icon.svg";
 const CompletionReasonView = (props) => {

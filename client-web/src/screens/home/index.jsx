@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { useContext } from "react";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PageSectionView from "../../components/PageSectionView";

@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+
 import Icon, { DESTINY_LOGO } from "../../../components/Icon";
 import DurationView from "../../../components/DurationView";
 import ActivityPlayerStatBreakdownView from "../../../components/ActivityPlayerStatBreakdownView";

@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 const NoMatchView = (props) => {
     const rootStyle = {
         display: "flex",

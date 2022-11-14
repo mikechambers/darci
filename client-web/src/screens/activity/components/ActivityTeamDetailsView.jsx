@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import ActivityPlayerList from "./ActivityPlayerList";
 import ActivityTeamSummaryView from "./ActivityTeamSummaryView";
 

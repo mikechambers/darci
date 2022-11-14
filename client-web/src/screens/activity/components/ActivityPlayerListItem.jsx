@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { useState } from "react";
 import ActivityPlayerListItemDrawer from "./ActivityPlayerListItemDrawer";
 import ActivityPlayerListItemHeader from "./ActivityPlayerListItemHeader";

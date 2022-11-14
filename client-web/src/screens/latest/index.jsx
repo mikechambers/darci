@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import RefreshStatusView from "../../components/RefreshStatusView";

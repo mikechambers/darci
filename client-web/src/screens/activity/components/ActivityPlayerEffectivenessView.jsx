@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { ResponsiveScatterPlot } from "@nivo/scatterplot";
 import ActivityPlayerEffectivenessTooltip from "../../../components/ActivityPlayerEffectivenessTooltip";
 

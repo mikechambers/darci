@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import OrderBy from "shared/packages/enums/OrderBy";
 import EnumSelect from "./EnumSelect";
 

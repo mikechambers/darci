@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+
 import { LARGE, LEFT, SMALL } from "../core/consts";
 
 const StatView = (props) => {

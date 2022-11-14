@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import Mode from "shared/packages/enums/Mode";
 import EnumSelect from "./EnumSelect";
 

@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { useState } from "react";
 import PlayerActivityListItemDrawer from "./PlayerActivityListItemDrawer";
 import StatView from "../../../components/StatView";

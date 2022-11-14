@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import CompactMedalsList from "../../../components/CompactMedalsList";
 import { SMALL } from "../../../core/consts";
 

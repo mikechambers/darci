@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 import { ReactComponent as AlphaTeamIcon } from "../../../components/images/alpha_team_logo.svg";
 import { ReactComponent as BravoTeamIcon } from "../../../components/images/bravo_team_logo.svg";

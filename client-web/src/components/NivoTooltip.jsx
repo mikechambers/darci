@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 const rootStyle = {
     padding: "2px 4px",
     borderRadius: 4,

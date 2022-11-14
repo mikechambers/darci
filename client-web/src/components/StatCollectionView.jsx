@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+
 import StatView from "./StatView";
 
 const style = {

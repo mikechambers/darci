@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { calculatePercent } from "../../../core/utils";
 
 import StatCollectionView from "../../../components/StatCollectionView";

@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { ReactComponent as PrecisionIcon } from "./images/precision_icon.svg";
 import { ReactComponent as GrenadeIcon } from "./images/grenade_icon.svg";
 import { ReactComponent as MeleeIcon } from "./images/melee_icon.svg";

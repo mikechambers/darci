@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import ActivityPlayerMedalsView from "./ActivityPlayerMedalsView";
 import ActivityPlayerStatBreakdownView from "../../../components/ActivityPlayerStatBreakdownView";
 import ActivityPlayerWeaponsList from "../../../components/ActivityPlayerWeaponsList";

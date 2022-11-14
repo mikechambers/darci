@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+
 import { truncate } from "../core/utils/string";
 
 const EnumSelect = (props) => {

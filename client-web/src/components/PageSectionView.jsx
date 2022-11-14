@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 const headerStyle = {
     display: "flex",
     flexDirection: "column",

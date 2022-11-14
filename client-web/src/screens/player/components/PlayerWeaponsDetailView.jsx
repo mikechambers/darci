@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { calculatePercent, calculateAverage } from "../../../core/utils/index";
 import PlayerWeaponsDetailList from "./PlayerWeaponsDetailList";
 

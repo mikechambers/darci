@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import EnumSelect from "./EnumSelect";
 
 const PlayerSelect = (props) => {

@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import Medal from "../../../components/Medal";
 import { MEDIUM } from "../../../core/consts";
 

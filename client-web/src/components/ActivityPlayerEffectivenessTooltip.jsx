@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import PlayerNameView from "./PlayerNameView";
 
 const rootStyle = {

@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+
 import PlayerMapSummaryView from "./PlayerMapSummaryView";
 
 const rootStyle = {

@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { calculatePercent } from "../core/utils";

@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import ResultSummaryView from "./ResultSummaryView";
 import PlayerAbilityStatSummaryView from "./PlayerAbilityStatSummaryView";
 import StatSummaryView from "../../../components/StatSummaryView";

@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { ReactComponent as JoinedLateIcon } from "./images/tabler/joined_late_icon.svg";
 import { ReactComponent as JoinedLateLeftEarlyIcon } from "./images/tabler/joined_late_left_early_icon.svg";
 

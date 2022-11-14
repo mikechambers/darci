@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import LeaderList from "../../../components/LeaderList";
 import { filterLeaderMetrics } from "../../../core/utils/components";
 

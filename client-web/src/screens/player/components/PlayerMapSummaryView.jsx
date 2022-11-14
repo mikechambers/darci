@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { humanDuration } from "../../../core/utils/date";
 import StatView from "../../../components/StatView";
 import { calculatePercent, calculateAverage } from "../../../core/utils";

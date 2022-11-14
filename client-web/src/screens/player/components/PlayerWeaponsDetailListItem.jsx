@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import StatView from "../../../components/StatView";
 
 const containerStyle = {

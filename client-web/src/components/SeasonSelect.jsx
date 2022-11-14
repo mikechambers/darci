@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import Season from "shared/packages/enums/Season";
 import EnumSelect from "./EnumSelect";
 

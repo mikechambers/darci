@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import EmblemImageView from "../../../components/EmblemImageView";
 import LightLevelView from "../../../components/LightLevelView";
 import PlayerNameView from "../../../components/PlayerNameView";

@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import StatCollectionView from "./StatCollectionView";
 
 const StatSummaryView = (props) => {

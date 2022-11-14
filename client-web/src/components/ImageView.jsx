@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 const ImageView = (props) => {
     const width = props.width;
     const height = props.height;

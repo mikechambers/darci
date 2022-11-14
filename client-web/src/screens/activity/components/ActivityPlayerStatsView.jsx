@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+
 import Stat from "../../../components/StatView";
 
 const ActivityPlayerStatsView = (props) => {

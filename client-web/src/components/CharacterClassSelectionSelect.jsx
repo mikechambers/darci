@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { CharacterClassSelection } from "shared";
 import EnumSelect from "./EnumSelect";
 

@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 import CompactMedalsList from "../../../components/CompactMedalsList";
 import StatusView from "../../../components/StatusView";

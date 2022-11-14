@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import ActivityWeaponList, { WEAPON_TYPE } from "./ActivityWeaponList";
 
 const ActivityWeaponsView = (props) => {

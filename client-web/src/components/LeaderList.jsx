@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+
 import PlayerNameView from "./PlayerNameView";
 
 const teamStyle = {

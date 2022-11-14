@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+
 import { ReactComponent as NavigationIcon } from "./images/tabler/map.svg";
 
 const navigationIconWrapperStyle = {

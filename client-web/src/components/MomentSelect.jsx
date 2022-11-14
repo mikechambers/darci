@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 import { Moment } from "shared";
 import EnumSelect from "./EnumSelect";
 

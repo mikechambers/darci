@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import React from "react";
+
 const PlayerNameView = (props) => {
     const player = props.player;
 
