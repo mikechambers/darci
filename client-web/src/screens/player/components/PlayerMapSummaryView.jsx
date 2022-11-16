@@ -25,7 +25,8 @@ import React from "react";
 
 import { humanDuration } from "../../../core/utils/date";
 import StatView from "../../../components/StatView";
-import { calculatePercent, calculateAverage } from "../../../core/utils";
+import { calculateAverage } from "shared/packages/utils";
+import { calculatePercent } from "shared/packages/utils";
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 import SingleBarChart from "../../../components/SingleBarChart";
 

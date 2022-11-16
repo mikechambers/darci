@@ -39,9 +39,23 @@ const calculateRatio = function (n, d) {
     return d !== 0 ? n / d : n;
 };
 
+const calculatePercent = (value, total) => {
+    return calculateRatio(value, total) * 100.0;
+};
+
+const calculateAverage = (value, total) => {
+    if (!total) {
+        return 0;
+    }
+
+    return value / total;
+};
+
 module.exports = {
     calculateEfficiency,
     calculateKillsDeathsRatio,
     calculateKillsDeathsAssists,
     calculateRatio,
+    calculatePercent,
+    calculateAverage,
 };

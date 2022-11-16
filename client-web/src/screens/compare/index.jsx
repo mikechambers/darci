@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import PageSectionView from "../../components/PageSectionView";
 import { Buffer } from "buffer";
 import {
-    CharacterClass,
+    calculateRatio,
     CharacterClassSelection,
     Mode,
     Moment,
@@ -12,8 +12,7 @@ import {
 import { SEASON_TYPE } from "../../core/consts";
 import { useFetchPlayerSummary } from "../../hooks/remote";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
-import { subtractDaysFromDate } from "shared/packages/enums/Moment";
-import { calculateAverage, calculatePercent } from "../../core/utils";
+import { calculateAverage } from "shared/packages/utils";
 
 const pageContainerStyle = {
     //minWidth: "720px",
@@ -95,60 +94,87 @@ const CompareView = (props) => {
         return ((n - o) / o) * 100;
     };
 
-    const f = (label, a, b, isPercent) => {
-        let c = calculatePercentChange(a, b);
+    //TODO: move these to const
+    let avgFormatter = new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
 
-        a = isPercent ? `${a.toFixed(2)}%` : a.toLocaleString("en-US");
-        b = isPercent ? `${b.toFixed(2)}%` : b.toLocaleString("en-US");
+    let digitFormatter = new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0,
+    });
 
+    let percentFormatter = new Intl.NumberFormat("en-US", {
+        style: "percent",
+        minimumFractionDigits: 0, //change both to 2 for trailing numbers
+        maximumFractionDigits: 0,
+    });
+
+    let changeFormatter = new Intl.NumberFormat("en-US", {
+        style: "percent",
+        signDisplay: "exceptZero",
+        minimumFractionDigits: 0, //change both to 2 for trailing numbers
+        maximumFractionDigits: 0,
+    });
+
+    const f = (label, a, b, formatter) => {
         return {
             label,
-            data0: a,
-            data1: b,
-            change: c,
+            data0: formatter.format(a),
+            data1: formatter.format(b),
+            change: (b - a) / a,
         };
     };
 
     let s0 = player0Summary;
     let s1 = player1Summary;
     let sData = [
-        f("Games", s0.summary.activityCount, s1.summary.activityCount),
+        f(
+            "Games",
+            s0.summary.activityCount,
+            s1.summary.activityCount,
+            digitFormatter
+        ),
         f(
             "Win %",
-            calculatePercent(s0.summary.wins, s0.summary.activityCount),
-            calculatePercent(s1.summary.wins, s1.summary.activityCount),
-            true
+            calculateRatio(s0.summary.wins, s0.summary.activityCount),
+            calculateRatio(s1.summary.wins, s1.summary.activityCount),
+            percentFormatter
         ),
         f(
             "Mercy %",
-            calculatePercent(
+            calculateRatio(
                 s0.summary.completionReasonMercy,
                 s0.summary.activityCount
             ),
-            calculatePercent(
+            calculateRatio(
                 s1.summary.completionReasonMercy,
                 s1.summary.activityCount
             ),
-            true
+            percentFormatter
         ),
         f(
             "Completed %",
-            calculatePercent(s0.summary.completed, s0.summary.activityCount),
-            calculatePercent(s1.summary.completed, s1.summary.activityCount)
+            calculateRatio(s0.summary.completed, s0.summary.activityCount),
+            calculateRatio(s1.summary.completed, s1.summary.activityCount),
+            percentFormatter
         ),
 
         f(
             "Kill / g",
             calculateAverage(s0.summary.kills, s0.summary.activityCount),
-            calculateAverage(s1.summary.kills, s1.summary.activityCount)
+            calculateAverage(s1.summary.kills, s1.summary.activityCount),
+            avgFormatter
         ),
-        f("Kills", s0.summary.kills, s1.summary.kills),
+        f("Kills", s0.summary.kills, s1.summary.kills, digitFormatter),
         f(
             "Assists / g",
             calculateAverage(s0.summary.assists, s0.summary.activityCount),
-            calculateAverage(s1.summary.assists, s1.summary.activityCount)
+            calculateAverage(s1.summary.assists, s1.summary.activityCount),
+            percentFormatter
         ),
-        f("Assists", s0.summary.assists, s1.summary.assists),
+        f("Assists", s0.summary.assists, s1.summary.assists, digitFormatter),
         f(
             "Defeats / g",
             calculateAverage(
@@ -158,32 +184,47 @@ const CompareView = (props) => {
             calculateAverage(
                 s1.summary.opponentsDefeated,
                 s1.summary.activityCount
-            )
+            ),
+            percentFormatter
         ),
         f(
             "Defeats",
             s0.summary.opponentsDefeated,
-            s1.summary.opponentsDefeated
+            s1.summary.opponentsDefeated,
+            digitFormatter
         ),
         f(
             "Deaths / g",
             calculateAverage(s0.summary.deaths, s0.summary.activityCount),
-            calculateAverage(s1.summary.deaths, s1.summary.activityCount)
+            calculateAverage(s1.summary.deaths, s1.summary.activityCount),
+            avgFormatter
         ),
-        f("Deaths", s0.summary.deaths, s1.summary.deaths),
+        f("Deaths", s0.summary.deaths, s1.summary.deaths, digitFormatter),
     ];
 
-    console.log(s0);
-
-    const style = {
-        padding: "6px",
+    const tableStyle = {
+        borderSpacing: "20px",
+        width: "500px",
+        verticalAlign: "text-bottom",
+        background: "#eeeeee",
+        border: "3px solid #111111",
+        borderCollapse: "collapse",
+    };
+    const labelStyle = {
+        font: "var(--light) 20px var(--font-family)",
+        color: "#222222",
+        textAlign: "right",
+    };
+    const dataStyle = {
+        font: "var(--light) 20px var(--font-family)",
+        color: "#222222",
+        textAlign: "left",
     };
 
-    const formatChanged = (d) => {
-        const pre = d > 0 ? "+" : "";
-
-        return `${pre}${d.toFixed(2)}`;
+    const changeStyle = {
+        ...dataStyle,
     };
+
     return (
         <div
             id="page_nav"
@@ -198,22 +239,26 @@ const CompareView = (props) => {
                 />
 
                 <div>
-                    <table style={{ width: "500px", cellSpacing: "6px" }}>
+                    <table style={tableStyle}>
                         <tbody>
                             {sData.map((d) => {
+                                let c = {
+                                    ...changeStyle,
+                                };
+
+                                if (d.change > 0) {
+                                    c.color = "#00FF00";
+                                } else {
+                                    c.color = "#FF0000";
+                                }
+
                                 return (
-                                    <tr key={d.label} style={style}>
-                                        <td className="subsection_header">
-                                            {d.label}
-                                        </td>
-                                        <td className="label_data">
-                                            {d.data0}
-                                        </td>
-                                        <td className="label_data">
-                                            {d.data1}
-                                        </td>
-                                        <td className="label_data">
-                                            {formatChanged(d.change)}%
+                                    <tr key={d.label}>
+                                        <td style={labelStyle}>{d.label}</td>
+                                        <td style={dataStyle}>{d.data0}</td>
+                                        <td style={dataStyle}>{d.data1}</td>
+                                        <td style={c}>
+                                            {changeFormatter.format(d.change)}
                                         </td>
                                     </tr>
                                 );

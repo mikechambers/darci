@@ -23,10 +23,10 @@
 
 import React from "react";
 
-import { calculatePercent } from "../../../core/utils";
 import StatView from "../../../components/StatView";
 import { calculateKillsDeathsRatio, calculateEfficiency } from "shared";
 import { LARGE, RIGHT } from "../../../core/consts";
+import { calculatePercent } from "shared/packages/utils";
 
 const style = {
     display: "flex",

@@ -23,7 +23,7 @@
 
 import React from "react";
 
-import { calculatePercent } from "../../../core/utils";
+import { calculatePercent } from "shared/packages/utils";
 
 import StatCollectionView from "../../../components/StatCollectionView";
 

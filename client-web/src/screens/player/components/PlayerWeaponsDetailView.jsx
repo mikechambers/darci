@@ -23,7 +23,8 @@
 
 import React from "react";
 
-import { calculatePercent, calculateAverage } from "../../../core/utils/index";
+import { calculateAverage } from "shared/packages/utils";
+import { calculatePercent } from "shared/packages/utils";
 import PlayerWeaponsDetailList from "./PlayerWeaponsDetailList";
 
 export const WEAPONS_DETAIL_GAME = "WEAPONS_DETAIL_GAME";

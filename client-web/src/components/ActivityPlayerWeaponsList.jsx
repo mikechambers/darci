@@ -26,7 +26,7 @@ import Icon, { PRECISION_ICON } from "./Icon";
 import WeaponIcon from "./WeaponIcon";
 import WeaponImageView from "./WeaponImageView";
 import { SMALL } from "../core/consts";
-import { calculatePercent } from "../core/utils";
+import { calculatePercent } from "shared/packages/utils";
 
 const rootStyle = {
     width: 365,

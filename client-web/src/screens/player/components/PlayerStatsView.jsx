@@ -27,7 +27,7 @@ import ResultSummaryView from "./ResultSummaryView";
 import PlayerAbilityStatSummaryView from "./PlayerAbilityStatSummaryView";
 import StatSummaryView from "../../../components/StatSummaryView";
 
-import { calculateAverage } from "../../../core/utils";
+import { calculateAverage } from "shared/packages/utils";
 import PlayerWeaponStatSummaryView from "./PlayerWeaponStatSummaryView";
 
 const style = {

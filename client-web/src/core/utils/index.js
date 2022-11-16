@@ -23,21 +23,19 @@
 
 import { MOMENT_TYPE } from "../consts";
 
-export const calculateAverage = (value, total) => {
-    if (!total) {
+/*
+export const calculateRatio = (a, b) => {
+    if (!b) {
         return 0;
     }
 
-    return value / total;
+    return a / b;
 };
 
 export const calculatePercent = (value, total) => {
-    if (!total) {
-        return 0;
-    }
-
-    return (value / total) * 100.0;
+    return calculateRatio(value, total) * 100.0;
 };
+*/
 
 /***
 {

@@ -24,9 +24,10 @@
 import React from "react";
 
 import { calculateRatio } from "shared";
-import { calculatePercent } from "../core/utils";
+
 import Stat from "./StatView";
 import { RIGHT } from "../core/consts";
+import { calculatePercent } from "shared/packages/utils";
 
 const rootStyle = {
     maxWidth: 125,
