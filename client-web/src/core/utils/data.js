@@ -40,3 +40,9 @@ export const parseMedalsFromServer = (medals, manifest) => {
     }
     return out;
 };
+
+export const reducer = (initial, type, payload) => {
+    let out = { ...initial };
+    out[type] = payload;
+    return out;
+};

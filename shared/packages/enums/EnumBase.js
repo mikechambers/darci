@@ -91,6 +91,10 @@ class EnumBase {
         return this._label;
     }
 
+    get value() {
+        return this._type;
+    }
+
     toString() {
         return this._type;
     }

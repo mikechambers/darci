@@ -114,107 +114,107 @@ class Moment extends EnumBase {
     }
 
     getDate() {
-        if (this == Moment.NOW) {
+        if (this === Moment.NOW) {
             return new Date();
         }
 
-        if (this == Moment.DAILY) {
+        if (this === Moment.DAILY) {
             return Moment.getLastDailyReset();
         }
 
-        if (this == Moment.WEEKEND) {
+        if (this === Moment.WEEKEND) {
             return Moment.getLastFridayReset();
         }
 
-        if (this == Moment.WEEKLY) {
+        if (this === Moment.WEEKLY) {
             return Moment.getLastWeeklyReset();
         }
 
-        if (this == Moment.DAY) {
+        if (this === Moment.DAY) {
             return Moment.subtractDaysFromDate(new Date(), 1);
         }
 
-        if (this == Moment.WEEK) {
+        if (this === Moment.WEEK) {
             return Moment.subtractDaysFromDate(new Date(), 7);
         }
 
-        if (this == Moment.MONTH) {
+        if (this === Moment.MONTH) {
             return Moment.subtractMonthsFromDate(new Date(), 1);
         }
 
-        if (this == Moment.ALL_TIME || this == Moment.LAUNCH) {
+        if (this === Moment.ALL_TIME || this === Moment.LAUNCH) {
             return Moment.getDestiny2LaunchDate();
         }
 
-        if (this == Moment.CURSE_OF_OSIRIS) {
+        if (this === Moment.CURSE_OF_OSIRIS) {
             return new Date(Date.UTC(2017, 11, 5, 17, 0, 0));
         }
 
-        if (this == Moment.WARMIND) {
+        if (this === Moment.WARMIND) {
             return new Date(Date.UTC(2018, 4, 8, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_THE_OUTLAW) {
+        if (this === Moment.SEASON_OF_THE_OUTLAW) {
             return new Date(Date.UTC(2018, 8, 4, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_THE_FORGE) {
+        if (this === Moment.SEASON_OF_THE_FORGE) {
             return new Date(Date.UTC(2018, 11, 4, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_THE_DRIFTER) {
+        if (this === Moment.SEASON_OF_THE_DRIFTER) {
             return new Date(Date.UTC(2019, 2, 5, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_OPULENCE) {
+        if (this === Moment.SEASON_OF_OPULENCE) {
             return new Date(Date.UTC(2019, 5, 4, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_THE_UNDYING) {
+        if (this === Moment.SEASON_OF_THE_UNDYING) {
             return new Date(Date.UTC(2019, 9, 1, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_DAWN) {
+        if (this === Moment.SEASON_OF_DAWN) {
             return new Date(Date.UTC(2019, 11, 10, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_THE_WORTHY) {
+        if (this === Moment.SEASON_OF_THE_WORTHY) {
             return new Date(Date.UTC(2020, 2, 10, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_ARRIVALS) {
+        if (this === Moment.SEASON_OF_ARRIVALS) {
             return new Date(Date.UTC(2020, 5, 9, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_THE_HUNT) {
+        if (this === Moment.SEASON_OF_THE_HUNT) {
             return new Date(Date.UTC(2020, 10, 10, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_THE_CHOSEN) {
+        if (this === Moment.SEASON_OF_THE_CHOSEN) {
             return new Date(Date.UTC(2021, 1, 9, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_THE_SPLICER) {
+        if (this === Moment.SEASON_OF_THE_SPLICER) {
             return new Date(Date.UTC(2021, 4, 11, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_THE_LOST) {
+        if (this === Moment.SEASON_OF_THE_LOST) {
             return new Date(Date.UTC(2021, 7, 24, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_THE_RISEN) {
+        if (this === Moment.SEASON_OF_THE_RISEN) {
             return new Date(Date.UTC(2022, 1, 22, 17, 0, 0));
         }
 
-        if (this == Moment.WITCH_QUEEN) {
+        if (this === Moment.WITCH_QUEEN) {
             return new Date(Date.UTC(2022, 1, 22, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_THE_HAUNTED) {
+        if (this === Moment.SEASON_OF_THE_HAUNTED) {
             return new Date(Date.UTC(2022, 4, 24, 17, 0, 0));
         }
 
-        if (this == Moment.SEASON_OF_PLUNDER) {
+        if (this === Moment.SEASON_OF_PLUNDER) {
             return new Date(Date.UTC(2022, 7, 23, 17, 0, 0));
         }
 

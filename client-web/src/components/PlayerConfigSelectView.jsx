@@ -22,7 +22,7 @@
  */
 
 import { CharacterClassSelection, Mode, Moment } from "shared";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useLocalStorage } from "@mantine/hooks";
 import Player from "../core/data/Player";
 import CharacterClassSelectionSelect from "./CharacterClassSelectionSelect";
@@ -57,7 +57,7 @@ const PlayerConfigSelectView = (props) => {
 
     const [mode, setMode] = useLocalStorage({
         key: "config-mode",
-        defaultValue: Mode.PVP_QUICKPLAY,
+        defaultValue: Mode.ALL_PVP,
         serialize: (value) => {
             return value.type;
         },
@@ -117,11 +117,22 @@ const PlayerConfigSelectView = (props) => {
     };
 
     let onClick = function (e) {
+        let p = player;
+        if (!p) {
+            if (!players || !players.length) {
+                return;
+            }
+
+            p = players[0];
+
+            //have to do this since we can't set a default player above
+            setPlayer(p);
+        }
         let url = createPlayerUrl({
-            player,
+            player: p,
             characterClass,
             mode,
-            momentType: MOMENT_TYPE,
+            periodType: MOMENT_TYPE,
             startMoment: moment,
         });
 

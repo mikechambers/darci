@@ -99,6 +99,10 @@ class Player {
     toString() {
         return this.getFullName();
     }
+
+    get value() {
+        return this.label;
+    }
 }
 
 export default Player;

@@ -88,6 +88,7 @@
   --page-max-width:900px;
   --nav-item-gap:24px;
   --leader-view-grid-gap:36px;
+  --form-section-gap:16px;
 
   --text-shadow:1px 1px 1px black;
 
@@ -567,10 +568,11 @@ button:active {
   translate: 0px 1px;
 }
 
+/*************** forms **********************/
+
 .form_validation_msg {
 	color:var(--color-form-validation-msg);
 }
-
 
 /******* loading spinner ***********/
 

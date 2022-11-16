@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { truncate } from "../core/utils/string";
 
@@ -34,55 +34,31 @@ const EnumSelect = (props) => {
     const disabled =
         props.disabled !== undefined && props.disabled ? true : false;
 
+    //let [selectedItem, setSelectedItem] = useState(selected);
+    /*
+    useEffect(() => {
+        if (selectedItem) {
+            onChange(selectedItem);
+        }
+    }, [selectedItem]);
+    */
+
     let handleOnChange = function (e) {
-        onChange(options[e.target.selectedIndex].data);
+        //setSelectedItem(options[e.target.selectedIndex]);
+        onChange(options[e.target.selectedIndex]);
     };
 
-    if (!options) {
-        options = [];
-    }
+    /*
+    useEffect(() => {
+        if (options && selected) {
+            let s = options.find((element) => element.value === selected.value);
 
-    options = options.map((item, index) => {
-        return {
-            value: item.label,
-            label: truncate(item.label, maxLabelLength),
-            data: item,
-        };
-    });
-
-    let defaultValue = "";
-    if (options && options.length && props.selected) {
-        const found = options.find((option) => {
-            //note, label may be truncated in options
-            return option.value === selected.label;
-        });
-
-        //defaultValue = found ? found.value : options[0].value;
-
-        if (found) {
-            defaultValue = found.value;
-        } else {
-            //if we get here it means that a default value was passed in
-            //that is not in the data set (happens when we remove a season option)
-            //so, we set default to the first item in the data, and then broadcast that
-            //the selected item changed. But we have to wait a frame to do it
-            //since we cant cause a re-render when the component is rendering.
-            defaultValue = options[0].value;
-            window.requestAnimationFrame(() => {
-                onChange(options[0].data);
-            });
+            if (s) {
+                setSelectedItem(s);
+            }
         }
-    } else if (options && options.length && !props.selected) {
-        //todo: this feels really hacky and there is almost certainly a better way
-        //to do this. basically this is here so wrapper of this are always insync with
-        //the values. this specific case is for when the options are loaded from the sever
-        //and no selected value is passed in. so we need to set the first item to selected
-        //and call back
-        window.requestAnimationFrame(() => {
-            console.log("hi");
-            onChange(options[0].data);
-        });
-    }
+    }, [options, selected]);
+    */
 
     let labelDiv = label ? <label className="form_label">{label}</label> : "";
 
@@ -91,13 +67,17 @@ const EnumSelect = (props) => {
             {labelDiv}
             <select
                 onChange={handleOnChange}
-                value={defaultValue}
+                value={selected ? selected : ""}
                 disabled={disabled}
             >
                 {options.map((item) => {
                     return (
-                        <option key={item.value} value={item.value}>
-                            {item.label}
+                        <option
+                            key={item.value}
+                            defaultValue={selected ? selected : ""}
+                            value={item.value}
+                        >
+                            {truncate(item.label, maxLabelLength)}
                         </option>
                     );
                 })}

@@ -34,6 +34,7 @@ import AboutView from "./screens/about/index";
 import NoMatchView from "./screens/404/index";
 import SearchView from "./screens/search";
 import LatestView from "./screens/latest";
+import CompareView from "./screens/compare";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -57,6 +58,11 @@ ReactDOM.render(
                         path="latest/:memberId/"
                         element={<LatestView />}
                     ></Route>
+                    <Route
+                        index
+                        path="compare/:data/"
+                        element={<CompareView />}
+                    />
                     <Route path="*" element={<NoMatchView />} />
                 </Route>
             </Routes>

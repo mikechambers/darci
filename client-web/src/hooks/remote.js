@@ -37,6 +37,7 @@ import PlayerActivities from "../core/data/PlayerActivities";
 import PlayerMetrics from "../core/data/PlayerMetrics";
 import { ActivityNotFoundError } from "../core/errors";
 import { OrderBy } from "shared";
+import { reducer } from "../core/utils/data";
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 const STORAGE_MANIFEST_LAST_CHECK_KEY = "STORAGE_MANIFEST_LAST_CHECK_KEY";
@@ -530,10 +531,4 @@ const cleanUpTimeout = (id) => {
     if (id) {
         clearTimeout(id);
     }
-};
-
-const reducer = (initial, type, payload) => {
-    let out = { ...initial };
-    out[type] = payload;
-    return out;
 };

@@ -44,7 +44,7 @@ export const calculatePercent = (value, total) => {
   player,
     characterClass,
     mode,
-    momentType,
+    periodType,
     startMoment,
     endMoment,
     season,
@@ -53,12 +53,12 @@ export const calculatePercent = (value, total) => {
 */
 export const createPlayerUrl = function (opts) {
     let seasonStartMomentString =
-        opts.momentType === MOMENT_TYPE
+        opts.periodType === MOMENT_TYPE
             ? opts.startMoment.type
             : opts.season.type;
 
     let lastArgStr =
-        opts.momentType === MOMENT_TYPE && opts.endMoment
+        opts.periodType === MOMENT_TYPE && opts.endMoment
             ? `${opts.endMoment.type}/`
             : "";
 
@@ -67,7 +67,7 @@ export const createPlayerUrl = function (opts) {
     let ts = new Date().getTime();
 
     //this is a little messy
-    let url = `/player/${opts.player.memberId}/${opts.player.platformId}/${opts.characterClass.type}/${opts.mode.type}/${opts.momentType}/${seasonStartMomentString}/${lastArgStr}?fr=${ts}${orderByStr}`;
+    let url = `/player/${opts.player.memberId}/${opts.player.platformId}/${opts.characterClass.type}/${opts.mode.type}/${opts.periodType}/${seasonStartMomentString}/${lastArgStr}?fr=${ts}${orderByStr}`;
 
     return url;
 };
