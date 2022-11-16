@@ -95,8 +95,11 @@ const CompareView = (props) => {
         return ((n - o) / o) * 100;
     };
 
-    const f = (label, a, b) => {
+    const f = (label, a, b, isPercent) => {
         let c = calculatePercentChange(a, b);
+
+        a = isPercent ? `${a.toFixed(2)}%` : a.toLocaleString("en-US");
+        b = isPercent ? `${b.toFixed(2)}%` : b.toLocaleString("en-US");
 
         return {
             label,
@@ -113,7 +116,8 @@ const CompareView = (props) => {
         f(
             "Win %",
             calculatePercent(s0.summary.wins, s0.summary.activityCount),
-            calculatePercent(s1.summary.wins, s1.summary.activityCount)
+            calculatePercent(s1.summary.wins, s1.summary.activityCount),
+            true
         ),
         f(
             "Mercy %",
@@ -124,7 +128,8 @@ const CompareView = (props) => {
             calculatePercent(
                 s1.summary.completionReasonMercy,
                 s1.summary.activityCount
-            )
+            ),
+            true
         ),
         f(
             "Completed %",
@@ -198,10 +203,18 @@ const CompareView = (props) => {
                             {sData.map((d) => {
                                 return (
                                     <tr key={d.label} style={style}>
-                                        <td>{d.label}</td>
-                                        <td>{d.data0}</td>
-                                        <td>{d.data1}</td>
-                                        <td>{formatChanged(d.change)}%</td>
+                                        <td className="subsection_header">
+                                            {d.label}
+                                        </td>
+                                        <td className="label_data">
+                                            {d.data0}
+                                        </td>
+                                        <td className="label_data">
+                                            {d.data1}
+                                        </td>
+                                        <td className="label_data">
+                                            {formatChanged(d.change)}%
+                                        </td>
                                     </tr>
                                 );
                             })}
