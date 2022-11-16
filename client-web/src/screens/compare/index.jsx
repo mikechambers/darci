@@ -2,14 +2,22 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import PageSectionView from "../../components/PageSectionView";
 import { Buffer } from "buffer";
-import { CharacterClass, Mode, Moment, Season } from "shared";
+import {
+    CharacterClass,
+    CharacterClassSelection,
+    Mode,
+    Moment,
+    Season,
+} from "shared";
 import { SEASON_TYPE } from "../../core/consts";
 import { useFetchPlayerSummary } from "../../hooks/remote";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
+import { subtractDaysFromDate } from "shared/packages/enums/Moment";
+import { calculateAverage, calculatePercent } from "../../core/utils";
 
 const pageContainerStyle = {
     //minWidth: "720px",
-    width: "000%",
+    width: "100%",
 };
 
 const gappedStyle = {
@@ -17,7 +25,7 @@ const gappedStyle = {
     flexDirection: "column",
     gap: "30px",
     //width: "250px",
-    width: "min-content",
+    //width: "min-content",
 };
 
 const CompareView = (props) => {
@@ -46,7 +54,9 @@ const CompareView = (props) => {
             mode: Mode.fromType(data[0].mode),
             startMoment: sm0,
             endMoment: em0,
-            characterClass: CharacterClass.fromType(data[0].characterClass),
+            characterClass: CharacterClassSelection.fromType(
+                data[0].characterClass
+            ),
             undefined,
         });
 
@@ -68,17 +78,107 @@ const CompareView = (props) => {
             mode: Mode.fromType(data[1].mode),
             startMoment: sm1,
             endMoment: em1,
-            characterClass: CharacterClass.fromType(data[1].characterClass),
+            characterClass: CharacterClassSelection.fromType(
+                data[1].characterClass
+            ),
             undefined,
         });
 
-    console.log(player0Summary);
-    console.log(player1Summary);
+    //console.log(player0Summary);
+    //console.log(player1Summary);
 
     if (isPlayer0SummaryLoading || isPlayer1SummaryLoading) {
         return <LoadingAnimationView message="Loading Player data." />;
     }
 
+    const calculatePercentChange = function (o, n) {
+        return ((n - o) / o) * 100;
+    };
+
+    const f = (label, a, b) => {
+        let c = calculatePercentChange(a, b);
+
+        return {
+            label,
+            data0: a,
+            data1: b,
+            change: c,
+        };
+    };
+
+    let s0 = player0Summary;
+    let s1 = player1Summary;
+    let sData = [
+        f("Games", s0.summary.activityCount, s1.summary.activityCount),
+        f(
+            "Win %",
+            calculatePercent(s0.summary.wins, s0.summary.activityCount),
+            calculatePercent(s1.summary.wins, s1.summary.activityCount)
+        ),
+        f(
+            "Mercy %",
+            calculatePercent(
+                s0.summary.completionReasonMercy,
+                s0.summary.activityCount
+            ),
+            calculatePercent(
+                s1.summary.completionReasonMercy,
+                s1.summary.activityCount
+            )
+        ),
+        f(
+            "Completed %",
+            calculatePercent(s0.summary.completed, s0.summary.activityCount),
+            calculatePercent(s1.summary.completed, s1.summary.activityCount)
+        ),
+
+        f(
+            "Kill / g",
+            calculateAverage(s0.summary.kills, s0.summary.activityCount),
+            calculateAverage(s1.summary.kills, s1.summary.activityCount)
+        ),
+        f("Kills", s0.summary.kills, s1.summary.kills),
+        f(
+            "Assists / g",
+            calculateAverage(s0.summary.assists, s0.summary.activityCount),
+            calculateAverage(s1.summary.assists, s1.summary.activityCount)
+        ),
+        f("Assists", s0.summary.assists, s1.summary.assists),
+        f(
+            "Defeats / g",
+            calculateAverage(
+                s0.summary.opponentsDefeated,
+                s0.summary.activityCount
+            ),
+            calculateAverage(
+                s1.summary.opponentsDefeated,
+                s1.summary.activityCount
+            )
+        ),
+        f(
+            "Defeats",
+            s0.summary.opponentsDefeated,
+            s1.summary.opponentsDefeated
+        ),
+        f(
+            "Deaths / g",
+            calculateAverage(s0.summary.deaths, s0.summary.activityCount),
+            calculateAverage(s1.summary.deaths, s1.summary.activityCount)
+        ),
+        f("Deaths", s0.summary.deaths, s1.summary.deaths),
+    ];
+
+    console.log(s0);
+
+    const style = {
+        padding: "6px",
+    };
+
+    const formatChanged = (d) => {
+        const pre = d > 0 ? "+" : "";
+
+        return `${pre}${d.toFixed(2)}`;
+    };
     return (
         <div
             id="page_nav"
@@ -91,6 +191,23 @@ const CompareView = (props) => {
                     title="Results"
                     description="Player search"
                 />
+
+                <div>
+                    <table style={{ width: "500px", cellSpacing: "6px" }}>
+                        <tbody>
+                            {sData.map((d) => {
+                                return (
+                                    <tr key={d.label} style={style}>
+                                        <td>{d.label}</td>
+                                        <td>{d.data0}</td>
+                                        <td>{d.data1}</td>
+                                        <td>{formatChanged(d.change)}%</td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );
