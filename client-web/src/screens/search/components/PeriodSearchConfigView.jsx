@@ -34,10 +34,6 @@ const PeriodSearchConfigView = (props) => {
         validationMessage: undefined,
     });
 
-    useEffect(() => {
-        onChange(output);
-    }, [output]);
-
     const isValid = function (periodType, startMoment, endMoment) {
         //only need to validate right now if period is set to MOMENT_TYPE
         if (periodType === SEASON_TYPE) {

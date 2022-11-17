@@ -33,15 +33,15 @@ const PlayerCompareConfigView = (props) => {
     });
 
     useEffect(() => {
+        onChange(output);
+    }, [output]);
+
+    useEffect(() => {
         if (players && players.length) {
             let s = reducer(output, "player", players[0]);
             setOutput(s);
         }
     }, [players]);
-
-    useEffect(() => {
-        onChange(output);
-    }, [output]);
 
     const onItemChange = function (type, data) {
         let s = reducer(output, type, data);
