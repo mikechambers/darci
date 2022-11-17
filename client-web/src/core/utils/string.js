@@ -21,6 +21,42 @@
  * SOFTWARE.
  */
 
+import { FLOAT_DECIMAL_PRECISION } from "../consts";
+
+//Format floating point  23.40
+export const FLOAT_FORMATTER = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: FLOAT_DECIMAL_PRECISION,
+    maximumFractionDigits: FLOAT_DECIMAL_PRECISION,
+});
+
+//format numbers / ints 23
+export const INT_FORMATTER = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+});
+
+//format number / int percent 23%
+export const PERCENT_INT_FORMATTER = new Intl.NumberFormat("en-US", {
+    style: "percent",
+    minimumFractionDigits: 0, //change both to 2 for trailing numbers
+    maximumFractionDigits: 0,
+});
+
+//format percent float 23.40%
+export const PERCENT_FORMATTER = new Intl.NumberFormat("en-US", {
+    style: "percent",
+    minimumFractionDigits: FLOAT_DECIMAL_PRECISION, //change both to 2 for trailing numbers
+    maximumFractionDigits: FLOAT_DECIMAL_PRECISION,
+});
+
+//format percent change number +24%
+export const PERCENT_CHANGE_INT_FORMATTER = new Intl.NumberFormat("en-US", {
+    style: "percent",
+    signDisplay: "exceptZero",
+    minimumFractionDigits: 0, //change both to 2 for trailing numbers
+    maximumFractionDigits: 0,
+});
+
 export const capitalize = function (str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 };

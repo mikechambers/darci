@@ -37,13 +37,13 @@ import CompactMedalsList from "../../../components/CompactMedalsList";
 import { SMALL } from "../../../core/consts";
 
 const resultWinStyle = {
-    backgroundColor: "#3FD445",
+    backgroundColor: "var(--color-win)",
     //width: "6px",
     borderRadius: "var(--radius-border) 0px 0px var(--radius-border)",
 };
 
 const resultLossStyle = {
-    backgroundColor: "#E92626",
+    backgroundColor: "var(--color-loss)",
     //width: "6px",
     borderRadius: "var(--radius-border) 0px 0px var(--radius-border)",
 };

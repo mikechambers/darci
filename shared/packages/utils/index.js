@@ -43,6 +43,18 @@ const calculatePercent = (value, total) => {
     return calculateRatio(value, total) * 100.0;
 };
 
+const calculateChange = function (old, n) {
+    if (!old) {
+        return 0;
+    }
+
+    return (n - old) / old;
+};
+
+const calculatePercentChange = function (old, n) {
+    return calculateChange(old, n) * 100;
+};
+
 const calculateAverage = (value, total) => {
     if (!total) {
         return 0;
@@ -58,4 +70,6 @@ module.exports = {
     calculateRatio,
     calculatePercent,
     calculateAverage,
+    calculateChange,
+    calculatePercentChange,
 };

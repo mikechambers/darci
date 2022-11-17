@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+import IndicatorView from "./IndicatorView";
 
 import PlayerNameView from "./PlayerNameView";
 
@@ -74,11 +75,10 @@ const LeaderList = (props) => {
                     let teamsDiv = "";
                     if (showTeams) {
                         teamsDiv = (
-                            <div
-                                className={`${item.teamName.toLowerCase()}_team`}
-                                style={teamStyle}
+                            <IndicatorView
+                                color={`var(--color-${item.teamName.toLowerCase()}-team)`}
                                 title={`${item.teamName} team`}
-                            ></div>
+                            />
                         );
                     }
 
