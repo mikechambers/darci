@@ -23,6 +23,10 @@ Future features being considered:
 
 Note that DARCI does not track data for ALL Destiny 2 PVP players. It only tracks the data for the players it has been configured to track.
 
+NOTE: DARCI is still pre-release and under development, which means it still has
+some bugs and needs some polish. If you run into any issues or have any
+suggestions please [log an issue](https://github.com/mikechambers/darci/issues) or share on the [Discord server](https://discord.gg/2Y8bV2Mq3p).
+
 ## Screenshots
 
 ![image](images/player_thumbnail_m.png)
