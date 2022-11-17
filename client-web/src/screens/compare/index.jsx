@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import PageSectionView from "../../components/PageSectionView";
 import { Buffer } from "buffer";
 import { CharacterClassSelection, Mode, Moment, Season } from "shared";
@@ -90,10 +90,15 @@ const CompareView = (props) => {
         >
             <div style={gappedStyle}>
                 <PageSectionView
-                    id="results"
-                    title="Results"
+                    id="compare"
+                    title="Compare"
                     description="Player search"
                 />
+
+                <div>
+                    You can change parameters on the{" "}
+                    <Link to="/search/">search page</Link>.
+                </div>
 
                 <PlayerCompareView
                     summary1={player0Summary}

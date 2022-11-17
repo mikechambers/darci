@@ -16,6 +16,7 @@ import {
     PERCENT_INT_FORMATTER,
 } from "../../../core/utils/string";
 import CompareRowChangeCellView from "./CompareRowChangeCellView";
+import CompareRowDivider from "./CompareRowDivider";
 
 const rootStyle = {
     display: "flex",
@@ -24,23 +25,10 @@ const rootStyle = {
     width: "497px",
 };
 
-const dividerStyle = {
-    //backgroundColor: "var(--color-list-item-background)",
-    //width: "497px",
-    width: "100%",
-};
-
-const dividerCell = {
-    display: "flex",
-
-    justifyContent: "center",
-    width: "100%",
-    alignItems: "stretch",
-    padding: "8px 0px",
-};
-
-const hStyle = {
-    margin: "8px",
+const dataRowStyle = {
+    display: "grid",
+    gridTemplateColumns: "135px 150px 150px 50px",
+    rowGap: "4px",
 };
 
 const PlayerCompareView = (props) => {
@@ -51,18 +39,9 @@ const PlayerCompareView = (props) => {
 
     const sData = formatData(summary1, summary2);
 
-    let divider = (
-        <div style={dividerStyle}>
-            <div style={dividerCell}>
-                <hr style={hStyle} />
-                Games
-                <hr style={hStyle} />
-            </div>
-        </div>
-    );
     return (
         <div style={rootStyle}>
-            <div className="compare_row">
+            <div className="compare_row" style={dataRowStyle}>
                 <div></div>
                 <div>
                     <PlayerNameView player={summary1.player} />
@@ -73,36 +52,40 @@ const PlayerCompareView = (props) => {
                 <div></div>
             </div>
 
-            <div className="compare_row">
+            <div className="compare_row" style={dataRowStyle}>
                 <div>Class</div>
                 <div>{summary1.query.classSelection}</div>
                 <div>{summary1.query.classSelection}</div>
                 <div></div>
             </div>
 
-            <div className="compare_row">
+            <div className="compare_row" style={dataRowStyle}>
                 <div>Mode</div>
                 <div>{summary1.query.mode}</div>
                 <div>{summary1.query.mode}</div>
                 <div></div>
             </div>
 
-            <div className="compare_row">
+            <div className="compare_row" style={dataRowStyle}>
                 <div>Period</div>
                 <div>{createPeriodData(period1)}</div>
                 <div>{createPeriodData(period2)}</div>
                 <div></div>
             </div>
 
-            {divider}
+            <CompareRowDivider label="Games" />
 
             {sData.map((d) => {
-                if (!d) {
-                    return divider;
+                if (d.isDivider) {
+                    return <CompareRowDivider label={d.label} key={d.label} />;
                 }
 
                 return (
-                    <div className="compare_row" key={d.label}>
+                    <div
+                        className="compare_row"
+                        style={dataRowStyle}
+                        key={d.label}
+                    >
                         <div>{d.label}</div>
                         <div>{d.data0}</div>
                         <div>{d.data1}</div>
@@ -318,7 +301,7 @@ const formatData = function (s0, s1) {
             INT_FORMATTER
         ),
 
-        createDivider("Kills"),
+        createDivider("Kill Types"),
 
         createRow(
             "Weapon Kills",
@@ -388,7 +371,7 @@ const formatData = function (s0, s1) {
         ),
 
         createRow("Gold Medals", m0.gold, m1.gold, INT_FORMATTER),
-        createRow("We Ran", m0.weRan, m1.weRan, INT_FORMATTER),
+        createRow("We Rans", m0.weRan, m1.weRan, INT_FORMATTER),
         createDivider("Maps"),
     ];
 
