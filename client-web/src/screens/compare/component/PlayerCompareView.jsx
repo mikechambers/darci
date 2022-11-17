@@ -338,7 +338,7 @@ const formatData = function (s0, s1) {
             PERCENT_INT_FORMATTER
         ),
 
-        createDivider("Weapon Type"),
+        createDivider("Weapon Types"),
 
         createRow(
             "Primary Weapon",
