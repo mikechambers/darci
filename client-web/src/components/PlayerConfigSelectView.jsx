@@ -100,6 +100,14 @@ const PlayerConfigSelectView = (props) => {
         },
     });
 
+    useEffect(() => {
+        if (players && players.length) {
+            if (!player) {
+                setPlayer(players[0]);
+            }
+        }
+    }, [players]);
+
     let classOnChange = function (e) {
         setCharacterClassSelection(e);
     };
@@ -117,28 +125,13 @@ const PlayerConfigSelectView = (props) => {
     };
 
     let onClick = function (e) {
-        let p = player;
-        if (!p) {
-            if (!players || !players.length) {
-                return;
-            }
-
-            p = players[0];
-
-            //have to do this since we can't set a default player above
-            setPlayer(p);
-        }
         let url = createPlayerUrl({
-            player: p,
+            player: player,
             characterClass,
             mode,
             periodType: MOMENT_TYPE,
             startMoment: moment,
         });
-
-        //the fr indicates its from this navigation, and passes a timestamp, so receivers
-        //can differentiate between different calls
-        //honestly, its a bit of a hack because my data framework isnt very good
 
         if (onClick) {
             onUpdate(url);
