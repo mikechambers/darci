@@ -35,30 +35,11 @@ const EnumSelect = (props) => {
         props.disabled !== undefined && props.disabled ? true : false;
 
     let [selectedItem, setSelectedItem] = useState(selected);
-    /*
-    useEffect(() => {
-        if (selectedItem) {
-            onChange(selectedItem);
-        }
-    }, [selectedItem]);
-    */
 
     let handleOnChange = function (e) {
         setSelectedItem(options[e.target.selectedIndex]);
         onChange(options[e.target.selectedIndex]);
     };
-
-    /*
-    useEffect(() => {
-        if (options && selected) {
-            let s = options.find((element) => element.value === selected.value);
-
-            if (s) {
-                setSelectedItem(s);
-            }
-        }
-    }, [options, selected]);
-    */
 
     let labelDiv = label ? <label className="form_label">{label}</label> : "";
 

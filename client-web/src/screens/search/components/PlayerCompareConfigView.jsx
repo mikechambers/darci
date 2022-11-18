@@ -1,5 +1,6 @@
-import React, { useContext, useEffect, useState } from "react";
-import { CharacterClassSelection, Mode, OrderBy } from "shared";
+import { useContext, useEffect, useReducer, useState } from "react";
+import { Mode } from "shared";
+import CharacterClassSelection from "shared/packages/enums/CharacterClassSelection";
 import CharacterClassSelectionSelect from "../../../components/CharacterClassSelectionSelect";
 import ModeSelect from "../../../components/ModeSelect";
 import PlayerSelect from "../../../components/PlayerSelect";
@@ -25,7 +26,13 @@ const PlayerCompareConfigView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
     const players = global.players;
 
-    const [output, setOutput] = useState({
+    const reducer = (state, action) => {
+        let out = { ...state };
+        out[action.type] = action.payload;
+        return out;
+    };
+
+    const [output, dispatch] = useReducer(reducer, {
         player: undefined,
         mode: Mode.ALL_PVP,
         period: undefined,
@@ -33,20 +40,14 @@ const PlayerCompareConfigView = (props) => {
     });
 
     useEffect(() => {
-        onChange(output);
-    }, [output]);
-
-    useEffect(() => {
         if (players && players.length) {
-            let s = reducer(output, "player", players[0]);
-            setOutput(s);
+            dispatch({ type: "player", payload: players[0] });
         }
     }, [players]);
 
-    const onItemChange = function (type, data) {
-        let s = reducer(output, type, data);
-        setOutput(s);
-    };
+    useEffect(() => {
+        onChange(output);
+    }, [output]);
 
     return (
         <fieldset style={formContainerStyle}>
@@ -54,23 +55,25 @@ const PlayerCompareConfigView = (props) => {
             <div style={formSectionStyle}>
                 <PlayerSelect
                     label="player"
-                    onChange={(d) => onItemChange("player", d)}
+                    onChange={(d) => dispatch({ type: "player", payload: d })}
                     players={players}
                 />
                 <CharacterClassSelectionSelect
                     label="class"
-                    onChange={(d) => onItemChange("characterClass", d)}
+                    onChange={(d) =>
+                        dispatch({ type: "characterClass", payload: d })
+                    }
                     selected={output.characterClass}
                 />
             </div>
 
             <ModeSelect
                 label="Mode"
-                onChange={(d) => onItemChange("mode", d)}
+                onChange={(d) => dispatch({ type: "mode", payload: d })}
                 selected={output.mode}
             />
             <PeriodSearchConfigView
-                onChange={(d) => onItemChange("period", d)}
+                onChange={(d) => dispatch({ type: "period", payload: d })}
             />
         </fieldset>
     );
