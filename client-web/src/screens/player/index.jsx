@@ -241,7 +241,6 @@ const PlayerView = () => {
         >
             <div style={gappedStyle}>
                 <ScreenNavigationView links={pageLinks} />
-
                 <div id="overview">
                     <PlayerActivitiesHeader
                         player={player}
@@ -257,75 +256,87 @@ const PlayerView = () => {
                     refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
                     align="left"
                 />
-
                 <PlayerPerformanceSummaryView
                     summary={summary}
                     medals={medals}
                 />
+                {summary.activityCount ? (
+                    <div>
+                        <div style={itemDetailsStyle}>
+                            <div>
+                                {" "}
+                                <PageSectionView
+                                    id="weapons"
+                                    title="Weapons"
+                                    description="Your weapon stats"
+                                />
+                                <PlayerWeaponsDetailView
+                                    weapons={weapons}
+                                    type={WEAPONS_DETAIL_GAME}
+                                />
+                            </div>
 
-                <div style={itemDetailsStyle}>
-                    <div>
-                        {" "}
+                            <div>
+                                <PageSectionView
+                                    id="meta"
+                                    title="Meta Weapons"
+                                    description="Weapon meta from your matches excluding you and your fireteam members"
+                                />
+                                <PlayerWeaponsDetailView
+                                    weapons={meta}
+                                    type={WEAPONS_DETAIL_PLAYER}
+                                />
+                            </div>
+
+                            <div>
+                                <PageSectionView
+                                    id="medals"
+                                    title="Medals"
+                                    description="Medals earned in matches"
+                                />
+                                <PlayerMedalsDetailList
+                                    medals={medals}
+                                    activityCount={summary.activityCount}
+                                />
+                            </div>
+                        </div>
+
+                        <div>
+                            <PageSectionView
+                                id="maps"
+                                description="Stats broken down by map"
+                                title="Maps"
+                            />
+                            <PlayerMapSummaryList maps={maps} />
+                        </div>
+
                         <PageSectionView
-                            id="weapons"
-                            title="Weapons"
-                            description="Your weapon stats"
+                            description="Most recent matches"
+                            id="games"
+                            title="Games"
                         />
-                        <PlayerWeaponsDetailView
-                            weapons={weapons}
-                            type={WEAPONS_DETAIL_GAME}
+                        <div
+                            style={loadLatestLinkStyle}
+                            title="Load a page that always displays the most recent activity details"
+                        >
+                            <a
+                                href="void()"
+                                onClick={(e) =>
+                                    onLatestActivityClick(e, player.memberId)
+                                }
+                            >
+                                Monitor Most Recent Activity
+                            </a>
+                        </div>
+
+                        <PlayerActivityList
+                            activities={activities}
+                            summary={summary}
                         />
                     </div>
-                    <div>
-                        <PageSectionView
-                            id="meta"
-                            title="Meta Weapons"
-                            description="Weapon meta from your matches excluding you and your fireteam members"
-                        />
-                        <PlayerWeaponsDetailView
-                            weapons={meta}
-                            type={WEAPONS_DETAIL_PLAYER}
-                        />
-                    </div>
-                    <div>
-                        <PageSectionView
-                            id="medals"
-                            title="Medals"
-                            description="Medals earned in matches"
-                        />
-                        <PlayerMedalsDetailList
-                            medals={medals}
-                            activityCount={summary.activityCount}
-                        />
-                    </div>
-                </div>
-                <div>
-                    <PageSectionView
-                        id="maps"
-                        description="Stats broken down by map"
-                        title="Maps"
-                    />
-                    <PlayerMapSummaryList maps={maps} />
-                </div>
-                <PageSectionView
-                    description="Most recent matches"
-                    id="games"
-                    title="Games"
-                />
-                <div
-                    style={loadLatestLinkStyle}
-                    title="Load a page that always displays the most recent activity details"
-                >
-                    <a
-                        href="void()"
-                        onClick={(e) =>
-                            onLatestActivityClick(e, player.memberId)
-                        }
-                    >
-                        Monitor Most Recent Activity
-                    </a>
-                </div>
-                <PlayerActivityList activities={activities} summary={summary} />
+                ) : (
+                    <div>No Activities</div>
+                )}
             </div>
         </div>
     );
