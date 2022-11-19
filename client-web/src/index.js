@@ -35,6 +35,7 @@ import NoMatchView from "./screens/404/index";
 import SearchView from "./screens/search";
 import LatestView from "./screens/latest";
 import CompareView from "./screens/compare";
+import OverlayView from "./screens/overlay";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -45,11 +46,14 @@ ReactDOM.render(
                     <Route index path="/about" element={<AboutView />} />
                     <Route index path="/search" element={<SearchView />} />
                     <Route
-                        path="player/:memberId/:platformId/:classType/:mode/:momentType/:startMoment/"
+                       path="player/:memberId/:platformId/:classType/:mode/:momentType/:startMoment/"
                         element={<PlayerView />}
                     >
                         <Route path=":endMoment" element={<PlayerView />} />
                     </Route>
+					<Route 
+	path="overlay/:memberId/:platformId:/:classType/:mode/:startMoment/:overlayType/"
+	element={<OverlayView />} />
                     <Route
                         path="activity/:activityId/"
                         element={<ActivityView />}

@@ -23,10 +23,10 @@
 
 import React from "react";
 
+const rootStyle = { width: "100%" };
+
 const PlayerNameView = (props) => {
     const player = props.player;
-
-    const rootStyle = { width: "100%" };
 
     return (
         <div
