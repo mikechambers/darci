@@ -28,6 +28,7 @@ const createMedalInfo = function (medals) {
     let total = 0;
     let gold = 0;
     let weRan = 0;
+    let unyielding = 0;
     for (const m of medals) {
         total += m.count;
 
@@ -37,10 +38,12 @@ const createMedalInfo = function (medals) {
 
         if (m.info.id === "medalStreakAbsurd") {
             weRan += m.count;
+        } else if (m.info.id === "medalStreak10x") {
+            unyielding += m.count;
         }
     }
 
-    return { total, gold, weRan };
+    return { total, gold, weRan, unyielding };
 };
 
 const formatData = function (s0, s1) {
@@ -190,7 +193,37 @@ const formatData = function (s0, s1) {
         ),
 
         createRow("Gold Medals", m0.gold, m1.gold, INT_FORMATTER),
-        createRow("We Rans", m0.weRan, m1.weRan, INT_FORMATTER),
+
+        createRow(
+            "Gold Medals / g",
+            calculateAverage(m0.gold, s0.summary.activityCount),
+            calculateAverage(m1.gold, s1.summary.activityCount),
+            FLOAT_FORMATTER
+        ),
+
+        createRow("We Ran ...", m0.weRan, m1.weRan, INT_FORMATTER),
+
+        createRow(
+            "We Ran... / g",
+            calculateAverage(m0.weRan, s0.summary.activityCount),
+            calculateAverage(m1.weRan, s1.summary.activityCount),
+            FLOAT_FORMATTER
+        ),
+
+        createRow("Unyielding", m0.unyielding, m1.unyielding, INT_FORMATTER),
+        createRow(
+            "Unyielding / g",
+            calculateAverage(m0.unyielding, s0.summary.activityCount),
+            calculateAverage(m1.unyielding, s1.summary.activityCount),
+            FLOAT_FORMATTER
+        ),
+
+        createRow(
+            "Unyielding / We Ran...",
+            calculateRatio(m0.unyielding, m0.weRan),
+            calculateRatio(m1.unyielding, m1.weRan),
+            FLOAT_FORMATTER
+        ),
     ];
 
     return out;
