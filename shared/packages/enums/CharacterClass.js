@@ -36,7 +36,7 @@ class CharacterClass extends EnumBase {
     static fromId(id) {
         let out = super._fromId(CharacterClass, id);
 
-        if (out != undefined) {
+        if (out !== undefined) {
             return out;
         }
 
@@ -46,7 +46,7 @@ class CharacterClass extends EnumBase {
     static fromType(type) {
         let out = super._fromType(CharacterClass, type);
 
-        if (out != undefined) {
+        if (out !== undefined) {
             return out;
         }
 

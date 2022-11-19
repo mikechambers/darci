@@ -57,7 +57,7 @@ class CharacterClassSelection extends EnumBase {
     static fromId(id) {
         let out = super._fromId(CharacterClassSelection, id);
 
-        if (out != undefined) {
+        if (out !== undefined) {
             return out;
         }
 
@@ -74,7 +74,7 @@ class CharacterClassSelection extends EnumBase {
 
         let out = super._fromType(CharacterClassSelection, type);
 
-        if (out != undefined) {
+        if (out !== undefined) {
             return out;
         }
 

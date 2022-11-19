@@ -46,14 +46,16 @@ ReactDOM.render(
                     <Route index path="/about" element={<AboutView />} />
                     <Route index path="/search" element={<SearchView />} />
                     <Route
-                       path="player/:memberId/:platformId/:classType/:mode/:momentType/:startMoment/"
+                        path="/overlay/:memberId/:platformId/:classType/:mode/:startMoment/:overlayType/"
+                        element={<OverlayView />}
+                    />
+                    <Route
+                        path="player/:memberId/:platformId/:classType/:mode/:momentType/:startMoment/"
                         element={<PlayerView />}
                     >
                         <Route path=":endMoment" element={<PlayerView />} />
                     </Route>
-					<Route 
-	path="overlay/:memberId/:platformId:/:classType/:mode/:startMoment/:overlayType/"
-	element={<OverlayView />} />
+
                     <Route
                         path="activity/:activityId/"
                         element={<ActivityView />}

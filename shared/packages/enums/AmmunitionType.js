@@ -37,7 +37,7 @@ class AmmunitionType extends EnumBase {
     static fromId(id) {
         let out = super._fromId(AmmunitionType, id);
 
-        if (out != undefined) {
+        if (out !== undefined) {
             return out;
         }
 
@@ -47,7 +47,7 @@ class AmmunitionType extends EnumBase {
     static fromType(type) {
         let out = super._fromType(AmmunitionType, type);
 
-        if (out != undefined) {
+        if (out !== undefined) {
             return out;
         }
 

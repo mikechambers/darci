@@ -203,7 +203,7 @@ class Mode extends EnumBase {
     static fromId(id) {
         let out = super._fromId(Mode, id);
 
-        if (out != undefined) {
+        if (out !== undefined) {
             return out;
         }
 
@@ -213,7 +213,7 @@ class Mode extends EnumBase {
     static fromType(type) {
         let out = super._fromType(Mode, type);
 
-        if (out != undefined) {
+        if (out !== undefined) {
             return out;
         }
 

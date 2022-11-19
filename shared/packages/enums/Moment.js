@@ -267,7 +267,7 @@ class Moment extends EnumBase {
     static fromType(type) {
         let out = super._fromType(Moment, type);
 
-        if (out != undefined) {
+        if (out !== undefined) {
             return out;
         }
 

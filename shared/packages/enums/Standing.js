@@ -3,50 +3,50 @@ const EnumBase = require("./EnumBase");
 
 //todo: this doesnt really handle draws correctly right now
 class Standing extends EnumBase {
-  static VICTORY = new Standing("Victory", 0);
-  static DEFEAT = new Standing("Defeat", 1);
-  static UNKNOWN = new Standing("Unknown", 2325);
+    static VICTORY = new Standing("Victory", 0);
+    static DEFEAT = new Standing("Defeat", 1);
+    static UNKNOWN = new Standing("Unknown", 2325);
 
-  constructor(type, id, label = undefined) {
-    super(type, id, label);
-  }
-
-  static fromId(id) {
-    let out = super._fromId(Standing, id);
-
-    if (out != undefined) {
-      return out;
+    constructor(type, id, label = undefined) {
+        super(type, id, label);
     }
 
-    return Standing.UNKNOWN;
-  }
+    static fromId(id) {
+        let out = super._fromId(Standing, id);
 
-  static fromIdAndMode(id, mode) {
-    //in rumble, 0,1,2 is victory.
-    //note, this will return wrong results for
-    //private rumble, (only 0 will be victory)
-    //due to api bug.
-    //https://github.com/Bungie-net/api/issues/1386
-    if (mode == Mode.RUMBLE) {
-      if (id > 2) {
-        return Standing.DEFEAT;
-      } else {
-        return Standing.VICTORY;
-      }
+        if (out !== undefined) {
+            return out;
+        }
+
+        return Standing.UNKNOWN;
     }
 
-    return Standing.fromId(id);
-  }
+    static fromIdAndMode(id, mode) {
+        //in rumble, 0,1,2 is victory.
+        //note, this will return wrong results for
+        //private rumble, (only 0 will be victory)
+        //due to api bug.
+        //https://github.com/Bungie-net/api/issues/1386
+        if (mode == Mode.RUMBLE) {
+            if (id > 2) {
+                return Standing.DEFEAT;
+            } else {
+                return Standing.VICTORY;
+            }
+        }
 
-  static fromType(type) {
-    let out = super._fromType(Standing, type);
-
-    if (out != undefined) {
-      return out;
+        return Standing.fromId(id);
     }
 
-    return Standing.UNKNOWN;
-  }
+    static fromType(type) {
+        let out = super._fromType(Standing, type);
+
+        if (out !== undefined) {
+            return out;
+        }
+
+        return Standing.UNKNOWN;
+    }
 }
 
 module.exports = Standing;
