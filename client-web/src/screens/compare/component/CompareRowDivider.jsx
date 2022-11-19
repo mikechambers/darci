@@ -1,35 +1,42 @@
 import React from "react";
 
-const dividerStyle = {
-    //backgroundColor: "var(--color-list-item-background)",
-    //width: "497px",
-    width: "485px",
+export const DIVIDER_HEADER = "DIVIDER_HEADER";
+export const DIVIDER_SUBHEADER = "DIVIDER_SUBHEADER";
 
+let dividerStyleBase = {
+    width: "485px",
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
     justifyItems: "center",
 };
 
-const dividerCell = {
-    display: "flex",
-
-    justifyContent: "center",
-    width: "100%",
-    alignItems: "stretch",
-    padding: "8px 0px",
-};
-
-const hStyle = {
-    // margin: "8px",
-};
-
 const CompareRowDivider = (props) => {
     const label = props.label;
+    const type = props.type;
+    const id = props.id;
+
+    let divider;
+    let dividerStyle;
+    let labelStyle = {};
+    if (type === DIVIDER_SUBHEADER) {
+        divider = "";
+        labelStyle.textTransform = "capitalize";
+        dividerStyle = {
+            ...dividerStyleBase,
+            gridTemplateColumns: "1fr",
+        };
+    } else {
+        divider = <hr />;
+        dividerStyle = dividerStyleBase;
+    }
+
     return (
-        <div style={dividerStyle} className="compare_row">
-            <hr style={hStyle} key="1" />
-            <div className="label_highlight">{label}</div>
-            <hr style={hStyle} />
+        <div style={dividerStyle} className="compare_row" id={id}>
+            {divider}
+            <div className="label_highlight" style={labelStyle}>
+                {label}
+            </div>
+            {divider}
         </div>
     );
 };

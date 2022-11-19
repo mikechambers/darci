@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+import IndicatorView from "../../../components/IndicatorView";
 
 import Medal from "../../../components/Medal";
 import { MEDIUM } from "../../../core/consts";
@@ -45,12 +46,6 @@ const playerEntryStyle = {
     flexDirection: "column",
     gap: 8,
     width: 200,
-};
-
-const teamStyle = {
-    width: 3,
-    height: 14,
-    //margin: 2,
 };
 
 const headerStyle = {
@@ -103,10 +98,10 @@ const ActivityGoldMedalsView = (props) => {
                         key={item.player.player.memberId}
                     >
                         <div style={headerStyle}>
-                            <div
-                                style={teamStyle}
-                                className={`${item.teamName.toLowerCase()}_team`}
-                            ></div>
+                            <IndicatorView
+                                color={`var(--color-${item.teamName.toLowerCase()}-team)`}
+                                title={`${item.teamName} team`}
+                            />
                             <div
                                 className="player_name_large"
                                 title={item.player.player.getFullName()}

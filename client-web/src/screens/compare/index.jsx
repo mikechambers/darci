@@ -8,6 +8,7 @@ import { useFetchPlayerSummary } from "../../hooks/remote";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 
 import PlayerCompareView from "./component/PlayerCompareView";
+import ScreenNavigationView from "../../components/ScreenNavigationView";
 
 const pageContainerStyle = {
     //minWidth: "720px",
@@ -21,6 +22,29 @@ const gappedStyle = {
     //width: "250px",
     //width: "min-content",
 };
+
+const pageLinks = [
+    {
+        value: "Overview",
+        id: "overview",
+    },
+    {
+        value: "Stats",
+        id: "stats",
+    },
+    {
+        value: "Weapons",
+        id: "weapons",
+    },
+    {
+        value: "Meta",
+        id: "meta",
+    },
+    {
+        value: "Maps",
+        id: "maps",
+    },
+];
 
 const CompareView = (props) => {
     const params = useParams();
@@ -89,11 +113,9 @@ const CompareView = (props) => {
             style={pageContainerStyle}
         >
             <div style={gappedStyle}>
-                <PageSectionView
-                    id="compare"
-                    title="Compare"
-                    description="Player search"
-                />
+                <ScreenNavigationView links={pageLinks} />
+
+                <PageSectionView title="Compare" description="" />
 
                 <div>
                     You can change parameters on the{" "}

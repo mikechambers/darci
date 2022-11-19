@@ -26,12 +26,6 @@ import IndicatorView from "./IndicatorView";
 
 import PlayerNameView from "./PlayerNameView";
 
-const teamStyle = {
-    width: 3,
-    height: 14,
-    //margin: 2,
-};
-
 const itemWrapperStyleBase = {
     width: 200,
     display: "grid",

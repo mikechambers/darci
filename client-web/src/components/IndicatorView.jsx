@@ -1,8 +1,8 @@
 import React from "react";
 
 const rootStyle = {
-    width: 3,
-    height: 14,
+    width: "3px",
+    height: "14px",
     flexShrink: "0",
 };
 

@@ -82,7 +82,7 @@ const HomeView = (props) => {
                 <PageSectionView
                     id="weekly"
                     title="Weekly Leaderboards"
-                    description="Weejkly Crucible Leaderboards."
+                    description="Weekly Crucible Leaderboards."
                 />
                 <WeeklyLeaderView metrics={metrics} />
 
@@ -98,6 +98,7 @@ const HomeView = (props) => {
                     title="All Time Leaderboards"
                     description="All Time Leaderboards."
                 />
+
                 <AllTimeLeaderView metrics={metrics} />
             </div>
         </div>

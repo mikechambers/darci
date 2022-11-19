@@ -57,6 +57,7 @@ const PlayerCompareConfigView = (props) => {
                     label="player"
                     onChange={(d) => dispatch({ type: "player", payload: d })}
                     players={players}
+                    selected={output.player}
                 />
                 <CharacterClassSelectionSelect
                     label="class"

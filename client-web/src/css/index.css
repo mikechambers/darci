@@ -410,6 +410,14 @@ hr {
 
 /* start here / fix subtitle underlines */
 
+.link {
+  text-decoration: underline;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
 a {
   color: var(--color-link);
   text-decoration-color: #fbfbfb66;
@@ -627,9 +635,14 @@ button:active {
 }
 
 .compare_row {
-
   border-radius: 4px;
   background-color: var(--color-list-item-background);
   padding: 8px;
   width: min-content;
+}
+
+.compare_data_row {
+  display: grid;
+  grid-template-columns: 135px 150px 150px 50px;
+  row-gap: 4px;
 }
