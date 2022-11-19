@@ -103,28 +103,28 @@ const formatMapData = function (s0, s1) {
 
         out.push(
             createRow(
-                "Total",
+                "% Total",
                 calculateRatio(g(m.data0, "count"), s0.summary.activityCount),
                 calculateRatio(g(m.data1, "count"), s1.summary.activityCount),
                 PERCENT_INT_FORMATTER
             ),
 
             createRow(
-                "Win",
+                "Win %",
                 calculateRatio(g(m.data0, "wins"), g(m.data0, "count")),
                 calculateRatio(g(m.data1, "wins"), g(m.data1, "count")),
                 PERCENT_INT_FORMATTER
             ),
 
             createRow(
-                "Completed",
+                "Completed %",
                 calculateRatio(g(m.data0, "completed"), g(m.data0, "count")),
                 calculateRatio(g(m.data1, "completed"), g(m.data1, "count")),
                 PERCENT_INT_FORMATTER
             ),
 
             createRow(
-                "Mercy",
+                "Mercy %",
                 calculateRatio(g(m.data0, "mercy"), g(m.data0, "count")),
                 calculateRatio(g(m.data1, "mercy"), g(m.data1, "count")),
                 PERCENT_INT_FORMATTER
