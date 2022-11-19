@@ -27,13 +27,13 @@ const formatData = function (s0, s1) {
             INT_FORMATTER
         ),
         createRow(
-            "Win",
+            "Win %",
             calculateRatio(s0.summary.wins, s0.summary.activityCount),
             calculateRatio(s1.summary.wins, s1.summary.activityCount),
             PERCENT_INT_FORMATTER
         ),
         createRow(
-            "Mercy",
+            "Mercy %",
             calculateRatio(
                 s0.summary.completionReasonMercy,
                 s0.summary.activityCount
@@ -45,7 +45,7 @@ const formatData = function (s0, s1) {
             PERCENT_INT_FORMATTER
         ),
         createRow(
-            "Completed",
+            "Completed %",
             calculateRatio(s0.summary.completed, s0.summary.activityCount),
             calculateRatio(s1.summary.completed, s1.summary.activityCount),
             PERCENT_INT_FORMATTER

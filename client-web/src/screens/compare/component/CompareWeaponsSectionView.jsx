@@ -98,7 +98,7 @@ const formatWeaponData = function (w0, w1, limit, count1, count2, type) {
         if (type === WEAPON_TYPE) {
             out.push(
                 createRow(
-                    "% Games",
+                    "% Total",
                     calculateRatio(g(m.data0, "count"), count1),
                     calculateRatio(g(m.data1, "count"), count2),
                     PERCENT_FORMATTER
@@ -115,6 +115,14 @@ const formatWeaponData = function (w0, w1, limit, count1, count2, type) {
                 )
             );
         }
+        out.push(
+            createRow(
+                "Kills",
+                g(m.data0, "kills"),
+                g(m.data1, "kills"),
+                INT_FORMATTER
+            )
+        );
 
         out.push(
             createRow(
