@@ -113,6 +113,11 @@
   --border-regular:1px solid #ffffff88;
 
   --blur-background: blur(2px);
+
+}
+
+#root {
+  height:100%;
 }
 
 .list_item_header {

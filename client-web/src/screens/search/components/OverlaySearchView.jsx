@@ -31,7 +31,6 @@ const OverlaySearchView = (props) => {
 
     const navigate = useNavigate();
     const reducer = (state, action) => {
-        console.log(action);
         let out = { ...state };
         out[action.type] = action.payload;
         return out;
@@ -59,11 +58,16 @@ const OverlaySearchView = (props) => {
     }, [weapons]);
 
     const onClick = () => {
+        let encoded;
         if (output.overlayType === Overlay.WEAPON) {
-            let encoded = serialize({
+            encoded = serialize({
                 overlayType: Overlay.WEAPON,
                 weapon: output.weapon.data.id,
             });
+
+            if (!encoded) {
+                return;
+            }
 
             navigate(`/overlay/${encoded}/`);
         }

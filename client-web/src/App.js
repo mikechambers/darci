@@ -105,6 +105,7 @@ const App = (props) => {
         display: "flex",
         flexDirection: "column",
         width: "var(--page-max-width)",
+        height: "100%",
     };
 
     const currentViewStyle = {
