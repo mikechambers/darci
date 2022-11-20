@@ -24,6 +24,7 @@
 import React from "react";
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
+import OverlaySearchView from "./components/OverlaySearchView";
 import PlayerCompareSearchView from "./components/PlayerCompareSearchView";
 import PlayerSearchView from "./components/PlayerSearchView";
 
@@ -49,6 +50,10 @@ const pageLinks = [
         value: "Compare",
         id: "compare",
     },
+    {
+        value: "Stream Overlay",
+        id: "overlay",
+    },
 ];
 
 const SearchView = (props) => {
@@ -72,10 +77,20 @@ const SearchView = (props) => {
                 <PageSectionView
                     id="compare"
                     title="Compare"
-                    description="Player search"
+                    description="Compare data"
                 />
 
                 <PlayerCompareSearchView />
+
+                <PageSectionView
+                    id="overlay"
+                    title="Stream Overlay"
+                    description="Customize a stream overlay"
+                />
+
+                <OverlaySearchView />
+
+                <div>&nbsp;</div>
             </div>
         </div>
     );

@@ -41,6 +41,10 @@ class Manifest {
         }
     }
 
+    getWeapons() {
+        return this.#manifestData.data.weaponItemDefinition;
+    }
+
     getWeaponDefinition(id) {
         let out = {
             name: "Unknown",

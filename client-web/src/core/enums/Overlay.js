@@ -24,6 +24,7 @@ import EnumBase from "shared/packages/enums/EnumBase";
 
 class Overlay extends EnumBase {
     static WEAPON = new Overlay("Weapon", "weapon", "Weapon");
+    static STATS = new Overlay("Stats", "stats", "Stats");
 
     static UNKNOWN = new Overlay("Unknown", "unknown", "Unknown");
 

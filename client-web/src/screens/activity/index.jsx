@@ -67,7 +67,7 @@ const ActivityView = (props) => {
 
         return (
             <div>
-                An error occured <br />
+                An error occurred <br />
                 {error.toString()}
                 <br />
                 {error.stack}

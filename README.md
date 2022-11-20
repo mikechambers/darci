@@ -150,7 +150,7 @@ $ dclisync --sync
 
 This will sync all pvp activities for players who have been added to dclisync.
 The initial sync may take some time depending on the number of games the player
-has played, and whether `DCLI_FIX_DATA` environment variable is enabled.
+has played, and whether `DCLI_FIX_DATA` environment variable is disabled.
 Subsequent data syncs will be much faster.
 
 If any errors occur, make sure you have set the `DESTINY_API_KEY` environment

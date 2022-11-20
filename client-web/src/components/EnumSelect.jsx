@@ -35,6 +35,9 @@ const EnumSelect = (props) => {
         props.disabled !== undefined && props.disabled ? true : false;
 
     let handleOnChange = function (e) {
+        if (!onChange) {
+            return;
+        }
         onChange(options[e.target.selectedIndex]);
     };
 
@@ -45,16 +48,14 @@ const EnumSelect = (props) => {
             {labelDiv}
             <select
                 onChange={handleOnChange}
-                value={selected ? selected : ""}
+                value={selected ? selected.value : ""}
                 disabled={disabled}
             >
                 {options.map((item) => {
+                    let key = item.key ? item.key : item.value;
+
                     return (
-                        <option
-                            key={item.value}
-                            defaultValue={selected ? selected : ""}
-                            value={item.value}
-                        >
+                        <option key={key} value={item.value}>
                             {truncate(item.label, maxLabelLength)}
                         </option>
                     );
