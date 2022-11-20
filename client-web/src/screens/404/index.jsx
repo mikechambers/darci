@@ -32,8 +32,10 @@ const NoMatchView = (props) => {
         justifyContent: "center",
         alignItems: "center",
         backgroundImage: `url(https://www.bungie.net/img/destiny_content/pgcr/pvp_street.jpg)`,
-        backgroundPosition: "center",
+        //backgroundPosition: "50% top",
         backgroundSize: "cover",
+        //backgroundRepeat: "no-repeat",
+        margin: "0px var(--padding-page-container)",
     };
 
     let s2 = {
@@ -41,7 +43,7 @@ const NoMatchView = (props) => {
     };
 
     return (
-        <div style={rootStyle}>
+        <div style={rootStyle} className="page_container">
             <div title="404" className="announce" style={s2}>
                 unknown space
             </div>
