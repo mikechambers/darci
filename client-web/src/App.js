@@ -32,6 +32,7 @@ import {
     GlobalAction,
     MANIFEST_UPDATED,
     PLAYERS_UPDATED,
+    WEAPONS_UPDATED,
 } from "./contexts/GlobalContext";
 import MainNavView from "./components/MainNavView";
 const { useQuery } = require("./hooks/browser");
@@ -49,20 +50,49 @@ const App = (props) => {
     }, [clearStorage]);
 
     const [global, dispatchGlobal] = useGlobalContext();
-    const manifest = global.manifest;
-    const players = global.players;
+    //const manifest = global.manifest;
+    //const players = global.players;
 
-    const [loadedPlayers, isPlayersLoading, isPlayersError] =
+    const [manifest, isLoading, error] = useFetchManifest();
+    const [players, isPlayersLoading, isPlayersError] =
         useFetchPlayers(manifest);
-    const [m, isLoading, error] = useFetchManifest();
 
-    if (m && !manifest) {
-        dispatchGlobal(new GlobalAction(MANIFEST_UPDATED, m));
-    }
+    useEffect(() => {
+        if (!manifest) {
+            return;
+        }
 
-    if (loadedPlayers && !players) {
-        dispatchGlobal(new GlobalAction(PLAYERS_UPDATED, loadedPlayers));
-    }
+        dispatchGlobal(new GlobalAction(MANIFEST_UPDATED, manifest));
+
+        let weapons = manifest.getWeapons();
+        let out = [];
+        let keyIndex = 0;
+        for (const [key, value] of Object.entries(weapons)) {
+            out.push({
+                key: keyIndex++,
+                data: value,
+
+                get value() {
+                    return this.data.name;
+                },
+                get label() {
+                    return this.data.name;
+                },
+            });
+        }
+
+        out.sort((a, b) => a.label.localeCompare(b.label));
+
+        dispatchGlobal(new GlobalAction(WEAPONS_UPDATED, out));
+    }, [manifest]);
+
+    useEffect(() => {
+        if (!players) {
+            return;
+        }
+
+        dispatchGlobal(new GlobalAction(PLAYERS_UPDATED, players));
+    }, [players]);
 
     let initializingContent;
     if (error) {

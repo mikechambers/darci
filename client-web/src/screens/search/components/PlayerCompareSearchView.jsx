@@ -4,6 +4,7 @@ import PlayerCompareConfigView from "./PlayerCompareConfigView";
 
 import { Buffer } from "buffer";
 import { useNavigate } from "react-router-dom";
+import { serialize } from "../../../core/utils/data";
 
 const rootStyle = {
     display: "flex",
@@ -55,9 +56,7 @@ const PlayerCompareSearchView = (props) => {
             });
         }
 
-        let json = JSON.stringify(data);
-        let encoded = Buffer.from(json).toString("base64");
-
+        let encoded = serialize(data);
         navigate(`/compare/${encoded}/`);
     };
 

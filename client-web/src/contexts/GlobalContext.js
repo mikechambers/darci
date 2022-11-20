@@ -26,10 +26,12 @@ export const GlobalContext = React.createContext();
 
 export const MANIFEST_UPDATED = "MANIFEST_UPDATED";
 export const PLAYERS_UPDATED = "PLAYERS_UPDATED";
+export const WEAPONS_UPDATED = "WEAPONS_UPDATED";
 
 export const initialState = {
     manifest: null,
     players: null,
+    weapons: null,
 };
 
 const reducer = function (state, action) {
@@ -46,6 +48,13 @@ const reducer = function (state, action) {
             out = {
                 ...state,
                 players: action.payload,
+            };
+            break;
+        }
+        case WEAPONS_UPDATED: {
+            out = {
+                ...state,
+                weapons: action.payload,
             };
             break;
         }

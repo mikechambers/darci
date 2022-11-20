@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams, Link } from "react-router-dom";
 import PageSectionView from "../../components/PageSectionView";
-import { Buffer } from "buffer";
 import { CharacterClassSelection, Mode, Moment, Season } from "shared";
 import { SEASON_TYPE } from "../../core/consts";
 import { useFetchPlayerSummary } from "../../hooks/remote";
@@ -9,6 +8,7 @@ import LoadingAnimationView from "../../components/LoadingAnimationView";
 
 import PlayerCompareView from "./component/PlayerCompareView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
+import { deserialize } from "../../core/utils/data";
 
 const pageContainerStyle = {
     //minWidth: "720px",
@@ -50,9 +50,7 @@ const CompareView = (props) => {
     const params = useParams();
     let encodedData = params.data;
 
-    let json = Buffer.from(encodedData, "base64").toString("utf8");
-
-    let data = JSON.parse(json);
+    let data = deserialize(encodedData);
 
     let sm0;
     let em0;

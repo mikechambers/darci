@@ -43,6 +43,9 @@ const EnumSelect = (props) => {
 
     let labelDiv = label ? <label className="form_label">{label}</label> : "";
 
+    if (!options) {
+        options = [];
+    }
     return (
         <div>
             {labelDiv}

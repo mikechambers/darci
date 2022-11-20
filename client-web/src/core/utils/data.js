@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+import { Buffer } from "buffer";
+
 export const parseWeaponsFromServer = (weapons, manifest) => {
     let out = [];
     for (const w of weapons) {
@@ -45,4 +47,19 @@ export const reducer = (initial, type, payload) => {
     let out = { ...initial };
     out[type] = payload;
     return out;
+};
+
+export const serialize = function (data) {
+    let json = JSON.stringify(data);
+    let encoded = Buffer.from(json).toString("base64");
+
+    return encoded;
+};
+
+export const deserialize = function (encoded) {
+    let json = Buffer.from(encoded, "base64").toString("utf8");
+
+    let data = JSON.parse(json);
+
+    return data;
 };
