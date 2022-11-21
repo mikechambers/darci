@@ -6,18 +6,6 @@ import SeasonSelect from "../../../components/SeasonSelect";
 import { reducer } from "../../../core/utils/data";
 import { getRandomInt } from "../../../core/utils/math";
 
-const formSectionStyle = {
-    display: "flex",
-    gap: "var(--form-section-gap)",
-};
-
-const periodContainerStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: "var(--form-section-gap)",
-    padding: "16px",
-};
-
 const PeriodSearchConfigView = (props) => {
     const onChange = props.onChange;
 
@@ -68,10 +56,10 @@ const PeriodSearchConfigView = (props) => {
     }, [output]);
 
     return (
-        <fieldset style={periodContainerStyle}>
+        <fieldset className="form_column">
             <legend>Period</legend>
-            <div style={formSectionStyle}>
-                <div>
+            <div className="form_row">
+                <div className="radio_container">
                     <input
                         type="radio"
                         value={MOMENT_TYPE}
@@ -84,7 +72,7 @@ const PeriodSearchConfigView = (props) => {
                     />
                     <label htmlFor={moment_radio_id}>Moments</label>
                 </div>
-                <div>
+                <div className="radio_container">
                     <input
                         type="radio"
                         value={SEASON_TYPE}
@@ -98,7 +86,7 @@ const PeriodSearchConfigView = (props) => {
                     <label htmlFor={season_radio_id}>Season</label>
                 </div>
             </div>
-            <div style={formSectionStyle}>
+            <div className="form_row">
                 <MomentSelect
                     label="Start Moment"
                     onChange={(e) => {
@@ -117,7 +105,7 @@ const PeriodSearchConfigView = (props) => {
                 />
             </div>
 
-            <div style={formSectionStyle}>
+            <div>
                 <SeasonSelect
                     label="Season"
                     selected={output.season}

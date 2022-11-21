@@ -573,7 +573,7 @@ button {
   cursor: pointer;
   border: 1px solid transparent;
   background-color: #4c6ef5;
-  background-image: #4c6ef5;
+  /*background-image: #4c6ef5;*/
   color: #fff;
 
   user-select: none;
@@ -593,6 +593,25 @@ button:active {
 
 .form_validation_msg {
 	color:var(--color-form-validation-msg);
+}
+
+.form_column  {
+  display: flex;
+  flex-direction: column;
+  gap: var(--form-section-gap);
+  width: min-content;
+}
+
+.form_row {
+  display: flex;
+  flex-direction: row;
+  gap: var(--form-section-gap);
+  width: min-content;
+}
+
+.radio_containter {
+  display: flex;
+  flex-direction: column;
 }
 
 /******* loading spinner ***********/

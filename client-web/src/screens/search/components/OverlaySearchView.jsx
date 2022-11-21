@@ -9,19 +9,23 @@ import MomentSelect from "../../../components/MomentSelect";
 import PlayerSelect from "../../../components/PlayerSelect";
 import { GlobalContext } from "../../../contexts/GlobalContext";
 import Overlay from "../../../core/enums/Overlay";
+import Stat from "../../../core/enums/Stat";
 import { serialize } from "../../../core/utils/data";
 import OverlaySelect from "./OverlaySelect";
+import StatSelect from "./StatSelect";
 import WeaponSelect from "./WeaponSelect";
 
-const formContainerStyle = {
+const formColumnStyle = {
     display: "flex",
     flexDirection: "column",
     gap: "var(--form-section-gap)",
+    width: "min-content",
 };
 
-const formSectionStyle = {
+const formRowStyle = {
     display: "flex",
     gap: "var(--form-section-gap)",
+    width: "min-content",
 };
 
 const OverlaySearchView = (props) => {
@@ -32,6 +36,13 @@ const OverlaySearchView = (props) => {
     const navigate = useNavigate();
     const reducer = (state, action) => {
         let out = { ...state };
+
+        switch (action.type) {
+            case "stat": {
+                break;
+            }
+        }
+
         out[action.type] = action.payload;
         return out;
     };
@@ -43,6 +54,7 @@ const OverlaySearchView = (props) => {
         characterClass: CharacterClassSelection.ALL,
         startMoment: Moment.DAILY,
         weapon: undefined,
+        stats: [Stat.KD],
     });
 
     useEffect(() => {
@@ -69,14 +81,15 @@ const OverlaySearchView = (props) => {
                 return;
             }
 
-            navigate(`/overlay/${encoded}/`);
+            navigate(
+                `/overlay/${output.player.memberId}/${output.player.platformId}/${output.characterClass.type}/${output.mode.type}/${output.startMoment.type}/${encoded}/`
+            );
         }
     };
 
     return (
-        <div style={formContainerStyle}>
-            <legend></legend>
-            <div style={formSectionStyle}>
+        <div className="form_column">
+            <div className="form_row">
                 <PlayerSelect
                     label="player"
                     onChange={(d) => dispatch({ type: "player", payload: d })}
@@ -104,19 +117,88 @@ const OverlaySearchView = (props) => {
                     }
                 />
             </div>
-            <OverlaySelect
-                selected={output.overlayType}
-                onChange={(d) => dispatch({ type: "overlayType", payload: d })}
-            />
-            <fieldset>
-                <legend>Weapon</legend>
-                <WeaponSelect
-                    options={weapons}
-                    selected={output.weapon}
-                    disabled={output.overlayType !== Overlay.WEAPON}
-                    onChange={(d) => dispatch({ type: "weapon", payload: d })}
+
+            <fieldset className="form_column">
+                <legend>Items to Display</legend>
+
+                <div className="form_row">
+                    <div>
+                        <input type="checkbox" id="mode_cb" name="mode_cb" />
+                        <label htmlFor="mode_cb">Mode</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="mode_cb" name="mode_cb" />
+                        <label htmlFor="mode_cb">Moment</label>
+                    </div>
+                </div>
+
+                <OverlaySelect
+                    selected={output.overlayType}
+                    onChange={(d) =>
+                        dispatch({ type: "overlayType", payload: d })
+                    }
                 />
+
+                <div className="form_row">
+                    <fieldset>
+                        <legend>Weapon</legend>
+                        <WeaponSelect
+                            options={weapons}
+                            selected={output.weapon}
+                            disabled={output.overlayType !== Overlay.WEAPON}
+                            onChange={(d) =>
+                                dispatch({ type: "weapon", payload: d })
+                            }
+                        />
+                    </fieldset>
+
+                    <fieldset className="form_row">
+                        <legend>Stats</legend>
+
+                        <StatSelect
+                            label="Stat 1"
+                            selected={output.stats[0]}
+                            onChange={(d) =>
+                                dispatch({
+                                    type: "stat",
+                                    payload: { stat: d, index: 0 },
+                                })
+                            }
+                        />
+                        <StatSelect
+                            label="Stat 2"
+                            selected={output.stats[1]}
+                            onChange={(d) =>
+                                dispatch({
+                                    type: "stat",
+                                    payload: { stat: d, index: 1 },
+                                })
+                            }
+                        />
+                        <StatSelect
+                            label="Stat 3"
+                            selected={output.stats[2]}
+                            onChange={(d) =>
+                                dispatch({
+                                    type: "stat",
+                                    payload: { stat: d, index: 2 },
+                                })
+                            }
+                        />
+                        <StatSelect
+                            label="Stat 4"
+                            selected={output.stats[3]}
+                            onChange={(d) =>
+                                dispatch({
+                                    type: "stat",
+                                    payload: { stat: d, index: 3 },
+                                })
+                            }
+                        />
+                    </fieldset>
+                </div>
             </fieldset>
+
             <button onClick={onClick}>Load</button>
         </div>
     );
