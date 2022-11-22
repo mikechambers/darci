@@ -27,6 +27,8 @@ const ImageView = (props) => {
     const width = props.width;
     const height = props.height;
     const image = props.image;
+    const borderRadius = props.borderRadius ? props.borderRadius : 0;
+    const title = props.title ? props.title : "";
 
     const elementStyle = {
         width: width,
@@ -34,9 +36,10 @@ const ImageView = (props) => {
         backgroundImage: `url(${image})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
-        borderRadius: 4,
+        borderRadius: borderRadius,
+        flexShrink: "0",
     };
-    return <div style={elementStyle}></div>;
+    return <div style={elementStyle} title={title} alt={title}></div>;
 };
 
 export default ImageView;

@@ -13,33 +13,18 @@ import Stat from "../../../core/enums/Stat";
 import { serialize } from "../../../core/utils/data";
 import OverlaySelect from "./OverlaySelect";
 import OverlayStatsConfigView from "./OverlayStatsConfigView";
-import StatSelect from "./StatSelect";
-import WeaponSelect from "./WeaponSelect";
-
-const formColumnStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: "var(--form-section-gap)",
-    width: "min-content",
-};
-
-const formRowStyle = {
-    display: "flex",
-    gap: "var(--form-section-gap)",
-    width: "min-content",
-};
+import OverlayWeaponsConfigView from "./OverlayWeaponsConfigView";
 
 const OverlaySearchView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
     const players = global.players;
-    const weapons = global.weapons;
 
     const navigate = useNavigate();
     const reducer = (state, action) => {
         let out = { ...state };
-
+        console.log(action);
         switch (action.type) {
-            case "stat": {
+            case "stats": {
                 break;
             }
         }
@@ -55,7 +40,7 @@ const OverlaySearchView = (props) => {
         characterClass: CharacterClassSelection.ALL,
         startMoment: Moment.DAILY,
         weapon: undefined,
-        stats: [Stat.KD],
+        stats: [],
     });
 
     useEffect(() => {
@@ -64,13 +49,8 @@ const OverlaySearchView = (props) => {
         }
     }, [players]);
 
-    useEffect(() => {
-        if (weapons && weapons.length) {
-            dispatch({ type: "weapon", payload: weapons[0] });
-        }
-    }, [weapons]);
-
     const onClick = () => {
+        console.log(output);
         let encoded;
         if (output.overlayType === Overlay.WEAPON) {
             encoded = serialize({
@@ -141,44 +121,17 @@ const OverlaySearchView = (props) => {
                 />
 
                 <div className="form_row">
-                    <fieldset>
-                        <legend>Weapon</legend>
-                        <WeaponSelect
-                            options={weapons}
-                            selected={output.weapon}
-                            disabled={output.overlayType !== Overlay.WEAPON}
-                            onChange={(d) =>
-                                dispatch({ type: "weapon", payload: d })
-                            }
-                        />
-                        <div className="radio_container">
-                            <input
-                                type="checkbox"
-                                id="mode_cb"
-                                name="mode_cb"
-                            />
-                            <label htmlFor="mode_cb">Kills</label>
-                        </div>
-                        <div className="radio_container">
-                            <input
-                                type="checkbox"
-                                id="mode_cb"
-                                name="mode_cb"
-                            />
-                            <label htmlFor="mode_cb">Kills / g</label>
-                        </div>
-                        <div className="radio_container">
-                            <input
-                                type="checkbox"
-                                id="mode_cb"
-                                name="mode_cb"
-                            />
-                            <label htmlFor="mode_cb">Precision</label>
-                        </div>
-                    </fieldset>
+                    <OverlayWeaponsConfigView
+                        onChange={(d) =>
+                            dispatch({ type: "weapon", payload: d })
+                        }
+                        disabled={output.overlayType !== Overlay.WEAPON}
+                    />
 
                     <OverlayStatsConfigView
-                        onChange={() => {}}
+                        onChange={(d) =>
+                            dispatch({ type: "stats", payload: d })
+                        }
                         disabled={output.overlayType !== Overlay.STATS}
                     />
                 </div>

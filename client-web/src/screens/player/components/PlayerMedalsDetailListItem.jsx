@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+import RoundedImageView from "../../../components/RoundedImageView";
 
 import StatView from "../../../components/StatView";
 
@@ -76,33 +77,18 @@ const PlayerMedalsDetailListItem = (props) => {
 
     let item = medals[index];
 
-    let iconStyle = {
-        //backgroundImage: `url(${item.info.icon})`,
-        width: "64x",
-        height: "64x",
-        flexShrink: "0",
-        backgroundColor: "#212f3d",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-    };
-
-    let imgTitle = item.info.isGold ? "Gold Medal" : "";
+    let title = item.info.isGold ? "Gold Medal" : "";
 
     return (
         <div style={style}>
             <div style={containerStyle}>
-                <div className="weapon_list_icon" style={iconStyle}>
-                    {" "}
-                    <img
-                        title={imgTitle}
-                        alt={imgTitle}
-                        src={item.info.icon}
-                        className="outline"
-                        width="50"
-                        height="50"
-                    />
-                </div>
+                <RoundedImageView
+                    title={title}
+                    image={item.info.icon}
+                    width={50}
+                    height={50}
+                />
+
                 <div id="data_container" style={dataContainerStyle}>
                     <div id="header_containter" style={headerStyle}>
                         <div className="subsection_header">

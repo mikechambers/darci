@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+import RoundedImageView from "../../../components/RoundedImageView";
 
 import StatView from "../../../components/StatView";
 
@@ -64,23 +65,16 @@ const PlayerWeaponsDetailListItem = (props) => {
 
     let item = weapons[index];
 
-    let iconStyle = {
-        backgroundImage: `url(${item.icon})`,
-        width: "64px",
-        height: "64px",
-        flexShrink: "0",
-    };
-
     return (
         <div style={style}>
             <div style={containerStyle}>
-                <div className="weapon_list_icon" style={iconStyle}></div>
+                <RoundedImageView height={64} width={64} image={item.icon} />
                 <div id="data_container" style={dataContainerStyle}>
-                    <div id="header_containter" style={headerStyle}>
+                    <div style={headerStyle}>
                         <div className="subsection_header">{item.title}</div>
                         <div className="list_subtitle">{item.subtitle}</div>
                     </div>
-                    <div id="values_containter" style={valuesStyle}>
+                    <div style={valuesStyle}>
                         {item.items.map((stat, i) => {
                             let align =
                                 i === item.items.length - 1 ? "right" : "left";
