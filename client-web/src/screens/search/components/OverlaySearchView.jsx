@@ -12,6 +12,7 @@ import Overlay from "../../../core/enums/Overlay";
 import Stat from "../../../core/enums/Stat";
 import { serialize } from "../../../core/utils/data";
 import OverlaySelect from "./OverlaySelect";
+import OverlayStatsConfigView from "./OverlayStatsConfigView";
 import StatSelect from "./StatSelect";
 import WeaponSelect from "./WeaponSelect";
 
@@ -119,14 +120,14 @@ const OverlaySearchView = (props) => {
             </div>
 
             <fieldset className="form_column">
-                <legend>Items to Display</legend>
+                <legend>Display</legend>
 
                 <div className="form_row">
-                    <div>
+                    <div className="radio_container">
                         <input type="checkbox" id="mode_cb" name="mode_cb" />
                         <label htmlFor="mode_cb">Mode</label>
                     </div>
-                    <div>
+                    <div className="radio_container">
                         <input type="checkbox" id="mode_cb" name="mode_cb" />
                         <label htmlFor="mode_cb">Moment</label>
                     </div>
@@ -150,52 +151,36 @@ const OverlaySearchView = (props) => {
                                 dispatch({ type: "weapon", payload: d })
                             }
                         />
+                        <div className="radio_container">
+                            <input
+                                type="checkbox"
+                                id="mode_cb"
+                                name="mode_cb"
+                            />
+                            <label htmlFor="mode_cb">Kills</label>
+                        </div>
+                        <div className="radio_container">
+                            <input
+                                type="checkbox"
+                                id="mode_cb"
+                                name="mode_cb"
+                            />
+                            <label htmlFor="mode_cb">Kills / g</label>
+                        </div>
+                        <div className="radio_container">
+                            <input
+                                type="checkbox"
+                                id="mode_cb"
+                                name="mode_cb"
+                            />
+                            <label htmlFor="mode_cb">Precision</label>
+                        </div>
                     </fieldset>
 
-                    <fieldset className="form_row">
-                        <legend>Stats</legend>
-
-                        <StatSelect
-                            label="Stat 1"
-                            selected={output.stats[0]}
-                            onChange={(d) =>
-                                dispatch({
-                                    type: "stat",
-                                    payload: { stat: d, index: 0 },
-                                })
-                            }
-                        />
-                        <StatSelect
-                            label="Stat 2"
-                            selected={output.stats[1]}
-                            onChange={(d) =>
-                                dispatch({
-                                    type: "stat",
-                                    payload: { stat: d, index: 1 },
-                                })
-                            }
-                        />
-                        <StatSelect
-                            label="Stat 3"
-                            selected={output.stats[2]}
-                            onChange={(d) =>
-                                dispatch({
-                                    type: "stat",
-                                    payload: { stat: d, index: 2 },
-                                })
-                            }
-                        />
-                        <StatSelect
-                            label="Stat 4"
-                            selected={output.stats[3]}
-                            onChange={(d) =>
-                                dispatch({
-                                    type: "stat",
-                                    payload: { stat: d, index: 3 },
-                                })
-                            }
-                        />
-                    </fieldset>
+                    <OverlayStatsConfigView
+                        onChange={() => {}}
+                        disabled={output.overlayType !== Overlay.STATS}
+                    />
                 </div>
             </fieldset>
 
