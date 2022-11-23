@@ -222,7 +222,7 @@ class Manifest {
     }
 }
 
-const createResourceUrl = (path) => {
+export const createResourceUrl = (path) => {
     if (!path) {
         return undefined;
     }

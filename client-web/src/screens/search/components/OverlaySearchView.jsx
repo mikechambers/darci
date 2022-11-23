@@ -8,6 +8,7 @@ import ModeSelect from "../../../components/ModeSelect";
 import MomentSelect from "../../../components/MomentSelect";
 import PlayerSelect from "../../../components/PlayerSelect";
 import { GlobalContext } from "../../../contexts/GlobalContext";
+import { MOMENT_TYPE, SEASON_TYPE } from "../../../core/consts";
 import Overlay from "../../../core/enums/Overlay";
 import Stat from "../../../core/enums/Stat";
 import { serialize } from "../../../core/utils/data";
@@ -68,6 +69,8 @@ const OverlaySearchView = (props) => {
         }
     };
 
+    const onItemChange = () => {};
+
     return (
         <div className="form_column">
             <div className="form_row">
@@ -113,12 +116,44 @@ const OverlaySearchView = (props) => {
                     </div>
                 </div>
 
-                <OverlaySelect
-                    selected={output.overlayType}
-                    onChange={(d) =>
-                        dispatch({ type: "overlayType", payload: d })
-                    }
-                />
+                <div className="form_row">
+                    <div className="radio_container">
+                        <input
+                            type="radio"
+                            value={Overlay.WEAPON.type}
+                            name="overlay_type_group"
+                            id="weapon_radio_id"
+                            onClick={(e) =>
+                                dispatch({
+                                    type: "overlayType",
+                                    payload: Overlay.fromType(e.target.value),
+                                })
+                            }
+                            defaultChecked={
+                                output.overlayType === Overlay.WEAPON
+                            }
+                        />
+                        <label htmlFor="weapon_radio_id">Weapon</label>
+                    </div>
+                    <div className="radio_container">
+                        <input
+                            type="radio"
+                            value={Overlay.STATS.type}
+                            name="overlay_type_group"
+                            id="stats_radio_id"
+                            onClick={(e) =>
+                                dispatch({
+                                    type: "overlayType",
+                                    payload: Overlay.fromType(e.target.value),
+                                })
+                            }
+                            defaultChecked={
+                                output.overlayType === Overlay.STATS
+                            }
+                        />
+                        <label htmlFor="stats_radio_id">Stats</label>
+                    </div>
+                </div>
 
                 <div className="form_row">
                     <OverlayWeaponsConfigView
