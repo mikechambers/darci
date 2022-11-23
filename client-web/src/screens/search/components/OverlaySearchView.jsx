@@ -103,18 +103,7 @@ const OverlaySearchView = (props) => {
             </div>
 
             <fieldset className="form_column">
-                <legend>Display</legend>
-
-                <div className="form_row">
-                    <div className="radio_container">
-                        <input type="checkbox" id="mode_cb" name="mode_cb" />
-                        <label htmlFor="mode_cb">Mode</label>
-                    </div>
-                    <div className="radio_container">
-                        <input type="checkbox" id="mode_cb" name="mode_cb" />
-                        <label htmlFor="mode_cb">Moment</label>
-                    </div>
-                </div>
+                <legend>Info to Display</legend>
 
                 <div className="form_row">
                     <div className="radio_container">
@@ -169,6 +158,16 @@ const OverlaySearchView = (props) => {
                         }
                         disabled={output.overlayType !== Overlay.STATS}
                     />
+                </div>
+                <div className="form_row">
+                    <div className="radio_container">
+                        <input type="checkbox" id="mode_cb" name="mode_cb" />
+                        <label htmlFor="mode_cb">Mode</label>
+                    </div>
+                    <div className="radio_container">
+                        <input type="checkbox" id="mode_cb" name="mode_cb" />
+                        <label htmlFor="mode_cb">Moment</label>
+                    </div>
                 </div>
             </fieldset>
 

@@ -74,7 +74,7 @@ const OverlayWeaponsConfigView = (props) => {
     let weaponName;
 
     if (output.weapon) {
-        weaponIconUrl = createResourceUrl(output.weapon.data.icon);
+        weaponIconUrl = createResourceUrl(output.weapon.data.collectibleIcon);
         weaponName = output.weapon.data.name;
     }
 

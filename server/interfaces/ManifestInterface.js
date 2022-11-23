@@ -41,6 +41,7 @@ class ManifestInterface {
     #select_activity_mode_definitions;
     #select_emblem_definitions;
     #select_medal_record_definition;
+    #select_collectible_definition;
 
     #manifestDbPath;
     #manifestInfoPath;
@@ -165,6 +166,13 @@ class ManifestInterface {
         WHERE
             json like @medalNameSearch
             `);
+
+        this.#select_collectible_definition = this.#db.prepare(`
+        SELECT
+            *
+        FROM
+            DestinyCollectibleDefinition
+        `);
     }
 
     async #getSystemManifestVersion() {
@@ -202,17 +210,27 @@ class ManifestInterface {
             activityDefinition[id] = out;
         }
 
+        let collectibles = this.#select_collectible_definition.all();
+
+        let indexMap = new Map();
+        for (const row of collectibles) {
+            const d = JSON.parse(row.json);
+
+            indexMap.set(d.itemHash, d.displayProperties.icon);
+        }
+
         rows = this.#select_weapon_item_definitions.all();
 
         let weaponItemDefinition = {};
         for (let row of rows) {
-            let d = JSON.parse(row.json);
+            const d = JSON.parse(row.json);
             const id = idToHash(row.id);
 
             let out = {
                 //description: d.displayProperties.description,
                 name: d.displayProperties.name,
                 icon: d.displayProperties.icon,
+                collectibleIcon: indexMap.get(id),
                 screenshot: d.screenshot,
                 itemType: d.itemType,
                 itemSubType: d.itemSubType,
