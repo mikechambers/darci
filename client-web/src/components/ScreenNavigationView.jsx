@@ -51,9 +51,9 @@ const ScreenNavigationView = (props) => {
 
     const linkContainerStyle = {
         display: "flex",
-        flexDirection: "columns",
+        flexDirection: "row",
         gap: "var(--nav-item-gap)",
-        justifyContent: "space-apart",
+        justifyContent: "flex-start",
     };
 
     const onClick = (index) => {

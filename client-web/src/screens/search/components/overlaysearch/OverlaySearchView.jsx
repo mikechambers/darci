@@ -53,7 +53,7 @@ const OverlaySearchView = (props) => {
                 break;
             }
             case WEAPON_UPDATED: {
-                out.weapon = action.weapon;
+                out.weapon = action.payload;
                 break;
             }
             case STATS_UPDATED: {
@@ -100,7 +100,7 @@ const OverlaySearchView = (props) => {
         if (output.overlayType === Overlay.WEAPON) {
             encoded = serialize({
                 overlayType: Overlay.WEAPON,
-                weapon: output.weapon.data.id,
+                weapon: output.weapon.weapon.id,
             });
 
             if (!encoded) {

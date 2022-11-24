@@ -65,7 +65,7 @@ const matchTimeStyle = {
 
 const modeMapContainerStyle = {
     display: "flex",
-    flexDirection: "columns",
+    flexDirection: "column",
     alignItems: "center",
 };
 

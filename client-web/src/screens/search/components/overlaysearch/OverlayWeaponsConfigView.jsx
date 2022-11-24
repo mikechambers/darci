@@ -3,10 +3,10 @@ import { GlobalContext } from "../../../../contexts/GlobalContext";
 import WeaponSelect from "./WeaponSelect";
 import RoundedImageView from "../../../../components/RoundedImageView";
 
-const WEAPON = "weapon";
-const SHOW_KILLS = "showKills";
-const SHOW_KILLS_GAME = "showKillsGame";
-const SHOW_PRECISION = "showPrecision";
+const WEAPON_UPDATED = "weapon";
+const SHOW_KILLS_UPDATED = "showKills";
+const SHOW_KILLS_GAME_UPDATED = "showKillsGame";
+const SHOW_PRECISION_UPDATED = "showPrecision";
 
 const OverlayWeaponsConfigView = (props) => {
     const disabled = props.disabled;
@@ -19,20 +19,19 @@ const OverlayWeaponsConfigView = (props) => {
         let out = { ...state };
 
         switch (action.type) {
-            case WEAPON: {
-                //createResourceUrl
+            case WEAPON_UPDATED: {
                 out.weapon = action.payload;
                 break;
             }
-            case SHOW_KILLS: {
+            case SHOW_KILLS_UPDATED: {
                 out.showKills = action.payload;
                 break;
             }
-            case SHOW_KILLS_GAME: {
+            case SHOW_KILLS_GAME_UPDATED: {
                 out.showKillsGame = action.payload;
                 break;
             }
-            case SHOW_PRECISION: {
+            case SHOW_PRECISION_UPDATED: {
                 out.showPrecision = action.payload;
                 break;
             }
@@ -60,7 +59,7 @@ const OverlayWeaponsConfigView = (props) => {
 
     useEffect(() => {
         if (weapons && weapons.length) {
-            dispatch({ type: "weapon", payload: weapons[0] });
+            dispatch({ type: WEAPON_UPDATED, payload: weapons[0] });
         }
     }, [weapons]);
 
@@ -88,7 +87,9 @@ const OverlayWeaponsConfigView = (props) => {
                     options={weapons}
                     selected={output.weapon}
                     disabled={disabled}
-                    onChange={(d) => dispatch({ type: WEAPON, payload: d })}
+                    onChange={(d) =>
+                        dispatch({ type: WEAPON_UPDATED, payload: d })
+                    }
                 />
                 <div className="form_column">
                     <div className="radio_container">
@@ -98,7 +99,7 @@ const OverlayWeaponsConfigView = (props) => {
                             checked={output.showKills}
                             onChange={(d) =>
                                 dispatch({
-                                    type: SHOW_KILLS,
+                                    type: SHOW_KILLS_UPDATED,
                                     payload: d.target.checked,
                                 })
                             }
@@ -112,7 +113,7 @@ const OverlayWeaponsConfigView = (props) => {
                             checked={output.showKillsGame}
                             onChange={(d) =>
                                 dispatch({
-                                    type: SHOW_KILLS_GAME,
+                                    type: SHOW_KILLS_GAME_UPDATED,
                                     payload: d.target.checked,
                                 })
                             }
@@ -126,7 +127,7 @@ const OverlayWeaponsConfigView = (props) => {
                             checked={output.showPrecision}
                             onChange={(d) =>
                                 dispatch({
-                                    type: SHOW_PRECISION,
+                                    type: SHOW_PRECISION_UPDATED,
                                     payload: d.target.checked,
                                 })
                             }
