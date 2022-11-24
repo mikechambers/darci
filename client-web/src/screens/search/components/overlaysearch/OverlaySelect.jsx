@@ -1,6 +1,6 @@
 import React from "react";
-import EnumSelect from "../../../components/EnumSelect";
-import Overlay from "../../../core/enums/Overlay";
+import EnumSelect from "../../../../components/EnumSelect";
+import Overlay from "../../../../core/enums/Overlay";
 
 const options = [Overlay.WEAPON, Overlay.STATS];
 

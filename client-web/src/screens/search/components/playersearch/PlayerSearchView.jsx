@@ -1,18 +1,18 @@
 import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { Mode, OrderBy } from "shared";
-import CharacterClassSelectionSelect from "../../../components/CharacterClassSelectionSelect";
-import ModeSelect from "../../../components/ModeSelect";
-import OrderBySelect from "../../../components/OrderBySelect";
-import PlayerSelect from "../../../components/PlayerSelect";
+import CharacterClassSelectionSelect from "../../../../components/CharacterClassSelectionSelect";
+import ModeSelect from "../../../../components/ModeSelect";
+import OrderBySelect from "../../../../components/OrderBySelect";
+import PlayerSelect from "../../../../components/PlayerSelect";
 
-import { GlobalContext } from "../../../contexts/GlobalContext";
-import { MOMENT_TYPE, SEASON_TYPE } from "../../../core/consts";
-import { createPlayerUrl } from "../../../core/utils";
+import { GlobalContext } from "../../../../contexts/GlobalContext";
+import { MOMENT_TYPE, SEASON_TYPE } from "../../../../core/consts";
+import { createPlayerUrl } from "../../../../core/utils";
 import { useNavigate } from "react-router-dom";
 import CharacterClassSelection from "shared/packages/enums/CharacterClassSelection";
-import PeriodSearchConfigView from "./PeriodSearchConfigView";
-import FormValidationMessageView from "./FormValidationMessageView";
+import PeriodSearchConfigView from "../PeriodSearchConfigView";
+import FormValidationMessageView from "../FormValidationMessageView";
 
 const formContainerStyle = {
     display: "flex",

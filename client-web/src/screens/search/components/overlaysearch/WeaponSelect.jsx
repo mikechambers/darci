@@ -1,5 +1,5 @@
 import React from "react";
-import EnumSelect from "../../../components/EnumSelect";
+import EnumSelect from "../../../../components/EnumSelect";
 
 const WeaponSelect = (props) => {
     const onChange = props.onChange;

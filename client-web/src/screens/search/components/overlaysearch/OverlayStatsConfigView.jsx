@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer } from "react";
-import Stat from "../../../core/enums/Stat";
+import Stat from "../../../../core/enums/Stat";
 import StatSelect from "./StatSelect";
 
 const statRowStyle = {

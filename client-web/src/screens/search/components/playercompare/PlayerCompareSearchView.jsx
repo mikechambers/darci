@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import FormValidationMessageView from "./FormValidationMessageView";
+import FormValidationMessageView from "./../FormValidationMessageView";
 import PlayerCompareConfigView from "./PlayerCompareConfigView";
 
 import { Buffer } from "buffer";
 import { useNavigate } from "react-router-dom";
-import { serialize } from "../../../core/utils/data";
+import { serialize } from "../../../../core/utils/data";
 
 const rootStyle = {
     display: "flex",

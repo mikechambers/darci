@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useReducer } from "react";
-import { GlobalContext } from "../../../contexts/GlobalContext";
+import { GlobalContext } from "../../../../contexts/GlobalContext";
 import WeaponSelect from "./WeaponSelect";
-import RoundedImageView from "../../../components/RoundedImageView";
+import RoundedImageView from "../../../../components/RoundedImageView";
 
 const WEAPON = "weapon";
 const SHOW_KILLS = "showKills";

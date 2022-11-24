@@ -1,12 +1,12 @@
 import { useContext, useEffect, useReducer, useState } from "react";
 import { Mode } from "shared";
 import CharacterClassSelection from "shared/packages/enums/CharacterClassSelection";
-import CharacterClassSelectionSelect from "../../../components/CharacterClassSelectionSelect";
-import ModeSelect from "../../../components/ModeSelect";
-import PlayerSelect from "../../../components/PlayerSelect";
-import { GlobalContext } from "../../../contexts/GlobalContext";
-import { reducer } from "../../../core/utils/data";
-import PeriodSearchConfigView from "./PeriodSearchConfigView";
+import CharacterClassSelectionSelect from "../../../../components/CharacterClassSelectionSelect";
+import ModeSelect from "../../../../components/ModeSelect";
+import PlayerSelect from "../../../../components/PlayerSelect";
+import { GlobalContext } from "../../../../contexts/GlobalContext";
+import { reducer } from "../../../../core/utils/data";
+import PeriodSearchConfigView from "../PeriodSearchConfigView";
 
 const formContainerStyle = {
     display: "flex",

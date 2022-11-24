@@ -24,9 +24,9 @@
 import React from "react";
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
-import OverlaySearchView from "./components/OverlaySearchView";
-import PlayerCompareSearchView from "./components/PlayerCompareSearchView";
-import PlayerSearchView from "./components/PlayerSearchView";
+import OverlaySearchView from "./components/overlaysearch/OverlaySearchView";
+import PlayerCompareSearchView from "./components/playercompare/PlayerCompareSearchView";
+import PlayerSearchView from "./components/playersearch/PlayerSearchView";
 
 const pageContainerStyle = {
     //minWidth: "720px",

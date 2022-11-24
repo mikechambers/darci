@@ -1,6 +1,6 @@
 import React from "react";
-import EnumSelect from "../../../components/EnumSelect";
-import Stat from "../../../core/enums/Stat";
+import EnumSelect from "../../../../components/EnumSelect";
+import Stat from "../../../../core/enums/Stat";
 
 const options = [
     Stat.KD,
