@@ -38,6 +38,7 @@ const {
     calculateKillsDeathsRatio,
     calculateKillsDeathsAssists,
     calculateRatio,
+    createResourceUrl,
 } = require("./packages/utils");
 
 module.exports = {

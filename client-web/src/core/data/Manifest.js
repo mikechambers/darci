@@ -23,7 +23,6 @@
 
 const { ItemSubType, AmmunitionType } = require("shared");
 
-const API_RESOURCE_BASE_URL = "https://www.bungie.net";
 class Manifest {
     #manifestData;
 
@@ -66,16 +65,17 @@ class Manifest {
             return out;
         }
 
-        Object.assign(out, d);
-
+        out = Object.assign(out, d);
+        /*
         out = {
             ...out,
             ...d,
         };
+        */
 
         out.itemSubType = ItemSubType.fromId(d.itemSubType);
-        out.icon = createResourceUrl(d.icon);
-        out.screenshot = createResourceUrl(d.screenshot);
+        out.icon = d.icon;
+        out.screenshot = d.screenshot;
         out.ammunitionType = AmmunitionType.fromId(d.ammunitionType);
 
         return out;
@@ -99,8 +99,7 @@ class Manifest {
             return out;
         }
 
-        Object.assign(out, d);
-        out.image = createResourceUrl(d.image);
+        out = Object.assign(out, d);
 
         return out;
     }
@@ -119,8 +118,7 @@ class Manifest {
 
         let d = this.#manifestData.data.trialsPassageItemDefinitions[id];
 
-        Object.assign(out, d);
-        out.icon = createResourceUrl(d.icon);
+        out = Object.assign(out, d);
 
         return !d ? out : d;
     }
@@ -151,10 +149,10 @@ class Manifest {
 
         out = {
             ...e,
-            icon: createResourceUrl(e.icon),
-            secondaryIcon: createResourceUrl(e.secondaryIcon),
-            secondaryOverlay: createResourceUrl(e.secondaryOverlay),
-            secondarySpecial: createResourceUrl(e.secondarySpecial),
+            icon: e.icon,
+            secondaryIcon: e.secondaryIcon,
+            secondaryOverlay: e.secondaryOverlay,
+            secondarySpecial: e.secondarySpecial,
         };
         return out;
     }
@@ -189,9 +187,7 @@ class Manifest {
             return out;
         }
 
-        Object.assign(out, m);
-        out.icon = createResourceUrl(m.icon);
-        out.image = createResourceUrl(m.image);
+        out = Object.assign(out, m);
 
         return out;
     }
@@ -215,19 +211,9 @@ class Manifest {
             return out;
         }
 
-        Object.assign(out, m);
-        out.icon = createResourceUrl(m.icon);
-
+        out = Object.assign(out, m);
         return out;
     }
 }
-
-export const createResourceUrl = (path) => {
-    if (!path) {
-        return undefined;
-    }
-
-    return `${API_RESOURCE_BASE_URL}${path}`;
-};
 
 export default Manifest;

@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useReducer } from "react";
 import { GlobalContext } from "../../../contexts/GlobalContext";
 import WeaponSelect from "./WeaponSelect";
 import RoundedImageView from "../../../components/RoundedImageView";
-import { createResourceUrl } from "../../../core/data/Manifest";
 
 const WEAPON = "weapon";
 const SHOW_KILLS = "showKills";
@@ -74,7 +73,7 @@ const OverlayWeaponsConfigView = (props) => {
     let weaponName;
 
     if (output.weapon) {
-        weaponIconUrl = createResourceUrl(output.weapon.data.collectibleIcon);
+        weaponIconUrl = output.weapon.data.collectibleIcon;
         weaponName = output.weapon.data.name;
     }
 

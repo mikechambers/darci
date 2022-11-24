@@ -23,6 +23,7 @@
 
 const Database = require("better-sqlite3");
 const fs = require("fs");
+const { createResourceUrl } = require("shared/packages/utils");
 
 const MANIFEST_CHECK_INTERVAL_MS_MIN = 1000 * 60 * 60; //1 min
 class ManifestInterface {
@@ -202,7 +203,7 @@ class ManifestInterface {
 
             let out = {
                 name: d.displayProperties.name,
-                image: d.pgcrImage,
+                image: createResourceUrl(d.pgcrImage),
                 description: d.displayProperties.description,
                 activityModeHash: d.directActivityModeHash,
             };
@@ -229,8 +230,8 @@ class ManifestInterface {
             let out = {
                 //description: d.displayProperties.description,
                 name: d.displayProperties.name,
-                icon: d.displayProperties.icon,
-                collectibleIcon: indexMap.get(id),
+                icon: createResourceUrl(d.displayProperties.icon),
+                collectibleIcon: createResourceUrl(indexMap.get(id)),
                 screenshot: d.screenshot,
                 itemType: d.itemType,
                 itemSubType: d.itemSubType,
@@ -251,7 +252,7 @@ class ManifestInterface {
             let out = {
                 name: d.displayProperties.name,
                 description: d.displayProperties.description,
-                icon: d.displayProperties.icon,
+                icon: createResourceUrl(d.displayProperties.icon),
                 id: id,
             };
 
@@ -334,7 +335,7 @@ class ManifestInterface {
             let out = {
                 name: d.statName,
                 description: description,
-                icon: d.iconImage,
+                icon: createResourceUrl(d.iconImage),
                 isGold: false,
                 id: key,
             };
@@ -380,8 +381,8 @@ class ManifestInterface {
             let out = {
                 name: d.displayProperties.name,
                 description: d.displayProperties.description,
-                icon: d.displayProperties.icon,
-                image: d.pgcrImage,
+                icon: createResourceUrl(d.displayProperties.icon),
+                image: createResourceUrl(d.pgcrImage),
             };
 
             activityModeDefinitions[id] = out;
@@ -396,10 +397,10 @@ class ManifestInterface {
 
             let out = {
                 name: d.displayProperties.name,
-                icon: d.displayProperties.icon,
-                secondaryIcon: d.secondaryIcon,
-                secondaryOverlay: d.secondaryOverlay,
-                secondarySpecial: d.secondarySpecial,
+                icon: createResourceUrl(d.displayProperties.icon),
+                secondaryIcon: createResourceUrl(d.secondaryIcon),
+                secondaryOverlay: createResourceUrl(d.secondaryOverlay),
+                secondarySpecial: createResourceUrl(d.secondarySpecial),
             };
 
             emblemDefinitions[id] = out;

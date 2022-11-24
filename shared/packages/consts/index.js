@@ -23,8 +23,10 @@
 
 const SERVER_RESPONSE_SUCCESS = "success";
 const SERVER_RESPONSE_ERROR = "error";
+const API_RESOURCE_BASE_URL = "https://www.bungie.net";
 
 module.exports = {
     SERVER_RESPONSE_SUCCESS,
     SERVER_RESPONSE_ERROR,
+    API_RESOURCE_BASE_URL,
 };

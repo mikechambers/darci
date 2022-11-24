@@ -21,6 +21,8 @@
  * SOFTWARE.
  */
 
+const { API_RESOURCE_BASE_URL } = require("../consts");
+
 const calculateKillsDeathsRatio = function (kills, deaths) {
     return calculateRatio(kills, deaths);
 };
@@ -63,6 +65,14 @@ const calculateAverage = (value, total) => {
     return value / total;
 };
 
+const createResourceUrl = (path) => {
+    if (!path) {
+        return undefined;
+    }
+
+    return `${API_RESOURCE_BASE_URL}${path}`;
+};
+
 module.exports = {
     calculateEfficiency,
     calculateKillsDeathsRatio,
@@ -72,4 +82,5 @@ module.exports = {
     calculateAverage,
     calculateChange,
     calculatePercentChange,
+    createResourceUrl,
 };
