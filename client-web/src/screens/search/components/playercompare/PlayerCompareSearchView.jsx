@@ -19,7 +19,7 @@ const configContainerStyle = {
 
 const buttonContainerStyle = {
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
 };
 
 const PlayerCompareSearchView = (props) => {

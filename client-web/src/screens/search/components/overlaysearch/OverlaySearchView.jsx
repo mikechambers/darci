@@ -8,13 +8,20 @@ import ModeSelect from "../../../../components/ModeSelect";
 import MomentSelect from "../../../../components/MomentSelect";
 import PlayerSelect from "../../../../components/PlayerSelect";
 import { GlobalContext } from "../../../../contexts/GlobalContext";
-import { MOMENT_TYPE, SEASON_TYPE } from "../../../../core/consts";
 import Overlay from "../../../../core/enums/Overlay";
-import Stat from "../../../../core/enums/Stat";
 import { serialize } from "../../../../core/utils/data";
-import OverlaySelect from "./OverlaySelect";
 import OverlayStatsConfigView from "./OverlayStatsConfigView";
 import OverlayWeaponsConfigView from "./OverlayWeaponsConfigView";
+
+const PLAYER_UPDATED = "PLAYER_UPDATED";
+const MODE_UPDATED = "MODE_UPDATED";
+const OVERLAY_TYPE_UPDATED = "OVERLAY_TYPE_UPDATED";
+const CHARACTER_CLASS_UPDATED = "CHARACTER_CLASS_UPDATED";
+const MOMENT_UPDATED = "MOMENT_UPDATED";
+const WEAPON_UPDATED = "WEAPON_UPDATED";
+const STATS_UPDATED = "STATS_UPDATED";
+const SHOW_MODE_UPDATED = "SHOW_MODE_UPDATED";
+const SHOW_MOMENT_UPDATED = "SHOW_MOMENT_UPDATED";
 
 const OverlaySearchView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
@@ -23,14 +30,49 @@ const OverlaySearchView = (props) => {
     const navigate = useNavigate();
     const reducer = (state, action) => {
         let out = { ...state };
-        console.log(action);
+
         switch (action.type) {
-            case "stats": {
+            case PLAYER_UPDATED: {
+                out.player = action.payload;
                 break;
+            }
+            case MODE_UPDATED: {
+                out.mode = action.payload;
+                break;
+            }
+            case OVERLAY_TYPE_UPDATED: {
+                out.overlayType = action.payload;
+                break;
+            }
+            case CHARACTER_CLASS_UPDATED: {
+                out.characterClass = action.payload;
+                break;
+            }
+            case MOMENT_UPDATED: {
+                out.moment = action.payload;
+                break;
+            }
+            case WEAPON_UPDATED: {
+                out.weapon = action.weapon;
+                break;
+            }
+            case STATS_UPDATED: {
+                out.stats = action.payload;
+                break;
+            }
+            case SHOW_MODE_UPDATED: {
+                out.showMode = action.payload;
+                break;
+            }
+            case SHOW_MOMENT_UPDATED: {
+                out.showMode = action.payload;
+                break;
+            }
+            default: {
+                console.log("OverlaySearchView unknown action:", action);
             }
         }
 
-        out[action.type] = action.payload;
         return out;
     };
 
@@ -42,11 +84,13 @@ const OverlaySearchView = (props) => {
         startMoment: Moment.DAILY,
         weapon: undefined,
         stats: [],
+        showMode: true,
+        showMoment: true,
     });
 
     useEffect(() => {
         if (players && players.length) {
-            dispatch({ type: "player", payload: players[0] });
+            dispatch({ type: PLAYER_UPDATED, payload: players[0] });
         }
     }, [players]);
 
@@ -63,41 +107,44 @@ const OverlaySearchView = (props) => {
                 return;
             }
 
+            return;
             navigate(
                 `/overlay/${output.player.memberId}/${output.player.platformId}/${output.characterClass.type}/${output.mode.type}/${output.startMoment.type}/${encoded}/`
             );
         }
     };
 
-    const onItemChange = () => {};
-
     return (
         <div className="form_column">
             <div className="form_row">
                 <PlayerSelect
                     label="player"
-                    onChange={(d) => dispatch({ type: "player", payload: d })}
+                    onChange={(d) =>
+                        dispatch({ type: PLAYER_UPDATED, payload: d })
+                    }
                     players={players}
                     selected={output.player}
                 />
                 <CharacterClassSelectionSelect
                     label="class"
                     onChange={(d) =>
-                        dispatch({ type: "characterClass", payload: d })
+                        dispatch({ type: CHARACTER_CLASS_UPDATED, payload: d })
                     }
                     selected={output.characterClass}
                 />
 
                 <ModeSelect
                     label="Mode"
-                    onChange={(d) => dispatch({ type: "mode", payload: d })}
+                    onChange={(d) =>
+                        dispatch({ type: MODE_UPDATED, payload: d })
+                    }
                     selected={output.mode}
                 />
                 <MomentSelect
                     label="Start Moment"
                     selected={output.startMoment}
                     onChange={(d) =>
-                        dispatch({ type: "startMoment", payload: d })
+                        dispatch({ type: MOMENT_UPDATED, payload: d })
                     }
                 />
             </div>
@@ -114,7 +161,7 @@ const OverlaySearchView = (props) => {
                             id="weapon_radio_id"
                             onClick={(e) =>
                                 dispatch({
-                                    type: "overlayType",
+                                    type: OVERLAY_TYPE_UPDATED,
                                     payload: Overlay.fromType(e.target.value),
                                 })
                             }
@@ -132,7 +179,7 @@ const OverlaySearchView = (props) => {
                             id="stats_radio_id"
                             onClick={(e) =>
                                 dispatch({
-                                    type: "overlayType",
+                                    type: OVERLAY_TYPE_UPDATED,
                                     payload: Overlay.fromType(e.target.value),
                                 })
                             }
@@ -147,25 +194,47 @@ const OverlaySearchView = (props) => {
                 <div className="form_row">
                     <OverlayWeaponsConfigView
                         onChange={(d) =>
-                            dispatch({ type: "weapon", payload: d })
+                            dispatch({ type: WEAPON_UPDATED, payload: d })
                         }
                         disabled={output.overlayType !== Overlay.WEAPON}
                     />
 
                     <OverlayStatsConfigView
                         onChange={(d) =>
-                            dispatch({ type: "stats", payload: d })
+                            dispatch({ type: STATS_UPDATED, payload: d })
                         }
                         disabled={output.overlayType !== Overlay.STATS}
                     />
                 </div>
                 <div className="form_row">
                     <div className="radio_container">
-                        <input type="checkbox" id="mode_cb" name="mode_cb" />
+                        <input
+                            type="checkbox"
+                            id="mode_cb"
+                            name="mode_cb"
+                            defaultChecked={output.showMode}
+                            onClick={(e) =>
+                                dispatch({
+                                    type: SHOW_MODE_UPDATED,
+                                    payload: e.target.checked,
+                                })
+                            }
+                        />
                         <label htmlFor="mode_cb">Mode</label>
                     </div>
                     <div className="radio_container">
-                        <input type="checkbox" id="mode_cb" name="mode_cb" />
+                        <input
+                            type="checkbox"
+                            id="mode_cb"
+                            name="mode_cb"
+                            defaultChecked={output.showMoment}
+                            onClick={(e) =>
+                                dispatch({
+                                    type: SHOW_MOMENT_UPDATED,
+                                    payload: e.target.checked,
+                                })
+                            }
+                        />
                         <label htmlFor="mode_cb">Moment</label>
                     </div>
                 </div>
