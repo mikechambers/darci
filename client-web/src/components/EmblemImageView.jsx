@@ -23,12 +23,12 @@
 
 import React from "react";
 
-import ImageView from "./ImageView";
+import RoundedImageView from "./RoundedImageView";
 
 const EmblemImageView = (props) => {
     const emblem = props.emblem;
 
-    return <ImageView height={50} width={50} image={emblem.icon} />;
+    return <RoundedImageView height={50} width={50} image={emblem.icon} />;
 };
 
 export default EmblemImageView;
