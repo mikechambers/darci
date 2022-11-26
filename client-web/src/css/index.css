@@ -599,7 +599,7 @@ input[type='radio'],input[type='checkbox']{
   vertical-align: baseline;
   padding: 4px;
   margin: 4px;
-} 
+}
 
 .form_column  {
   display: flex;

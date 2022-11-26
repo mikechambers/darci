@@ -4,6 +4,7 @@ import { Moment } from "shared";
 import CharacterClassSelection from "shared/packages/enums/CharacterClassSelection";
 import Mode from "shared/packages/enums/Mode";
 import CharacterClassSelectionSelect from "../../../../components/CharacterClassSelectionSelect";
+import ColorInput from "../../../../components/ColorInput";
 import ModeSelect from "../../../../components/ModeSelect";
 import MomentSelect from "../../../../components/MomentSelect";
 import PlayerSelect from "../../../../components/PlayerSelect";
@@ -22,6 +23,8 @@ const WEAPON_UPDATED = "WEAPON_UPDATED";
 const STATS_UPDATED = "STATS_UPDATED";
 const SHOW_MODE_UPDATED = "SHOW_MODE_UPDATED";
 const SHOW_MOMENT_UPDATED = "SHOW_MOMENT_UPDATED";
+const FONT_COLOR_UPDATED = "FONT_COLOR_UPDATED";
+const BACKGROUND_COLOR_UPDATED = "BACKGROUND_COLOR_UPDATED";
 
 const OverlaySearchView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
@@ -64,6 +67,14 @@ const OverlaySearchView = (props) => {
                 out.showMode = action.payload;
                 break;
             }
+            case FONT_COLOR_UPDATED: {
+                out.fontColor = action.payload;
+                break;
+            }
+            case BACKGROUND_COLOR_UPDATED: {
+                out.backgroundColor = action.payload;
+                break;
+            }
             case SHOW_MOMENT_UPDATED: {
                 out.showMode = action.payload;
                 break;
@@ -86,6 +97,8 @@ const OverlaySearchView = (props) => {
         stats: [],
         showMode: true,
         showMoment: true,
+        fontColor: "#FFFFFF",
+        backgroundColor: "#000000",
     });
 
     useEffect(() => {
@@ -238,6 +251,28 @@ const OverlaySearchView = (props) => {
                         <label htmlFor="mode_cb">Moment</label>
                     </div>
                 </div>
+
+                <ColorInput
+                    color={output.fontColor}
+                    onChange={(e) =>
+                        dispatch({
+                            type: FONT_COLOR_UPDATED,
+                            payload: e,
+                        })
+                    }
+                    label="Text Color"
+                />
+
+                <ColorInput
+                    color={output.backgroundColor}
+                    onChange={(e) =>
+                        dispatch({
+                            type: BACKGROUND_COLOR_UPDATED,
+                            payload: e,
+                        })
+                    }
+                    label="Background Color"
+                />
             </fieldset>
 
             <button onClick={onClick}>Load</button>
