@@ -52,7 +52,15 @@ const OverlayView = (props) => {
 
     console.log(weapon);
 
-    return <div>Overlay view</div>;
+    const rootStyle = {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        height: "100%",
+        width: "100%",
+        backgroundColor: data.backgroundColor,
+    };
+    return <div style={rootStyle}>foo</div>;
 };
 
 export default OverlayView;
