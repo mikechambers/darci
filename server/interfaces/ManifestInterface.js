@@ -232,7 +232,7 @@ class ManifestInterface {
                 name: d.displayProperties.name,
                 icon: createResourceUrl(d.displayProperties.icon),
                 collectibleIcon: createResourceUrl(indexMap.get(id)),
-                screenshot: d.screenshot,
+                screenshot: createResourceUrl(d.screenshot),
                 itemType: d.itemType,
                 itemSubType: d.itemSubType,
                 ammunitionType: d.equippingBlock.ammoType,
