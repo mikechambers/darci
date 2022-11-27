@@ -46,7 +46,7 @@ ReactDOM.render(
                     <Route index path="/about" element={<AboutView />} />
                     <Route index path="/search" element={<SearchView />} />
                     <Route
-                        path="/overlay/:memberId/:platformId/:classType/:mode/:startMoment/:overlayType/"
+                        path="/overlay/:memberId/:platformId/:classType/:mode/:startMoment/:data/"
                         element={<OverlayView />}
                     />
                     <Route

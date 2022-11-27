@@ -12,8 +12,8 @@ const colorStyle = {
 
 const colorSpanStyleBase = {
     borderRadius: "4px",
-    width: "25px",
-    height: "25px",
+    width: "20px",
+    height: "20px",
     backgroundColor: "red",
     display: "inline-block",
 };

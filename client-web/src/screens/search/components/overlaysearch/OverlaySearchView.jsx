@@ -108,23 +108,35 @@ const OverlaySearchView = (props) => {
     }, [players]);
 
     const onClick = () => {
-        console.log(output);
-        let encoded;
+        let out = {
+            backgroundColor: output.backgroundColor,
+            fontColor: output.fontColor,
+            overlayType: output.overlayType.type,
+            showMode: output.showMode,
+            showMoment: output.showMoment,
+            stats: undefined,
+            weapon: undefined,
+        };
+
         if (output.overlayType === Overlay.WEAPON) {
-            encoded = serialize({
-                overlayType: Overlay.WEAPON,
-                weapon: output.weapon.weapon.id,
-            });
-
-            if (!encoded) {
-                return;
-            }
-
-            return;
-            navigate(
-                `/overlay/${output.player.memberId}/${output.player.platformId}/${output.characterClass.type}/${output.mode.type}/${output.startMoment.type}/${encoded}/`
-            );
+            out.weapon = {
+                id: output.weapon.weapon.data.id,
+                showKills: output.weapon.showKills,
+                showKillsGame: output.weapon.showKillsGame,
+                showPrecision: output.weapon.showPrecision,
+            };
+        } else {
+            let s = output.stats.map((s) => s.type);
+            out.stats = s;
         }
+
+        let encoded = serialize(out);
+
+        console.log(out);
+
+        navigate(
+            `/overlay/${output.player.memberId}/${output.player.platformId}/${output.characterClass.type}/${output.mode.type}/${output.startMoment.type}/${encoded}/`
+        );
     };
 
     return (
