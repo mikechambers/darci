@@ -59,6 +59,7 @@ const OverlayView = (props) => {
         height: "100%",
         width: "100%",
         backgroundColor: data.backgroundColor,
+        padding: "var(--padding-page-container)",
     };
     return <div style={rootStyle}>foo</div>;
 };
