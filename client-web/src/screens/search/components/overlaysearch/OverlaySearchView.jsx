@@ -111,7 +111,7 @@ const OverlaySearchView = (props) => {
         showMoment: true,
         fontColor: "#FFFFFF",
         backgroundColor: "#000000",
-        backgroundTransparency: 100,
+        backgroundTransparency: 75,
         historyCount: 10,
     });
 
