@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer } from "react";
+import React, { useContext, useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Moment } from "shared";
 import CharacterClassSelection from "shared/packages/enums/CharacterClassSelection";
@@ -8,9 +8,11 @@ import ColorInput from "../../../../components/ColorInput";
 import ModeSelect from "../../../../components/ModeSelect";
 import MomentSelect from "../../../../components/MomentSelect";
 import PlayerSelect from "../../../../components/PlayerSelect";
+import RangeInput from "../../../../components/RangeInput";
 import { GlobalContext } from "../../../../contexts/GlobalContext";
 import Overlay from "../../../../core/enums/Overlay";
 import { serialize } from "../../../../core/utils/data";
+import OverlayHistoryConfigView from "./OverlayHistoryConfigView";
 import OverlayStatsConfigView from "./OverlayStatsConfigView";
 import OverlayWeaponsConfigView from "./OverlayWeaponsConfigView";
 
@@ -25,6 +27,8 @@ const SHOW_MODE_UPDATED = "SHOW_MODE_UPDATED";
 const SHOW_MOMENT_UPDATED = "SHOW_MOMENT_UPDATED";
 const FONT_COLOR_UPDATED = "FONT_COLOR_UPDATED";
 const BACKGROUND_COLOR_UPDATED = "BACKGROUND_COLOR_UPDATED";
+const BACKGROUND_TRANSPARENCY_UPDATED = "BACKGROUND_TRANSPARENCY_UPDATED";
+const HISTORY_UPDATED = "HISTORY_UPDATED";
 
 const OverlaySearchView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
@@ -52,7 +56,7 @@ const OverlaySearchView = (props) => {
                 break;
             }
             case MOMENT_UPDATED: {
-                out.moment = action.payload;
+                out.startMoment = action.payload;
                 break;
             }
             case WEAPON_UPDATED: {
@@ -79,6 +83,14 @@ const OverlaySearchView = (props) => {
                 out.showMode = action.payload;
                 break;
             }
+            case BACKGROUND_TRANSPARENCY_UPDATED: {
+                out.backgroundTransparency = action.payload;
+                break;
+            }
+            case HISTORY_UPDATED: {
+                out.historyCount = action.payload;
+                break;
+            }
             default: {
                 console.log("OverlaySearchView unknown action:", action);
             }
@@ -99,7 +111,11 @@ const OverlaySearchView = (props) => {
         showMoment: true,
         fontColor: "#FFFFFF",
         backgroundColor: "#000000",
+        backgroundTransparency: 100,
+        historyCount: 10,
     });
+
+    const [url, setUrl] = useState("");
 
     useEffect(() => {
         if (players && players.length) {
@@ -107,9 +123,40 @@ const OverlaySearchView = (props) => {
         }
     }, [players]);
 
-    const onClick = () => {
+    useEffect(() => {
+        if (!output.player) {
+            return;
+        }
+
+        if (output.overlayType === Overlay.WEAPON && !output.weapon) {
+            return;
+        }
+
+        const u = `${window.location.origin}${createUrl()}`;
+
+        setUrl(u);
+    }, [output]);
+
+    const createUrl = () => {
+        //converts 0 to 100 to 2 digit hex
+        const f = (n) => {
+            n = Math.round(n * 2.55);
+
+            let hex = n.toString(16);
+
+            if (hex.length === 1) {
+                hex = `${hex}${hex}`;
+            }
+
+            return hex;
+        };
+
+        const backgroundColor = `${output.backgroundColor}${f(
+            output.backgroundTransparency
+        )}`;
+
         let out = {
-            backgroundColor: output.backgroundColor,
+            backgroundColor: backgroundColor,
             fontColor: output.fontColor,
             overlayType: output.overlayType.type,
             showMode: output.showMode,
@@ -124,6 +171,7 @@ const OverlaySearchView = (props) => {
                 showKills: output.weapon.showKills,
                 showKillsGame: output.weapon.showKillsGame,
                 showPrecision: output.weapon.showPrecision,
+                showIcon: output.weapon.showIcon,
             };
         } else {
             let s = output.stats.map((s) => s.type);
@@ -132,11 +180,13 @@ const OverlaySearchView = (props) => {
 
         let encoded = serialize(out);
 
-        console.log(out);
+        return `/overlay/${output.player.memberId}/${output.player.platformId}/${output.characterClass.type}/${output.mode.type}/${output.startMoment.type}/${encoded}/`;
+    };
 
-        navigate(
-            `/overlay/${output.player.memberId}/${output.player.platformId}/${output.characterClass.type}/${output.mode.type}/${output.startMoment.type}/${encoded}/`
-        );
+    const onClick = () => {
+        let url = createUrl();
+
+        navigate(url);
     };
 
     return (
@@ -214,6 +264,24 @@ const OverlaySearchView = (props) => {
                         />
                         <label htmlFor="stats_radio_id">Stats</label>
                     </div>
+                    <div className="radio_container">
+                        <input
+                            type="radio"
+                            value={Overlay.HISTORY.type}
+                            name="overlay_type_group"
+                            id="history_radio_id"
+                            onClick={(e) =>
+                                dispatch({
+                                    type: OVERLAY_TYPE_UPDATED,
+                                    payload: Overlay.fromType(e.target.value),
+                                })
+                            }
+                            defaultChecked={
+                                output.overlayType === Overlay.HISTORY
+                            }
+                        />
+                        <label htmlFor="history_radio_id">Stats</label>
+                    </div>
                 </div>
 
                 <div className="form_row">
@@ -230,7 +298,14 @@ const OverlaySearchView = (props) => {
                         }
                         disabled={output.overlayType !== Overlay.STATS}
                     />
+                    <OverlayHistoryConfigView
+                        onChange={(d) =>
+                            dispatch({ type: HISTORY_UPDATED, payload: d })
+                        }
+                        disabled={output.overlayType !== Overlay.HISTORY}
+                    />
                 </div>
+                {/*
                 <div className="form_row">
                     <div className="radio_container">
                         <input
@@ -263,6 +338,7 @@ const OverlaySearchView = (props) => {
                         <label htmlFor="mode_cb">Moment</label>
                     </div>
                 </div>
+                        */}
 
                 <ColorInput
                     color={output.fontColor}
@@ -275,19 +351,56 @@ const OverlaySearchView = (props) => {
                     label="Text Color"
                 />
 
-                <ColorInput
-                    color={output.backgroundColor}
-                    onChange={(e) =>
-                        dispatch({
-                            type: BACKGROUND_COLOR_UPDATED,
-                            payload: e,
-                        })
-                    }
-                    label="Background Color"
-                />
+                <fieldset className="form_column">
+                    <legend>Background</legend>
+
+                    <ColorInput
+                        color={output.backgroundColor}
+                        onChange={(e) =>
+                            dispatch({
+                                type: BACKGROUND_COLOR_UPDATED,
+                                payload: e,
+                            })
+                        }
+                        label="Color"
+                    />
+
+                    <RangeInput
+                        min={0}
+                        max={100}
+                        value={output.backgroundTransparency}
+                        onChange={(e) =>
+                            dispatch({
+                                type: BACKGROUND_TRANSPARENCY_UPDATED,
+                                payload: e,
+                            })
+                        }
+                        label="Transparency"
+                    />
+                </fieldset>
             </fieldset>
 
-            <button onClick={onClick}>Load</button>
+            <textarea
+                rows="5"
+                cols="10"
+                autoComplete="off"
+                readOnly={true}
+                value={url}
+                id="url-area"
+            />
+
+            <div className="form_row">
+                <button
+                    onClick={() =>
+                        navigator.clipboard.writeText(
+                            document.getElementById("url-area").value
+                        )
+                    }
+                >
+                    Copy
+                </button>
+                <button onClick={onClick}>Load</button>
+            </div>
         </div>
     );
 };

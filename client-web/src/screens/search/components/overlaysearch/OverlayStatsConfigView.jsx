@@ -36,11 +36,11 @@ const OverlayStatsConfigView = (props) => {
 
     const [output, dispatch] = useReducer(reducer, {
         stats: [
+            { checked: true, stat: Stat.ACTIVITY_COUNT },
             { checked: true, stat: Stat.WIN_PERCENT },
-            { checked: true, stat: Stat.DEFEATS },
             { checked: true, stat: Stat.KD },
             { checked: true, stat: Stat.EFFICIENCY },
-            { checked: false, stat: Stat.DEATHS },
+            { checked: false, stat: Stat.DEFEATS },
         ],
     });
 

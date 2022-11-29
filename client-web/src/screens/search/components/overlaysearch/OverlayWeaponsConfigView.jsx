@@ -7,6 +7,7 @@ const WEAPON_UPDATED = "weapon";
 const SHOW_KILLS_UPDATED = "showKills";
 const SHOW_KILLS_GAME_UPDATED = "showKillsGame";
 const SHOW_PRECISION_UPDATED = "showPrecision";
+const SHOW_ICON_UPDATED = "SHOW_ICON_UPDATED";
 
 const OverlayWeaponsConfigView = (props) => {
     const disabled = props.disabled;
@@ -35,6 +36,10 @@ const OverlayWeaponsConfigView = (props) => {
                 out.showPrecision = action.payload;
                 break;
             }
+            case SHOW_ICON_UPDATED: {
+                out.showIcon = action.payload;
+                break;
+            }
             default: {
                 console.log(
                     "OverlayWeaponsConfigView : Unknown action : ",
@@ -51,6 +56,7 @@ const OverlayWeaponsConfigView = (props) => {
         showKills: true,
         showKillsGame: true,
         showPrecision: true,
+        showIcon: true,
     });
 
     useEffect(() => {
@@ -133,6 +139,20 @@ const OverlayWeaponsConfigView = (props) => {
                             }
                         />
                         <label htmlFor="precision_cb">Precision</label>
+                    </div>
+                    <div className="radio_container">
+                        <input
+                            type="checkbox"
+                            id="icon_cb"
+                            checked={output.showIcon}
+                            onChange={(d) =>
+                                dispatch({
+                                    type: SHOW_ICON_UPDATED,
+                                    payload: d.target.checked,
+                                })
+                            }
+                        />
+                        <label htmlFor="icon_cb">Icon</label>
                     </div>
                 </div>
             </div>
