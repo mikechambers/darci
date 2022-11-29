@@ -55,7 +55,7 @@ const OverlayStatsView = (props) => {
         let label = type.label;
         let value;
         let formatter;
-        console.log(type);
+
         switch (type) {
             case Stat.KD: {
                 value = calculateKillsDeathsRatio(

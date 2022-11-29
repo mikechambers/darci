@@ -51,7 +51,7 @@ class Manifest {
             itemSubType: ItemSubType.UNKNOWN,
             id: id,
             icon: "https://www.bungie.net/common/destiny2_content/icons/f3c27772a3d98c91fef127ce32e9f1e0.png",
-            collectibleIcon:
+            collectionIcon:
                 "https://www.bungie.net/common/destiny2_content/icons/f3c27772a3d98c91fef127ce32e9f1e0.png",
             ammunitionType: AmmunitionType.UNKNOWN,
             screenshot: undefined,

@@ -34,7 +34,6 @@ const OverlayStatView = (props) => {
         color: color,
     };
 
-    console.log(label, value);
     return (
         <div style={rootStyle}>
             <div style={valueStyle}>{formatter.format(value)}</div>

@@ -78,7 +78,7 @@ const OverlayWeaponsConfigView = (props) => {
     let weaponName;
 
     if (output.weapon) {
-        weaponIconUrl = output.weapon.data.collectibleIcon;
+        weaponIconUrl = output.weapon.data.collectionIcon;
         weaponName = output.weapon.data.name;
     }
 

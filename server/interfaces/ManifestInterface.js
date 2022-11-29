@@ -231,7 +231,7 @@ class ManifestInterface {
                 //description: d.displayProperties.description,
                 name: d.displayProperties.name,
                 icon: createResourceUrl(d.displayProperties.icon),
-                collectibleIcon: createResourceUrl(indexMap.get(id)),
+                collectionIcon: createResourceUrl(indexMap.get(id)),
                 screenshot: createResourceUrl(d.screenshot),
                 itemType: d.itemType,
                 itemSubType: d.itemSubType,

@@ -280,7 +280,7 @@ const OverlaySearchView = (props) => {
                                 output.overlayType === Overlay.HISTORY
                             }
                         />
-                        <label htmlFor="history_radio_id">Stats</label>
+                        <label htmlFor="history_radio_id">History</label>
                     </div>
                 </div>
 

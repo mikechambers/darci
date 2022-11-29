@@ -8,6 +8,7 @@ import Overlay from "../../core/enums/Overlay";
 import { deserialize } from "../../core/utils/data";
 
 import OverlayStatsView from "./components/OverlayStatsView";
+import OverlayWeaponView from "./components/OverlayWeaponView";
 
 const rootStyleBase = {
     position: "absolute",
@@ -54,7 +55,15 @@ const OverlayView = (props) => {
     let div = "";
     let overlayType = Overlay.fromType(data.overlayType);
     if (overlayType === Overlay.WEAPON) {
-        //weapon = manifest.getWeaponDefinition(data.weapon.id);
+        div = (
+            <OverlayWeaponView
+                mode={mode}
+                startMoment={startMoment}
+                memberId={memberId}
+                characterClass={characterClass}
+                config={data.weapon}
+            />
+        );
     } else if (overlayType === Overlay.STATS) {
         div = (
             <OverlayStatsView
