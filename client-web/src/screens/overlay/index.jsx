@@ -6,6 +6,7 @@ import Mode from "shared/packages/enums/Mode";
 
 import Overlay from "../../core/enums/Overlay";
 import { deserialize } from "../../core/utils/data";
+import OverlayHistoryView from "./components/OverlayHistoryView";
 
 import OverlayStatsView from "./components/OverlayStatsView";
 import OverlayWeaponView from "./components/OverlayWeaponView";
@@ -15,10 +16,10 @@ const rootStyleBase = {
     top: 0,
     left: 0,
     height: "100%",
-    width: "100%",
-
+    width: "100$",
     padding: 24,
     visibility: "visible",
+    boxSizing: "border-box",
 };
 
 const OverlayView = (props) => {
@@ -54,26 +55,47 @@ const OverlayView = (props) => {
 
     let div = "";
     let overlayType = Overlay.fromType(data.overlayType);
-    if (overlayType === Overlay.WEAPON) {
-        div = (
-            <OverlayWeaponView
-                mode={mode}
-                startMoment={startMoment}
-                memberId={memberId}
-                characterClass={characterClass}
-                config={data.weapon}
-            />
-        );
-    } else if (overlayType === Overlay.STATS) {
-        div = (
-            <OverlayStatsView
-                stats={data.stats}
-                mode={mode}
-                startMoment={startMoment}
-                memberId={memberId}
-                characterClass={characterClass}
-            />
-        );
+
+    switch (overlayType) {
+        case Overlay.WEAPON: {
+            div = (
+                <OverlayWeaponView
+                    mode={mode}
+                    startMoment={startMoment}
+                    memberId={memberId}
+                    characterClass={characterClass}
+                    config={data.weapon}
+                />
+            );
+            break;
+        }
+        case Overlay.STATS: {
+            div = (
+                <OverlayStatsView
+                    stats={data.stats}
+                    mode={mode}
+                    startMoment={startMoment}
+                    memberId={memberId}
+                    characterClass={characterClass}
+                />
+            );
+            break;
+        }
+        case Overlay.HISTORY: {
+            div = (
+                <OverlayHistoryView
+                    config={data.history}
+                    mode={mode}
+                    startMoment={startMoment}
+                    memberId={memberId}
+                    characterClass={characterClass}
+                />
+            );
+            break;
+        }
+        default: {
+            return <div>Unknown Overlay Type : {overlayType.label}</div>;
+        }
     }
 
     return <div style={rootStyle}>{div}</div>;

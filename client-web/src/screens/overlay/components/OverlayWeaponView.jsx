@@ -20,18 +20,6 @@ const rootStyle = {
     gap: 4,
 };
 
-const statsStyle = {
-    display: "flex",
-    flexDirection: "row",
-    gap: 36,
-};
-
-const titleStyle = {
-    fontWeight: "var(--bold)",
-    fontSize: "18px",
-    textTransform: "uppercase",
-};
-
 const OverlayWeaponView = (props) => {
     const memberId = props.memberId;
     const mode = props.mode;
@@ -71,6 +59,15 @@ const OverlayWeaponView = (props) => {
         (e) => e.id === config.id
     );
 
+    let kills = 0;
+    let count = 0;
+    let precision = 0;
+    if (weaponData) {
+        kills = weaponData.kills;
+        count = weaponData.count;
+        precision = weaponData.precision;
+    }
+
     const weapon = manifest.getWeaponDefinition(config.id);
 
     const iconDiv = config.showIcon ? (
@@ -84,16 +81,17 @@ const OverlayWeaponView = (props) => {
     );
 
     let data = [];
+
     data.push({
-        label: "Games",
-        value: weaponData.count,
+        label: count === 1 ? "Game" : "Games",
+        value: count,
         formatter: INT_FORMATTER,
     });
 
     if (config.showKills) {
         data.push({
-            label: "Kills",
-            value: weaponData.kills,
+            label: kills === 1 ? "Kill" : "Kills",
+            value: kills,
             formatter: INT_FORMATTER,
         });
     }
@@ -101,7 +99,7 @@ const OverlayWeaponView = (props) => {
     if (config.showKillsGame) {
         data.push({
             label: "Kills / g",
-            value: calculateAverage(weaponData.kills, weaponData.count),
+            value: calculateAverage(kills, count),
             formatter: FLOAT_FORMATTER,
         });
     }
@@ -109,16 +107,16 @@ const OverlayWeaponView = (props) => {
     if (config.showPrecision) {
         data.push({
             label: "Precision",
-            value: calculateRatio(weaponData.precision, weaponData.kills),
+            value: calculateRatio(precision, kills),
             formatter: PERCENT_INT_FORMATTER,
         });
     }
 
     return (
         <div style={rootStyle}>
-            <div style={titleStyle}>{weapon.name}</div>
-            <div style={statsStyle}>
-                {iconDiv}
+            <div className="overlay_title">{weapon.name}</div>
+            <div className="overlay_list_row">
+                <div>{iconDiv}</div>
                 {data.map((d) => {
                     return (
                         <OverlayStatView

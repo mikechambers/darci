@@ -603,7 +603,7 @@ input[type='radio'],input[type='checkbox']{
 
 .form_column  {
   display: flex;
- flex-direction : column;
+  flex-direction : column;
   gap: var(--form-section-gap);
   width: min-content;
 }
@@ -676,4 +676,43 @@ input[type='radio'],input[type='checkbox']{
   display: grid;
   grid-template-columns: 135px 150px 150px 50px;
   row-gap: 4px;
+}
+
+.overlay_title {
+
+    font-weight: var(--bold);
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.overlay_list_row {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+
+.overlay_list_row > div {
+  width:80px;
+  max-width: 80px;
+  white-space: nowrap;
+}
+
+.overlay_stat_label {
+  text-transform: uppercase;
+  font-weight: var(--medium);
+  opacity: 0.7;
+  visibility: visible;
+  display:flex;
+  margin-bottom: -4px;
+}
+
+.overlay_stat_value {
+  font-weight: var(--bold);
+  font-size: 24px;
+  visibility: visible;
+  display:flex;
+}
+
+.cb_label {
+  white-space: nowrap;
 }

@@ -13,6 +13,10 @@ const options = [
     Stat.WINS,
     Stat.WIN_PERCENT,
     Stat.LOSSES,
+    Stat.KILLS_GAME,
+    Stat.ASSISTS_GAME,
+    Stat.DEFEATS_GAME,
+    Stat.DEATHS_GAME,
 ];
 
 const StatSelect = (props) => {

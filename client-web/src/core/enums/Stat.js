@@ -29,17 +29,21 @@ class Stat extends EnumBase {
     static DEATHS = new Stat("Deaths", "deaths", "Deaths");
     static DEFEATS = new Stat("Defeats", "defeats", "Defeats");
     static ASSISTS = new Stat("Assists", "assists", "Assists");
-	static ACTIVITY_COUNT = new Stat("ActivityCount", "activityCount", "Activity Count");
+    static ACTIVITY_COUNT = new Stat(
+        "ActivityCount",
+        "activityCount",
+        "Activity Count"
+    );
     static WINS = new Stat("Wins", "wins", "Wins");
     static LOSSES = new Stat("Losses", "losses", "Losses");
     static WIN_PERCENT = new Stat("WinPercent", "winPercent", "Win Percent");
 
+    static KILLS_GAME = new Stat("KillsGame", "killsGame", "Kills / g");
+    static ASSISTS_GAME = new Stat("AssistsGame", "assistsGame", "Assists / g");
+    static DEATHS_GAME = new Stat("DeathsGame", "deathsGame", "Deaths / g");
+    static DEFEATS_GAME = new Stat("DefeatsGame", "defeatsGame", "Defeats / g");
 
-
-
-
-//ACTIVITY_COUNT, WINS, LOSSES, WIN %
-
+    //ACTIVITY_COUNT, WINS, LOSSES, WIN %
 
     static UNKNOWN = new Stat("Unknown", "unknown", "Unknown");
 

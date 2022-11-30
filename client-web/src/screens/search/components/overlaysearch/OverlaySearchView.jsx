@@ -88,7 +88,7 @@ const OverlaySearchView = (props) => {
                 break;
             }
             case HISTORY_UPDATED: {
-                out.historyCount = action.payload;
+                out.history = action.payload;
                 break;
             }
             default: {
@@ -112,7 +112,7 @@ const OverlaySearchView = (props) => {
         fontColor: "#FFFFFF",
         backgroundColor: "#000000",
         backgroundTransparency: 75,
-        historyCount: 10,
+        history: undefined,
     });
 
     const [url, setUrl] = useState("");
@@ -128,7 +128,7 @@ const OverlaySearchView = (props) => {
             return;
         }
 
-        if (output.overlayType === Overlay.WEAPON && !output.weapon) {
+        if (!output.weapon || !output.weapon.weapon) {
             return;
         }
 
@@ -165,17 +165,33 @@ const OverlaySearchView = (props) => {
             weapon: undefined,
         };
 
-        if (output.overlayType === Overlay.WEAPON) {
-            out.weapon = {
-                id: output.weapon.weapon.data.id,
-                showKills: output.weapon.showKills,
-                showKillsGame: output.weapon.showKillsGame,
-                showPrecision: output.weapon.showPrecision,
-                showIcon: output.weapon.showIcon,
-            };
-        } else {
-            let s = output.stats.map((s) => s.type);
-            out.stats = s;
+        switch (output.overlayType) {
+            case Overlay.WEAPON: {
+                out.weapon = {
+                    id: output.weapon.weapon.data.id,
+                    showKills: output.weapon.showKills,
+                    showKillsGame: output.weapon.showKillsGame,
+                    showPrecision: output.weapon.showPrecision,
+                    showIcon: output.weapon.showIcon,
+                };
+                break;
+            }
+            case Overlay.STATS: {
+                let s = output.stats.map((s) => s.type);
+                out.stats = s;
+                break;
+            }
+            case Overlay.HISTORY: {
+                out.history = output.history;
+                break;
+            }
+            default: {
+                console.log(
+                    "OverlaySearchView unknown Overlay type.",
+                    output.overlayType
+                );
+                return;
+            }
         }
 
         let encoded = serialize(out);

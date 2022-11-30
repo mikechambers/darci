@@ -95,7 +95,7 @@ class ActivityStoreInterface {
                 not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
             ORDER BY
                 activity.period DESC
-            LIMIT 50`
+            LIMIT 25`
         );
 
         this.#select_latest_activity_id_for_member = this.#db.prepare(`
@@ -587,7 +587,7 @@ class ActivityStoreInterface {
         not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
       ORDER BY
           ${orderByStr} DESC
-      LIMIT 50`;
+      LIMIT 25`;
 
         //we compile to a prepared statement every time, since we need to dynamically generate
         //the query (see above). We could compile and cache for each order by, but the

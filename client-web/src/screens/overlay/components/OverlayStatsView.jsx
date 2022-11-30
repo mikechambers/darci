@@ -18,8 +18,8 @@ import Moment from "shared/packages/enums/Moment";
 
 const rootStyle = {
     display: "flex",
-    flexDirection: "row",
-    gap: 36,
+    flexDirection: "column",
+    gap: 4,
 };
 
 const OverlayStatsView = (props) => {
@@ -76,41 +76,56 @@ const OverlayStatsView = (props) => {
                 break;
             }
             case Stat.KILLS: {
+                label = playerSummary.summary.kills === 1 ? "Kills" : "Kills";
                 value = playerSummary.summary.kills;
                 formatter = INT_FORMATTER;
 
                 break;
             }
             case Stat.DEATHS: {
+                label = playerSummary.summary.deaths === 1 ? "Death" : "Deaths";
                 value = playerSummary.summary.deaths;
                 formatter = INT_FORMATTER;
                 break;
             }
             case Stat.DEFEATS: {
+                label =
+                    playerSummary.summary.opponentsDefeated === 1
+                        ? "Defeat"
+                        : "Defeats";
                 value = playerSummary.summary.opponentsDefeated;
                 formatter = INT_FORMATTER;
                 break;
             }
             case Stat.ASSISTS: {
+                label =
+                    playerSummary.summary.assists === 1 ? "Assist" : "Assists";
                 value = playerSummary.summary.assists;
                 formatter = INT_FORMATTER;
                 break;
             }
             case Stat.ACTIVITY_COUNT: {
+                label =
+                    playerSummary.summary.activityCount === 1
+                        ? "Game"
+                        : "Games";
                 label = "Games";
                 value = playerSummary.summary.activityCount;
                 formatter = INT_FORMATTER;
                 break;
             }
             case Stat.WINS: {
+                label = playerSummary.summary.wins === 1 ? "Win" : "Wins";
                 value = playerSummary.summary.wins;
                 formatter = INT_FORMATTER;
                 break;
             }
             case Stat.LOSSES: {
-                value =
+                const losses =
                     playerSummary.summary.activityCount -
                     playerSummary.summary.wins;
+                label = losses === 1 ? "Loss" : "Losses";
+                value = losses;
                 formatter = INT_FORMATTER;
                 break;
             }
@@ -124,6 +139,43 @@ const OverlayStatsView = (props) => {
 
                 break;
             }
+
+            case Stat.KILLS_GAME: {
+                value = calculateRatio(
+                    playerSummary.summary.kills,
+                    playerSummary.summary.activityCount
+                );
+                formatter = FLOAT_FORMATTER;
+
+                break;
+            }
+            case Stat.ASSISTS_GAME: {
+                value = calculateRatio(
+                    playerSummary.summary.assists,
+                    playerSummary.summary.activityCount
+                );
+                formatter = FLOAT_FORMATTER;
+
+                break;
+            }
+            case Stat.DEFEATS_GAME: {
+                value = calculateRatio(
+                    playerSummary.summary.opponentsDefeated,
+                    playerSummary.summary.activityCount
+                );
+                formatter = FLOAT_FORMATTER;
+
+                break;
+            }
+            case Stat.DEATHS_GAME: {
+                value = calculateRatio(
+                    playerSummary.summary.deaths,
+                    playerSummary.summary.activityCount
+                );
+                formatter = FLOAT_FORMATTER;
+
+                break;
+            }
             default: {
                 console.log("OverlayStatsView : Unknown Stat type:", s, type);
             }
@@ -133,16 +185,20 @@ const OverlayStatsView = (props) => {
 
     return (
         <div style={rootStyle}>
-            {arr.map((item, index) => {
-                return (
-                    <OverlayStatView
-                        key={index}
-                        label={item.label}
-                        value={item.value}
-                        formatter={item.formatter}
-                    />
-                );
-            })}
+            <div className="overlay_title">{`${mode.label} (${startMoment.label})`}</div>
+
+            <div className="overlay_list_row">
+                {arr.map((item, index) => {
+                    return (
+                        <OverlayStatView
+                            key={index}
+                            label={item.label}
+                            value={item.value}
+                            formatter={item.formatter}
+                        />
+                    );
+                })}
+            </div>
         </div>
     );
 };

@@ -3,24 +3,13 @@ import React from "react";
 const rootStyleBase = {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-end",
-    textAlign: "right",
-    borderRight: "2px solid #FFFFFFA6",
-    paddingRight: 4,
+    justifyContent: "flex-start",
+    textAlign: "left",
+    borderLeft: "2px solid #FFFFFFA6",
+    boxSizing: "border-box",
+    height: 48,
     visibility: "visible",
-};
-
-const labelStyle = {
-    textTransform: "uppercase",
-    fontWeight: "var(--medium)",
-    opacity: 0.7,
-    visibility: "visible",
-};
-
-const valueStyle = {
-    fontWeight: "var(--bold)",
-    fontSize: "24px",
-    visibility: "visible",
+    paddingLeft: 6,
 };
 
 const OverlayStatView = (props) => {
@@ -32,12 +21,13 @@ const OverlayStatView = (props) => {
     const rootStyle = {
         ...rootStyleBase,
         color: color,
+        justifyContent: "space-between",
     };
 
     return (
         <div style={rootStyle}>
-            <div style={valueStyle}>{formatter.format(value)}</div>
-            <div style={labelStyle}>{label}</div>
+            <div className="overlay_stat_value">{formatter.format(value)}</div>
+            <div className="overlay_stat_label">{label}</div>
         </div>
     );
 };
