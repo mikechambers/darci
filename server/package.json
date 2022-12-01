@@ -1,6 +1,6 @@
 {
   "name": "DARCI",
-  "version": "0.50.0",
+  "version": "0.3.0",
   "description": "DARCI",
   "main": "server.js",
   "scripts": {

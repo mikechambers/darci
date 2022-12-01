@@ -52,8 +52,7 @@ const OverlayStatsConfigView = (props) => {
     }, [output]);
 
     return (
-        <fieldset className="form_column">
-            <legend>Stats</legend>
+        <div className="form_column overlay_tab_content">
             {output.stats.map((item, index) => {
                 return (
                     <div key={index} className="form_row" style={statRowStyle}>
@@ -90,7 +89,7 @@ const OverlayStatsConfigView = (props) => {
                     </div>
                 );
             })}
-        </fieldset>
+        </div>
     );
 };
 

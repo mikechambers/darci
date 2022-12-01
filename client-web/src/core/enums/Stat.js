@@ -46,7 +46,7 @@ class Stat extends EnumBase {
     static MELEES = new Stat("Melees", "melees", "Melees");
     static MELEES_GAME = new Stat("MeleesGame", "meleesGame", "Melees / g");
     static SUPERS = new Stat("Supers", "supers", "Supers");
-    static SUPERS_GAME = new Stat("Supers", "supers", "Supers / g");
+    static SUPERS_GAME = new Stat("SupersGame", "supersGame", "Supers / g");
     static GRENADES = new Stat("Grenades", "grenades", "Grenades");
     static GRENADES_GAME = new Stat(
         "GrenadesGame",

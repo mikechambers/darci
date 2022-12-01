@@ -58,90 +58,83 @@ const OverlayLoadoutConfigView = (props) => {
     }, [output]);
 
     return (
-        <fieldset>
-            <legend>Loadout</legend>
-            <div className="form_column">
-                <div className="radio_container">
-                    <input
-                        disabled={disabled}
-                        type="checkbox"
-                        id="primary_cb"
-                        checked={output.showPrimary}
-                        onChange={(d) =>
-                            dispatch({
-                                type: SHOW_PRIMARY_UPDATED,
-                                payload: d.target.checked,
-                            })
-                        }
-                    />
-                    <label htmlFor="primary_cb">Top Primary Weapon</label>
-                </div>
-                <div className="radio_container">
-                    <input
-                        disabled={disabled}
-                        type="checkbox"
-                        id="primary_second_cb"
-                        checked={output.showSecondPrimary}
-                        onChange={(d) =>
-                            dispatch({
-                                type: SHOW_PRIMARY_SECOND_UPDATED,
-                                payload: d.target.checked,
-                            })
-                        }
-                    />
-                    <label htmlFor="primary_second_cb">
-                        Second Primary Weapon
-                    </label>
-                </div>
-                <div className="radio_container">
-                    <input
-                        disabled={disabled}
-                        type="checkbox"
-                        id="special_cb"
-                        checked={output.showSpecial}
-                        onChange={(d) =>
-                            dispatch({
-                                type: SHOW_SPECIAL_UPDATED,
-                                payload: d.target.checked,
-                            })
-                        }
-                    />
-                    <label htmlFor="special_cb">Top Special Weapon</label>
-                </div>
-                <div className="radio_container">
-                    <input
-                        disabled={disabled}
-                        type="checkbox"
-                        id="special_second_cb"
-                        checked={output.showSecondSpecial}
-                        onChange={(d) =>
-                            dispatch({
-                                type: SHOW_SPECIAL_SECOND_UPDATED,
-                                payload: d.target.checked,
-                            })
-                        }
-                    />
-                    <label htmlFor="special_second_cb">
-                        Second Special Weapon
-                    </label>
-                </div>
-                <div className="radio_container">
-                    <input
-                        disabled={disabled}
-                        type="checkbox"
-                        id="heavy_cb"
-                        checked={output.showHeavy}
-                        onChange={(d) =>
-                            dispatch({
-                                type: SHOW_HEAVY_UPDATED,
-                                payload: d.target.checked,
-                            })
-                        }
-                    />
-                    <label htmlFor="heavy_cb">Top Heavy Weapon</label>
-                </div>
+        <div className="form_column overlay_tab_content">
+            <div className="radio_container">
+                <input
+                    disabled={disabled}
+                    type="checkbox"
+                    id="primary_cb"
+                    checked={output.showPrimary}
+                    onChange={(d) =>
+                        dispatch({
+                            type: SHOW_PRIMARY_UPDATED,
+                            payload: d.target.checked,
+                        })
+                    }
+                />
+                <label htmlFor="primary_cb">Top Primary Weapon</label>
             </div>
-        </fieldset>
+            <div className="radio_container">
+                <input
+                    disabled={disabled}
+                    type="checkbox"
+                    id="primary_second_cb"
+                    checked={output.showSecondPrimary}
+                    onChange={(d) =>
+                        dispatch({
+                            type: SHOW_PRIMARY_SECOND_UPDATED,
+                            payload: d.target.checked,
+                        })
+                    }
+                />
+                <label htmlFor="primary_second_cb">Second Primary Weapon</label>
+            </div>
+            <div className="radio_container">
+                <input
+                    disabled={disabled}
+                    type="checkbox"
+                    id="special_cb"
+                    checked={output.showSpecial}
+                    onChange={(d) =>
+                        dispatch({
+                            type: SHOW_SPECIAL_UPDATED,
+                            payload: d.target.checked,
+                        })
+                    }
+                />
+                <label htmlFor="special_cb">Top Special Weapon</label>
+            </div>
+            <div className="radio_container">
+                <input
+                    disabled={disabled}
+                    type="checkbox"
+                    id="special_second_cb"
+                    checked={output.showSecondSpecial}
+                    onChange={(d) =>
+                        dispatch({
+                            type: SHOW_SPECIAL_SECOND_UPDATED,
+                            payload: d.target.checked,
+                        })
+                    }
+                />
+                <label htmlFor="special_second_cb">Second Special Weapon</label>
+            </div>
+            <div className="radio_container">
+                <input
+                    disabled={disabled}
+                    type="checkbox"
+                    id="heavy_cb"
+                    checked={output.showHeavy}
+                    onChange={(d) =>
+                        dispatch({
+                            type: SHOW_HEAVY_UPDATED,
+                            payload: d.target.checked,
+                        })
+                    }
+                />
+                <label htmlFor="heavy_cb">Top Heavy Weapon</label>
+            </div>
+        </div>
     );
 };
 

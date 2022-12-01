@@ -16,6 +16,7 @@ import OverlayHistoryConfigView from "./OverlayHistoryConfigView";
 import OverlayLoadoutConfigView from "./OverlayLoadoutConfigView";
 import OverlayStatsConfigView from "./OverlayStatsConfigView";
 import OverlayWeaponsConfigView from "./OverlayWeaponsConfigView";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 const PLAYER_UPDATED = "PLAYER_UPDATED";
 const MODE_UPDATED = "MODE_UPDATED";
@@ -108,7 +109,7 @@ const OverlaySearchView = (props) => {
     const [output, dispatch] = useReducer(reducer, {
         player: undefined,
         mode: Mode.ALL_PVP,
-        overlayType: Overlay.STATS,
+        overlayType: Overlay.LOADOUT,
         characterClass: CharacterClassSelection.ALL,
         startMoment: Moment.DAILY,
         weapon: undefined,
@@ -254,108 +255,81 @@ const OverlaySearchView = (props) => {
             <fieldset className="form_column">
                 <legend>Info to Display</legend>
 
-                <div className="form_row">
-                    <div className="radio_container">
-                        <input
-                            type="radio"
-                            value={Overlay.LOADOUT.type}
-                            name="overlay_type_group"
-                            id="loadout_radio_id"
-                            onClick={(e) =>
-                                dispatch({
-                                    type: OVERLAY_TYPE_UPDATED,
-                                    payload: Overlay.fromType(e.target.value),
-                                })
-                            }
-                            defaultChecked={
-                                output.overlayType === Overlay.LOADOUT
-                            }
-                        />
-                        <label htmlFor="loadout_radio_id">Loadout</label>
-                    </div>
-                    <div className="radio_container">
-                        <input
-                            type="radio"
-                            value={Overlay.WEAPON.type}
-                            name="overlay_type_group"
-                            id="weapon_radio_id"
-                            onClick={(e) =>
-                                dispatch({
-                                    type: OVERLAY_TYPE_UPDATED,
-                                    payload: Overlay.fromType(e.target.value),
-                                })
-                            }
-                            defaultChecked={
-                                output.overlayType === Overlay.WEAPON
-                            }
-                        />
-                        <label htmlFor="weapon_radio_id">Weapon</label>
-                    </div>
-                    <div className="radio_container">
-                        <input
-                            type="radio"
-                            value={Overlay.STATS.type}
-                            name="overlay_type_group"
-                            id="stats_radio_id"
-                            onClick={(e) =>
-                                dispatch({
-                                    type: OVERLAY_TYPE_UPDATED,
-                                    payload: Overlay.fromType(e.target.value),
-                                })
-                            }
-                            defaultChecked={
-                                output.overlayType === Overlay.STATS
-                            }
-                        />
-                        <label htmlFor="stats_radio_id">Stats</label>
-                    </div>
-                    <div className="radio_container">
-                        <input
-                            type="radio"
-                            value={Overlay.HISTORY.type}
-                            name="overlay_type_group"
-                            id="history_radio_id"
-                            onClick={(e) =>
-                                dispatch({
-                                    type: OVERLAY_TYPE_UPDATED,
-                                    payload: Overlay.fromType(e.target.value),
-                                })
-                            }
-                            defaultChecked={
-                                output.overlayType === Overlay.HISTORY
-                            }
-                        />
-                        <label htmlFor="history_radio_id">History</label>
-                    </div>
-                </div>
+                <Tabs
+                    forceRenderTabPanel={true}
+                    onSelect={(index) => {
+                        let type;
 
-                <div className="form_row">
-                    <OverlayLoadoutConfigView
-                        disabled={output.overlayType !== Overlay.LOADOUT}
-                        onChange={(d) =>
-                            dispatch({ type: LOADOUT_UPDATED, payload: d })
+                        switch (index) {
+                            case 0: {
+                                type = Overlay.LOADOUT;
+                                break;
+                            }
+                            case 1: {
+                                type = Overlay.WEAPON;
+                                break;
+                            }
+                            case 2: {
+                                type = Overlay.STATS;
+                                break;
+                            }
+                            case 3: {
+                                type = Overlay.HISTORY;
+                                break;
+                            }
+                            default: {
+                                console.log(
+                                    "OverlaySearchView Unknown Tab index / type.",
+                                    index
+                                );
+                            }
                         }
-                    />
-                    <OverlayWeaponsConfigView
-                        onChange={(d) =>
-                            dispatch({ type: WEAPON_UPDATED, payload: d })
-                        }
-                        disabled={output.overlayType !== Overlay.WEAPON}
-                    />
 
-                    <OverlayStatsConfigView
-                        onChange={(d) =>
-                            dispatch({ type: STATS_UPDATED, payload: d })
-                        }
-                        disabled={output.overlayType !== Overlay.STATS}
-                    />
-                    <OverlayHistoryConfigView
-                        onChange={(d) =>
-                            dispatch({ type: HISTORY_UPDATED, payload: d })
-                        }
-                        disabled={output.overlayType !== Overlay.HISTORY}
-                    />
-                </div>
+                        dispatch({
+                            type: OVERLAY_TYPE_UPDATED,
+                            payload: type,
+                        });
+                    }}
+                >
+                    <TabList>
+                        <Tab>Loadout</Tab>
+                        <Tab>Weapon</Tab>
+                        <Tab>Stats</Tab>
+                        <Tab>History</Tab>
+                    </TabList>
+                    <TabPanel>
+                        <OverlayLoadoutConfigView
+                            disabled={output.overlayType !== Overlay.LOADOUT}
+                            onChange={(d) =>
+                                dispatch({ type: LOADOUT_UPDATED, payload: d })
+                            }
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                        <OverlayWeaponsConfigView
+                            onChange={(d) =>
+                                dispatch({ type: WEAPON_UPDATED, payload: d })
+                            }
+                            disabled={output.overlayType !== Overlay.WEAPON}
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                        <OverlayStatsConfigView
+                            onChange={(d) =>
+                                dispatch({ type: STATS_UPDATED, payload: d })
+                            }
+                            disabled={output.overlayType !== Overlay.STATS}
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                        <OverlayHistoryConfigView
+                            onChange={(d) =>
+                                dispatch({ type: HISTORY_UPDATED, payload: d })
+                            }
+                            disabled={output.overlayType !== Overlay.HISTORY}
+                        />
+                    </TabPanel>
+                </Tabs>
                 {/*
                 <div className="form_row">
                     <div className="radio_container">

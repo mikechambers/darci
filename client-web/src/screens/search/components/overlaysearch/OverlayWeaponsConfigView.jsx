@@ -86,8 +86,7 @@ const OverlayWeaponsConfigView = (props) => {
         justifyContent: "space-between",
     };
     return (
-        <fieldset className="form_column" style={rootStyle}>
-            <legend>Weapon</legend>
+        <div className="form_column overlay_tab_content" style={rootStyle}>
             <div className="form_column">
                 <WeaponSelect
                     options={weapons}
@@ -171,7 +170,7 @@ const OverlayWeaponsConfigView = (props) => {
 
                 <div className="subsection_header">{weaponName}</div>
             </div>
-        </fieldset>
+        </div>
     );
 };
 

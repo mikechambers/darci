@@ -41,9 +41,7 @@ const OverlayHistoryConfigView = (props) => {
     }, [output]);
 
     return (
-        <fieldset className="form_column">
-            <legend>Game History</legend>
-
+        <div className="form_column overlay_tab_content">
             <RangeInput
                 min={1}
                 max={25}
@@ -75,7 +73,7 @@ const OverlayHistoryConfigView = (props) => {
                     <label htmlFor="show_title_cb">Display Title</label>
                 </div>
             </div>
-        </fieldset>
+        </div>
     );
 };
 
