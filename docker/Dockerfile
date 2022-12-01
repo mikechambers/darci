@@ -13,12 +13,12 @@ RUN apk add --no-cache unzip && \
 # make sure dcli binaries are executable
 RUN chmod +x /usr/local/bin/dcli*
 
-# install darci
 COPY . .
+
 WORKDIR /server
 RUN npm install
 WORKDIR /client-web
 RUN npm install
 
 # start darci
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker/docker-entrypoint.sh"]
