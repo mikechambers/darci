@@ -97,10 +97,12 @@ const OverlayWeaponsConfigView = (props) => {
                         dispatch({ type: WEAPON_UPDATED, payload: d })
                     }
                 />
+                {/*
                 <div className="form_column">
                     <div className="radio_container">
                         <input
                             type="checkbox"
+                            disabled={disabled}
                             id="kills_cb"
                             checked={output.showKills}
                             onChange={(d) =>
@@ -115,6 +117,7 @@ const OverlayWeaponsConfigView = (props) => {
                     <div className="radio_container">
                         <input
                             type="checkbox"
+                            disabled={disabled}
                             id="kills_game_cb"
                             checked={output.showKillsGame}
                             onChange={(d) =>
@@ -129,6 +132,7 @@ const OverlayWeaponsConfigView = (props) => {
                     <div className="radio_container">
                         <input
                             type="checkbox"
+                            disabled={disabled}
                             id="precision_cb"
                             checked={output.showPrecision}
                             onChange={(d) =>
@@ -143,6 +147,7 @@ const OverlayWeaponsConfigView = (props) => {
                     <div className="radio_container">
                         <input
                             type="checkbox"
+                            disabled={disabled}
                             id="icon_cb"
                             checked={output.showIcon}
                             onChange={(d) =>
@@ -155,6 +160,7 @@ const OverlayWeaponsConfigView = (props) => {
                         <label htmlFor="icon_cb">Icon</label>
                     </div>
                 </div>
+                        */}
             </div>
             <div className="form_row" style={weaponImageContainer}>
                 <RoundedImageView

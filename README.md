@@ -334,6 +334,8 @@ Next, we need to schedule the player data syncing via `dclisync`. There are two 
 -   Set up a crontab task to automate calling dclisync at a set interval. This should be ok for just a couple of users, but you need to make sure there is enough time between intervals that `dclisync` doesn't get called while it is still running from a previous sync.
 -   Install and run `dclisync` as a system service. This is the safest most robust way, and is recommended, especially if you are syncing data for multiple users.
 
+Note, if you just want to run this locally on Windows, you can use this [Windows Powershell script](https://github.com/mikechambers/dcli/blob/main/examples/dclisyncd.ps1) to automate the updated.
+
 `dclisync` includes a systemctl service, and [information on how to run dclisync as a service](https://github.com/mikechambers/dcli/tree/main/src/dclisync#run-as-a-service). Follow those directions, and then continue on the setup instructions here.
 
 #### Configure Node, Web Server to run in production

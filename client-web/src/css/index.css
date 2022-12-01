@@ -100,6 +100,8 @@
   --leader-view-grid-gap:36px;
   --form-section-gap:16px;
 
+  --overlay-padding:12px;
+
   --text-shadow:1px 1px 1px black;
 
   /* expose these via classes */
@@ -621,6 +623,10 @@ input[type='radio'],input[type='checkbox']{
   align-items: center;
 }
 
+label {
+  white-space: nowrap;
+}
+
 /******* loading spinner ***********/
 
 .spinner {
@@ -713,6 +719,4 @@ input[type='radio'],input[type='checkbox']{
   display:flex;
 }
 
-.cb_label {
-  white-space: nowrap;
-}
+

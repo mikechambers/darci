@@ -72,9 +72,7 @@ const OverlayHistoryConfigView = (props) => {
                             })
                         }
                     />
-                    <label htmlFor="show_title_cb" className="cb_label">
-                        Display Title
-                    </label>
+                    <label htmlFor="show_title_cb">Display Title</label>
                 </div>
             </div>
         </fieldset>

@@ -17,6 +17,12 @@ const options = [
     Stat.ASSISTS_GAME,
     Stat.DEFEATS_GAME,
     Stat.DEATHS_GAME,
+    Stat.MELEES,
+    Stat.MELEES_GAME,
+    Stat.GRENADES,
+    Stat.GRENADES_GAME,
+    Stat.SUPERS,
+    Stat.SUPERS_GAME,
 ];
 
 const StatSelect = (props) => {

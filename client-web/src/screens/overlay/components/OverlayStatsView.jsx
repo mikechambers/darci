@@ -45,10 +45,10 @@ const OverlayStatsView = (props) => {
             hash: query.get("fr"),
         });
 
-    if (!playerSummary) {
+    if (!playerSummary || playerSummaryLoadError) {
         return "";
     }
-
+    console.log(playerSummary);
     let arr = [];
     for (const s of stats) {
         let type = Stat.fromType(s);
@@ -139,7 +139,6 @@ const OverlayStatsView = (props) => {
 
                 break;
             }
-
             case Stat.KILLS_GAME: {
                 value = calculateRatio(
                     playerSummary.summary.kills,
@@ -176,6 +175,57 @@ const OverlayStatsView = (props) => {
 
                 break;
             }
+
+            case Stat.GRENADES: {
+                label = "Gren";
+                value = playerSummary.summary.grenadeKills;
+                formatter = INT_FORMATTER;
+
+                break;
+            }
+            case Stat.GRENADES_GAME: {
+                label = "Gren / g";
+                value = calculateRatio(
+                    playerSummary.summary.grenadeKills,
+                    playerSummary.summary.activityCount
+                );
+                formatter = FLOAT_FORMATTER;
+
+                break;
+            }
+
+            case Stat.SUPERS: {
+                value = playerSummary.summary.superKills;
+                formatter = INT_FORMATTER;
+
+                break;
+            }
+            case Stat.SUPERS_GAME: {
+                value = calculateRatio(
+                    playerSummary.summary.superKills,
+                    playerSummary.summary.activityCount
+                );
+                formatter = FLOAT_FORMATTER;
+
+                break;
+            }
+
+            case Stat.MELEES: {
+                value = playerSummary.summary.meleeKills;
+                formatter = INT_FORMATTER;
+
+                break;
+            }
+            case Stat.MELEES_GAME: {
+                value = calculateRatio(
+                    playerSummary.summary.meleeKills,
+                    playerSummary.summary.activityCount
+                );
+                formatter = FLOAT_FORMATTER;
+
+                break;
+            }
+
             default: {
                 console.log("OverlayStatsView : Unknown Stat type:", s, type);
             }

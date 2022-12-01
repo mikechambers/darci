@@ -13,6 +13,7 @@ import { GlobalContext } from "../../../../contexts/GlobalContext";
 import Overlay from "../../../../core/enums/Overlay";
 import { serialize } from "../../../../core/utils/data";
 import OverlayHistoryConfigView from "./OverlayHistoryConfigView";
+import OverlayLoadoutConfigView from "./OverlayLoadoutConfigView";
 import OverlayStatsConfigView from "./OverlayStatsConfigView";
 import OverlayWeaponsConfigView from "./OverlayWeaponsConfigView";
 
@@ -29,6 +30,7 @@ const FONT_COLOR_UPDATED = "FONT_COLOR_UPDATED";
 const BACKGROUND_COLOR_UPDATED = "BACKGROUND_COLOR_UPDATED";
 const BACKGROUND_TRANSPARENCY_UPDATED = "BACKGROUND_TRANSPARENCY_UPDATED";
 const HISTORY_UPDATED = "HISTORY_UPDATED";
+const LOADOUT_UPDATED = "LOADOUT_UPDATED";
 
 const OverlaySearchView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
@@ -91,6 +93,10 @@ const OverlaySearchView = (props) => {
                 out.history = action.payload;
                 break;
             }
+            case LOADOUT_UPDATED: {
+                out.loadout = action.payload;
+                break;
+            }
             default: {
                 console.log("OverlaySearchView unknown action:", action);
             }
@@ -102,7 +108,7 @@ const OverlaySearchView = (props) => {
     const [output, dispatch] = useReducer(reducer, {
         player: undefined,
         mode: Mode.ALL_PVP,
-        overlayType: Overlay.WEAPON,
+        overlayType: Overlay.STATS,
         characterClass: CharacterClassSelection.ALL,
         startMoment: Moment.DAILY,
         weapon: undefined,
@@ -113,6 +119,7 @@ const OverlaySearchView = (props) => {
         backgroundColor: "#000000",
         backgroundTransparency: 75,
         history: undefined,
+        loadout: undefined,
     });
 
     const [url, setUrl] = useState("");
@@ -185,6 +192,10 @@ const OverlaySearchView = (props) => {
                 out.history = output.history;
                 break;
             }
+            case Overlay.LOADOUT: {
+                out.loadout = output.loadout;
+                break;
+            }
             default: {
                 console.log(
                     "OverlaySearchView unknown Overlay type.",
@@ -247,6 +258,24 @@ const OverlaySearchView = (props) => {
                     <div className="radio_container">
                         <input
                             type="radio"
+                            value={Overlay.LOADOUT.type}
+                            name="overlay_type_group"
+                            id="loadout_radio_id"
+                            onClick={(e) =>
+                                dispatch({
+                                    type: OVERLAY_TYPE_UPDATED,
+                                    payload: Overlay.fromType(e.target.value),
+                                })
+                            }
+                            defaultChecked={
+                                output.overlayType === Overlay.LOADOUT
+                            }
+                        />
+                        <label htmlFor="loadout_radio_id">Loadout</label>
+                    </div>
+                    <div className="radio_container">
+                        <input
+                            type="radio"
                             value={Overlay.WEAPON.type}
                             name="overlay_type_group"
                             id="weapon_radio_id"
@@ -301,6 +330,12 @@ const OverlaySearchView = (props) => {
                 </div>
 
                 <div className="form_row">
+                    <OverlayLoadoutConfigView
+                        disabled={output.overlayType !== Overlay.LOADOUT}
+                        onChange={(d) =>
+                            dispatch({ type: LOADOUT_UPDATED, payload: d })
+                        }
+                    />
                     <OverlayWeaponsConfigView
                         onChange={(d) =>
                             dispatch({ type: WEAPON_UPDATED, payload: d })

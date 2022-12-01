@@ -7,6 +7,7 @@ import Mode from "shared/packages/enums/Mode";
 import Overlay from "../../core/enums/Overlay";
 import { deserialize } from "../../core/utils/data";
 import OverlayHistoryView from "./components/OverlayHistoryView";
+import OverlayLoadoutView from "./components/OverlayLoadoutView";
 
 import OverlayStatsView from "./components/OverlayStatsView";
 import OverlayWeaponView from "./components/OverlayWeaponView";
@@ -17,7 +18,7 @@ const rootStyleBase = {
     left: 0,
     height: "100%",
     width: "100%",
-    padding: 24,
+    padding: "var(--overlay-padding)",
     visibility: "visible",
     boxSizing: "border-box",
 };
@@ -85,6 +86,18 @@ const OverlayView = (props) => {
             div = (
                 <OverlayHistoryView
                     config={data.history}
+                    mode={mode}
+                    startMoment={startMoment}
+                    memberId={memberId}
+                    characterClass={characterClass}
+                />
+            );
+            break;
+        }
+        case Overlay.LOADOUT: {
+            div = (
+                <OverlayLoadoutView
+                    config={data.loadout}
                     mode={mode}
                     startMoment={startMoment}
                     memberId={memberId}

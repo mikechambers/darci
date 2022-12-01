@@ -45,7 +45,7 @@ const OverlayHistoryView = (props) => {
         orderBy: OrderBy.PERIOD,
     });
 
-    if (!playerActivities) {
+    if (!playerActivities || playerActivitiesLoadError) {
         return "";
     }
 
