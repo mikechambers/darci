@@ -10,7 +10,8 @@ The app has the following functionality:
     for games, maps, and activities
 -   Details per activity stats, including per player stats, team stat summaries,
     and weapon usage
--   Search page that allows details searches of pvp data
+-   Search page that allows details searches and comparison of pvp data
+-   Stream overlay views, to enable near real time Destiny 2 PVP states on streams.
 
 Future features being considered:
 
