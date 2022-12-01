@@ -32,7 +32,7 @@ suggestions please [log an issue](https://github.com/mikechambers/darci/issues) 
 ![image](images/player_thumbnail_m.png)
 ![image](images/activity_thumbnail_m.png)
 
-[Full Player Details](images/player_details.png) | [Full Activity Details](images/activity_details.png) | [Full Compare View](images/compare_details.png)
+[Full Player Details](images/player_details.png) | [Full Activity Details](images/activity_details.png) | [Full Compare View](images/compare_details.png) | [Stream Overlay](images/stream_overlay.png)
 
 ## Development / Local Installation and Configuration
 
