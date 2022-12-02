@@ -40,7 +40,6 @@
   --font-label-highlight:var(--medium) 17px var(--font-family);
 
   --font-data-small:var(--light) 12px 'Roboto', sans-serif;
-  --font-label-small:var(--light) 10px 'Roboto', sans-serif;
 
   --font-label-small:var(--light) 10px var(--font-family);
   --font-announce: var(--medium) 64px var(--font-family);
@@ -127,7 +126,7 @@
   border: var(--border-list-item);
   border-radius: 4px;
   padding:4px;
-  width:700px
+  width:700px;
 }
 
 .list_item_drawer {
@@ -726,7 +725,6 @@ label {
   width:100%;
   padding:6px;
   box-sizing: border-box;
- 
 }
 
 

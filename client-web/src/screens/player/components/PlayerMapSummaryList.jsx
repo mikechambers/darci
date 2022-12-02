@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
     calculateAverage,
     calculateEfficiency,
@@ -50,143 +50,126 @@ const sortStyle = {
     justifyContent: "flex-end",
 };
 
+const sortData = [
+    {
+        value: "Games",
+        sort: (a, b) => {
+            return b.summary.activityCount - a.summary.activityCount;
+        },
+    },
+    {
+        value: "Win %",
+        sort: (a, b) => {
+            return (
+                calculatePercent(b.summary.wins, b.summary.activityCount) -
+                calculatePercent(a.summary.wins, a.summary.activityCount)
+            );
+        },
+    },
+    {
+        value: "Mercy %",
+        sort: (a, b) => {
+            return (
+                calculatePercent(
+                    b.summary.completionReasonMercy,
+                    b.summary.activityCount
+                ) -
+                calculatePercent(
+                    a.summary.completionReasonMercy,
+                    a.summary.activityCount
+                )
+            );
+        },
+    },
+    {
+        value: "KD",
+        sort: (a, b) => {
+            return (
+                calculateKillsDeathsRatio(b.summary.kills, b.summary.deaths) -
+                calculateKillsDeathsRatio(a.summary.kills, a.summary.deaths)
+            );
+        },
+    },
+    {
+        value: "Efficiency",
+        sort: (a, b) => {
+            return (
+                calculateEfficiency(
+                    b.summary.kills,
+                    b.summary.deaths,
+                    b.summary.assists
+                ) -
+                calculateEfficiency(
+                    a.summary.kills,
+                    a.summary.deaths,
+                    a.summary.assists
+                )
+            );
+        },
+    },
+    {
+        value: "Kills / g",
+        sort: (a, b) => {
+            return (
+                calculateAverage(b.summary.kills, b.summary.activityCount) -
+                calculateAverage(a.summary.kills, a.summary.activityCount)
+            );
+        },
+    },
+    {
+        value: "Defeats / g",
+        sort: (a, b) => {
+            return (
+                calculateAverage(
+                    b.summary.opponentsDefeated,
+                    b.summary.activityCount
+                ) -
+                calculateAverage(
+                    a.summary.opponentsDefeated,
+                    a.summary.activityCount
+                )
+            );
+        },
+    },
+    {
+        value: "Assists / g",
+        sort: (a, b) => {
+            return (
+                calculateAverage(b.summary.assists, b.summary.activityCount) -
+                calculateAverage(a.summary.assists, a.summary.activityCount)
+            );
+        },
+    },
+    {
+        value: "Deaths / g",
+        sort: (a, b) => {
+            return (
+                calculateAverage(b.summary.deaths, b.summary.activityCount) -
+                calculateAverage(a.summary.deaths, a.summary.activityCount)
+            );
+        },
+    },
+    {
+        value: "Time Played",
+        sort: (a, b) => {
+            return b.summary.timePlayedSeconds - a.summary.timePlayedSeconds;
+        },
+    },
+    {
+        value: "Completion %",
+        sort: (a, b) => {
+            return (
+                calculatePercent(b.summary.completed, b.summary.activityCount) -
+                calculatePercent(a.summary.completed, a.summary.activityCount)
+            );
+        },
+    },
+];
+
 const PlayerMapSummaryList = (props) => {
     let maps = props.maps ? props.maps : [];
 
     const [sortIndex, setSortIndex] = useState(0);
-
-    const sortData = [
-        {
-            value: "Games",
-            sort: (a, b) => {
-                return b.summary.activityCount - a.summary.activityCount;
-            },
-        },
-        {
-            value: "Win %",
-            sort: (a, b) => {
-                return (
-                    calculatePercent(b.summary.wins, b.summary.activityCount) -
-                    calculatePercent(a.summary.wins, a.summary.activityCount)
-                );
-            },
-        },
-        {
-            value: "Mercy %",
-            sort: (a, b) => {
-                return (
-                    calculatePercent(
-                        b.summary.completionReasonMercy,
-                        b.summary.activityCount
-                    ) -
-                    calculatePercent(
-                        a.summary.completionReasonMercy,
-                        a.summary.activityCount
-                    )
-                );
-            },
-        },
-        {
-            value: "KD",
-            sort: (a, b) => {
-                return (
-                    calculateKillsDeathsRatio(
-                        b.summary.kills,
-                        b.summary.deaths
-                    ) -
-                    calculateKillsDeathsRatio(a.summary.kills, a.summary.deaths)
-                );
-            },
-        },
-        {
-            value: "Efficiency",
-            sort: (a, b) => {
-                return (
-                    calculateEfficiency(
-                        b.summary.kills,
-                        b.summary.deaths,
-                        b.summary.assists
-                    ) -
-                    calculateEfficiency(
-                        a.summary.kills,
-                        a.summary.deaths,
-                        a.summary.assists
-                    )
-                );
-            },
-        },
-        {
-            value: "Kills / g",
-            sort: (a, b) => {
-                return (
-                    calculateAverage(b.summary.kills, b.summary.activityCount) -
-                    calculateAverage(a.summary.kills, a.summary.activityCount)
-                );
-            },
-        },
-        {
-            value: "Defeats / g",
-            sort: (a, b) => {
-                return (
-                    calculateAverage(
-                        b.summary.opponentsDefeated,
-                        b.summary.activityCount
-                    ) -
-                    calculateAverage(
-                        a.summary.opponentsDefeated,
-                        a.summary.activityCount
-                    )
-                );
-            },
-        },
-        {
-            value: "Assists / g",
-            sort: (a, b) => {
-                return (
-                    calculateAverage(
-                        b.summary.assists,
-                        b.summary.activityCount
-                    ) -
-                    calculateAverage(a.summary.assists, a.summary.activityCount)
-                );
-            },
-        },
-        {
-            value: "Deaths / g",
-            sort: (a, b) => {
-                return (
-                    calculateAverage(
-                        b.summary.deaths,
-                        b.summary.activityCount
-                    ) -
-                    calculateAverage(a.summary.deaths, a.summary.activityCount)
-                );
-            },
-        },
-        {
-            value: "Time Played",
-            sort: (a, b) => {
-                return (
-                    b.summary.timePlayedSeconds - a.summary.timePlayedSeconds
-                );
-            },
-        },
-        {
-            value: "Completion %",
-            sort: (a, b) => {
-                return (
-                    calculatePercent(
-                        b.summary.completed,
-                        b.summary.activityCount
-                    ) -
-                    calculatePercent(
-                        a.summary.completed,
-                        a.summary.activityCount
-                    )
-                );
-            },
-        },
-    ];
 
     maps.sort(sortData[sortIndex].sort);
 

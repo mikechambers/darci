@@ -100,37 +100,6 @@ const PlayerMapSummaryView = (props) => {
 
     let timePlayed = humanDuration(map.summary.timePlayedSeconds * 1000, true);
 
-    let data = [
-        {
-            label: "Mercy",
-            value: calculatePercent(
-                map.summary.completionReasonMercy,
-                map.summary.activityCount
-            ).toFixed(),
-        },
-        {
-            label: "Objective Complete",
-            value: calculatePercent(
-                map.summary.completionReasonObjectiveCompleted,
-                map.summary.activityCount
-            ).toFixed(),
-        },
-        {
-            label: "Timer Expired",
-            value: calculatePercent(
-                map.summary.completionReasonTimeExpired,
-                map.summary.activityCount
-            ).toFixed(),
-        },
-        {
-            label: "No Opponents",
-            value: calculatePercent(
-                map.summary.completionReasonNoOpponents,
-                map.summary.activityCount
-            ).toFixed(),
-        },
-    ];
-
     return (
         <div style={h}>
             <div className="subsection_header" style={headerStyle}>
@@ -161,6 +130,14 @@ const PlayerMapSummaryView = (props) => {
                                 totalGames
                             ).toFixed()}%`}
                         />
+                        <StatView
+                            label="Mercy"
+                            title="Percent of all games that end in Mercy"
+                            value={`${calculatePercent(
+                                map.summary.completionReasonMercy,
+                                map.summary.activityCount
+                            ).toFixed()}%`}
+                        />
                     </div>
                     <div style={statContainerStyle}>
                         <StatView
@@ -188,6 +165,16 @@ const PlayerMapSummaryView = (props) => {
                                 map.summary.opponentsDefeated,
                                 map.summary.activityCount
                             ).toFixed(2)}
+                            align="center"
+                        />
+
+                        <StatView
+                            label="Objective"
+                            title="Percent of games ending with objective complete"
+                            value={`${calculatePercent(
+                                map.summary.completionReasonObjectiveCompleted,
+                                map.summary.activityCount
+                            ).toFixed()}%`}
                             align="center"
                         />
                     </div>
@@ -220,9 +207,19 @@ const PlayerMapSummaryView = (props) => {
                             ).toFixed(2)}
                             align="right"
                         />
+
+                        <StatView
+                            label="Expired"
+                            title="Percent game ending due to time expired."
+                            value={`${calculatePercent(
+                                map.summary.completionReasonTimeExpired,
+                                map.summary.activityCount
+                            ).toFixed()}%`}
+                            align="right"
+                        />
                     </div>
                 </div>
-                <SingleBarChart data={data} />
+
                 <div style={bottomContainerDataStyle}>
                     <StatView
                         title="Percent of games completed"
