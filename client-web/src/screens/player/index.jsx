@@ -52,7 +52,6 @@ import LoadingAnimationView from "../../components/LoadingAnimationView";
 
 const { useQuery } = require("../../hooks/browser");
 
-const gapMargin = 30;
 const invalidParametersStyle = {
     padding: "var(--padding-page-container)",
     display: "flex",
@@ -65,7 +64,7 @@ const invalidParametersStyle = {
 };
 
 const loadLatestLinkStyle = {
-    marginTop: `-${gapMargin}px`,
+    padding: "15px 0",
 };
 
 const gappedStyle = {
@@ -82,7 +81,7 @@ const pageContainerStyle = {
 const itemDetailsStyle = {
     display: "flex",
     flexWrap: "wrap",
-    gap: `${gapMargin}px`,
+    gap: 30,
 };
 
 const pageLinks = [
@@ -261,7 +260,7 @@ const PlayerView = () => {
                     medals={medals}
                 />
                 {summary.activityCount ? (
-                    <div>
+                    <React.Fragment>
                         <div style={itemDetailsStyle}>
                             <div>
                                 {" "}
@@ -310,30 +309,35 @@ const PlayerView = () => {
                             <PlayerMapSummaryList maps={maps} />
                         </div>
 
-                        <PageSectionView
-                            description="Most recent matches"
-                            id="games"
-                            title="Games"
-                        />
-                        <div
-                            style={loadLatestLinkStyle}
-                            title="Load a page that always displays the most recent activity details"
-                        >
-                            <a
-                                href="void()"
-                                onClick={(e) =>
-                                    onLatestActivityClick(e, player.memberId)
-                                }
+                        <div>
+                            <PageSectionView
+                                description="Most recent matches"
+                                id="games"
+                                title="Games"
+                            />
+                            <div
+                                style={loadLatestLinkStyle}
+                                title="Load a page that always displays the most recent activity details"
                             >
-                                Monitor Most Recent Activity
-                            </a>
-                        </div>
+                                <a
+                                    href="void()"
+                                    onClick={(e) =>
+                                        onLatestActivityClick(
+                                            e,
+                                            player.memberId
+                                        )
+                                    }
+                                >
+                                    Monitor Most Recent Activity
+                                </a>
+                            </div>
 
-                        <PlayerActivityList
-                            activities={activities}
-                            summary={summary}
-                        />
-                    </div>
+                            <PlayerActivityList
+                                activities={activities}
+                                summary={summary}
+                            />
+                        </div>
+                    </React.Fragment>
                 ) : (
                     <div>No Activities</div>
                 )}
