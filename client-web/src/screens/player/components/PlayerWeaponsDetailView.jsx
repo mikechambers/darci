@@ -75,12 +75,7 @@ const PlayerWeaponsDetailView = (props) => {
         });
     }
 
-    let sortLabels = [
-        typeLabel.toLocaleLowerCase(),
-        "kills",
-        `kills/${typeAbr}`,
-        "precision",
-    ];
+    let sortLabels = [typeLabel, "Kills", `Kills / ${typeAbr}`, "Precision"];
 
     return (
         <PlayerWeaponsDetailList
