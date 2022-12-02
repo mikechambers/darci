@@ -361,13 +361,13 @@ body {
 .nav_select, .nav_option {
   font:var(--font-controls);
   border:0px;
-  text-align-last: right;
+  /*text-align-last: right;*/
 }
 
 .nav_option {
   color:var(--color-base-font-dark);
   /* right align options */
-  direction: rtl;
+  /*direction: rtl;*/
   
 }
 
