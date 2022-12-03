@@ -39,13 +39,6 @@ import { ActivityNotFoundError } from "../../core/errors";
 
 const pageContainerStyle = {
     minWidth: "720px",
-    padding: "0px var(--padding-page-container)",
-};
-
-const gappedStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: "30px",
 };
 
 const ActivityView = (props) => {
@@ -118,7 +111,7 @@ const ActivityView = (props) => {
 
     return (
         <div style={pageContainerStyle} id="page_nav">
-            <div style={gappedStyle}>
+            <div className="page_content">
                 <ScreenNavigationView links={pageLinks} />
                 <ActivitySummaryView details={details} teams={teams} />
 

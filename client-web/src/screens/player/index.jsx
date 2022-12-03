@@ -67,17 +67,6 @@ const loadLatestLinkStyle = {
     padding: "15px 0",
 };
 
-const gappedStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: "30px",
-};
-
-const pageContainerStyle = {
-    //minWidth: "720px",
-    width: "100%",
-};
-
 const itemDetailsStyle = {
     display: "flex",
     flexWrap: "wrap",
@@ -233,12 +222,8 @@ const PlayerView = () => {
     );
 
     return (
-        <div
-            id="page_nav"
-            className="page_containter"
-            style={pageContainerStyle}
-        >
-            <div style={gappedStyle}>
+        <div id="page_nav" className="page_containter">
+            <div className="page_content">
                 <ScreenNavigationView links={pageLinks} />
                 <div id="overview">
                     <PlayerActivitiesHeader

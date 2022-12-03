@@ -119,6 +119,13 @@
 
 #root {
   height:100%;
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    width: 100%;
+    overflow-y: scroll;
 }
 
 .list_item_header {
@@ -267,8 +274,14 @@ body {
 /************* core layout css ********************/
 
 .page_containter {
-  padding: 0px var(--padding-page-container);
-  max-width: var(--page-max-width);
+  /*max-width: var(--page-max-width);*/
+  width:100%;
+}
+
+.page_content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 }
 
 /************ activity detail ****************/

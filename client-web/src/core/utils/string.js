@@ -22,6 +22,7 @@
  */
 
 import { FLOAT_DECIMAL_PRECISION } from "../consts";
+import { humanDuration } from "./date";
 
 //Format floating point  23.40
 export const FLOAT_FORMATTER = new Intl.NumberFormat("en-US", {
@@ -56,6 +57,12 @@ export const PERCENT_CHANGE_INT_FORMATTER = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 0, //change both to 2 for trailing numbers
     maximumFractionDigits: 0,
 });
+
+export const HUMAN_DATE_TIME_FORMATTER = {
+    format: (s) => {
+        return humanDuration(s * 1000, true);
+    },
+};
 
 export const capitalize = function (str) {
     return str.charAt(0).toUpperCase() + str.slice(1);

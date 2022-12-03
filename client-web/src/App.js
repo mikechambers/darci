@@ -35,7 +35,22 @@ import {
     WEAPONS_UPDATED,
 } from "./contexts/GlobalContext";
 import MainNavView from "./components/MainNavView";
+import { CENTER } from "./core/consts";
 const { useQuery } = require("./hooks/browser");
+
+const style = {
+    display: "flex",
+    flexDirection: "column",
+    width: "var(--page-max-width)",
+    height: "100%",
+    alignItems: "flex-start",
+    //width: "100%",
+};
+
+const currentViewStyle = {
+    //flexGrow: 2,
+    width: "100%",
+};
 
 const App = (props) => {
     let query = useQuery();
@@ -100,18 +115,6 @@ const App = (props) => {
     } else if (isLoading) {
         initializingContent = <div>Initializing Manifest</div>;
     }
-
-    const style = {
-        display: "flex",
-        flexDirection: "column",
-        width: "var(--page-max-width)",
-        height: "100%",
-    };
-
-    const currentViewStyle = {
-        flexGrow: "2",
-        //height: "100vh",
-    };
 
     return (
         <GlobalContext.Provider value={{ global, dispatchGlobal }}>

@@ -38,12 +38,6 @@ const pageContainerStyle = {
     width: "100%",
 };
 
-const gappedStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: "30px",
-};
-
 const HomeView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
     const players = global.players;
@@ -76,7 +70,7 @@ const HomeView = (props) => {
             className="page_containter"
             style={pageContainerStyle}
         >
-            <div style={gappedStyle}>
+            <div className="page_content">
                 <ScreenNavigationView links={pageLinks} />
 
                 <PageSectionView

@@ -33,14 +33,6 @@ const pageContainerStyle = {
     width: "100%",
 };
 
-const gappedStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: "30px",
-    //width: "250px",
-    width: "min-content",
-};
-
 const pageLinks = [
     {
         value: "Search",
@@ -63,7 +55,7 @@ const SearchView = (props) => {
             className="page_containter"
             style={pageContainerStyle}
         >
-            <div style={gappedStyle}>
+            <div className="page_content">
                 <ScreenNavigationView links={pageLinks} />
 
                 <PageSectionView

@@ -4,6 +4,7 @@ import { createRow } from "./PlayerCompareView";
 import { calculateRatio } from "shared/packages/utils";
 
 import {
+    HUMAN_DATE_TIME_FORMATTER,
     INT_FORMATTER,
     PERCENT_INT_FORMATTER,
 } from "../../../core/utils/string";
@@ -49,6 +50,12 @@ const formatData = function (s0, s1) {
             calculateRatio(s0.summary.completed, s0.summary.activityCount),
             calculateRatio(s1.summary.completed, s1.summary.activityCount),
             PERCENT_INT_FORMATTER
+        ),
+        createRow(
+            "Time Played",
+            s0.summary.timePlayedSeconds,
+            s1.summary.timePlayedSeconds,
+            HUMAN_DATE_TIME_FORMATTER
         ),
     ];
 

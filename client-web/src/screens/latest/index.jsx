@@ -52,7 +52,7 @@ const LatestView = (props) => {
     }
 
     const rootStyle = {
-        maxWidth: "var(--page-max-width)",
+        //maxWidth: "var(--page-max-width)",
     };
     const refreshWrapperStyle = {
         padding: "var(--padding-page-container)",

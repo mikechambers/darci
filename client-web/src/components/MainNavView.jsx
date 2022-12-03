@@ -30,10 +30,12 @@ const rootStyle = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    width: "var(--page-max-width)",
+    //width: "var(--page-max-width)",
+    width: "100%",
     gap: "var(--nav-item-gap)",
 
-    padding: "var(--padding-content) var(--padding-page-container)",
+    padding: "var(--padding-page-container) 0",
+    boxSizing: "border-box",
 };
 
 const navStyle = {
