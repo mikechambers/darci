@@ -54,9 +54,6 @@ const OverlayTrialsView = (props) => {
             },
         };
     }
-    console.log(config);
-
-    const divs = [];
 
     const labelDiv = config.showCardInfo ? (
         <div className="overlay_title">{card.passage.name}</div>
