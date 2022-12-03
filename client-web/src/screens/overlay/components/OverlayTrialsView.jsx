@@ -1,10 +1,12 @@
 import React from "react";
 import RoundedImageView from "../../../components/RoundedImageView";
-import SwatchView from "../../../components/SwatchView";
+
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../../core/consts";
 import { INT_FORMATTER } from "../../../core/utils/string";
-import { useFetchPlayerProfile } from "../../../hooks/remote";
-import CardSwatchView, { CARD_FLAWLESS } from "./CardSwatchView";
+import {
+    useFetchPlayerMetrics,
+    useFetchPlayerProfile,
+} from "../../../hooks/remote";
 import OverlayStatView from "./OverlayStatView";
 import OverlayTrialsFlawlessView from "./OverlayTrialsFlawlessView";
 import PassageStatusView from "./PassageStatusView";
@@ -35,6 +37,12 @@ const OverlayTrialsView = (props) => {
         platformId
     );
 
+    const [metrics, isMetricsLoading, isMetricsError] = useFetchPlayerMetrics(
+        refreshInterval,
+        memberId,
+        platformId
+    );
+
     if (!profile) {
         return "";
     }
@@ -53,6 +61,15 @@ const OverlayTrialsView = (props) => {
                 icon: "https://www.bungie.net/common/destiny2_content/icons/892caaf523b17aca478cbea3d63a07d0.jpg",
             },
         };
+    }
+
+    let flawlessCount = 0;
+
+    if (metrics) {
+        //note, if API call fails, then metrics will default 0 which might cause
+        //value to change temporarily on screen. Could fix by storing in state and only
+        //updating state when API call succeeds.
+        flawlessCount = metrics.trials.flawlessWeekly;
     }
 
     const labelDiv = config.showCardInfo ? (
@@ -80,7 +97,7 @@ const OverlayTrialsView = (props) => {
         <OverlayStatView
             key="1"
             label="weekly"
-            value={0}
+            value={flawlessCount}
             formatter={INT_FORMATTER}
         />
     ) : (

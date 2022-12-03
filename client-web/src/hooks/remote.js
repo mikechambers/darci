@@ -406,7 +406,54 @@ export const useFetchPlayers = (manifest) => {
     return [output.players, output.isLoading, output.error];
 };
 
-export const useFetchPlayerMetrics = (players) => {
+export const useFetchPlayerMetrics = (
+    refreshInterval,
+    memberId,
+    platformId
+) => {
+    const [output, setOutput] = useState({
+        metrics: null,
+        isLoading: true,
+        error: null,
+    });
+
+    const { global, dispatchGlobal } = useContext(GlobalContext);
+    const manifest = global.manifest;
+
+    useEffect(() => {
+        if (!memberId || !platformId) {
+            return;
+        }
+        const f = async () => {
+            let s = reducer(output, "isLoading", false);
+            try {
+                const data = await fetchDestinyApi(
+                    `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=1100`
+                );
+
+                let metrics = PlayerMetrics.fromApi(data);
+                s = reducer(s, "metrics", metrics);
+            } catch (err) {
+                console.log("err", err);
+                s = reducer(s, "error", err);
+            }
+
+            setOutput(s);
+            timeoutId = startTimeout(f, refreshInterval);
+        };
+
+        f();
+
+        let timeoutId;
+        return () => {
+            cleanUpTimeout(timeoutId);
+        };
+    }, []);
+
+    return [output.metrics, output.isLoading, output.error];
+};
+
+export const useFetchPlayersMetrics = (players) => {
     const [output, setOutput] = useState({
         data: null,
         isLoading: true,

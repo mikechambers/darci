@@ -28,7 +28,7 @@ import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import { GlobalContext } from "../../contexts/GlobalContext";
-import { useFetchPlayerMetrics } from "../../hooks/remote";
+import { useFetchPlayersMetrics } from "../../hooks/remote";
 import AllTimeLeaderView from "./components/AllTimeLeaderView";
 import SeasonLeaderView from "./components/SeasonLeaderView";
 import WeeklyLeaderView from "./components/WeeklyLeaderView";
@@ -43,7 +43,7 @@ const HomeView = (props) => {
     const players = global.players;
 
     const [metrics, isMetricsLoading, isMetricsError] =
-        useFetchPlayerMetrics(players);
+        useFetchPlayersMetrics(players);
 
     const pageLinks = [
         {
