@@ -18,6 +18,14 @@ const CardSwatchView = (props) => {
             );
             break;
         }
+        case CARD_FLAWLESS: {
+            div = <SwatchView width={SIDE} height={SIDE} color="yellow" />;
+            break;
+        }
+        case CARD_NO_FLAWLESS: {
+            div = <SwatchView width={SIDE} height={SIDE} color="red" />;
+            break;
+        }
         default: {
             div = <SwatchView width={SIDE} height={SIDE} borderColor="white" />;
         }

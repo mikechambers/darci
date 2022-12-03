@@ -6,6 +6,7 @@ import { INT_FORMATTER } from "../../../core/utils/string";
 import { useFetchPlayerProfile } from "../../../hooks/remote";
 import CardSwatchView, { CARD_FLAWLESS } from "./CardSwatchView";
 import OverlayStatView from "./OverlayStatView";
+import OverlayTrialsFlawlessView from "./OverlayTrialsFlawlessView";
 import PassageStatusView from "./PassageStatusView";
 
 const rootStyle = {
@@ -46,19 +47,13 @@ const OverlayTrialsView = (props) => {
             wins: 0,
             losses: 0,
             roundsWon: 0,
-            isFlawless: 0,
+            isFlawless: undefined,
             passage: {
                 name: "No Passage",
                 icon: "https://www.bungie.net/common/destiny2_content/icons/892caaf523b17aca478cbea3d63a07d0.jpg",
             },
         };
     }
-
-    const flawlessStyle = {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-    };
 
     return (
         <div style={rootStyle}>
@@ -72,13 +67,7 @@ const OverlayTrialsView = (props) => {
                 />
 
                 <PassageStatusView card={card} />
-                <div
-                    className="overlay_list_item overlay_border"
-                    style={flawlessStyle}
-                >
-                    <CardSwatchView type={CARD_FLAWLESS} />
-                    <div className="overlay_stat_label">Flawless</div>
-                </div>
+                <OverlayTrialsFlawlessView flawless={card.isFlawless} />
                 <OverlayStatView
                     label="weekly"
                     value={0}
