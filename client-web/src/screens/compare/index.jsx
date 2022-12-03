@@ -110,7 +110,7 @@ const CompareView = (props) => {
             className="page_containter"
             style={pageContainerStyle}
         >
-            <div style={gappedStyle}>
+            <div className="page_content">
                 <ScreenNavigationView links={pageLinks} />
 
                 <PageSectionView title="Compare" description="" />
