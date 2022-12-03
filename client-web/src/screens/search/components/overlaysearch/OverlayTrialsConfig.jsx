@@ -1,8 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 
 const SHOW_PASSAGE_UPDATED = "SHOW_PASSAGE_UPDATED";
-const SHOW_WINS_UPDATED = "SHOW_WINS_UPDATED";
-const SHOW_MERCY_UPDATED = "SHOW_MERCY_UPDATED";
 const SHOW_WEEKLY_FLAWLESS = "SHOW_WEEKLY_FLAWLESS";
 
 const reducer = (state, action) => {
@@ -10,15 +8,7 @@ const reducer = (state, action) => {
 
     switch (action.type) {
         case SHOW_PASSAGE_UPDATED: {
-            out.showPassageName = action.payload;
-            break;
-        }
-        case SHOW_WINS_UPDATED: {
-            out.showPassageWins = action.payload;
-            break;
-        }
-        case SHOW_MERCY_UPDATED: {
-            out.showHasMercy = action.payload;
+            out.showCardInfo = action.payload;
             break;
         }
         case SHOW_WEEKLY_FLAWLESS: {
@@ -38,9 +28,7 @@ const OverlayTrialsConfigView = (props) => {
     const onChange = props.onChange;
 
     const [output, dispatch] = useReducer(reducer, {
-        showPassageName: true,
-        showPassageWins: true,
-        showHasMercy: true,
+        showCardInfo: true,
         showWeeklyFlawlessCount: true,
     });
 
@@ -55,7 +43,7 @@ const OverlayTrialsConfigView = (props) => {
                     disabled={disabled}
                     type="checkbox"
                     id="passage_cb"
-                    checked={output.showPassageName}
+                    checked={output.showCardInfo}
                     onChange={(d) =>
                         dispatch({
                             type: SHOW_PASSAGE_UPDATED,
@@ -63,38 +51,9 @@ const OverlayTrialsConfigView = (props) => {
                         })
                     }
                 />
-                <label htmlFor="passage_cb">Show Current Passage</label>
+                <label htmlFor="passage_cb">Show Current Card Info</label>
             </div>
-            <div className="radio_container">
-                <input
-                    disabled={disabled}
-                    type="checkbox"
-                    id="wins_cb"
-                    checked={output.showPassageWins}
-                    onChange={(d) =>
-                        dispatch({
-                            type: SHOW_WINS_UPDATED,
-                            payload: d.target.checked,
-                        })
-                    }
-                />
-                <label htmlFor="wins_cb">Show Passage Wins</label>
-            </div>
-            <div className="radio_container">
-                <input
-                    disabled={disabled}
-                    type="checkbox"
-                    id="mercy_cb"
-                    checked={output.showHasMercy}
-                    onChange={(d) =>
-                        dispatch({
-                            type: SHOW_MERCY_UPDATED,
-                            payload: d.target.checked,
-                        })
-                    }
-                />
-                <label htmlFor="mercy_cb">Show Mercy Status</label>
-            </div>
+
             <div className="radio_container">
                 <input
                     disabled={disabled}

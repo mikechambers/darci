@@ -35,6 +35,10 @@ const HISTORY_UPDATED = "HISTORY_UPDATED";
 const LOADOUT_UPDATED = "LOADOUT_UPDATED";
 const TRIALS_UPDATED = "TRIALS_UPDATED";
 
+const overlayInfoStyle = {
+    minWidth: 400,
+};
+
 const OverlaySearchView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
     const players = global.players;
@@ -266,7 +270,7 @@ const OverlaySearchView = (props) => {
                 />
             </div>
 
-            <fieldset className="form_column">
+            <fieldset className="form_column" style={overlayInfoStyle}>
                 <legend>Info to Display</legend>
 
                 <Tabs

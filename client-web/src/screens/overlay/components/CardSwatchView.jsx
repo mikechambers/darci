@@ -14,16 +14,35 @@ const CardSwatchView = (props) => {
     switch (type) {
         case CARD_WIN: {
             div = (
-                <SwatchView width={SIDE} height={SIDE} borderColor="yellow" />
+                <SwatchView
+                    width={SIDE}
+                    height={SIDE}
+                    color="yellow"
+                    border="white"
+                />
             );
             break;
         }
         case CARD_FLAWLESS: {
-            div = <SwatchView width={SIDE} height={SIDE} color="yellow" />;
+            div = (
+                <SwatchView
+                    width={SIDE}
+                    height={SIDE}
+                    color="yellow"
+                    border="white"
+                />
+            );
             break;
         }
         case CARD_NO_FLAWLESS: {
-            div = <SwatchView width={SIDE} height={SIDE} color="red" />;
+            div = (
+                <SwatchView
+                    width={SIDE}
+                    height={SIDE}
+                    color="red"
+                    border="white"
+                />
+            );
             break;
         }
         default: {

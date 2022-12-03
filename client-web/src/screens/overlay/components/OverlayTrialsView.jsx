@@ -54,25 +54,48 @@ const OverlayTrialsView = (props) => {
             },
         };
     }
+    console.log(config);
 
-    return (
-        <div style={rootStyle}>
-            <div className="overlay_title">{card.passage.name}</div>
+    const divs = [];
 
-            <div className="overlay_list_row">
+    const labelDiv = config.showCardInfo ? (
+        <div className="overlay_title">{card.passage.name}</div>
+    ) : (
+        ""
+    );
+    const cardDiv = config.showCardInfo ? (
+        <React.Fragment key="0">
+            <div className="overlay_list_item">
                 <RoundedImageView
                     width={50}
                     height={50}
                     image={card.passage.icon}
                 />
+            </div>
 
-                <PassageStatusView card={card} />
-                <OverlayTrialsFlawlessView flawless={card.isFlawless} />
-                <OverlayStatView
-                    label="weekly"
-                    value={0}
-                    formatter={INT_FORMATTER}
-                />
+            <PassageStatusView card={card} />
+            <OverlayTrialsFlawlessView flawless={card.isFlawless} />
+        </React.Fragment>
+    ) : (
+        ""
+    );
+    const flawlessDiv = config.showWeeklyFlawlessCount ? (
+        <OverlayStatView
+            key="1"
+            label="weekly"
+            value={0}
+            formatter={INT_FORMATTER}
+        />
+    ) : (
+        ""
+    );
+
+    return (
+        <div style={rootStyle}>
+            {labelDiv}
+            <div className="overlay_list_row">
+                {cardDiv}
+                {flawlessDiv}
             </div>
         </div>
     );
