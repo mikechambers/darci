@@ -15,14 +15,6 @@ const pageContainerStyle = {
     width: "100%",
 };
 
-const gappedStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: "30px",
-    //width: "250px",
-    //width: "min-content",
-};
-
 const pageLinks = [
     {
         value: "Overview",

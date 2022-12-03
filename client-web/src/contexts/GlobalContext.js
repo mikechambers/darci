@@ -21,18 +21,15 @@
  * SOFTWARE.
  */
 
-import React, { useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
+import { useFetchManifest, useFetchPlayers } from "../hooks/remote";
 export const GlobalContext = React.createContext();
 
 export const MANIFEST_UPDATED = "MANIFEST_UPDATED";
 export const PLAYERS_UPDATED = "PLAYERS_UPDATED";
 export const WEAPONS_UPDATED = "WEAPONS_UPDATED";
-
-export const initialState = {
-    manifest: null,
-    players: null,
-    weapons: null,
-};
+export const MANIFEST_ERROR_UPDATED = "MANIFEST_ERROR_UPDATED";
+export const MANIFEST_LOADING_UPDATED = "MANIFEST_LOADING_UPDATED";
 
 const reducer = function (state, action) {
     let out = state;
@@ -58,7 +55,22 @@ const reducer = function (state, action) {
             };
             break;
         }
+        case MANIFEST_ERROR_UPDATED: {
+            out = {
+                ...state,
+                manifestError: action.payload,
+            };
+            break;
+        }
+        case MANIFEST_LOADING_UPDATED: {
+            out = {
+                ...state,
+                manifestIsLoading: action.payload,
+            };
+            break;
+        }
         default: {
+            console.log("GlobalContext unknown action", action);
         }
     }
 
@@ -76,6 +88,64 @@ export class GlobalAction {
 }
 
 export const useGlobalContext = () => {
-    const [global, dispatchGlobal] = useReducer(reducer, initialState);
+    const [global, dispatchGlobal] = useReducer(reducer, {
+        manifest: undefined,
+        players: undefined,
+        weapons: undefined,
+        manifestError: undefined,
+        manifestIsLoading: true,
+    });
+
+    const [manifest, manifestIsLoading, manifestError] = useFetchManifest();
+    const [players, isPlayersLoading, isPlayersError] =
+        useFetchPlayers(manifest);
+
+    useEffect(() => {
+        if (!manifest) {
+            return;
+        }
+
+        dispatchGlobal(new GlobalAction(MANIFEST_UPDATED, manifest));
+
+        let weapons = manifest.getWeapons();
+        let out = [];
+        let keyIndex = 0;
+        for (const [key, value] of Object.entries(weapons)) {
+            out.push({
+                key: keyIndex++,
+                data: value,
+
+                get value() {
+                    return this.data.name;
+                },
+                get label() {
+                    return this.data.name;
+                },
+            });
+        }
+
+        out.sort((a, b) => a.label.localeCompare(b.label));
+
+        dispatchGlobal(new GlobalAction(WEAPONS_UPDATED, out));
+    }, [manifest]);
+
+    useEffect(() => {
+        dispatchGlobal(new GlobalAction(MANIFEST_ERROR_UPDATED, manifestError));
+    }, [manifestError]);
+
+    useEffect(() => {
+        dispatchGlobal(
+            new GlobalAction(MANIFEST_LOADING_UPDATED, manifestIsLoading)
+        );
+    }, [manifestIsLoading]);
+
+    useEffect(() => {
+        if (!players) {
+            return;
+        }
+
+        dispatchGlobal(new GlobalAction(PLAYERS_UPDATED, players));
+    }, [players]);
+
     return [global, dispatchGlobal];
 };
