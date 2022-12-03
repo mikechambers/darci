@@ -11,16 +11,14 @@ The app has the following functionality:
 -   Details per activity stats, including per player stats, team stat summaries,
     and weapon usage
 -   Search page that allows details searches and comparison of pvp data
+-   Ability to compare different moments / seasons and or players
 -   Stream overlay views, to enable near real time Destiny 2 PVP states on streams.
 
 Future features being considered:
 
 -   Add support for mobile (works not but isn't formatted well)
--   Stream overlays to show realtime PVP stats on Stream
 -   View detailed stats per map
 -   Ability to search by weapon usage and medals
--   Ability to compare different moments / seasons and or players
--   Create a Docker container to make it easier to deploy
 
 Note that DARCI does not track data for ALL Destiny 2 PVP players. It only tracks the data for the players it has been configured to track.
 
