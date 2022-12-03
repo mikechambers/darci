@@ -110,7 +110,7 @@ class Manifest {
         let out = {
             name: "Unknown",
             description: undefined,
-            icon: undefined,
+            icon: "https://www.bungie.net/common/destiny2_content/icons/f3c27772a3d98c91fef127ce32e9f1e0.png",
             id: id,
         };
 

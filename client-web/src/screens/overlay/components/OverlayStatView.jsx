@@ -3,13 +3,6 @@ import React from "react";
 const rootStyleBase = {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-start",
-    textAlign: "left",
-    borderLeft: "2px solid #FFFFFFA6",
-    boxSizing: "border-box",
-    height: 48,
-    visibility: "visible",
-    paddingLeft: 6,
 };
 
 const OverlayStatView = (props) => {
@@ -25,7 +18,7 @@ const OverlayStatView = (props) => {
     };
 
     return (
-        <div style={rootStyle}>
+        <div style={rootStyle} className="overlay_border overlay_list_item">
             <div className="overlay_stat_value">{formatter.format(value)}</div>
             <div className="overlay_stat_label">{label}</div>
         </div>

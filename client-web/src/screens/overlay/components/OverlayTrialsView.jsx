@@ -47,17 +47,24 @@ const OverlayTrialsView = (props) => {
             losses: 0,
             roundsWon: 0,
             isFlawless: 0,
-            passage: { name: "No Passage", icon: undefined },
+            passage: {
+                name: "No Passage",
+                icon: "https://www.bungie.net/common/destiny2_content/icons/892caaf523b17aca478cbea3d63a07d0.jpg",
+            },
         };
     }
 
-    console.log(card);
+    const flawlessStyle = {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+    };
 
     return (
         <div style={rootStyle}>
             <div className="overlay_title">{card.passage.name}</div>
 
-            <div style={contentRowStyle}>
+            <div className="overlay_list_row">
                 <RoundedImageView
                     width={50}
                     height={50}
@@ -65,7 +72,10 @@ const OverlayTrialsView = (props) => {
                 />
 
                 <PassageStatusView card={card} />
-                <div>
+                <div
+                    className="overlay_list_item overlay_border"
+                    style={flawlessStyle}
+                >
                     <CardSwatchView type={CARD_FLAWLESS} />
                     <div className="overlay_stat_label">Flawless</div>
                 </div>

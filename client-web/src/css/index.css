@@ -115,6 +115,10 @@
 
   --blur-background: blur(2px);
 
+  /* overlay */
+  --overlay-item-width:80px;
+  --overlay-list-row-gap:6px;
+
 }
 
 #root {
@@ -706,12 +710,33 @@ label {
 .overlay_list_row {
   display: flex;
   flex-direction: row;
-  gap: 6px;
+  gap: var(--overlay-list-row-gap);
+  
+
 }
 
 .overlay_list_row > div {
-  width:80px;
-  max-width: 80px;
+  width:var(--overlay-item-width);
+  max-width: var(--overlay-item-width);
+  white-space: nowrap;
+  min-height: 100%;
+}
+
+.overlay_list_item {
+  justify-content: flex-start;
+  text-align: left;
+  box-sizing: border-box;
+  visibility: visible;
+  padding-left: 6px;
+}
+
+.overlay_border {
+  border-left: 2px solid #FFFFFFA6;
+}
+
+.overlay_list_row > .overlay_list_large_item {
+  width:calc(var(--overlay-item-width) * 2 + var(--overlay-list-row-gap));
+  max-width: calc(var(--overlay-item-width) * 2 + var(--overlay-list-row-gap));
   white-space: nowrap;
 }
 

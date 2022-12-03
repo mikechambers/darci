@@ -5,6 +5,7 @@ import CardSwatchView, {
     CARD_FLAWLESS,
     CARD_WIN,
 } from "./CardSwatchView";
+
 const listStyle = {
     display: "flex",
     flexDirection: "row",
@@ -15,7 +16,6 @@ const rootStyle = {
     display: "flex",
     flexDirection: "column",
     gap: 4,
-    height: "100%",
     justifyContent: "space-between",
 };
 
@@ -23,7 +23,10 @@ const PassageStatusView = (props) => {
     const card = props.card;
 
     return (
-        <div style={rootStyle}>
+        <div
+            style={rootStyle}
+            className="overlay_list_large_item overlay_list_item"
+        >
             <div style={listStyle}>
                 {[...Array(7)].map((item, index) => {
                     const t =
