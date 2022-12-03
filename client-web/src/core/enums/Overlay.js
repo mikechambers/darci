@@ -27,6 +27,7 @@ class Overlay extends EnumBase {
     static STATS = new Overlay("Stats", "stats", "Stats");
     static HISTORY = new Overlay("History", "history", "History");
     static LOADOUT = new Overlay("Loadout", "loadout", "Loadout");
+    static TRIALS = new Overlay("Trials", "trials", "Trials");
 
     static UNKNOWN = new Overlay("Unknown", "unknown", "Unknown");
 

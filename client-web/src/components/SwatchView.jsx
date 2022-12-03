@@ -5,13 +5,29 @@ const SwatchView = (props) => {
     const height = props.height;
     const width = props.width;
     const radius = props.radius ? props.radius : 0;
+    const borderColor = props.borderColor;
 
-    const rootStyle = {
-        backgroundColor: color,
+    const rootStyleBase = {
         height: height,
         width: width,
         borderRadius: radius,
     };
+
+    let rootStyle = rootStyleBase;
+    if (color) {
+        rootStyle = {
+            ...rootStyle,
+            backgroundColor: color,
+        };
+    }
+
+    if (borderColor) {
+        rootStyle = {
+            ...rootStyle,
+            border: "1px solid",
+            borderColor: borderColor,
+        };
+    }
 
     return <div style={rootStyle}></div>;
 };

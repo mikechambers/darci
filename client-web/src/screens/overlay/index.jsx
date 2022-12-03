@@ -10,6 +10,7 @@ import OverlayHistoryView from "./components/OverlayHistoryView";
 import OverlayLoadoutView from "./components/OverlayLoadoutView";
 
 import OverlayStatsView from "./components/OverlayStatsView";
+import OverlayTrialsView from "./components/OverlayTrialsView";
 import OverlayWeaponView from "./components/OverlayWeaponView";
 
 const rootStyleBase = {
@@ -29,7 +30,7 @@ const OverlayView = (props) => {
     let mode = Mode.fromType(params.mode);
     let startMoment = Moment.fromType(params.startMoment);
     let memberId = params.memberId;
-    //let platformId = params.platformId;
+    let platformId = params.platformId;
     let characterClass = CharacterClassSelection.fromType(params.classType);
 
     useEffect(() => {
@@ -102,6 +103,16 @@ const OverlayView = (props) => {
                     startMoment={startMoment}
                     memberId={memberId}
                     characterClass={characterClass}
+                />
+            );
+            break;
+        }
+        case Overlay.TRIALS: {
+            div = (
+                <OverlayTrialsView
+                    config={data.trials}
+                    memberId={memberId}
+                    platformId={platformId}
                 />
             );
             break;

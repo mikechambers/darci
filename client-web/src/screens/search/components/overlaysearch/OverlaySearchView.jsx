@@ -17,6 +17,7 @@ import OverlayLoadoutConfigView from "./OverlayLoadoutConfigView";
 import OverlayStatsConfigView from "./OverlayStatsConfigView";
 import OverlayWeaponsConfigView from "./OverlayWeaponsConfigView";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import OverlayTrialsConfigView from "./OverlayTrialsConfig";
 
 const PLAYER_UPDATED = "PLAYER_UPDATED";
 const MODE_UPDATED = "MODE_UPDATED";
@@ -32,6 +33,7 @@ const BACKGROUND_COLOR_UPDATED = "BACKGROUND_COLOR_UPDATED";
 const BACKGROUND_TRANSPARENCY_UPDATED = "BACKGROUND_TRANSPARENCY_UPDATED";
 const HISTORY_UPDATED = "HISTORY_UPDATED";
 const LOADOUT_UPDATED = "LOADOUT_UPDATED";
+const TRIALS_UPDATED = "TRIALS_UPDATED";
 
 const OverlaySearchView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
@@ -98,6 +100,10 @@ const OverlaySearchView = (props) => {
                 out.loadout = action.payload;
                 break;
             }
+            case TRIALS_UPDATED: {
+                out.trials = action.payload;
+                break;
+            }
             default: {
                 console.log("OverlaySearchView unknown action:", action);
             }
@@ -121,6 +127,7 @@ const OverlaySearchView = (props) => {
         backgroundTransparency: 75,
         history: undefined,
         loadout: undefined,
+        trials: undefined,
     });
 
     const [url, setUrl] = useState("");
@@ -197,6 +204,10 @@ const OverlaySearchView = (props) => {
                 out.loadout = output.loadout;
                 break;
             }
+            case Overlay.TRIALS: {
+                out.trials = output.trials;
+                break;
+            }
             default: {
                 console.log(
                     "OverlaySearchView unknown Overlay type.",
@@ -229,6 +240,7 @@ const OverlaySearchView = (props) => {
                     selected={output.player}
                 />
                 <CharacterClassSelectionSelect
+                    disabled={output.overlayType === Overlay.TRIALS}
                     label="class"
                     onChange={(d) =>
                         dispatch({ type: CHARACTER_CLASS_UPDATED, payload: d })
@@ -237,6 +249,7 @@ const OverlaySearchView = (props) => {
                 />
 
                 <ModeSelect
+                    disabled={output.overlayType === Overlay.TRIALS}
                     label="Mode"
                     onChange={(d) =>
                         dispatch({ type: MODE_UPDATED, payload: d })
@@ -244,6 +257,7 @@ const OverlaySearchView = (props) => {
                     selected={output.mode}
                 />
                 <MomentSelect
+                    disabled={output.overlayType === Overlay.TRIALS}
                     label="Start Moment"
                     selected={output.startMoment}
                     onChange={(d) =>
@@ -277,6 +291,10 @@ const OverlaySearchView = (props) => {
                                 type = Overlay.HISTORY;
                                 break;
                             }
+                            case 4: {
+                                type = Overlay.TRIALS;
+                                break;
+                            }
                             default: {
                                 console.log(
                                     "OverlaySearchView Unknown Tab index / type.",
@@ -296,6 +314,7 @@ const OverlaySearchView = (props) => {
                         <Tab>Weapon</Tab>
                         <Tab>Stats</Tab>
                         <Tab>History</Tab>
+                        <Tab>Trials</Tab>
                     </TabList>
                     <TabPanel>
                         <OverlayLoadoutConfigView
@@ -327,6 +346,14 @@ const OverlaySearchView = (props) => {
                                 dispatch({ type: HISTORY_UPDATED, payload: d })
                             }
                             disabled={output.overlayType !== Overlay.HISTORY}
+                        />
+                    </TabPanel>
+                    <TabPanel>
+                        <OverlayTrialsConfigView
+                            onChange={(d) =>
+                                dispatch({ type: TRIALS_UPDATED, payload: d })
+                            }
+                            disabled={output.overlayType !== Overlay.TRIALS}
                         />
                     </TabPanel>
                 </Tabs>

@@ -487,6 +487,9 @@ export const useFetchPlayerProfile = (
     const manifest = global.manifest;
 
     useEffect(() => {
+        if (!memberId || !platformId) {
+            return;
+        }
         const f = async () => {
             let s = reducer(output, "isLoading", false);
             try {
