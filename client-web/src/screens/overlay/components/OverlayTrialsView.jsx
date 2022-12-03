@@ -1,7 +1,23 @@
 import React from "react";
+import RoundedImageView from "../../../components/RoundedImageView";
+import SwatchView from "../../../components/SwatchView";
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../../core/consts";
+import { INT_FORMATTER } from "../../../core/utils/string";
 import { useFetchPlayerProfile } from "../../../hooks/remote";
+import CardSwatchView, { CARD_FLAWLESS } from "./CardSwatchView";
+import OverlayStatView from "./OverlayStatView";
 import PassageStatusView from "./PassageStatusView";
+
+const rootStyle = {
+    display: "flex",
+    flexDirection: "column",
+    gap: 4,
+};
+
+const contentRowStyle = {
+    display: "flex",
+    flexDirection: "row",
+};
 
 const OverlayTrialsView = (props) => {
     const memberId = props.memberId;
@@ -38,8 +54,27 @@ const OverlayTrialsView = (props) => {
     console.log(card);
 
     return (
-        <div>
-            <PassageStatusView card={card} />
+        <div style={rootStyle}>
+            <div className="overlay_title">{card.passage.name}</div>
+
+            <div style={contentRowStyle}>
+                <RoundedImageView
+                    width={50}
+                    height={50}
+                    image={card.passage.icon}
+                />
+
+                <PassageStatusView card={card} />
+                <div>
+                    <CardSwatchView type={CARD_FLAWLESS} />
+                    <div className="overlay_stat_label">Flawless</div>
+                </div>
+                <OverlayStatView
+                    label="weekly"
+                    value={0}
+                    formatter={INT_FORMATTER}
+                />
+            </div>
         </div>
     );
 };

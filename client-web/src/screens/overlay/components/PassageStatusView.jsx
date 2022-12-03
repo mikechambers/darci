@@ -1,6 +1,10 @@
 import React from "react";
 import SwatchView from "../../../components/SwatchView";
-import CardSwatchView, { CARD_EMPTY, CARD_WIN } from "./CardSwatchView";
+import CardSwatchView, {
+    CARD_EMPTY,
+    CARD_FLAWLESS,
+    CARD_WIN,
+} from "./CardSwatchView";
 const listStyle = {
     display: "flex",
     flexDirection: "row",
@@ -11,6 +15,8 @@ const rootStyle = {
     display: "flex",
     flexDirection: "column",
     gap: 4,
+    height: "100%",
+    justifyContent: "space-between",
 };
 
 const PassageStatusView = (props) => {
@@ -18,7 +24,6 @@ const PassageStatusView = (props) => {
 
     return (
         <div style={rootStyle}>
-            <div className="overlay_title">{card.passage.name}</div>
             <div style={listStyle}>
                 {[...Array(7)].map((item, index) => {
                     const t =
@@ -31,6 +36,7 @@ const PassageStatusView = (props) => {
                     return t;
                 })}
             </div>
+            <div className="overlay_stat_label">Current Card</div>
         </div>
     );
 };
