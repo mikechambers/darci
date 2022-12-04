@@ -26,6 +26,7 @@ import React from "react";
 import { FixedSizeList as List } from "react-window";
 import PlayerMedalsDetailListItem from "./PlayerMedalsDetailListItem";
 import { useState } from "react";
+import SelectView from "../../../components/SelectView";
 
 const elementStyle = {
     width: "422px",
@@ -45,44 +46,39 @@ const PlayerMedalsDetailList = (props) => {
 
     let [sortIndex, setSortIndex] = useState(0);
 
-    let sortCount = (a, b) => {
-        return b.count - a.count;
-    };
+    const sortOptions = [
+        {
+            label: "Gold Medals",
+            sort: (a, b) => {
+                if (b.info.isGold === a.info.isGold) {
+                    return b.count - a.count;
+                }
 
-    let sortName = (a, b) => {
-        return a.info.name.localeCompare(b.info.name);
-    };
+                if (b.info.isGold && !a.info.isGold) {
+                    return 1;
+                }
 
-    let sortGold = (a, b) => {
-        if (b.info.isGold === a.info.isGold) {
-            return b.count - a.count;
-        }
+                return -1;
+            },
+        },
+        {
+            label: "Count",
+            sort: (a, b) => {
+                return b.count - a.count;
+            },
+        },
+        {
+            label: "Name",
+            sort: (a, b) => {
+                return a.info.name.localeCompare(b.info.name);
+            },
+        },
+    ];
 
-        if (b.info.isGold && !a.info.isGold) {
-            return 1;
-        }
+    medals.sort(sortOptions[sortIndex].sort);
 
-        return -1;
-    };
-
-    let sortGamesMedal = (a, b) => {
-        return activityCount / b.count - activityCount / a.count;
-    };
-
-    let sort = sortGold;
-    if (sortIndex === 1) {
-        sort = sortCount;
-    } else if (sortIndex === 2) {
-        sort = sortGamesMedal;
-    } else if (sortIndex === 3) {
-        sort = sortName;
-    }
-
-    medals.sort(sort);
-
-    const onSortChange = (e) => {
-        console.log("PlayerMedalsDetailList.onSortChange", e);
-        setSortIndex(e.target.selectedIndex);
+    const onSortChange = (item, index) => {
+        setSortIndex(index);
     };
 
     let itemKey = (index, data) => data.medals[index].id;
@@ -97,24 +93,7 @@ const PlayerMedalsDetailList = (props) => {
         <div style={elementStyle}>
             <div style={titleStyle}>
                 <div>
-                    <select
-                        className="nav_select"
-                        defaultValue="0"
-                        onChange={onSortChange}
-                    >
-                        <option value="0" className="nav_option">
-                            gold medals
-                        </option>
-                        <option value="1" className="nav_option">
-                            count
-                        </option>
-                        <option value="2" className="nav_option">
-                            games until medal
-                        </option>
-                        <option value="3" className="nav_option">
-                            name
-                        </option>
-                    </select>
+                    <SelectView options={sortOptions} onChange={onSortChange} />
                 </div>
             </div>
             <List
