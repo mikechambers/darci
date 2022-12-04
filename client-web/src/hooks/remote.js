@@ -489,8 +489,11 @@ export const useFetchPlayersMetrics = (players) => {
                     for (let i = 0; i < values.length; i++) {
                         let value = values[i];
 
-                        let metrics;
+                        if (!value) {
+                            continue;
+                        }
 
+                        let metrics;
                         try {
                             metrics = PlayerMetrics.fromApi(value);
                         } catch (e) {
