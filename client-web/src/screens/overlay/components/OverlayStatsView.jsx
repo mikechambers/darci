@@ -63,7 +63,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.kills,
                     playerSummary.summary.deaths
                 );
-                formatter = formatInt;
+                formatter = formatFloat;
                 break;
             }
             case Stat.EFFICIENCY: {
@@ -73,7 +73,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.deaths,
                     playerSummary.summary.assists
                 );
-                formatter = formatInt;
+                formatter = formatFloat;
                 break;
             }
             case Stat.KILLS: {
@@ -163,7 +163,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.opponentsDefeated,
                     playerSummary.summary.activityCount
                 );
-                formatter = formatInt;
+                formatter = formatFloat;
 
                 break;
             }
@@ -172,7 +172,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.deaths,
                     playerSummary.summary.activityCount
                 );
-                formatter = formatInt;
+                formatter = formatFloat;
 
                 break;
             }
@@ -206,7 +206,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.superKills,
                     playerSummary.summary.activityCount
                 );
-                formatter = formatInt;
+                formatter = formatFloat;
 
                 break;
             }
@@ -222,7 +222,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.meleeKills,
                     playerSummary.summary.activityCount
                 );
-                formatter = formatInt;
+                formatter = formatFloat;
 
                 break;
             }
