@@ -29,6 +29,7 @@ import StatSummaryView from "../../../components/StatSummaryView";
 
 import { calculateAverage } from "shared/packages/utils";
 import PlayerWeaponStatSummaryView from "./PlayerWeaponStatSummaryView";
+import { formatFloat } from "../../../core/utils/string";
 
 const style = {
     display: "flex",
@@ -38,7 +39,6 @@ const style = {
     padding: "10px",
     borderRadius: "var(--radius-border)",
     width: "max-content",
-    //border: "var(--border-list-item)",
     backdropFilter: "var(--blur-background)",
 };
 
@@ -55,41 +55,64 @@ const PlayerStatsView = (props) => {
             />
 
             <StatSummaryView
-                avg={calculateAverage(
-                    summary.kills,
-                    summary.activityCount
-                ).toFixed(2)}
+                avg={formatFloat(
+                    calculateAverage(summary.kills, summary.activityCount)
+                )}
                 total={summary.kills}
                 high={summary.highestKills}
+                perMinute={formatFloat(
+                    calculateAverage(
+                        summary.kills,
+                        summary.timePlayedSeconds / 60
+                    )
+                )}
                 title="Kills"
             />
 
             <StatSummaryView
-                avg={calculateAverage(
-                    summary.assists,
-                    summary.activityCount
-                ).toFixed(2)}
+                avg={formatFloat(
+                    calculateAverage(summary.assists, summary.activityCount)
+                )}
                 total={summary.assists}
                 high={summary.highestAssists}
+                perMinute={formatFloat(
+                    calculateAverage(
+                        summary.assists,
+                        summary.timePlayedSeconds / 60
+                    )
+                )}
                 title="Assists"
             />
 
             <StatSummaryView
-                avg={calculateAverage(
-                    summary.opponentsDefeated,
-                    summary.activityCount
-                ).toFixed(2)}
+                avg={formatFloat(
+                    calculateAverage(
+                        summary.opponentsDefeated,
+                        summary.activityCount
+                    )
+                )}
                 total={summary.opponentsDefeated}
                 high={summary.highestOpponentsDefeated}
+                perMinute={formatFloat(
+                    calculateAverage(
+                        summary.opponentsDefeated,
+                        summary.timePlayedSeconds / 60
+                    )
+                )}
                 title="Defeats"
             />
 
             <StatSummaryView
-                avg={calculateAverage(
-                    summary.deaths,
-                    summary.activityCount
-                ).toFixed(2)}
+                avg={formatFloat(
+                    calculateAverage(summary.deaths, summary.activityCount)
+                )}
                 total={summary.deaths}
+                perMinute={formatFloat(
+                    calculateAverage(
+                        summary.deaths,
+                        summary.timePlayedSeconds / 60
+                    )
+                )}
                 high={summary.highestDeaths}
                 title="Deaths"
             />

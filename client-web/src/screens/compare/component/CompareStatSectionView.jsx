@@ -80,9 +80,34 @@ const formatData = function (s0, s1) {
         ),
 
         createRow(
+            "Kill / min",
+            calculateAverage(
+                s0.summary.kills,
+                s0.summary.timePlayedSeconds / 60
+            ),
+            calculateAverage(
+                s1.summary.kills,
+                s1.summary.timePlayedSeconds / 60
+            ),
+            formatFloat
+        ),
+
+        createRow(
             "Assists / g",
             calculateAverage(s0.summary.assists, s0.summary.activityCount),
             calculateAverage(s1.summary.assists, s1.summary.activityCount),
+            formatFloat
+        ),
+        createRow(
+            "Assists / min",
+            calculateAverage(
+                s0.summary.assists,
+                s0.summary.timePlayedSeconds / 60
+            ),
+            calculateAverage(
+                s1.summary.assists,
+                s1.summary.timePlayedSeconds / 60
+            ),
             formatFloat
         ),
 
@@ -100,9 +125,35 @@ const formatData = function (s0, s1) {
         ),
 
         createRow(
+            "Defeats / min",
+            calculateAverage(
+                s0.summary.opponentsDefeated,
+                s0.summary.timePlayedSeconds / 60
+            ),
+            calculateAverage(
+                s1.summary.opponentsDefeated,
+                s1.summary.timePlayedSeconds / 60
+            ),
+            formatFloat
+        ),
+
+        createRow(
             "Deaths / g",
             calculateAverage(s0.summary.deaths, s0.summary.activityCount),
             calculateAverage(s1.summary.deaths, s1.summary.activityCount),
+            formatFloat
+        ),
+
+        createRow(
+            "Deaths / min",
+            calculateAverage(
+                s0.summary.deaths,
+                s0.summary.timePlayedSeconds / 60
+            ),
+            calculateAverage(
+                s1.summary.deaths,
+                s1.summary.timePlayedSeconds / 60
+            ),
             formatFloat
         ),
 

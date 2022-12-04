@@ -29,12 +29,17 @@ const StatSummaryView = (props) => {
     let title = props.title;
     let avg = props.avg;
     let high = props.high;
+    let perMinute = props.perMinute ? props.perMinute : 0;
     let total = props.total;
 
     let values = [
         {
             value: avg,
             label: "avg",
+        },
+        {
+            value: perMinute,
+            label: "per min",
         },
         {
             value: high,
