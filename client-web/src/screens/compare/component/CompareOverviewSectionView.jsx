@@ -3,12 +3,12 @@ import { createRow } from "./PlayerCompareView";
 
 import { calculateRatio } from "shared/packages/utils";
 
-import {
-    HUMAN_DATE_TIME_FORMATTER,
-    INT_FORMATTER,
-    PERCENT_INT_FORMATTER,
-} from "../../../core/utils/string";
 import CompareSectionView from "./CompareSectionView";
+import {
+    formatHumanDateTime,
+    formatInt,
+    formatPercentInt,
+} from "../../../core/utils/string";
 
 const CompareOverviewSectionView = (props) => {
     const summary1 = props.summary1;
@@ -25,13 +25,13 @@ const formatData = function (s0, s1) {
             "Games",
             s0.summary.activityCount,
             s1.summary.activityCount,
-            INT_FORMATTER
+            formatInt
         ),
         createRow(
             "Win %",
             calculateRatio(s0.summary.wins, s0.summary.activityCount),
             calculateRatio(s1.summary.wins, s1.summary.activityCount),
-            PERCENT_INT_FORMATTER
+            formatPercentInt
         ),
         createRow(
             "Mercy %",
@@ -43,19 +43,19 @@ const formatData = function (s0, s1) {
                 s1.summary.completionReasonMercy,
                 s1.summary.activityCount
             ),
-            PERCENT_INT_FORMATTER
+            formatPercentInt
         ),
         createRow(
             "Completed %",
             calculateRatio(s0.summary.completed, s0.summary.activityCount),
             calculateRatio(s1.summary.completed, s1.summary.activityCount),
-            PERCENT_INT_FORMATTER
+            formatPercentInt
         ),
         createRow(
             "Time Played",
             s0.summary.timePlayedSeconds,
             s1.summary.timePlayedSeconds,
-            HUMAN_DATE_TIME_FORMATTER
+            formatHumanDateTime
         ),
     ];
 

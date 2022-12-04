@@ -1,6 +1,9 @@
 import React from "react";
 import IndicatorView from "../../../components/IndicatorView";
-import { PERCENT_CHANGE_INT_FORMATTER } from "../../../core/utils/string";
+import {
+    formatPercentChangeInt,
+    PERCENT_CHANGE_INT_FORMATTER,
+} from "../../../core/utils/string";
 
 const changeCellStyle = {
     display: "flex",
@@ -26,7 +29,7 @@ const CompareRowChangeCellView = (props) => {
             color = "--color-neutral";
         }
 
-        v = PERCENT_CHANGE_INT_FORMATTER.format(change);
+        v = formatPercentChangeInt(change);
 
         cElement = (
             <div style={changeCellStyle}>

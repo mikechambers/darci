@@ -8,12 +8,12 @@ import {
     calculateKillsDeathsRatio,
 } from "shared/packages/utils";
 
-import {
-    FLOAT_FORMATTER,
-    INT_FORMATTER,
-    PERCENT_INT_FORMATTER,
-} from "../../../core/utils/string";
 import CompareSectionView from "./CompareSectionView";
+import {
+    formatFloat,
+    formatInt,
+    formatPercentInt,
+} from "../../../core/utils/string";
 
 const CompareStatSectionView = (props) => {
     const summary1 = props.summary1;
@@ -55,7 +55,7 @@ const formatData = function (s0, s1) {
             "K/D",
             calculateKillsDeathsRatio(s0.summary.kills, s0.summary.deaths),
             calculateKillsDeathsRatio(s1.summary.kills, s1.summary.deaths),
-            FLOAT_FORMATTER
+            formatFloat
         ),
         createRow(
             "Efficiency",
@@ -69,29 +69,23 @@ const formatData = function (s0, s1) {
                 s1.summary.deaths,
                 s1.summary.assists
             ),
-            FLOAT_FORMATTER
+            formatFloat
         ),
 
         createRow(
             "Kill / g",
             calculateAverage(s0.summary.kills, s0.summary.activityCount),
             calculateAverage(s1.summary.kills, s1.summary.activityCount),
-            FLOAT_FORMATTER
+            formatFloat
         ),
-        //createRow("Kills", s0.summary.kills, s1.summary.kills, INT_FORMATTER),
+
         createRow(
             "Assists / g",
             calculateAverage(s0.summary.assists, s0.summary.activityCount),
             calculateAverage(s1.summary.assists, s1.summary.activityCount),
-            FLOAT_FORMATTER
+            formatFloat
         ),
-        /*
-        createRow(
-            "Assists",
-            s0.summary.assists,
-            s1.summary.assists,
-            INT_FORMATTER
-        ),*/
+
         createRow(
             "Defeats / g",
             calculateAverage(
@@ -102,26 +96,15 @@ const formatData = function (s0, s1) {
                 s1.summary.opponentsDefeated,
                 s1.summary.activityCount
             ),
-            FLOAT_FORMATTER
+            formatFloat
         ),
-        /*createRow(
-            "Defeats",
-            s0.summary.opponentsDefeated,
-            s1.summary.opponentsDefeated,
-            INT_FORMATTER
-        ),*/
+
         createRow(
             "Deaths / g",
             calculateAverage(s0.summary.deaths, s0.summary.activityCount),
             calculateAverage(s1.summary.deaths, s1.summary.activityCount),
-            FLOAT_FORMATTER
+            formatFloat
         ),
-        /*createRow(
-            "Deaths",
-            s0.summary.deaths,
-            s1.summary.deaths,
-            INT_FORMATTER
-        ),*/
 
         createDivider("Kill Types"),
 
@@ -129,35 +112,35 @@ const formatData = function (s0, s1) {
             "Weapon Kills",
             calculateRatio(s0.summary.weaponKills, s0.summary.kills),
             calculateRatio(s1.summary.weaponKills, s1.summary.kills),
-            PERCENT_INT_FORMATTER
+            formatPercentInt
         ),
 
         createRow(
             "Precision Kills",
             calculateRatio(s0.summary.precision, s0.summary.kills),
             calculateRatio(s1.summary.precision, s1.summary.kills),
-            PERCENT_INT_FORMATTER
+            formatPercentInt
         ),
 
         createRow(
             "Melee Kills",
             calculateRatio(s0.summary.meleeKills, s0.summary.kills),
             calculateRatio(s1.summary.meleeKills, s1.summary.kills),
-            PERCENT_INT_FORMATTER
+            formatPercentInt
         ),
 
         createRow(
             "Grenade Kills",
             calculateRatio(s0.summary.grenadeKills, s0.summary.kills),
             calculateRatio(s1.summary.grenadeKills, s1.summary.kills),
-            PERCENT_INT_FORMATTER
+            formatPercentInt
         ),
 
         createRow(
             "Super Kills",
             calculateRatio(s0.summary.superKills, s0.summary.kills),
             calculateRatio(s1.summary.superKills, s1.summary.kills),
-            PERCENT_INT_FORMATTER
+            formatPercentInt
         ),
 
         createDivider("Weapon Types"),
@@ -166,21 +149,21 @@ const formatData = function (s0, s1) {
             "Primary Weapon",
             calculateRatio(s0.summary.primaryAmmoKills, s0.summary.weaponKills),
             calculateRatio(s1.summary.primaryAmmoKills, s1.summary.weaponKills),
-            PERCENT_INT_FORMATTER
+            formatPercentInt
         ),
 
         createRow(
             "Special Weapon",
             calculateRatio(s0.summary.specialAmmoKills, s0.summary.weaponKills),
             calculateRatio(s1.summary.specialAmmoKills, s1.summary.weaponKills),
-            PERCENT_INT_FORMATTER
+            formatPercentInt
         ),
 
         createRow(
             "Heavy Weapon",
             calculateRatio(s0.summary.heavyAmmoKills, s0.summary.weaponKills),
             calculateRatio(s1.summary.heavyAmmoKills, s1.summary.weaponKills),
-            PERCENT_INT_FORMATTER
+            formatPercentInt
         ),
 
         createDivider("Medals"),
@@ -189,40 +172,40 @@ const formatData = function (s0, s1) {
             "Medals / g",
             calculateAverage(m0.total, s0.summary.activityCount),
             calculateAverage(m1.total, s1.summary.activityCount),
-            FLOAT_FORMATTER
+            formatFloat
         ),
 
-        createRow("Gold Medals", m0.gold, m1.gold, INT_FORMATTER),
+        createRow("Gold Medals", m0.gold, m1.gold, formatInt),
 
         createRow(
             "Gold Medals / g",
             calculateAverage(m0.gold, s0.summary.activityCount),
             calculateAverage(m1.gold, s1.summary.activityCount),
-            FLOAT_FORMATTER
+            formatFloat
         ),
 
-        createRow("We Ran ...", m0.weRan, m1.weRan, INT_FORMATTER),
+        createRow("We Ran ...", m0.weRan, m1.weRan, formatInt),
 
         createRow(
             "We Ran... / g",
             calculateAverage(m0.weRan, s0.summary.activityCount),
             calculateAverage(m1.weRan, s1.summary.activityCount),
-            FLOAT_FORMATTER
+            formatFloat
         ),
 
-        createRow("Unyielding", m0.unyielding, m1.unyielding, INT_FORMATTER),
+        createRow("Unyielding", m0.unyielding, m1.unyielding, formatInt),
         createRow(
             "Unyielding / g",
             calculateAverage(m0.unyielding, s0.summary.activityCount),
             calculateAverage(m1.unyielding, s1.summary.activityCount),
-            FLOAT_FORMATTER
+            formatFloat
         ),
 
         createRow(
             "Unyielding / We Ran...",
             calculateRatio(m0.unyielding, m0.weRan),
             calculateRatio(m1.unyielding, m1.weRan),
-            FLOAT_FORMATTER
+            formatFloat
         ),
     ];
 

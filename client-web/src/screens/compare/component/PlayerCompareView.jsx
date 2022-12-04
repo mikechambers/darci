@@ -103,8 +103,8 @@ export const createDivider = function (label, type = DIVIDER_HEADER) {
 export const createRow = (label, a, b, formatter) => {
     return {
         label,
-        data0: formatter.format(a),
-        data1: formatter.format(b),
+        data0: formatter(a),
+        data1: formatter(b),
         change: calculateChange(a, b),
     };
 };

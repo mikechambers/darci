@@ -2,7 +2,7 @@ import React from "react";
 import RoundedImageView from "../../../components/RoundedImageView";
 
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../../core/consts";
-import { INT_FORMATTER } from "../../../core/utils/string";
+import { formatInt, INT_FORMATTER } from "../../../core/utils/string";
 import {
     useFetchPlayerMetrics,
     useFetchPlayerProfile,
@@ -98,7 +98,7 @@ const OverlayTrialsView = (props) => {
             key="1"
             label="weekly"
             value={flawlessCount}
-            formatter={INT_FORMATTER}
+            formatter={formatInt}
         />
     ) : (
         ""

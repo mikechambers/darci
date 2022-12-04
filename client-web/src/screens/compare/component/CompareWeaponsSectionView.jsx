@@ -1,11 +1,12 @@
 import React from "react";
 import { calculateAverage, calculateRatio } from "shared/packages/utils";
 import {
-    FLOAT_FORMATTER,
-    INT_FORMATTER,
-    PERCENT_FORMATTER,
-    PERCENT_INT_FORMATTER,
+    formatFloat,
+    formatInt,
+    formatPercent,
+    formatPercentInt,
 } from "../../../core/utils/string";
+
 import { DIVIDER_SUBHEADER } from "./CompareRowDivider";
 import CompareSectionView from "./CompareSectionView";
 import { createDivider, createRow } from "./PlayerCompareView";
@@ -87,12 +88,7 @@ const formatWeaponData = function (w0, w1, limit, count1, count2, type) {
         out.push(createDivider(m.name, DIVIDER_SUBHEADER));
 
         out.push(
-            createRow(
-                unit,
-                g(m.data0, "count"),
-                g(m.data1, "count"),
-                INT_FORMATTER
-            )
+            createRow(unit, g(m.data0, "count"), g(m.data1, "count"), formatInt)
         );
 
         if (type === WEAPON_TYPE) {
@@ -101,7 +97,7 @@ const formatWeaponData = function (w0, w1, limit, count1, count2, type) {
                     "% Total",
                     calculateRatio(g(m.data0, "count"), count1),
                     calculateRatio(g(m.data1, "count"), count2),
-                    PERCENT_FORMATTER
+                    formatPercent
                 )
             );
         } else {
@@ -110,8 +106,7 @@ const formatWeaponData = function (w0, w1, limit, count1, count2, type) {
                     `Players / g`,
                     calculateAverage(g(m.data0, "count"), count1),
                     calculateAverage(g(m.data1, "count"), count2),
-
-                    FLOAT_FORMATTER
+                    formatFloat
                 )
             );
         }
@@ -120,7 +115,7 @@ const formatWeaponData = function (w0, w1, limit, count1, count2, type) {
                 "Kills",
                 g(m.data0, "kills"),
                 g(m.data1, "kills"),
-                INT_FORMATTER
+                formatInt
             )
         );
 
@@ -129,8 +124,7 @@ const formatWeaponData = function (w0, w1, limit, count1, count2, type) {
                 `Kills / ${abbr}`,
                 calculateAverage(g(m.data0, "kills"), g(m.data0, "count")),
                 calculateAverage(g(m.data1, "kills"), g(m.data1, "count")),
-
-                FLOAT_FORMATTER
+                formatFloat
             )
         );
 
@@ -139,8 +133,7 @@ const formatWeaponData = function (w0, w1, limit, count1, count2, type) {
                 "Precision",
                 calculateRatio(g(m.data0, "precision"), g(m.data0, "kills")),
                 calculateRatio(g(m.data1, "precision"), g(m.data1, "kills")),
-
-                PERCENT_INT_FORMATTER
+                formatPercentInt
             )
         );
     }

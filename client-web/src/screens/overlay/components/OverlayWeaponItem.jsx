@@ -2,13 +2,13 @@ import React, { useContext } from "react";
 import RoundedImageView from "../../../components/RoundedImageView";
 import { GlobalContext } from "../../../contexts/GlobalContext";
 
-import {
-    FLOAT_FORMATTER,
-    INT_FORMATTER,
-    PERCENT_INT_FORMATTER,
-} from "../../../core/utils/string";
 import { calculateAverage, calculateRatio } from "shared/packages/utils";
 import OverlayStatView from "./OverlayStatView";
+import {
+    formatFloat,
+    formatInt,
+    formatPercentInt,
+} from "../../../core/utils/string";
 
 const rootStyle = {
     display: "flex",
@@ -59,14 +59,14 @@ const OverlayWeaponItem = (props) => {
     data.push({
         label: count === 1 ? "Game" : "Games",
         value: count,
-        formatter: INT_FORMATTER,
+        formatter: formatInt,
     });
 
     if (showKills) {
         data.push({
             label: kills === 1 ? "Kill" : "Kills",
             value: kills,
-            formatter: INT_FORMATTER,
+            formatter: formatInt,
         });
     }
 
@@ -74,7 +74,7 @@ const OverlayWeaponItem = (props) => {
         data.push({
             label: "Kills / g",
             value: calculateAverage(kills, count),
-            formatter: FLOAT_FORMATTER,
+            formatter: formatFloat,
         });
     }
 
@@ -82,7 +82,7 @@ const OverlayWeaponItem = (props) => {
         data.push({
             label: "Precision",
             value: calculateRatio(precision, kills),
-            formatter: PERCENT_INT_FORMATTER,
+            formatter: formatPercentInt,
         });
     }
 

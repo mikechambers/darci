@@ -6,15 +6,16 @@ import {
     calculateKillsDeathsRatio,
     calculateRatio,
 } from "shared/packages/utils";
-import {
-    FLOAT_FORMATTER,
-    INT_FORMATTER,
-    PERCENT_INT_FORMATTER,
-} from "../../../core/utils/string";
+
 import { useFetchPlayerSummary } from "../../../hooks/remote";
 import { useQuery } from "../../../hooks/browser";
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../../core/consts";
 import Moment from "shared/packages/enums/Moment";
+import {
+    formatFloat,
+    formatInt,
+    formatPercentInt,
+} from "../../../core/utils/string";
 
 const rootStyle = {
     display: "flex",
@@ -62,7 +63,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.kills,
                     playerSummary.summary.deaths
                 );
-                formatter = FLOAT_FORMATTER;
+                formatter = formatInt;
                 break;
             }
             case Stat.EFFICIENCY: {
@@ -72,20 +73,20 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.deaths,
                     playerSummary.summary.assists
                 );
-                formatter = FLOAT_FORMATTER;
+                formatter = formatInt;
                 break;
             }
             case Stat.KILLS: {
                 label = playerSummary.summary.kills === 1 ? "Kills" : "Kills";
                 value = playerSummary.summary.kills;
-                formatter = INT_FORMATTER;
+                formatter = formatInt;
 
                 break;
             }
             case Stat.DEATHS: {
                 label = playerSummary.summary.deaths === 1 ? "Death" : "Deaths";
                 value = playerSummary.summary.deaths;
-                formatter = INT_FORMATTER;
+                formatter = formatInt;
                 break;
             }
             case Stat.DEFEATS: {
@@ -94,14 +95,14 @@ const OverlayStatsView = (props) => {
                         ? "Defeat"
                         : "Defeats";
                 value = playerSummary.summary.opponentsDefeated;
-                formatter = INT_FORMATTER;
+                formatter = formatInt;
                 break;
             }
             case Stat.ASSISTS: {
                 label =
                     playerSummary.summary.assists === 1 ? "Assist" : "Assists";
                 value = playerSummary.summary.assists;
-                formatter = INT_FORMATTER;
+                formatter = formatInt;
                 break;
             }
             case Stat.ACTIVITY_COUNT: {
@@ -111,13 +112,13 @@ const OverlayStatsView = (props) => {
                         : "Games";
                 label = "Games";
                 value = playerSummary.summary.activityCount;
-                formatter = INT_FORMATTER;
+                formatter = formatInt;
                 break;
             }
             case Stat.WINS: {
                 label = playerSummary.summary.wins === 1 ? "Win" : "Wins";
                 value = playerSummary.summary.wins;
-                formatter = INT_FORMATTER;
+                formatter = formatInt;
                 break;
             }
             case Stat.LOSSES: {
@@ -126,7 +127,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.wins;
                 label = losses === 1 ? "Loss" : "Losses";
                 value = losses;
-                formatter = INT_FORMATTER;
+                formatter = formatInt;
                 break;
             }
             case Stat.WIN_PERCENT: {
@@ -135,7 +136,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.wins,
                     playerSummary.summary.activityCount
                 );
-                formatter = PERCENT_INT_FORMATTER;
+                formatter = formatPercentInt;
 
                 break;
             }
@@ -144,7 +145,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.kills,
                     playerSummary.summary.activityCount
                 );
-                formatter = FLOAT_FORMATTER;
+                formatter = formatInt;
 
                 break;
             }
@@ -153,7 +154,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.assists,
                     playerSummary.summary.activityCount
                 );
-                formatter = FLOAT_FORMATTER;
+                formatter = formatInt;
 
                 break;
             }
@@ -162,7 +163,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.opponentsDefeated,
                     playerSummary.summary.activityCount
                 );
-                formatter = FLOAT_FORMATTER;
+                formatter = formatInt;
 
                 break;
             }
@@ -171,7 +172,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.deaths,
                     playerSummary.summary.activityCount
                 );
-                formatter = FLOAT_FORMATTER;
+                formatter = formatInt;
 
                 break;
             }
@@ -179,7 +180,7 @@ const OverlayStatsView = (props) => {
             case Stat.GRENADES: {
                 label = "Gren";
                 value = playerSummary.summary.grenadeKills;
-                formatter = INT_FORMATTER;
+                formatter = formatInt;
 
                 break;
             }
@@ -189,14 +190,14 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.grenadeKills,
                     playerSummary.summary.activityCount
                 );
-                formatter = FLOAT_FORMATTER;
+                formatter = formatFloat;
 
                 break;
             }
 
             case Stat.SUPERS: {
                 value = playerSummary.summary.superKills;
-                formatter = INT_FORMATTER;
+                formatter = formatInt;
 
                 break;
             }
@@ -205,14 +206,14 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.superKills,
                     playerSummary.summary.activityCount
                 );
-                formatter = FLOAT_FORMATTER;
+                formatter = formatInt;
 
                 break;
             }
 
             case Stat.MELEES: {
                 value = playerSummary.summary.meleeKills;
-                formatter = INT_FORMATTER;
+                formatter = formatInt;
 
                 break;
             }
@@ -221,7 +222,7 @@ const OverlayStatsView = (props) => {
                     playerSummary.summary.meleeKills,
                     playerSummary.summary.activityCount
                 );
-                formatter = FLOAT_FORMATTER;
+                formatter = formatInt;
 
                 break;
             }

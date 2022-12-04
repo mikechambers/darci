@@ -9,11 +9,8 @@ import {
     calculateKillsDeathsAssists,
 } from "shared/packages/utils";
 
-import {
-    FLOAT_FORMATTER,
-    PERCENT_INT_FORMATTER,
-} from "../../../core/utils/string";
 import { DIVIDER_SUBHEADER } from "./CompareRowDivider";
+import { formatFloat, formatPercentInt } from "../../../core/utils/string";
 
 const CompareMapSectionView = (props) => {
     const summary1 = props.summary1;
@@ -106,28 +103,28 @@ const formatMapData = function (s0, s1) {
                 "% Total",
                 calculateRatio(g(m.data0, "count"), s0.summary.activityCount),
                 calculateRatio(g(m.data1, "count"), s1.summary.activityCount),
-                PERCENT_INT_FORMATTER
+                formatPercentInt
             ),
 
             createRow(
                 "Win %",
                 calculateRatio(g(m.data0, "wins"), g(m.data0, "count")),
                 calculateRatio(g(m.data1, "wins"), g(m.data1, "count")),
-                PERCENT_INT_FORMATTER
+                formatPercentInt
             ),
 
             createRow(
                 "Completed %",
                 calculateRatio(g(m.data0, "completed"), g(m.data0, "count")),
                 calculateRatio(g(m.data1, "completed"), g(m.data1, "count")),
-                PERCENT_INT_FORMATTER
+                formatPercentInt
             ),
 
             createRow(
                 "Mercy %",
                 calculateRatio(g(m.data0, "mercy"), g(m.data0, "count")),
                 calculateRatio(g(m.data1, "mercy"), g(m.data1, "count")),
-                PERCENT_INT_FORMATTER
+                formatPercentInt
             ),
 
             createRow(
@@ -140,7 +137,7 @@ const formatMapData = function (s0, s1) {
                     g(m.data1, "kills"),
                     g(m.data1, "deaths")
                 ),
-                FLOAT_FORMATTER
+                formatFloat
             ),
 
             createRow(
@@ -155,7 +152,7 @@ const formatMapData = function (s0, s1) {
                     g(m.data1, "deaths"),
                     g(m.data1, "assists")
                 ),
-                FLOAT_FORMATTER
+                formatFloat
             )
         );
     }

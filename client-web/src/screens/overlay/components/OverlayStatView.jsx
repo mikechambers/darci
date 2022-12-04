@@ -19,7 +19,7 @@ const OverlayStatView = (props) => {
 
     return (
         <div style={rootStyle} className="overlay_border overlay_list_item">
-            <div className="overlay_stat_value">{formatter.format(value)}</div>
+            <div className="overlay_stat_value">{formatter(value)}</div>
             <div className="overlay_stat_label">{label}</div>
         </div>
     );

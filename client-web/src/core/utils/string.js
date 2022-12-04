@@ -25,43 +25,61 @@ import { FLOAT_DECIMAL_PRECISION } from "../consts";
 import { humanDuration } from "./date";
 
 //Format floating point  23.40
-export const FLOAT_FORMATTER = new Intl.NumberFormat("en-US", {
+const FLOAT_FORMATTER = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: FLOAT_DECIMAL_PRECISION,
     maximumFractionDigits: FLOAT_DECIMAL_PRECISION,
 });
 
+export const formatFloat = (v) => {
+    return FLOAT_FORMATTER.format(v);
+};
+
 //format numbers / ints 23
-export const INT_FORMATTER = new Intl.NumberFormat("en-US", {
+const INT_FORMATTER = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
 });
 
+export const formatInt = (v) => {
+    return INT_FORMATTER.format(v);
+};
+
 //format number / int percent 23%
-export const PERCENT_INT_FORMATTER = new Intl.NumberFormat("en-US", {
+const PERCENT_INT_FORMATTER = new Intl.NumberFormat("en-US", {
     style: "percent",
     minimumFractionDigits: 0, //change both to 2 for trailing numbers
     maximumFractionDigits: 0,
 });
 
+export const formatPercentInt = (v) => {
+    return PERCENT_INT_FORMATTER.format(v);
+};
+
 //format percent float 23.40%
-export const PERCENT_FORMATTER = new Intl.NumberFormat("en-US", {
+const PERCENT_FORMATTER = new Intl.NumberFormat("en-US", {
     style: "percent",
     minimumFractionDigits: FLOAT_DECIMAL_PRECISION, //change both to 2 for trailing numbers
     maximumFractionDigits: FLOAT_DECIMAL_PRECISION,
 });
 
+export const formatPercent = (v) => {
+    return PERCENT_FORMATTER.format(v);
+};
+
 //format percent change number +24%
-export const PERCENT_CHANGE_INT_FORMATTER = new Intl.NumberFormat("en-US", {
+const PERCENT_CHANGE_INT_FORMATTER = new Intl.NumberFormat("en-US", {
     style: "percent",
     signDisplay: "exceptZero",
     minimumFractionDigits: 0, //change both to 2 for trailing numbers
     maximumFractionDigits: 0,
 });
 
-export const HUMAN_DATE_TIME_FORMATTER = {
-    format: (s) => {
-        return humanDuration(s * 1000, true);
-    },
+export const formatPercentChangeInt = (v) => {
+    PERCENT_CHANGE_INT_FORMATTER.format(v);
+};
+
+export const formatHumanDateTime = (secs) => {
+    return humanDuration(secs * 1000, true);
 };
 
 export const capitalize = function (str) {
