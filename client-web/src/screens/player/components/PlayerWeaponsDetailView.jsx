@@ -61,13 +61,20 @@ const PlayerWeaponsDetailView = (props) => {
                 data: precision,
             },
         ];
-
+        /*
         data.push({
             id: w.id,
             title: w.item.name,
             subtitle: w.item.itemSubType.toString(),
             icon: w.item.icon,
             items: items,
+        });
+        */
+
+        data.push({
+            id: w.id,
+            items: items,
+            weapon: w.item,
         });
     }
 

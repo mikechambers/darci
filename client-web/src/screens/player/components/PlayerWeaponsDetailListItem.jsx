@@ -68,11 +68,19 @@ const PlayerWeaponsDetailListItem = (props) => {
     return (
         <div style={style}>
             <div style={containerStyle}>
-                <RoundedImageView height={64} width={64} image={item.icon} />
+                <RoundedImageView
+                    height={64}
+                    width={64}
+                    image={item.weapon.icon}
+                />
                 <div id="data_container" style={dataContainerStyle}>
                     <div style={headerStyle}>
-                        <div className="subsection_header">{item.title}</div>
-                        <div className="list_subtitle">{item.subtitle}</div>
+                        <div className="subsection_header">
+                            {item.weapon.name}
+                        </div>
+                        <div className="list_subtitle">
+                            {item.weapon.itemSubType.label}
+                        </div>
                     </div>
                     <div style={valuesStyle}>
                         {item.items.map((stat, i) => {
