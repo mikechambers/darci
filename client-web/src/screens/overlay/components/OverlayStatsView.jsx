@@ -17,12 +17,6 @@ import {
     formatPercentInt,
 } from "../../../core/utils/string";
 
-const rootStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: 4,
-};
-
 const OverlayStatsView = (props) => {
     const stats = props.stats;
     const memberId = props.memberId;
@@ -235,7 +229,7 @@ const OverlayStatsView = (props) => {
     }
 
     return (
-        <div style={rootStyle}>
+        <div className="overlay_root">
             <div className="overlay_title">{`${mode.label} (${startMoment.label})`}</div>
 
             <div className="overlay_list_row">

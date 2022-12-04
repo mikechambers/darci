@@ -11,12 +11,6 @@ import OverlayStatView from "./OverlayStatView";
 import OverlayTrialsFlawlessView from "./OverlayTrialsFlawlessView";
 import PassageStatusView from "./PassageStatusView";
 
-const rootStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: 4,
-};
-
 const contentRowStyle = {
     display: "flex",
     flexDirection: "row",
@@ -105,7 +99,7 @@ const OverlayTrialsView = (props) => {
     );
 
     return (
-        <div style={rootStyle}>
+        <div className="overlay_root">
             {labelDiv}
             <div className="overlay_list_row">
                 {cardDiv}

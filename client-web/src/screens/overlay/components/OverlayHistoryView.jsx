@@ -11,12 +11,6 @@ const listStyle = {
     gap: 10,
 };
 
-const rootStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: 4,
-};
-
 const OverlayHistoryView = (props) => {
     const memberId = props.memberId;
     const mode = props.mode;
@@ -61,7 +55,7 @@ const OverlayHistoryView = (props) => {
     );
 
     return (
-        <div style={rootStyle}>
+        <div className="overlay_root">
             {labelDiv}
             <div style={listStyle}>
                 {activities.map((a) => {

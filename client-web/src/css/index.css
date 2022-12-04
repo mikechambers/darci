@@ -687,6 +687,8 @@ label {
   }
 }
 
+/********* compare ************/
+
 .compare_row {
   border-radius: 4px;
   background-color: var(--color-list-item-background);
@@ -698,6 +700,14 @@ label {
   display: grid;
   grid-template-columns: 135px 150px 150px 50px;
   row-gap: 4px;
+}
+
+/********* overlay ************/
+
+.overlay_root {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .overlay_title {

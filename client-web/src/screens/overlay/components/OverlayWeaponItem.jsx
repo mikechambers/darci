@@ -10,12 +10,6 @@ import {
     formatPercentInt,
 } from "../../../core/utils/string";
 
-const rootStyle = {
-    display: "flex",
-    flexDirection: "column",
-    gap: 4,
-};
-
 const OverlayWeaponItem = (props) => {
     const showKills = props.showKills;
     const showKillsGame = props.showKillsGame;
@@ -87,7 +81,7 @@ const OverlayWeaponItem = (props) => {
     }
 
     return (
-        <div style={rootStyle}>
+        <div className="overlay_root">
             <div className="overlay_title">{weapon.name}</div>
             <div className="overlay_list_row">
                 <div>{iconDiv}</div>
