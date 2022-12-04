@@ -55,7 +55,7 @@ const RefreshStatusView = (props) => {
         elementAlign = "flex-end";
     }
 
-    const [elapsedTime, setElapsedTime] = useState();
+    const [elapsedTime, setElapsedTime] = useState(0);
     useEffect(() => {
         if (!lastUpdate) {
             return;
@@ -94,7 +94,6 @@ const RefreshStatusView = (props) => {
     if (lastUpdate) {
         let out = DateTime.fromJSDate(lastUpdate).toRelative();
         s = `Last updated ${out}`;
-
         percent = calculatePercent(elapsedTime, refreshInterval);
         percent = Math.min(percent, 100);
     }
@@ -106,7 +105,7 @@ const RefreshStatusView = (props) => {
 
     const barStyle = {
         ...barStyleBase,
-        width: `${percent}%`,
+        width: `${percent.toFixed(2)}%`,
     };
 
     return (
