@@ -43,7 +43,7 @@ const OverlayStatsView = (props) => {
     if (!playerSummary || playerSummaryLoadError) {
         return "";
     }
-    console.log(playerSummary);
+
     let arr = [];
     for (const s of stats) {
         let type = Stat.fromType(s);

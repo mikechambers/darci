@@ -27,11 +27,11 @@ const SelectView = (props) => {
             {options.map((item, index) => {
                 return (
                     <option
-                        key={item.value}
+                        key={item.label}
                         value={index}
                         className="nav_option"
                     >
-                        {item.value}
+                        {item.label}
                     </option>
                 );
             })}

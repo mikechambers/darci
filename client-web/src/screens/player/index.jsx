@@ -49,6 +49,7 @@ import PlayerPerformanceSummaryView from "./components/PlayerPerformanceSummaryV
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
+import PlayerMetaWeaponsDetailView from "./components/PlayerMetaWeaponsDetailView";
 
 const { useQuery } = require("../../hooks/browser");
 
@@ -266,10 +267,7 @@ const PlayerView = () => {
                                     title="Meta Weapons"
                                     description="Weapon meta from your matches excluding you and your fireteam members"
                                 />
-                                <PlayerWeaponsDetailView
-                                    weapons={meta}
-                                    type={WEAPONS_DETAIL_PLAYER}
-                                />
+                                <PlayerMetaWeaponsDetailView weapons={meta} />
                             </div>
 
                             <div>

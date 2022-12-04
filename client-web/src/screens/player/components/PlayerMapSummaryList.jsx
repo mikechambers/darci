@@ -50,15 +50,15 @@ const sortStyle = {
     justifyContent: "flex-end",
 };
 
-const sortData = [
+const sortOptions = [
     {
-        value: "Games",
+        label: "Games",
         sort: (a, b) => {
             return b.summary.activityCount - a.summary.activityCount;
         },
     },
     {
-        value: "Win %",
+        label: "Win %",
         sort: (a, b) => {
             return (
                 calculatePercent(b.summary.wins, b.summary.activityCount) -
@@ -67,7 +67,7 @@ const sortData = [
         },
     },
     {
-        value: "Mercy %",
+        label: "Mercy %",
         sort: (a, b) => {
             return (
                 calculatePercent(
@@ -82,7 +82,7 @@ const sortData = [
         },
     },
     {
-        value: "KD",
+        label: "KD",
         sort: (a, b) => {
             return (
                 calculateKillsDeathsRatio(b.summary.kills, b.summary.deaths) -
@@ -91,7 +91,7 @@ const sortData = [
         },
     },
     {
-        value: "Efficiency",
+        label: "Efficiency",
         sort: (a, b) => {
             return (
                 calculateEfficiency(
@@ -108,7 +108,7 @@ const sortData = [
         },
     },
     {
-        value: "Kills / g",
+        label: "Kills / g",
         sort: (a, b) => {
             return (
                 calculateAverage(b.summary.kills, b.summary.activityCount) -
@@ -117,7 +117,7 @@ const sortData = [
         },
     },
     {
-        value: "Defeats / g",
+        label: "Defeats / g",
         sort: (a, b) => {
             return (
                 calculateAverage(
@@ -132,7 +132,7 @@ const sortData = [
         },
     },
     {
-        value: "Assists / g",
+        label: "Assists / g",
         sort: (a, b) => {
             return (
                 calculateAverage(b.summary.assists, b.summary.activityCount) -
@@ -141,7 +141,7 @@ const sortData = [
         },
     },
     {
-        value: "Deaths / g",
+        label: "Deaths / g",
         sort: (a, b) => {
             return (
                 calculateAverage(b.summary.deaths, b.summary.activityCount) -
@@ -150,13 +150,13 @@ const sortData = [
         },
     },
     {
-        value: "Time Played",
+        label: "Time Played",
         sort: (a, b) => {
             return b.summary.timePlayedSeconds - a.summary.timePlayedSeconds;
         },
     },
     {
-        value: "Completion %",
+        label: "Completion %",
         sort: (a, b) => {
             return (
                 calculatePercent(b.summary.completed, b.summary.activityCount) -
@@ -171,7 +171,7 @@ const PlayerMapSummaryList = (props) => {
 
     const [sortIndex, setSortIndex] = useState(0);
 
-    maps.sort(sortData[sortIndex].sort);
+    maps.sort(sortOptions[sortIndex].sort);
 
     let totalGames = maps.reduce(
         (prev, cur) => cur.summary.activityCount + prev,
@@ -185,7 +185,7 @@ const PlayerMapSummaryList = (props) => {
     return (
         <div style={rootStyle}>
             <div style={sortStyle}>
-                <SelectView onChange={onSortChange} options={sortData} />
+                <SelectView onChange={onSortChange} options={sortOptions} />
             </div>
             <div style={wrapperStyle}>
                 {maps.map((map, index) => {

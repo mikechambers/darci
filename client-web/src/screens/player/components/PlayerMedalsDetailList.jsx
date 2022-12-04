@@ -81,6 +81,7 @@ const PlayerMedalsDetailList = (props) => {
     medals.sort(sort);
 
     const onSortChange = (e) => {
+        console.log("PlayerMedalsDetailList.onSortChange", e);
         setSortIndex(e.target.selectedIndex);
     };
 
