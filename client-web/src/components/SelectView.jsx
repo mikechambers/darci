@@ -11,7 +11,7 @@ const SelectView = (props) => {
             return;
         }
 
-        onChange(selectedIndex);
+        onChange(options[selectedIndex], selectedIndex);
     }, [selectedIndex]);
 
     const onSelectChange = (e) => {

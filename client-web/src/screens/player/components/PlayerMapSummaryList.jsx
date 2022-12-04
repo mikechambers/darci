@@ -178,7 +178,7 @@ const PlayerMapSummaryList = (props) => {
         0
     );
 
-    const onSortChange = (selectedIndex) => {
+    const onSortChange = (item, selectedIndex) => {
         setSortIndex(selectedIndex);
     };
 
