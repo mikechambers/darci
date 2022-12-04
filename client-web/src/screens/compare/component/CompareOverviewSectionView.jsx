@@ -1,11 +1,12 @@
 import React from "react";
 import { createRow } from "./PlayerCompareView";
 
-import { calculateRatio } from "shared/packages/utils";
+import { calculateAverage, calculateRatio } from "shared/packages/utils";
 
 import CompareSectionView from "./CompareSectionView";
 import {
     formatHumanDateTime,
+    formatHumanDateTimeSecs,
     formatInt,
     formatPercentInt,
 } from "../../../core/utils/string";
@@ -51,6 +52,20 @@ const formatData = function (s0, s1) {
             calculateRatio(s1.summary.completed, s1.summary.activityCount),
             formatPercentInt
         ),
+
+        createRow(
+            "Time / g",
+            calculateAverage(
+                s0.summary.timePlayedSeconds,
+                s0.summary.activityCount
+            ),
+            calculateAverage(
+                s1.summary.timePlayedSeconds,
+                s1.summary.activityCount
+            ),
+            formatHumanDateTimeSecs
+        ),
+
         createRow(
             "Time Played",
             s0.summary.timePlayedSeconds,

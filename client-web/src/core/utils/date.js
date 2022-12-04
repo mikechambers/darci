@@ -39,7 +39,7 @@ export const dateIsWithinLastWeek = function (d) {
     return diffMs > weekMs;
 };
 
-export const humanDuration = function (ms, short = false) {
+export const humanDuration = function (ms, short = false, showSeconds = false) {
     var dur = Duration.fromMillis(ms)
         .shiftTo("years", "months", "days", "hours", "minutes", "seconds")
         .toObject();
@@ -67,8 +67,13 @@ export const humanDuration = function (ms, short = false) {
     humanDurationParts.push(f(dur.hours, short ? "h" : "hour"));
     humanDurationParts.push(f(dur.minutes, short ? "m" : "minute"));
 
-    if (!short) {
-        humanDurationParts.push(f(dur.seconds, "second"));
+    if (showSeconds) {
+        const s = Math.round(dur.seconds);
+        if (short) {
+            humanDurationParts.push(f(s, short ? "s" : "second"));
+        } else {
+            humanDurationParts.push(f(s, "second"));
+        }
     }
 
     humanDurationParts = humanDurationParts.filter((entry) => entry !== null);

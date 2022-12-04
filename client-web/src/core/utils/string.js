@@ -75,11 +75,15 @@ const PERCENT_CHANGE_INT_FORMATTER = new Intl.NumberFormat("en-US", {
 });
 
 export const formatPercentChangeInt = (v) => {
-    PERCENT_CHANGE_INT_FORMATTER.format(v);
+    return PERCENT_CHANGE_INT_FORMATTER.format(v);
 };
 
 export const formatHumanDateTime = (secs) => {
-    return humanDuration(secs * 1000, true);
+    return humanDuration(secs * 1000, true, false);
+};
+
+export const formatHumanDateTimeSecs = (secs) => {
+    return humanDuration(secs * 1000, true, true);
 };
 
 export const capitalize = function (str) {
