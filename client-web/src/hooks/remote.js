@@ -469,9 +469,15 @@ export const useFetchPlayersMetrics = (players) => {
             let s = reducer(output, "isLoading", false);
 
             let urls = players.map(async (p) => {
+                let m = p;
                 return fetchDestinyApi(
-                    `https://www.bungie.net/Platform/Destiny2/${p.platformId}/Profile/${p.memberId}/?components=1100`
-                );
+                    `https://www.bungie.net/Platform/Destiny2/${m.platformId}/Profile/${m.memberId}/?components=1100`
+                ).catch((e) => {
+                    console.log(
+                        `Error loading profile data for ${m.getFullName()} SKIPPING`,
+                        e.message
+                    );
+                });
             });
 
             //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
@@ -505,6 +511,7 @@ export const useFetchPlayersMetrics = (players) => {
                     s = reducer(s, "data", out);
                 })
                 .catch((error) => {
+                    console.log("here");
                     s = reducer(s, "error", error);
                 })
                 .finally(() => {
