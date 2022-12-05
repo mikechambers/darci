@@ -50,16 +50,20 @@ const OverlayLoadoutView = (props) => {
 
     let divs = [];
 
+    const killsSort = (a, b) => b.kills - a.kills;
+
     if (config.showPrimary || config.showSecondPrimary) {
         let primaries = playerSummary.summary.weapons.filter(
             (e) => e.item.ammunitionType === AmmunitionType.PRIMARY
         );
 
-        if (config.showPrimary) {
+        primaries.sort(killsSort);
+
+        if (config.showPrimary && primaries.length > 0) {
             divs.push(primaries[0]);
         }
 
-        if (config.showSecondPrimary) {
+        if (config.showSecondPrimary && primaries.length > 1) {
             divs.push(primaries[1]);
         }
     }
@@ -69,20 +73,26 @@ const OverlayLoadoutView = (props) => {
             (e) => e.item.ammunitionType === AmmunitionType.SPECIAL
         );
 
-        if (config.showSpecial) {
+        specials.sort(killsSort);
+
+        if (config.showSpecial && specials.length > 0) {
             divs.push(specials[0]);
         }
 
-        if (config.showSecondSpecial) {
+        if (config.showSecondSpecial && specials.length > 1) {
             divs.push(specials[1]);
         }
     }
 
     if (config.showHeavy) {
-        const heavyWeapon = playerSummary.summary.weapons.find(
+        const heavyWeapons = playerSummary.summary.weapons.filter(
             (e) => e.item.ammunitionType === AmmunitionType.HEAVY
         );
-        divs.push(heavyWeapon);
+
+        heavyWeapons.sort(killsSort);
+        if (heavyWeapons.length > 0) {
+            divs.push(heavyWeapons[0]);
+        }
     }
 
     return (
