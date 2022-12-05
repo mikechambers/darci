@@ -54,6 +54,9 @@ const CRUCIBLE_SEASON_KDA = "871184140";
 
 const CRUCIBLE_SEASON_WIN_RATE = "2941499201";
 
+const TRIALS_WEEKLY_CARRIES = "1155098170";
+const TRIALS_SEASON_CARRIES = "610393611";
+
 class PlayerMetrics {
     trials;
     ironBanner;
@@ -103,7 +106,16 @@ class PlayerMetrics {
             winsLifetime:
                 data.metrics.data.metrics[TRIALS_LIFETIME_WINS]
                     .objectiveProgress.progress,
+
+            carriesWeekly:
+                data.metrics.data.metrics[TRIALS_WEEKLY_CARRIES]
+                    .objectiveProgress.progress,
+            carriesSeason:
+                data.metrics.data.metrics[TRIALS_SEASON_CARRIES]
+                    .objectiveProgress.progress,
         };
+
+        console.log(trials);
 
         const ironBanner = {
             winsSeason:
