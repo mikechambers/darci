@@ -25,6 +25,12 @@ import React from "react";
 
 import ActivityWeaponList, { WEAPON_TYPE } from "./ActivityWeaponList";
 
+const elementStyle = {
+    display: "flex",
+    flexDirection: "row",
+    columnGap: 12,
+};
+
 const ActivityWeaponsView = (props) => {
     let teams = props.teams;
 
@@ -32,6 +38,7 @@ const ActivityWeaponsView = (props) => {
     let map = new Map();
     for (const t of teams) {
         let weaponMap = new Map();
+
         for (const p of t.players) {
             for (const w of p.stats.extended.weapons) {
                 let id = w.id;
@@ -92,18 +99,22 @@ const ActivityWeaponsView = (props) => {
         allWeaponTypesMap.set(id, item);
     }
 
-    const elementStyle = {
-        display: "flex",
-        flexDirection: "row",
-        columnGap: 12,
-    };
-
     const sort = (a, b) => {
         return b.kills - a.kills;
     };
 
     let alphaWeapons = Array.from(map.get("Alpha").values()).sort(sort);
-    let bravoWeapons = Array.from(map.get("Bravo").values()).sort(sort);
+
+    let bravoDiv = "";
+
+    const bravoWeaponsMap = map.get("Bravo");
+    if (bravoWeaponsMap) {
+        const bravoWeapons = Array.from(bravoWeaponsMap.values()).sort(sort);
+        bravoDiv = (
+            <ActivityWeaponList weapons={bravoWeapons} title="Bravo Team" />
+        );
+    }
+
     //let allWeapons = Array.from(allWeaponsMap.values()).sort(sort);
     let allWeaponTypes = Array.from(allWeaponTypesMap.values()).sort(sort);
 
@@ -115,7 +126,7 @@ const ActivityWeaponsView = (props) => {
                 type={WEAPON_TYPE}
             />
             <ActivityWeaponList weapons={alphaWeapons} title="Alpha Team" />
-            <ActivityWeaponList weapons={bravoWeapons} title="Bravo Team" />
+            {bravoDiv}
         </div>
     );
 };

@@ -31,7 +31,7 @@ import ScreenNavigationView from "../../components/ScreenNavigationView";
 import ActivitySummaryView from "./components/ActivitySummaryView";
 import ActivityLeadersView from "./components/ActivityLeadersView";
 import ActivityGoldMedalsView from "./components/ActivityGoldMedalsView";
-import ActivityWeaponListContainer from "./components/ActivityWeaponsView";
+import ActivityWeaponView from "./components/ActivityWeaponsView";
 import ActivityTeamDetailsView from "./components/ActivityTeamDetailsView";
 import ActivityPlayerEffectivenessView from "./components/ActivityPlayerEffectivenessView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
@@ -148,7 +148,7 @@ const ActivityView = (props) => {
                         title="Weapons"
                         description="Weapons"
                     />
-                    <ActivityWeaponListContainer teams={teams} />
+                    <ActivityWeaponView teams={teams} />
                 </div>
 
                 {teams.map((team, index) => {

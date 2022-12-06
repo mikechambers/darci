@@ -143,15 +143,26 @@ const ActivitySummaryView = (props) => {
                 <div className="activity_completion_reason">
                     {details.completionReason.label}
                 </div>
-                <div style={teamScoresStyle}>
-                    <div className="alpha_team activity_score_box">
-                        {alphaTeam.score}
-                    </div>
-                    <div style={scoreDivider}></div>
-                    <div className="bravo_team activity_score_box">
-                        {betaTeam.score}
-                    </div>
-                </div>
+
+                {(() => {
+                    //if only alpha team, then it means we are in a private match
+                    //rumble. So team score doesnt make sense.
+                    if (!betaTeam) {
+                        return "";
+                    }
+
+                    return (
+                        <div style={teamScoresStyle}>
+                            <div className="alpha_team activity_score_box">
+                                {alphaTeam.score}
+                            </div>
+                            <div style={scoreDivider}></div>
+                            <div className="bravo_team activity_score_box">
+                                {betaTeam.score}
+                            </div>
+                        </div>
+                    );
+                })()}
                 <DurationView
                     duration={details.activityDurationSeconds * 1000}
                 />
