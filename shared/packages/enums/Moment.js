@@ -109,6 +109,11 @@ class Moment extends EnumBase {
         "Season of Plunder"
     );
 
+    static SEASON_OF_THE_SERAPH = new Moment(
+        "SeasonOfTheSeraph",
+        "Season of The Seraph"
+    );
+
     constructor(type, label = undefined) {
         super(type, undefined, label);
     }
@@ -216,6 +221,10 @@ class Moment extends EnumBase {
 
         if (this === Moment.SEASON_OF_PLUNDER) {
             return new Date(Date.UTC(2022, 7, 23, 17, 0, 0));
+        }
+
+        if (this === Moment.SEASON_OF_THE_SERAPH) {
+            return new Date(Date.UTC(2022, 11, 6, 17, 0, 0));
         }
 
         return undefined;

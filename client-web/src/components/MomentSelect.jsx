@@ -33,7 +33,7 @@ const moments = [
     Moment.DAY,
     Moment.WEEK,
     Moment.MONTH,
-    Moment.SEASON_OF_PLUNDER,
+    Moment.SEASON_OF_THE_SERAPH,
     Moment.NOW,
 ];
 

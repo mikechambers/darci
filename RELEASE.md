@@ -7,3 +7,4 @@
 -   Will need to run `npm install` in `client-web` after updating.
 -   Added sort to map data on player view
 -   Tons of refactoring and optimizations
+-   Added support for Season of the Seraph
