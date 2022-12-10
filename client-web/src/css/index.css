@@ -372,6 +372,7 @@ body {
 .nav_select {
   background: #00000000;
   color:white;
+  direction:ltr;
 }
 
 .nav_select, .nav_option {
@@ -380,10 +381,14 @@ body {
   /*text-align-last: right;*/
 }
 
+.nav_select_left {
+  direction:rtl;
+}
+
 .nav_option {
   color:var(--color-base-font-dark);
   /* right align options */
-  /*direction: rtl;*/
+  direction: ltr;
   
 }
 

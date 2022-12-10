@@ -116,8 +116,6 @@ class PlayerMetrics {
                     .objectiveProgress.progress,
         };
 
-        console.log(trials);
-
         const ironBanner = {
             winsSeason:
                 data.metrics.data.metrics[IRON_BANNER_SEASON_WINS]

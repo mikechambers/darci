@@ -25,6 +25,7 @@ import React, { useState } from "react";
 import { FixedSizeList as List } from "react-window";
 import { AmmunitionType, ItemSubType } from "shared";
 import SelectView from "../../../components/SelectView";
+import { LEFT } from "../../../core/consts";
 import PlayerWeaponsDetailListItem from "./PlayerWeaponsDetailListItem";
 
 const elementStyle = {
@@ -123,7 +124,11 @@ const PlayerWeaponsDetailList = (props) => {
     return (
         <div style={elementStyle}>
             <div style={configStyle}>
-                <SelectView onChange={onFilterChange} options={filterOptions} />
+                <SelectView
+                    onChange={onFilterChange}
+                    options={filterOptions}
+                    align={LEFT}
+                />
                 <SelectView onChange={onSortChange} options={sortOptions} />
             </div>
             <List
