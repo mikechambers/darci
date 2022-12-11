@@ -104,7 +104,7 @@ const HomeView = (props) => {
                 <AllTimeLeaderView metrics={metrics} />
             </div>
 
-            <ErrorContainerView errors={[metricsError]} />
+            <ErrorContainerView errors={[metricsError, metricsError]} />
         </div>
     );
 };

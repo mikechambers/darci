@@ -10,6 +10,9 @@ const rootStyleBase = {
     display: "flex",
     flexDirection: "column",
     gap: 8,
+    background: "var(--color-list-item-background)",
+    borderRadius: "var(--radius-border)",
+    padding: 8,
 };
 
 const outputStyle = {
@@ -23,16 +26,9 @@ const outputStyle = {
 
 const headerStyle = {
     width: "100%",
-    height: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-};
-
-const expandedStyle = {
-    background: "var(--color-list-item-background)",
-    borderRadius: "var(--radius-border)",
-    padding: 8,
 };
 
 const ErrorView = (props) => {
@@ -61,25 +57,28 @@ const ErrorView = (props) => {
     return (
         <div style={rootStyle}>
             <div>
-                <div
-                    style={headerStyle}
-                    className="subsection_header underline"
-                >
+                <div className="subsection_header underline">
                     <div>{error.constructor.name}</div>
+                </div>
+                <div style={headerStyle}>
+                    <div className="overflow">{error.message}</div>
                     <div onClick={onExpandedClick} className="link icon_link">
                         <Icon icon={CHEVRONS_DOWN} width="14" />
                     </div>
                 </div>
-                <div className="overflow">{error.message}</div>
             </div>
 
             {expanded && (
-                <div style={expandedStyle}>
-                    <textarea style={outputStyle} readOnly={true}>
-                        {`${apiMessage}\n${error.stack.toString()}\n${
+                <div>
+                    <textarea
+                        style={outputStyle}
+                        readOnly={true}
+                        defaultValue={`${apiMessage}\n${error.stack.toString()}\n${
                             error.constructor.name
                         }\n${error.message}`}
-                    </textarea>
+                    ></textarea>
+                    <div>&nbsp;</div>
+                    <div>copy discord github</div>
                 </div>
             )}
         </div>

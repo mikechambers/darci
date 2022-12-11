@@ -104,7 +104,7 @@ export const fetchDestinyApi = async (url) => {
     if (json.ErrorCode !== 1) {
         const code = json.ErrorCode;
         const message = json.Message;
-        const status = json.Status;
+        const status = json.ErrorStatus;
 
         let type;
         switch (code) {

@@ -7,15 +7,14 @@ const rootStyle = {
     right: "var(--padding-content)",
     bottom: "var(--padding-content)",
     padding: "var(--padding-content)",
+
+    display: "flex",
+    flexDirection: "column",
+    gap: 6,
 };
 
 const ErrorContainerView = (props) => {
     const errors = props.errors;
-
-    console.log(errors);
-
-    //log a bug
-    //ask for help
 
     return (
         <div style={rootStyle}>

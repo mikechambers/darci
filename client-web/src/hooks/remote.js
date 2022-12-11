@@ -473,10 +473,12 @@ export const useFetchPlayersMetrics = (players) => {
                 return fetchDestinyApi(
                     `https://www.bungie.net/Platform/Destiny2/${m.platformId}/Profile/${m.memberId}/?components=1100`
                 ).catch((e) => {
+                    /*
                     console.log(
                         `Error loading profile data for ${m.getFullName()} SKIPPING`,
                         e.message
                     );
+                    */
 
                     return e;
                 });
