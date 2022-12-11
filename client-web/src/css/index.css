@@ -135,7 +135,7 @@
 .list_item_header {
   background-color: var(--color-list-item-background);
   border: var(--border-list-item);
-  border-radius: 4px;
+  border-radius: var(--radius-border);
   padding:4px;
   width:700px;
 }
@@ -145,7 +145,7 @@
   border: var(--border-list-item);
 
   border-top-width: 0px;
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0px 0px var(--radius-border) var(--radius-border);
   align-self: center;
   width:98%;
 
@@ -270,7 +270,7 @@ body {
 .tooltip_color_swatch {
   width: 12px;
   height: 12px;
-  border-radius: 4px;
+  border-radius: var(--radius-border);
 }
 
 /************* end text styles ********************/

@@ -43,7 +43,7 @@ export class DestinyApiResponseError extends Error {
         super(message);
         this.code = code;
         this.status = status;
-        this.message = message;
+        this.url = url;
     }
 }
 

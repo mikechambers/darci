@@ -26,14 +26,7 @@ import { Outlet } from "react-router-dom";
 
 import { useFetchManifest, useFetchPlayers } from "./hooks/remote";
 
-import {
-    GlobalContext,
-    useGlobalContext,
-    GlobalAction,
-    MANIFEST_UPDATED,
-    PLAYERS_UPDATED,
-    WEAPONS_UPDATED,
-} from "./contexts/GlobalContext";
+import { GlobalContext, useGlobalContext } from "./contexts/GlobalContext";
 import MainNavView from "./components/MainNavView";
 const { useQuery } = require("./hooks/browser");
 

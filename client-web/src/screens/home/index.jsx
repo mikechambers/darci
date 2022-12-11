@@ -24,10 +24,15 @@
 import React from "react";
 
 import { useContext } from "react";
+import ErrorContainerView from "../../components/ErrorContainerView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
-import { GlobalContext } from "../../contexts/GlobalContext";
+import {
+    ADD_ERROR,
+    GlobalAction,
+    GlobalContext,
+} from "../../contexts/GlobalContext";
 import { useFetchPlayersMetrics } from "../../hooks/remote";
 import AllTimeLeaderView from "./components/AllTimeLeaderView";
 import SeasonLeaderView from "./components/SeasonLeaderView";
@@ -42,7 +47,7 @@ const HomeView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
     const players = global.players;
 
-    const [metrics, isMetricsLoading, isMetricsError] =
+    const [metrics, isMetricsLoading, metricsError] =
         useFetchPlayersMetrics(players);
 
     const pageLinks = [
@@ -62,6 +67,9 @@ const HomeView = (props) => {
 
     if (isMetricsLoading) {
         return <LoadingAnimationView message="Loading leaderboard data." />;
+    }
+
+    if (metricsError) {
     }
 
     return (
@@ -95,6 +103,8 @@ const HomeView = (props) => {
 
                 <AllTimeLeaderView metrics={metrics} />
             </div>
+
+            <ErrorContainerView errors={[metricsError]} />
         </div>
     );
 };

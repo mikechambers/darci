@@ -168,11 +168,16 @@ class Manifest {
             id: id,
         };
 
+        console.log("----------");
+        console.log("id", id);
         let a = this.getActivityDefinition(id);
+        console.log("a", a);
+
         if (!a) {
             console.log(
                 `Manifest.getModeInfo : Could not find activity definition [${id}]`
             );
+
             return out;
         }
 
@@ -182,10 +187,14 @@ class Manifest {
 
         let m =
             this.#manifestData.data.activityModeDefinitions[a.activityModeHash];
+
+        //console.log(m);
+
         if (!m) {
             console.log(
                 `Manifest.getModeInfo : Could not find activity mode definition [${a.activityModeHash}]`
             );
+
             return out;
         }
 
