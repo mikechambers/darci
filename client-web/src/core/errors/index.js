@@ -22,8 +22,29 @@
  */
 
 export class NetworkError extends Error {}
-export class ServerResponseError extends Error {}
 export class ApiResponseError extends Error {}
-export class DestinyApiResponseError extends Error {}
+
 export class JSONParsingError extends Error {}
 export class ActivityNotFoundError extends Error {}
+
+//note, we are not using this right now
+export class ServerResponseError extends Error {
+    status;
+    statusText;
+    body;
+}
+
+export class DestinyApiResponseError extends Error {
+    code;
+    status;
+    message;
+    url;
+    constructor(message, status, code, url) {
+        super(message);
+        this.code = code;
+        this.status = status;
+        this.message = message;
+    }
+}
+
+export class DestinyApiDisabledError extends DestinyApiResponseError {}

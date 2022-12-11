@@ -27,6 +27,7 @@ import {
     DestinyApiResponseError,
     NetworkError,
     JSONParsingError,
+    DestinyApiDisabledError,
 } from "../errors";
 
 import { DESTINY_API_KEY } from "../consts";
@@ -42,14 +43,23 @@ export const fetchUrl = async (url, options) => {
         throw new NetworkError(`Could not fetch url : ${url}`, { cause: err });
     }
 
+    let out = await response.text();
+    /*
     if (!response.ok) {
-        throw new ServerResponseError(
+        let err = new ServerResponseError(
             `Failed status code [${response.status}] from server url : ${url}`
         );
+
+        err.status = response.status;
+        err.statusText = response.statusText;
+        err.body = out;
+
+        throw err;
     }
+    */
 
     //Need to confirm that this cant throw an error
-    let out = await response.text();
+
     return out;
 };
 
@@ -92,9 +102,22 @@ export const fetchDestinyApi = async (url) => {
     */
 
     if (json.ErrorCode !== 1) {
-        throw new DestinyApiResponseError(
-            `${json.ErrorStatus} [${json.ErrorCode}] : ${json.Message} : ${url}`
-        );
+        const code = json.ErrorCode;
+        const message = json.Message;
+        const status = json.Status;
+
+        let type;
+        switch (code) {
+            case 5: {
+                type = DestinyApiDisabledError;
+                break;
+            }
+            default: {
+                type = DestinyApiResponseError;
+            }
+        }
+
+        throw new type(message, status, code, url);
     }
 
     return json.Response;

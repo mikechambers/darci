@@ -35,7 +35,7 @@ import { fetchApi, fetchDestinyApi } from "../core/utils/remote";
 import Player from "../core/data/Player";
 import PlayerActivities from "../core/data/PlayerActivities";
 import PlayerMetrics from "../core/data/PlayerMetrics";
-import { ActivityNotFoundError } from "../core/errors";
+import { ActivityNotFoundError, DestinyApiDisabledError } from "../core/errors";
 import { OrderBy } from "shared";
 import { reducer } from "../core/utils/data";
 
@@ -477,6 +477,8 @@ export const useFetchPlayersMetrics = (players) => {
                         `Error loading profile data for ${m.getFullName()} SKIPPING`,
                         e.message
                     );
+
+                    return e;
                 });
             });
 
@@ -486,10 +488,13 @@ export const useFetchPlayersMetrics = (players) => {
             Promise.all(urls)
                 .then((values) => {
                     let out = [];
+
+                    let errors = [];
                     for (let i = 0; i < values.length; i++) {
                         let value = values[i];
 
-                        if (!value) {
+                        if (value instanceof Error) {
+                            errors.push(value);
                             continue;
                         }
 
@@ -509,6 +514,14 @@ export const useFetchPlayersMetrics = (players) => {
                             player: players[i],
                             metrics: metrics,
                         });
+                    }
+
+                    //check if all calls results in errors
+                    if (errors.length === values.length) {
+                        //if so, throw the first error (assume they are all the same)
+                        if (errors.length) {
+                            throw errors[0];
+                        }
                     }
 
                     s = reducer(s, "data", out);
