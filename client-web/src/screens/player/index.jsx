@@ -50,6 +50,7 @@ import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PlayerMetaWeaponsDetailView from "./components/PlayerMetaWeaponsDetailView";
+import ErrorContainerView from "../../components/ErrorContainerView";
 
 const { useQuery } = require("../../hooks/browser");
 
@@ -179,6 +180,15 @@ const PlayerView = () => {
                 </div>
             </div>
         );
+    }
+
+    const errors = [];
+    if (playerSummaryLoadError) {
+        errors.push(playerSummaryLoadError);
+    }
+
+    if (playerActivitiesLoadError) {
+        errors.push(playerActivitiesLoadError);
     }
 
     const onLatestActivityClick = (e, memberId) => {
@@ -325,6 +335,8 @@ const PlayerView = () => {
                     <div>No Activities</div>
                 )}
             </div>
+
+            <ErrorContainerView errors={errors} />
         </div>
     );
 };

@@ -271,6 +271,9 @@ export const useFetchPlayerActivities = (args) => {
 
                 const as = PlayerActivities.fromApi(data, manifest);
                 s = reducer(s, "activityStats", as);
+
+                //clear any previous errors
+                s = reducer(s, "error", undefined);
             } catch (err) {
                 s = reducer(s, "error", err);
             }
@@ -339,6 +342,9 @@ export const useFetchPlayerSummary = (args) => {
 
                 const as = PlayerSummary.fromApi(data, manifest);
                 s = reducer(s, "activityStats", as);
+
+                //clear any previous errors
+                s = reducer(s, "error", undefined);
             } catch (err) {
                 s = reducer(s, "error", err);
             }
@@ -393,6 +399,9 @@ export const useFetchPlayers = (manifest) => {
                 }
 
                 s = reducer(s, "players", players);
+
+                //clear any previous errors
+                s = reducer(s, "error", undefined);
             } catch (err) {
                 s = reducer(s, "error", err);
             }
@@ -433,8 +442,10 @@ export const useFetchPlayerMetrics = (
 
                 let metrics = PlayerMetrics.fromApi(data);
                 s = reducer(s, "metrics", metrics);
+
+                //clear any previous errors
+                s = reducer(s, "error", undefined);
             } catch (err) {
-                console.log("err", err);
                 s = reducer(s, "error", err);
             }
 
@@ -526,6 +537,8 @@ export const useFetchPlayersMetrics = (players) => {
                         }
                     }
 
+                    //clear any previous errors
+                    s = reducer(s, "error", undefined);
                     s = reducer(s, "data", out);
                 })
                 .catch((error) => {

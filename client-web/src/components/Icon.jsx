@@ -37,6 +37,7 @@ import { ReactComponent as SearchIcon } from "./images/tabler/search_icon.svg";
 
 import { ReactComponent as ChevronsDown } from "./images/tabler/chevrons-down.svg";
 import { ReactComponent as ChevronsUp } from "./images/tabler/chevrons-up.svg";
+import { ReactComponent as Alert } from "./images/tabler/alert-triangle.svg";
 
 export const PRECISION_ICON = "PRECISION_ICON";
 export const GRENADE_ICON = "GRENADE_ICON";
@@ -52,6 +53,8 @@ export const SEARCH_ICON = "SEARCH_ICON";
 
 export const CHEVRONS_DOWN = "CHEVRONS_DOWN";
 export const CHEVRONS_UP = "CHEVRONS_UP";
+
+export const ALERT_ICON = "ALERT_ICON";
 
 const Icon = (props) => {
     let icon = props.icon;
@@ -164,6 +167,17 @@ const Icon = (props) => {
         case CHEVRONS_UP:
             out = (
                 <ChevronsUp
+                    title={title}
+                    width={width}
+                    height={width}
+                    style={style}
+                />
+            );
+            break;
+        case ALERT_ICON:
+            out = (
+                <Alert
+                    className="pulse"
                     title={title}
                     width={width}
                     height={width}

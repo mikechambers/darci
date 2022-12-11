@@ -837,3 +837,24 @@ label {
 .react-tabs__tab-panel--selected {
   display: block;
 }
+
+.pulse {
+  animation: pulse 5s infinite;
+}
+
+@keyframes pulse {
+	0% {
+		opacity:1.0;
+	}
+	10% {
+    opacity:0.5;
+	}
+
+	20% {
+    opacity:1.0;
+	}
+
+  100% {
+    opacity:1.0;
+	}
+}

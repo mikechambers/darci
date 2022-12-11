@@ -36,6 +36,7 @@ import ActivityTeamDetailsView from "./components/ActivityTeamDetailsView";
 import ActivityPlayerEffectivenessView from "./components/ActivityPlayerEffectivenessView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 import { ActivityNotFoundError } from "../../core/errors";
+import ErrorContainerView from "../../components/ErrorContainerView";
 
 const pageContainerStyle = {
     minWidth: "720px",
@@ -58,14 +59,7 @@ const ActivityView = (props) => {
             return <div>Activity Not Found : {activityId}</div>;
         }
 
-        return (
-            <div>
-                An error occurred <br />
-                {error.toString()}
-                <br />
-                {error.stack}
-            </div>
-        );
+        return <ErrorContainerView errors={[error]} />;
     }
 
     const pageLinks = [

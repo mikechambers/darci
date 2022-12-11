@@ -69,7 +69,9 @@ const HomeView = (props) => {
         return <LoadingAnimationView message="Loading leaderboard data." />;
     }
 
+    const errors = [];
     if (metricsError) {
+        errors.push(metricsError);
     }
 
     return (
@@ -104,7 +106,7 @@ const HomeView = (props) => {
                 <AllTimeLeaderView metrics={metrics} />
             </div>
 
-            <ErrorContainerView errors={[metricsError, metricsError]} />
+            <ErrorContainerView errors={errors} />
         </div>
     );
 };
