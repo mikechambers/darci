@@ -48,6 +48,7 @@ const gameInfoContainterStyle = {
     alignItems: "flex-end",
 
     backgroundColor: "var(--color-text-container-background)",
+    fontWeight: "var(--regular)",
     padding: "var(--padding-content)",
 };
 
