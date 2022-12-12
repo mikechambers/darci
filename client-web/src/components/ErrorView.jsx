@@ -3,6 +3,7 @@ import {
     DestinyApiDisabledError,
     DestinyApiResponseError,
 } from "../core/errors";
+import { generateId } from "../core/utils/string";
 import Icon, { CHEVRONS_DOWN } from "./Icon";
 
 const rootStyleBase = {
@@ -19,16 +20,30 @@ const outputStyle = {
     width: "100%",
     height: 200,
     background: "none",
-    color: "white",
+    color: "#FFFFFF88",
     border: "none",
     overflowY: "scroll",
 };
 
-const headerStyle = {
+const messageStyle = {
     width: "100%",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+};
+
+const headerStyle = {
+    display: "flex",
+    flexDirection: "column",
+    gap: 4,
+};
+
+const reportStyle = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    font: "var(--font-label)",
+    color: "var(--color-font)",
 };
 
 const ErrorView = (props) => {
@@ -54,15 +69,31 @@ const ErrorView = (props) => {
         opacity: expanded ? 1 : 0.5,
     };
 
+    const id = generateId("error_text_area");
+
+    const onCopyClick = (e) => {
+        const out = document.getElementById(id);
+        navigator.clipboard.writeText(out.value);
+    };
+
+    const iconClassNames = ["link", "icon_link"];
+
+    if (expanded) {
+        iconClassNames.push("flip_icon");
+    }
+
     return (
         <div style={rootStyle}>
-            <div>
+            <div style={headerStyle}>
                 <div className="subsection_header underline">
                     <div>{error.constructor.name}</div>
                 </div>
-                <div style={headerStyle}>
+                <div style={messageStyle}>
                     <div className="overflow">{error.message}</div>
-                    <div onClick={onExpandedClick} className="link icon_link">
+                    <div
+                        onClick={onExpandedClick}
+                        className={iconClassNames.join(" ")}
+                    >
                         <Icon icon={CHEVRONS_DOWN} width="14" />
                     </div>
                 </div>
@@ -71,6 +102,7 @@ const ErrorView = (props) => {
             {expanded && (
                 <div>
                     <textarea
+                        id={id}
                         style={outputStyle}
                         readOnly={true}
                         defaultValue={`${apiMessage}\n${error.stack.toString()}\n${
@@ -78,7 +110,27 @@ const ErrorView = (props) => {
                         }\n${error.message}`}
                     ></textarea>
                     <div>&nbsp;</div>
-                    <div>copy discord github</div>
+                    <div style={reportStyle} className="label">
+                        <div className="link" onClick={onCopyClick}>
+                            Copy
+                        </div>
+                        <div>
+                            Report :{" "}
+                            <a
+                                href="https://discord.gg/TEDQy65hhn"
+                                className="link"
+                            >
+                                Discord
+                            </a>{" "}
+                            |{" "}
+                            <a
+                                href="https://github.com/mikechambers/darci/issues"
+                                className="link"
+                            >
+                                Github
+                            </a>
+                        </div>
+                    </div>
                 </div>
             )}
         </div>

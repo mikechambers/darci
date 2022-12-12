@@ -858,3 +858,7 @@ label {
     opacity:1.0;
 	}
 }
+
+.flip_icon {
+  transform: rotate(180deg);
+}

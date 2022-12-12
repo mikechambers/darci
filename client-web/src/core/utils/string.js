@@ -23,6 +23,7 @@
 
 import { FLOAT_DECIMAL_PRECISION } from "../consts";
 import { humanDuration } from "./date";
+import { getRandomIntInclusive } from "./math";
 
 //Format floating point  23.40
 const FLOAT_FORMATTER = new Intl.NumberFormat("en-US", {
@@ -93,4 +94,8 @@ export const capitalize = function (str) {
 //https://stackoverflow.com/a/1199420/10232
 export const truncate = function (str, n) {
     return str.length > n ? str.substr(0, n - 1) + "..." : str;
+};
+
+export const generateId = function (base) {
+    return `${base}_${getRandomIntInclusive(0, 1000000)}`;
 };
