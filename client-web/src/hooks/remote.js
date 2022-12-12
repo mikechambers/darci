@@ -466,9 +466,9 @@ export const useFetchPlayerMetrics = (
 
 export const useFetchPlayersMetrics = (players) => {
     const [output, setOutput] = useState({
-        data: null,
-        isLoading: true,
-        error: null,
+        data: undefined,
+        isLoading: undefined,
+        errors: undefined,
     });
 
     useEffect(() => {
@@ -533,16 +533,20 @@ export const useFetchPlayersMetrics = (players) => {
                     if (errors.length === values.length) {
                         //if so, throw the first error (assume they are all the same)
                         if (errors.length) {
-                            throw errors[0];
+                            //throw errors[0];
                         }
                     }
 
-                    //clear any previous errors
-                    s = reducer(s, "error", undefined);
+                    s = reducer(
+                        s,
+                        "errors",
+                        errors.length ? errors : undefined
+                    );
+
                     s = reducer(s, "data", out);
                 })
                 .catch((error) => {
-                    s = reducer(s, "error", error);
+                    s = reducer(s, "errors", [error]);
                 })
                 .finally(() => {
                     setOutput(s);
@@ -553,7 +557,7 @@ export const useFetchPlayersMetrics = (players) => {
         //Promise.all();
     }, [players]);
 
-    return [output.data, output.isLoading, output.error];
+    return [output.data, output.isLoading, output.errors];
 };
 
 export const useFetchPlayerProfile = (

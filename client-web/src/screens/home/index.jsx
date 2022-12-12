@@ -47,7 +47,7 @@ const HomeView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
     const players = global.players;
 
-    const [metrics, isMetricsLoading, metricsError] =
+    const [metrics, isMetricsLoading, metricsErrors] =
         useFetchPlayersMetrics(players);
 
     const pageLinks = [
@@ -68,11 +68,7 @@ const HomeView = (props) => {
     if (isMetricsLoading) {
         return <LoadingAnimationView message="Loading leaderboard data." />;
     }
-
-    const errors = [];
-    if (metricsError) {
-        errors.push(metricsError);
-    }
+    let errors = !!metricsErrors ? metricsErrors : [];
 
     return (
         <div
