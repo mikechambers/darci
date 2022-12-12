@@ -76,7 +76,8 @@
   --color-light-level:#FFD600;
   --color-base-font-dark:#000000;
   --color-background:rgb(34,34,34);
-	--color-form-validation-msg:#FF6347;	  
+	--color-form-validation-msg:#FF6347;
+  --color-text-container-background:#00000044;
 
   --color-alpha-team:#1a9ee8;
   --color-bravo-team:#c94340;

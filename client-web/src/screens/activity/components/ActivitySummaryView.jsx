@@ -47,7 +47,7 @@ const gameInfoContainterStyle = {
     justifyContent: "space-apart",
     alignItems: "flex-end",
 
-    backgroundColor: "#00000044",
+    backgroundColor: "var(--color-text-container-background)",
     padding: "var(--padding-content)",
 };
 

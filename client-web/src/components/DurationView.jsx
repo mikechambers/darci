@@ -25,12 +25,21 @@ import React from "react";
 
 import { humanDuration } from "../core/utils/date";
 
+const rootStyle = {
+    background: "var(--color-text-container-background)",
+    padding: "0px 12px",
+};
+
 const DurationView = (props) => {
     const duration = props.duration;
 
     const d = humanDuration(duration);
 
-    return <div className="section_entry">{d}</div>;
+    return (
+        <div className="section_entry" style={rootStyle}>
+            {d}
+        </div>
+    );
 };
 
 export default DurationView;
