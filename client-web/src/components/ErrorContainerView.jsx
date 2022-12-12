@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ErrorView from "./ErrorView";
-import Icon, { ALERT_ICON, CHEVRONS_DOWN } from "./Icon";
+import Icon, { ALERT_ICON } from "./Icon";
 
 const rootStyle = {
     width: 400,
@@ -8,6 +8,7 @@ const rootStyle = {
     right: "var(--padding-content)",
     top: "var(--padding-content)",
     padding: "var(--padding-content)",
+    zIndex: 100,
 };
 
 const listStyle = {

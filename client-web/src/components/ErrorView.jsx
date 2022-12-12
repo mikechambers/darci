@@ -66,7 +66,10 @@ const ErrorView = (props) => {
 
     const rootStyle = {
         ...rootStyleBase,
-        opacity: expanded ? 1 : 0.5,
+    };
+
+    const opacityStyle = {
+        opacity: expanded ? 1.0 : 0.5,
     };
 
     const id = generateId("error_text_area");
@@ -86,55 +89,57 @@ const ErrorView = (props) => {
 
     return (
         <div style={rootStyle}>
-            <div style={headerStyle}>
-                <div className="subsection_header underline">
-                    <div>{errorName}</div>
-                </div>
-                <div style={messageStyle}>
-                    <div className="overflow">{error.message}</div>
-                    <div
-                        onClick={onExpandedClick}
-                        className={iconClassNames.join(" ")}
-                    >
-                        <Icon icon={CHEVRONS_DOWN} width="14" />
+            <div style={opacityStyle}>
+                <div style={headerStyle}>
+                    <div className="subsection_header underline">
+                        <div>{errorName}</div>
+                    </div>
+                    <div style={messageStyle}>
+                        <div className="overflow">{error.message}</div>
+                        <div
+                            onClick={onExpandedClick}
+                            className={iconClassNames.join(" ")}
+                        >
+                            <Icon icon={CHEVRONS_DOWN} width="14" />
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            {expanded && (
-                <div>
-                    <textarea
-                        id={id}
-                        style={outputStyle}
-                        readOnly={true}
-                        defaultValue={`${apiMessage}\n${error.stack.toString()}\n${errorName}\n${
-                            error.message
-                        }`}
-                    ></textarea>
-                    <div>&nbsp;</div>
-                    <div style={reportStyle} className="label">
-                        <div className="link" onClick={onCopyClick}>
-                            Copy
-                        </div>
-                        <div>
-                            Report :{" "}
-                            <a
-                                href="https://discord.gg/TEDQy65hhn"
-                                className="link"
-                            >
-                                Discord
-                            </a>{" "}
-                            |{" "}
-                            <a
-                                href="https://github.com/mikechambers/darci/issues"
-                                className="link"
-                            >
-                                Github
-                            </a>
+                {expanded && (
+                    <div>
+                        <textarea
+                            id={id}
+                            style={outputStyle}
+                            readOnly={true}
+                            defaultValue={`${apiMessage}\n${error.stack.toString()}\n${errorName}\n${
+                                error.message
+                            }`}
+                        ></textarea>
+                        <div>&nbsp;</div>
+                        <div style={reportStyle} className="label">
+                            <div className="link" onClick={onCopyClick}>
+                                Copy
+                            </div>
+                            <div>
+                                Report :{" "}
+                                <a
+                                    href="https://discord.gg/TEDQy65hhn"
+                                    className="link"
+                                >
+                                    Discord
+                                </a>{" "}
+                                |{" "}
+                                <a
+                                    href="https://github.com/mikechambers/darci/issues"
+                                    className="link"
+                                >
+                                    Github
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 };
