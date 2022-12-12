@@ -82,11 +82,13 @@ const ErrorView = (props) => {
         iconClassNames.push("flip_icon");
     }
 
+    const errorName = !!error.name ? error.name : error.name;
+
     return (
         <div style={rootStyle}>
             <div style={headerStyle}>
                 <div className="subsection_header underline">
-                    <div>{error.constructor.name}</div>
+                    <div>{errorName}</div>
                 </div>
                 <div style={messageStyle}>
                     <div className="overflow">{error.message}</div>
@@ -105,9 +107,9 @@ const ErrorView = (props) => {
                         id={id}
                         style={outputStyle}
                         readOnly={true}
-                        defaultValue={`${apiMessage}\n${error.stack.toString()}\n${
-                            error.constructor.name
-                        }\n${error.message}`}
+                        defaultValue={`${apiMessage}\n${error.stack.toString()}\n${errorName}\n${
+                            error.message
+                        }`}
                     ></textarea>
                     <div>&nbsp;</div>
                     <div style={reportStyle} className="label">

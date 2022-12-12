@@ -21,17 +21,27 @@
  * SOFTWARE.
  */
 
-export class NetworkError extends Error {}
-export class ApiResponseError extends Error {}
+export class NetworkError extends Error {
+    name = "NetworkError";
+}
+export class ApiResponseError extends Error {
+    name = "ApiResponseError";
+}
 
-export class JSONParsingError extends Error {}
-export class ActivityNotFoundError extends Error {}
+export class JSONParsingError extends Error {
+    name = "JSONParsingError";
+}
+export class ActivityNotFoundError extends Error {
+    name = "ActivityNotFoundError";
+}
 
 //note, we are not using this right now
 export class ServerResponseError extends Error {
     status;
     statusText;
     body;
+
+    name = "ServerResponseError";
 }
 
 export class DestinyApiResponseError extends Error {
@@ -39,6 +49,9 @@ export class DestinyApiResponseError extends Error {
     status;
     message;
     url;
+
+    name = "DestinyApiResponseError";
+
     constructor(message, status, code, url) {
         super(message);
         this.code = code;
