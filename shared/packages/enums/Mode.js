@@ -183,6 +183,12 @@ class Mode extends EnumBase {
         "Iron Banner Rift"
     );
 
+    static IRON_BANNER_ZONE_CONTROL = new Mode(
+        "IronBannerZoneControl",
+        91,
+        "Iron Banner Zone Control"
+    );
+
     constructor(type, id, label = undefined) {
         super(type, id, label);
     }
