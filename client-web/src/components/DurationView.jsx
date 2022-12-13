@@ -27,8 +27,9 @@ import { humanDuration } from "../core/utils/date";
 
 const rootStyle = {
     background: "var(--color-text-container-background)",
-    padding: "0px 12px",
+    padding: "4px 12px",
     fontWeight: "var(--regular)",
+    borderRadius: "var(--radius-border)",
 };
 
 const DurationView = (props) => {

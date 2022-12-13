@@ -37,47 +37,34 @@ import { SERVER_RESPONSE_SUCCESS } from "shared/packages/consts";
 export const fetchUrl = async (url, options) => {
     let response;
     try {
-        //console.log(url);
         response = await fetch(url, options);
     } catch (err) {
         throw new NetworkError(`Could not fetch url : ${url}`, { cause: err });
     }
 
-    let out = await response.text();
-    /*
-    if (!response.ok) {
-        let err = new ServerResponseError(
-            `Failed status code [${response.status}] from server url : ${url}`
-        );
-
-        err.status = response.status;
-        err.statusText = response.statusText;
-        err.body = out;
-
-        throw err;
-    }
-    */
-
-    //Need to confirm that this cant throw an error
-
-    return out;
+    return response;
 };
 
 export const fetchJson = async (url, options) => {
-    let data;
+    let response;
     try {
-        data = await fetchUrl(url, options);
+        response = await fetchUrl(url, options);
     } catch (err) {
         throw err;
     }
 
+    let body = await response.text();
     let out;
     try {
-        out = JSON.parse(data);
+        out = JSON.parse(body);
     } catch (err) {
-        throw JSONParsingError(`Error parsing json from url : ${url}`, {
-            cause: err,
-        });
+        if (!response.ok) {
+            throw new ServerResponseError(body, response.status, url);
+        } else {
+            throw new JSONParsingError("Error parsing json", url, {
+                cause: err,
+            });
+        }
     }
 
     return out;

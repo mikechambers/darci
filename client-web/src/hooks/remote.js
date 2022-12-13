@@ -106,10 +106,13 @@ export const useFetchManifest = () => {
                 //if error occured and we have stored data, then use the stored data
                 if (storedData) {
                     manifest = new Manifest(storedData);
+
+                    //wrap error in an object so it is collapsed in console in browser
                     console.log(
-                        "Error loading manifest data. Used stored manifest",
-                        error
+                        "Error loading manifest data. Using stored manifest",
+                        { error }
                     );
+
                     error = null;
                 }
             } else {

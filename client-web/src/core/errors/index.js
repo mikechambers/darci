@@ -30,6 +30,11 @@ export class ApiResponseError extends Error {
 
 export class JSONParsingError extends Error {
     name = "JSONParsingError";
+
+    constructor(message, url, cause) {
+        super(message, cause);
+        this.url = url;
+    }
 }
 export class ActivityNotFoundError extends Error {
     name = "ActivityNotFoundError";
@@ -38,10 +43,15 @@ export class ActivityNotFoundError extends Error {
 //note, we are not using this right now
 export class ServerResponseError extends Error {
     status;
-    statusText;
-    body;
+    url;
 
     name = "ServerResponseError";
+
+    constructor(message, status, url) {
+        super(message);
+        this.status = status;
+        this.url = url;
+    }
 }
 
 export class DestinyApiResponseError extends Error {

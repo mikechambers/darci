@@ -61,7 +61,15 @@ const ErrorView = (props) => {
 
     let apiMessage = "";
     if (error instanceof DestinyApiResponseError) {
-        apiMessage = `Status : ${error.status}\nCode : ${error.code}\nURL: ${error.url}\n-----------`;
+        apiMessage = `Status : ${error.status}\nCode : ${error.code}\n`;
+    }
+
+    if (error.url) {
+        apiMessage += `URL: ${error.url}\n`;
+    }
+
+    if (apiMessage.length) {
+        apiMessage += "-----------";
     }
 
     const rootStyle = {

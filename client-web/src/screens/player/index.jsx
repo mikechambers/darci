@@ -183,12 +183,14 @@ const PlayerView = () => {
     }
 
     const errors = [];
-    if (playerSummaryLoadError) {
-        errors.push(playerSummaryLoadError);
-    }
 
     if (playerActivitiesLoadError) {
         errors.push(playerActivitiesLoadError);
+    }
+
+    if (playerSummaryLoadError) {
+        errors.push(playerSummaryLoadError);
+        return <ErrorContainerView errors={errors} />;
     }
 
     const onLatestActivityClick = (e, memberId) => {
@@ -196,22 +198,6 @@ const PlayerView = () => {
         e.preventDefault();
         navigate(`/latest/${memberId}`);
     };
-
-    /*
-    if (profileLoadError) {
-        return <div>An error occured (profileLoadError) <br />{profileLoadError.toString()}<br />{profileLoadError.stack}</div>
-    }
-    */
-
-    if (playerSummaryLoadError) {
-        return (
-            <div style={invalidParametersStyle}>
-                <div className="page_title">Error loading Activities</div>
-                <div>{playerSummaryLoadError.toString()}</div>
-                <div>{playerSummaryLoadError.stack}</div>
-            </div>
-        );
-    }
 
     if (isPlayerActivitiesLoading || isPlayerSummaryLoading) {
         return <LoadingAnimationView message="Loading Player data." />;
