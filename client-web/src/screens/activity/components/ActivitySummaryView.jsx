@@ -53,15 +53,16 @@ const gameInfoContainterStyle = {
 };
 
 const gameInfoStyle = {
-    width: "65%",
+    width: "70%",
 };
 
 const matchTimeStyle = {
-    width: "35%",
+    width: "30%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
     alignItems: "flex-end",
+    whiteSpace: "nowrap",
 };
 
 const modeMapContainerStyle = {
