@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-const { ItemSubType, AmmunitionType } = require("shared");
+const { ItemSubType, AmmunitionType, Mode } = require("shared");
 
 class Manifest {
     #manifestData;
@@ -38,6 +38,8 @@ class Manifest {
                 this.#trialsPassageIds.push(value.id);
             }
         }
+
+        console.log(this.#manifestData);
     }
 
     getWeapons() {
@@ -159,40 +161,20 @@ class Manifest {
         return out;
     }
 
-    getModeInfo(id) {
+    getModeInfo(mode) {
         let out = {
             name: "Unknown",
             description: undefined,
             icon: undefined,
             image: undefined,
-            id: id,
+            id: undefined,
         };
 
-        console.log("----------");
-        console.log("id", id);
-        let a = this.getActivityDefinition(id);
-        console.log("a", a);
-
-        if (!a) {
-            console.log(
-                `Manifest.getModeInfo : Could not find activity definition [${id}]`
-            );
-
-            return out;
-        }
-
-        if (!this.#manifestData.data.activityModeDefinitions) {
-            return out;
-        }
-
-        let m =
-            this.#manifestData.data.activityModeDefinitions[a.activityModeHash];
-
-        //console.log(m);
+        let m = this.#manifestData.data.activityModeDefinitions[mode.id];
 
         if (!m) {
             console.log(
-                `Manifest.getModeInfo : Could not find activity mode definition [${a.activityModeHash}]`
+                `Manifest.getModeInfo : Could not find activity mode definition [${mode.label}]`
             );
 
             return out;

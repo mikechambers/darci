@@ -67,10 +67,10 @@ export default class Activity {
         let map = manifest.getActivityDefinition(activity.referenceId);
         activity.map = map;
 
-        let modeInfo = manifest.getModeInfo(activity.directorActivityHash);
+        let mode = Mode.fromId(activity.mode);
+        let modeInfo = manifest.getModeInfo(mode);
         activity.modeInfo = modeInfo;
 
-        let mode = Mode.fromId(activity.mode);
         activity.mode = mode;
 
         let teams = data.teams;

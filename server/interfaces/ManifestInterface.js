@@ -379,13 +379,15 @@ class ManifestInterface {
             const id = idToHash(row.id);
 
             let out = {
+                id: id,
                 name: d.displayProperties.name,
                 description: d.displayProperties.description,
                 icon: createResourceUrl(d.displayProperties.icon),
                 image: createResourceUrl(d.pgcrImage),
+                mode: d.modeType,
             };
 
-            activityModeDefinitions[id] = out;
+            activityModeDefinitions[d.modeType] = out;
         }
 
         rows = this.#select_emblem_definitions.all();
