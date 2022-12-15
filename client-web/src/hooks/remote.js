@@ -382,11 +382,7 @@ export const useFetchPlayerSummary = (args) => {
     return [output.activityStats, output.isLoading, output.error];
 };
 
-//todo: do we need to pass in manifest here?
 export const useFetchPlayers = (manifest) => {
-    //const { global, dispatchGlobal } = useContext(GlobalContext);
-    //const manifest = global.manifest;
-
     //return is [players, isLoading, error]
     const [output, setOutput] = useState({
         players: null,

@@ -440,11 +440,18 @@ hr {
 
 /* start here / fix subtitle underlines */
 
+.clickable {
+  cursor: pointer;
+}
+
 .link {
   text-decoration: underline;
 }
 
 .link:hover {
+
+    cursor:pointer;
+  
   text-decoration: none;
 }
 
@@ -507,10 +514,6 @@ a:hover {
 
 .bravo_team {
   background-color:#c94340;
-}
-
-.link {
-  cursor:pointer;
 }
 
 .link:active {

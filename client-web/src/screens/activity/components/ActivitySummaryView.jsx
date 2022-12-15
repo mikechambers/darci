@@ -44,7 +44,7 @@ const gameInfoContainterStyle = {
     height: "25%",
     display: "flex",
     flexDirection: "row",
-    justifyContent: "space-apart",
+    justifyContent: "space-around",
     alignItems: "flex-end",
 
     backgroundColor: "var(--color-text-container-background)",
@@ -77,7 +77,7 @@ const dividerStyle = {
 
 const teamScoresStyle = {
     display: "flex",
-    flexDirection: "rows",
+    flexDirection: "row",
     gap: "10px",
 };
 
@@ -96,7 +96,7 @@ const summaryStyleBase = {
     borderRadius: 4,
     display: "flex",
     flexDirection: "column",
-    alignItems: "space-apart",
+    //alignItems: "space-around",
 };
 
 const modeIconStyleBase = {

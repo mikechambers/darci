@@ -33,7 +33,6 @@ import { SMALL } from "../../../core/consts";
 const rootStyle = {
     display: "grid",
     gridTemplateColumns: "6px 218px 370px 20px auto",
-    flexDirection: "row",
     alignItems: "center",
     columnGap: 6,
     //justifyContent: "center",
@@ -54,10 +53,6 @@ const ActivityPlayerListItemHeader = (props) => {
     const player = props.player;
     const onClick = props.onClick;
     const teamColor = props.teamColor;
-
-    let className = props.onClick
-        ? "list_item_header link"
-        : "list_item_header";
 
     const data = [
         { value: player.stats.score, label: "score" },
@@ -102,7 +97,11 @@ const ActivityPlayerListItemHeader = (props) => {
     };
 
     return (
-        <div className={className} style={rootStyle} onClick={handleOnClick}>
+        <div
+            className="list_item_header clickable"
+            style={rootStyle}
+            onClick={handleOnClick}
+        >
             <div style={teamStyle} title="Fireteam"></div>
             <PlayerInfoView player={player} />
             <ActivityPlayerStatsView data={data} />

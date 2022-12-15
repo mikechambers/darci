@@ -62,8 +62,6 @@ const gameContainerStyle = {
     display: "grid",
     gridTemplateColumns: "6px 170px 400px 39px 75px 10px",
     flexDirection: "row",
-
-    cursor: "pointer",
 };
 
 const gameTitleStyle = {
@@ -192,7 +190,7 @@ const PlayerActivityListItemHeader = (props) => {
     return (
         <div style={gameContainerWrapper}>
             <div
-                className="list_item_header"
+                className="list_item_header clickable"
                 style={gameContainerStyle}
                 onClick={onItemClick}
             >

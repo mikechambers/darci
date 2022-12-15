@@ -28,7 +28,7 @@ import { MEDIUM } from "../../../core/consts";
 
 let style = {
     display: "flex",
-    alignItems: "start",
+    alignItems: "flex-start",
     justifyContent: "start",
     flexWrap: "wrap",
 };

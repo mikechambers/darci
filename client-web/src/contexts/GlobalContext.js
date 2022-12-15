@@ -23,6 +23,7 @@
 
 import React, { useEffect, useReducer } from "react";
 import { useFetchManifest, useFetchPlayers } from "../hooks/remote";
+
 export const GlobalContext = React.createContext();
 
 export const MANIFEST_UPDATED = "MANIFEST_UPDATED";
