@@ -53,11 +53,11 @@ const gameInfoContainterStyle = {
 };
 
 const gameInfoStyle = {
-    width: "60%",
+    width: "65%",
 };
 
 const matchTimeStyle = {
-    width: "40%",
+    width: "35%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
