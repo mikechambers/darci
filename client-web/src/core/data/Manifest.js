@@ -38,8 +38,6 @@ class Manifest {
                 this.#trialsPassageIds.push(value.id);
             }
         }
-
-        console.log(this.#manifestData);
     }
 
     getWeapons() {

@@ -38,9 +38,11 @@ import PlayerMetrics from "../core/data/PlayerMetrics";
 import { ActivityNotFoundError, DestinyApiDisabledError } from "../core/errors";
 import { OrderBy } from "shared";
 import { reducer } from "../core/utils/data";
+import { Buffer } from "buffer";
 
 const STORAGE_MANIFEST_DATA_KEY = "STORAGE_MANIFEST_DATA_KEY";
 const STORAGE_MANIFEST_LAST_CHECK_KEY = "STORAGE_MANIFEST_LAST_CHECK_KEY";
+
 export const useFetchManifest = () => {
     const [output, setOutput] = useState({
         manifest: null,
@@ -57,15 +59,6 @@ export const useFetchManifest = () => {
 
         let now = new Date().getTime();
 
-        //if we checked (without an error) within the last N amount of time
-        //then abort check
-
-        if (output.manifest && lastCheckTimeStamp) {
-            if (now - lastCheckTimeStamp < MANIFEST_CHECK_INTERVAL) {
-                return;
-            }
-        }
-
         let rawStoredData = storage.getItem(STORAGE_MANIFEST_DATA_KEY);
         let storedData;
 
@@ -74,7 +67,10 @@ export const useFetchManifest = () => {
             try {
                 storedData = JSON.parse(rawStoredData);
 
-                version = btoa(storedData.version);
+                //version = btoa(storedData.version);
+                version = Buffer.from(storedData.version, "base64").toString(
+                    "utf8"
+                );
             } catch (err) {
                 let e = new Error(
                     "Error parsing locally stored manifest JSON.",
@@ -83,6 +79,17 @@ export const useFetchManifest = () => {
                     }
                 );
                 let s = reducer(output, "error", e);
+                s = reducer(s, "isLoading", false);
+                setOutput(s);
+                return;
+            }
+        }
+
+        //if we checked (without an error) within the last N amount of time
+        //then use existing manifest data
+        if (storedData && lastCheckTimeStamp) {
+            if (now - lastCheckTimeStamp < MANIFEST_CHECK_INTERVAL) {
+                let s = reducer(output, "manifest", new Manifest(storedData));
                 s = reducer(s, "isLoading", false);
                 setOutput(s);
                 return;
@@ -375,6 +382,7 @@ export const useFetchPlayerSummary = (args) => {
     return [output.activityStats, output.isLoading, output.error];
 };
 
+//todo: do we need to pass in manifest here?
 export const useFetchPlayers = (manifest) => {
     //const { global, dispatchGlobal } = useContext(GlobalContext);
     //const manifest = global.manifest;
@@ -591,7 +599,6 @@ export const useFetchPlayerProfile = (
                 let profile = new PlayerProfile(data, manifest);
                 s = reducer(s, "profile", profile);
             } catch (err) {
-                console.log("err", err);
                 s = reducer(s, "error", err);
             }
 
