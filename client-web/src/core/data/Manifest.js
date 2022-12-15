@@ -166,6 +166,7 @@ class Manifest {
             icon: undefined,
             image: undefined,
             id: undefined,
+            mode: mode,
         };
 
         let m = this.#manifestData.data.activityModeDefinitions[mode.id];
