@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+import DestinyTrackerIcon from "../components/images/destinytracker.webp";
 
 const siteIconStyle = {
     verticalAlign: "middle",
@@ -29,16 +30,16 @@ const siteIconStyle = {
 
 const DestinyTrackerButton = (props) => {
     const url = props.url;
-    const descriptipn = props.descriptipn ? props.descriptipn : "Trials Report";
+    const description = props.description ? props.description : "Trials Report";
 
     return (
         <div>
             <a href={url}>
                 <img
-                    src="https://destinytracker.com/public/icons/icon192.png"
+                    src={DestinyTrackerIcon}
                     width="18"
-                    alt={descriptipn}
-                    title={descriptipn}
+                    alt={description}
+                    title={description}
                     style={siteIconStyle}
                 />
             </a>

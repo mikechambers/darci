@@ -27,7 +27,8 @@ import Icon, { DESTINY_LOGO } from "../../../components/Icon";
 import DurationView from "../../../components/DurationView";
 import ActivityPlayerStatBreakdownView from "../../../components/ActivityPlayerStatBreakdownView";
 import ActivityPlayerWeaponsList from "../../../components/ActivityPlayerWeaponsList";
-
+import DestinyTrackerButton from "../../../components/DestinyTrackerButton";
+import TrialsReportButton from "../../../components/TrialsReportButton";
 const GAP = 4;
 
 const dataContainerStyle = {
@@ -140,27 +141,15 @@ const PlayerActivityListItemDrawer = (props) => {
                     />
                 </div>
                 <div style={linksStyle}>
-                    <a href={`https://crucible.report/pgcr/${activityId}`}>
-                        <img
-                            src="https://trials.report/assets/svg/icon.svg"
-                            width="12"
-                            alt="View game on Crucible Report"
-                            title="View game on Crucible Report"
-                            style={siteIconStyle}
-                        />
-                    </a>
+                    <TrialsReportButton
+                        url={`https://crucible.report/pgcr/${activityId}`}
+                        description="View game on Crucible Report"
+                    />
                     &nbsp;
-                    <a
-                        href={`https://destinytracker.com/destiny-2/pgcr/${activityId}`}
-                    >
-                        <img
-                            src="https://destinytracker.com/public/icons/icon192.png"
-                            width="18"
-                            alt="View game on DestinyTracker.com"
-                            title="View game on DestinyTracker.com"
-                            style={siteIconStyle}
-                        />
-                    </a>
+                    <DestinyTrackerButton
+                        url={`https://destinytracker.com/destiny-2/pgcr/${activityId}`}
+                        description="View game on Destiny Tracker"
+                    />
                     &nbsp;
                     <a
                         href={`https://www.bungie.net/en/PGCR/${activityId}?character=${characterId}`}
@@ -178,44 +167,3 @@ const PlayerActivityListItemDrawer = (props) => {
 };
 
 export default PlayerActivityListItemDrawer;
-
-/*
-        <div style={metaDataStyle}>
-          <div style={timePlayedStyle} className="section_entry">
-            <DurationView
-              duration={activity.stats.activityDurationSeconds * 1000}
-            />
-          </div>
-          <div style={linksStyle}>
-            <a href={`https://crucible.report/pgcr/${activityId}`}>
-              <img
-                src="https://trials.report/assets/svg/icon.svg"
-                width="12"
-                alt="View game on Crucible Report"
-                title="View game on Crucible Report"
-                style={siteIconStyle}
-              />
-            </a>
-            &nbsp;
-            <a href={`https://destinytracker.com/destiny-2/pgcr/${activityId}`}>
-              <img
-                src="https://destinytracker.com/public/icons/icon192.png"
-                width="18"
-                alt="View game on DestinyTracker.com"
-                title="View game on DestinyTracker.com"
-                style={siteIconStyle}
-              />
-            </a>
-            &nbsp;
-            <a
-              href={`https://www.bungie.net/en/PGCR/${activityId}?character=${characterId}`}
-            >
-              <Icon
-                icon={DESTINY_LOGO}
-                style={siteIconStyle}
-                title="View game on Bungie.com"
-              />
-            </a>
-          </div>
-        </div>
-*/

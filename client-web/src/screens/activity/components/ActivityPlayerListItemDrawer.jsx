@@ -80,11 +80,11 @@ const ActivityPlayerListItemDrawer = (props) => {
                 <div style={linksStyle}>
                     <DestinyTrackerButton
                         url={`https://destinytracker.com/destiny-2/profile/bungie/${player.player.memberId}/overview`}
-                        desription="View player on Destiny Tracker."
+                        description="View player on Destiny Tracker."
                     />
                     <TrialsReportButton
                         url={`https://destinytrialsreport.com/report/${player.player.platformId}/${player.player.memberId}`}
-                        descrption="View player on Trials Report"
+                        description="View player on Trials Report"
                     />
                 </div>
             </div>

@@ -29,7 +29,7 @@ const siteIconStyle = {
 
 const TrialsReportButton = (props) => {
     const url = props.url;
-    const descriptipn = props.descriptipn ? props.descriptipn : "Trials Report";
+    const description = props.description ? props.description : "Trials Report";
 
     return (
         <div>
@@ -37,8 +37,8 @@ const TrialsReportButton = (props) => {
                 <img
                     src="https://trials.report/assets/svg/icon.svg"
                     width="12"
-                    alt={descriptipn}
-                    title={descriptipn}
+                    alt={description}
+                    title={description}
                     style={siteIconStyle}
                 />
             </a>
