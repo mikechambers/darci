@@ -29,7 +29,6 @@ import ActivityPlayerStatBreakdownView from "../../../components/ActivityPlayerS
 import ActivityPlayerWeaponsList from "../../../components/ActivityPlayerWeaponsList";
 import DestinyTrackerButton from "../../../components/DestinyTrackerButton";
 import TrialsReportButton from "../../../components/TrialsReportButton";
-const GAP = 4;
 
 const dataContainerStyle = {
     display: "flex",
@@ -60,7 +59,7 @@ const backgroundStyleBase = {
 let detailStyleBase = {
     display: "flex",
     flexDirection: "column",
-    gap: `${GAP}px`,
+    gap: 4,
 };
 
 let dataStyle = {
