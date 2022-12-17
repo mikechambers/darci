@@ -28,7 +28,6 @@ import StatView from "../../../components/StatView";
 import { calculateAverage } from "shared/packages/utils";
 import { calculatePercent } from "shared/packages/utils";
 import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
-import SingleBarChart from "../../../components/SingleBarChart";
 
 const headerStyle = {
     display: "flex",

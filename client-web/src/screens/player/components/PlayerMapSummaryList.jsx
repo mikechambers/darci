@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import {
     calculateAverage,
     calculateEfficiency,
@@ -29,12 +29,14 @@ import {
     calculatePercent,
 } from "shared/packages/utils";
 import SelectView from "../../../components/SelectView";
+import { LEFT, RIGHT } from "../../../core/consts";
 
 import PlayerMapSummaryView from "./PlayerMapSummaryView";
 
 const rootStyle = {
     display: "flex",
     flexDirection: "column",
+    maxWidth: 730,
 };
 
 const wrapperStyle = {
@@ -42,6 +44,7 @@ const wrapperStyle = {
     flexDirection: "row",
     gap: "var(--gap-list-item)",
     flexWrap: "wrap",
+    justifyContent: "space-apart",
 };
 
 const sortStyle = {
@@ -185,7 +188,11 @@ const PlayerMapSummaryList = (props) => {
     return (
         <div style={rootStyle}>
             <div style={sortStyle}>
-                <SelectView onChange={onSortChange} options={sortOptions} />
+                <SelectView
+                    onChange={onSortChange}
+                    options={sortOptions}
+                    align={RIGHT}
+                />
             </div>
             <div style={wrapperStyle}>
                 {maps.map((map, index) => {
