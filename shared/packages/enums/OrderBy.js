@@ -25,6 +25,11 @@ const EnumBase = require("./EnumBase");
 
 class OrderBy extends EnumBase {
     static PERIOD = new OrderBy("Period", "period", "Period");
+    static PERIOD_REVERSE = new OrderBy(
+        "PeriodReverse",
+        "periodReverse",
+        "Period Reverse"
+    );
     static KILLS = new OrderBy("Kills", "kills", "Kills");
     static ASSISTS = new OrderBy("Assists", "assists", "Assists");
     static SCORE = new OrderBy("Score", "score", "Score");
