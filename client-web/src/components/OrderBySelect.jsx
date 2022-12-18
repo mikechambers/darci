@@ -28,6 +28,7 @@ import EnumSelect from "./EnumSelect";
 
 const orderByOptions = [
     OrderBy.PERIOD,
+    OrderBy.PERIOD_REVERSE,
     OrderBy.KILLS,
     OrderBy.ASSISTS,
     OrderBy.SCORE,

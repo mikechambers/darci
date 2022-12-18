@@ -516,47 +516,52 @@ class ActivityStoreInterface {
         let orderByStr;
         switch (orderBy) {
             case OrderBy.PERIOD: {
+                orderByStr = "activity.period DESC";
+                break;
+            }
+            case OrderBy.PERIOD_REVERSE: {
                 orderByStr = "activity.period";
                 break;
             }
             case OrderBy.KILLS: {
-                orderByStr = "character_activity_stats.kills";
+                orderByStr = "character_activity_stats.kills DESC";
                 break;
             }
             case OrderBy.ASSISTS: {
-                orderByStr = "character_activity_stats.assists";
+                orderByStr = "character_activity_stats.assists DESC";
                 break;
             }
             case OrderBy.SCORE: {
-                orderByStr = "character_activity_stats.score";
+                orderByStr = "character_activity_stats.score DESC";
                 break;
             }
             case OrderBy.OPPONENTS_DEFEATED: {
-                orderByStr = "character_activity_stats.opponents_defeated";
+                orderByStr = "character_activity_stats.opponents_defeated DESC";
                 break;
             }
             case OrderBy.DEATHS: {
-                orderByStr = "character_activity_stats.deaths";
+                orderByStr = "character_activity_stats.deaths DESC";
                 break;
             }
             case OrderBy.PRECISION_KILLS: {
-                orderByStr = "character_activity_stats.precision_kills";
+                orderByStr = "character_activity_stats.precision_kills DESC";
                 break;
             }
             case OrderBy.GRENADE_KILLS: {
-                orderByStr = "character_activity_stats.weapon_kills_grenade";
+                orderByStr =
+                    "character_activity_stats.weapon_kills_grenade DESC";
                 break;
             }
             case OrderBy.MELEE_KILLS: {
-                orderByStr = "character_activity_stats.weapon_kills_melee";
+                orderByStr = "character_activity_stats.weapon_kills_melee DESC";
                 break;
             }
             case OrderBy.SUPER_KILLS: {
-                orderByStr = "character_activity_stats.weapon_kills_super";
+                orderByStr = "character_activity_stats.weapon_kills_super DESC";
                 break;
             }
             case OrderBy.MEDALS_EARNED: {
-                orderByStr = "character_activity_stats.all_medals_earned";
+                orderByStr = "character_activity_stats.all_medals_earned DESC";
                 break;
             }
             default: {
@@ -586,7 +591,7 @@ class ActivityStoreInterface {
         exists (select 1 from modes where activity = activity.id and mode = @modeId) AND
         not exists (select 1 from modes where activity = activity.id and mode = @restrictModeId)
       ORDER BY
-          ${orderByStr} DESC
+          ${orderByStr}
       LIMIT 25`;
 
         //we compile to a prepared statement every time, since we need to dynamically generate

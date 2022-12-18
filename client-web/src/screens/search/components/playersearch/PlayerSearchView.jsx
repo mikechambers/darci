@@ -121,7 +121,7 @@ const PlayerSearchView = (props) => {
             <div style={formSectionStyle}>
                 <OrderBySelect
                     label="Sort By"
-                    selected={OrderBy.PERIOD}
+                    selected={orderBy}
                     onChange={onOrderBySelectChange}
                 />
             </div>
