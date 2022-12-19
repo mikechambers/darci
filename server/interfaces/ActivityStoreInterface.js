@@ -565,7 +565,7 @@ class ActivityStoreInterface {
                 break;
             }
             default: {
-                orderByStr = "activity.period";
+                orderByStr = "activity.period DESC";
             }
         }
 
