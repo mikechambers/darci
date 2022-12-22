@@ -929,7 +929,7 @@ class ActivityStoreInterface {
             completionReason: activityRow.completion_reason,
             startSeconds: activityRow.start_seconds,
             timePlayedSeconds: activityRow.time_played_seconds,
-            playerCount: activityRow.player_count,
+            //playerCount: activityRow.player_count,
             team: activityRow.team,
             teamScore: activityRow.team_score,
             opponentTeamScore: activityRow.opponentTeamScore,
