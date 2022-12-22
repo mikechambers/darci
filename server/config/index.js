@@ -27,7 +27,7 @@ const MAX_ACTIVITIES_PAGE_LIMIT = 50;
 const PLAYERS_ROW_CACHE_LIFETIME = 1000 * 60 * 60; //1 hour
 
 const PLAYER_START_BUFFER = 30; //seconds
-const DB_SCHEMA_VERSION = 9;
+const DB_SCHEMA_VERSION = 10;
 
 const DB_PATH = process.env.DCLI_DB_PATH;
 const MANIFEST_DB_PATH = process.env.MANIFEST_DB_PATH;
