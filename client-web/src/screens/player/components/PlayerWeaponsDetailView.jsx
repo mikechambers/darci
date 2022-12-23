@@ -22,9 +22,16 @@
  */
 
 import React, { useState } from "react";
+import { calculateRatio } from "shared";
 
 import { calculateAverage } from "shared/packages/utils";
 import { calculatePercent } from "shared/packages/utils";
+import {
+    formatFloat,
+    formatInt,
+    formatPercent,
+    formatPercentInt,
+} from "../../../core/utils/string";
 import PlayerWeaponsDetailList from "./PlayerWeaponsDetailList";
 
 export const WEAPONS_DETAIL_GAME = "WEAPONS_DETAIL_GAME";
@@ -39,37 +46,28 @@ const PlayerWeaponsDetailView = (props) => {
 
     let data = [];
     for (const w of weapons) {
-        let precision = calculatePercent(w.precision, w.kills).toFixed(2);
         let items = [
             {
                 label: "Games",
                 value: w.count,
+                formatter: formatInt,
             },
             {
                 label: "Kills",
                 value: w.kills,
+                formatter: formatInt,
             },
             {
                 label: "Kills / g",
-                value: calculateAverage(w.kills, w.count).toFixed(2),
+                value: calculateAverage(w.kills, w.count),
+                formatter: formatFloat,
             },
-
-            //todo: check this
             {
                 label: "Precision",
-                value: precision + "%",
-                data: precision,
+                value: calculateRatio(w.precision, w.kills),
+                formatter: formatPercent,
             },
         ];
-        /*
-        data.push({
-            id: w.id,
-            title: w.item.name,
-            subtitle: w.item.itemSubType.toString(),
-            icon: w.item.icon,
-            items: items,
-        });
-        */
 
         data.push({
             id: w.id,

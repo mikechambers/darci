@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import { ItemSubType } from "shared";
 import AmmunitionType from "shared/packages/enums/AmmunitionType";
-import { calculateAverage, calculatePercent } from "shared/packages/utils";
+import {
+    calculateAverage,
+    calculatePercent,
+    calculateRatio,
+} from "shared/packages/utils";
+import {
+    formatFloat,
+    formatInt,
+    formatPercent,
+    formatPercentInt,
+} from "../../../core/utils/string";
 import PlayerWeaponsDetailList from "./PlayerWeaponsDetailList";
 
 const PlayerMetaWeaponsDetailView = (props) => {
@@ -48,26 +58,32 @@ const PlayerMetaWeaponsDetailView = (props) => {
 
     weapons.sort(sortOptions[sortIndex].sort);
 
+    //add formatter option
+    //then sort items not weapons
+
     let data = [];
     for (const w of weapons) {
-        let precision = calculatePercent(w.precision, w.kills).toFixed(2);
+        let precision = calculateRatio(w.precision, w.kills);
         let items = [
             {
                 label: "Players",
                 value: w.count,
+                formatter: formatInt,
             },
             {
                 label: "Kills",
                 value: w.kills,
+                formatter: formatInt,
             },
             {
                 label: `Kills/p`,
-                value: calculateAverage(w.kills, w.count).toFixed(2),
+                value: calculateAverage(w.kills, w.count),
+                formatter: formatFloat,
             },
             {
                 label: "Precision",
-                value: precision + "%",
-                data: precision,
+                value: precision,
+                formatter: formatPercent,
             },
         ];
 

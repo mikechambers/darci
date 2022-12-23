@@ -35,7 +35,7 @@ const style = {
     display: "flex",
     flexWrap: "wrap",
     columnGap: "40px",
-    backgroundColor: "rgba(0,0,0,0.1)",
+    backgroundColor: "var(--color-text-container-background)",
     padding: "10px",
     borderRadius: "var(--radius-border)",
     width: "max-content",
