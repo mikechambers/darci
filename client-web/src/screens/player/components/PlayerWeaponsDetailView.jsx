@@ -25,12 +25,11 @@ import React, { useState } from "react";
 import { calculateRatio } from "shared";
 
 import { calculateAverage } from "shared/packages/utils";
-import { calculatePercent } from "shared/packages/utils";
+
 import {
     formatFloat,
     formatInt,
     formatPercent,
-    formatPercentInt,
 } from "../../../core/utils/string";
 import PlayerWeaponsDetailList from "./PlayerWeaponsDetailList";
 

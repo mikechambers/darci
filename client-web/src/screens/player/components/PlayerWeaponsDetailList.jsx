@@ -32,12 +32,6 @@ const elementStyle = {
     width: "422px",
 };
 
-const titleStyle = {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "flex-end",
-};
-
 const ITEM_HEIGHT = 100;
 const MAX_HEIGHT = 488;
 

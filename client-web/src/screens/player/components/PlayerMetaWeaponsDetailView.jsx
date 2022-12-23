@@ -1,16 +1,9 @@
 import React, { useState } from "react";
-import { ItemSubType } from "shared";
-import AmmunitionType from "shared/packages/enums/AmmunitionType";
-import {
-    calculateAverage,
-    calculatePercent,
-    calculateRatio,
-} from "shared/packages/utils";
+import { calculateAverage, calculateRatio } from "shared/packages/utils";
 import {
     formatFloat,
     formatInt,
     formatPercent,
-    formatPercentInt,
 } from "../../../core/utils/string";
 import PlayerWeaponsDetailList from "./PlayerWeaponsDetailList";
 

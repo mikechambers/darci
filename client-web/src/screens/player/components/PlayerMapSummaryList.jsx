@@ -44,7 +44,7 @@ const wrapperStyle = {
     flexDirection: "row",
     gap: "var(--gap-list-item)",
     flexWrap: "wrap",
-    justifyContent: "space-apart",
+    justifyContent: "flex-start",
 };
 
 const sortStyle = {

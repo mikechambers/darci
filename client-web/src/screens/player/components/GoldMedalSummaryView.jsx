@@ -29,7 +29,7 @@ import { MEDIUM } from "../../../core/consts";
 let style = {
     display: "flex",
     alignItems: "flex-start",
-    justifyContent: "start",
+    justifyContent: "flex-start",
     flexWrap: "wrap",
 };
 
