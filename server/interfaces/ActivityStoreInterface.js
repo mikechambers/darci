@@ -32,7 +32,6 @@ class ActivityStoreInterface {
     #db;
     #dbPath;
     #select_sync_members;
-    #select_activities_for_member_since;
     #select_member;
     #select_activity;
     #select_teams;
@@ -68,7 +67,8 @@ class ActivityStoreInterface {
 
         if (row.version !== DB_SCHEMA_VERSION) {
             throw Error(
-                `DB Schema Version mismatch. Expected [${DB_SCHEMA_VERSION}] found [${row.version}]`
+                `DB Schema Version mismatch. Expected [${DB_SCHEMA_VERSION}] found [${row.version}]\n
+                Please make sure you are running the correct version of DCLI`
             );
         }
     }
@@ -99,17 +99,17 @@ class ActivityStoreInterface {
         );
 
         this.#select_latest_activity_id_for_member = this.#db.prepare(`
-      SELECT
-	     CAST(max(activity_id) as TEXT) as activity_id
-      FROM
-        activity
-      INNER JOIN
-        character_activity_stats on character_activity_stats.activity = activity.activity_id,
-        character on character_activity_stats.character = character.character_id,
-        member on character.member = member.member_id
-      WHERE
-        member.member_id = @memberId
-    `);
+            SELECT
+                CAST(max(activity_id) as TEXT) as activity_id
+            FROM
+                activity
+            INNER JOIN
+                character_activity_stats on character_activity_stats.activity = activity.activity_id,
+                character on character_activity_stats.character = character.character_id,
+                member on character.member = member.member_id
+            WHERE
+                member.member_id = @memberId
+            `);
 
         this.#select_teams = this.#db.prepare(`
             SELECT
@@ -121,7 +121,14 @@ class ActivityStoreInterface {
         `);
 
         this.#select_sync_members = this.#db.prepare(
-            'SELECT cast("member_id" as text) as member_id, "platform_id", "display_name", "bungie_display_name", "bungie_display_name_code" from sync join member on sync.member = member.member_id'
+            `SELECT
+                CAST("member_id" as text) as member_id,
+                "platform_id", "display_name", "bungie_display_name", 
+                "bungie_display_name_code"
+            FROM
+                sync 
+            JOIN
+                member on sync.member = member.member_id`
         );
 
         this.#select_member = this.#db.prepare(
@@ -156,21 +163,20 @@ class ActivityStoreInterface {
 
         this.#select_character_activity_stats_for_activity = this.#db.prepare(`
             SELECT
-            CAST(character.member as TEXT) as member_id,
-            CAST(character_activity_stats.character as TEXT) as character_id,
-            CAST(character_activity_stats.fireteam_id as TEXT) as fireteam_id,
+                CAST(character.member as TEXT) as member_id,
+                CAST(character_activity_stats.character as TEXT) as character_id,
+                CAST(character_activity_stats.fireteam_id as TEXT) as fireteam_id,
 
-            assists, score, kills, deaths, completed, opponents_defeated, activity_duration_seconds,
-            standing, team, completion_reason, start_seconds, time_played_seconds, team_score,
-            precision_kills, weapon_kills_grenade, weapon_kills_melee, weapon_kills_super,
-            all_medals_earned, light_level, emblem_hash,
+                assists, score, kills, deaths, completed, opponents_defeated, activity_duration_seconds,
+                standing, team, completion_reason, start_seconds, time_played_seconds, team_score,
+                precision_kills, weapon_kills_grenade, weapon_kills_melee, weapon_kills_super,
+                all_medals_earned, light_level, emblem_hash,
 
-            character_activity_stats.id as character_activity_stats_index,
-              
-            member.bungie_display_name as bungie_display_name,
-            member.bungie_display_name_code as bungie_display_name_code,
-            member.platform_id as platform_id
-
+                character_activity_stats.id as character_activity_stats_index,
+                
+                member.bungie_display_name as bungie_display_name,
+                member.bungie_display_name_code as bungie_display_name_code,
+                member.platform_id as platform_id
             FROM
                 character_activity_stats
             INNER JOIN
@@ -181,10 +187,9 @@ class ActivityStoreInterface {
         `);
 
         this.#select_version = this.#db.prepare(`
-        SELECT version from version
-    `);
+            SELECT version from version
+        `);
 
-        //here
         this.#select_meta_weapons_summary = this.#db.prepare(`
             SELECT
                 reference_id as id,
@@ -234,168 +239,175 @@ class ActivityStoreInterface {
             ) 
             GROUP BY reference_id`);
 
-        this.#select_map_summary = this.#db.prepare(`SELECT
-            activity.reference_id as referenceId,
-            count(*) as activityCount,
-            sum(time_played_seconds) as timePlayedSeconds,
-            sum(standing = 0) as wins,
-            sum( character_activity_stats.completion_reason = 4) as completionReasonMercy,
-            sum( character_activity_stats.completion_reason = 0) as completionReasonObjectiveCompleted,
-            sum( character_activity_stats.completion_reason = 1) as completionReasonTimeExpired,
-            sum( character_activity_stats.completion_reason = 3) as completionReasonNoOpponents,
-            sum(completed) as completed,
-            sum(assists) as assists,
-            sum(character_activity_stats.kills) as kills,
-            sum(deaths) as deaths,
-            sum(opponents_defeated) as opponentsDefeated,
-            sum(weapon_kills_grenade) as grenadeKills,
-            sum(weapon_kills_melee) as meleeKills,
-            sum(weapon_kills_super) as superKills,
-            sum(weapon_kills_ability) as abilityKills,
-            sum(character_activity_stats.precision_kills) as precision,
-            max(assists) as highestAssists,
-            max(character_activity_stats.kills) as highestKills,
-            max(deaths) as highestDeaths,
-            max(opponents_defeated) as highestOpponentsDefeated,
-            max(weapon_kills_grenade) as highestGrenadeKills,
-            max(weapon_kills_melee) as highestMeleeKills,
-            max(weapon_kills_super) as highestSuperKills,
-            max(weapon_kills_ability) as highestAbilityKills,
+        this.#select_map_summary = this.#db.prepare(`
+            SELECT
+                activity.reference_id as referenceId,
+                count(*) as activityCount,
+                sum(time_played_seconds) as timePlayedSeconds,
+                sum(standing = 0) as wins,
+                sum( character_activity_stats.completion_reason = 4) as completionReasonMercy,
+                sum( character_activity_stats.completion_reason = 0) as completionReasonObjectiveCompleted,
+                sum( character_activity_stats.completion_reason = 1) as completionReasonTimeExpired,
+                sum( character_activity_stats.completion_reason = 3) as completionReasonNoOpponents,
+                sum(completed) as completed,
+                sum(assists) as assists,
+                sum(character_activity_stats.kills) as kills,
+                sum(deaths) as deaths,
+                sum(opponents_defeated) as opponentsDefeated,
+                sum(weapon_kills_grenade) as grenadeKills,
+                sum(weapon_kills_melee) as meleeKills,
+                sum(weapon_kills_super) as superKills,
+                sum(weapon_kills_ability) as abilityKills,
+                sum(character_activity_stats.precision_kills) as precision,
+                max(assists) as highestAssists,
+                max(character_activity_stats.kills) as highestKills,
+                max(deaths) as highestDeaths,
+                max(opponents_defeated) as highestOpponentsDefeated,
+                max(weapon_kills_grenade) as highestGrenadeKills,
+                max(weapon_kills_melee) as highestMeleeKills,
+                max(weapon_kills_super) as highestSuperKills,
+                max(weapon_kills_ability) as highestAbilityKills,
 
-            max(
-            cast(character_activity_stats.kills as real) 
-            / 
-            cast(
-                IFNULL(
-                    NULLIF(character_activity_stats.deaths, 0), 
-                1) as real
-            ))
-        as highestKillsDeathsRatio,
-        max(
-            cast((character_activity_stats.kills + character_activity_stats.assists) as real) 
-            / 
-            cast(
-                IFNULL(
-                    NULLIF(character_activity_stats.deaths, 0), 
-                1) as real
-            ))
-        as highestEfficiency
-
-            FROM
-            character_activity_stats
-            INNER JOIN
-            activity ON character_activity_stats.activity = activity.activity_id,
-            character on character_activity_stats.character = character.character_id,
-            member on member.member_id = character.member
-            WHERE
-            member.member_id = @memberId AND
-            (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
-            period > @startDate AND
-            period < @endDate AND
-            exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
-            not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)
-            group by activity.reference_id
-            order by activityCount`);
-
-        this.#select_weapons_summary = this.#db.prepare(`SELECT
-            weapon_result.reference_id as id,
-            count(*) as count,
-            sum(weapon_result.precision_kills) as precision,
-            sum(weapon_result.kills) as kills
-            FROM
-            character_activity_stats
-            INNER JOIN
-            weapon_result on character_activity_stats.id = weapon_result.character_activity_stats,
-            activity ON character_activity_stats.activity = activity.activity_id,
-            character on character_activity_stats.character = character.character_id,
-            member on member.member_id = character.member
-            WHERE
-            member.member_id = @memberId AND
-            (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
-            period > @startDate AND
-            period < @endDate AND
-            exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
-            not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)
-            GROUP BY weapon_result.reference_id
-            order by count desc`);
-
-        this.#select_medals_summary = this.#db.prepare(`
-        SELECT
-            medal_result.reference_id as id,
-	        sum(count) as count
-        FROM
-            character_activity_stats
-        INNER JOIN
-            medal_result on character_activity_stats.id = medal_result.character_activity_stats,
-            activity ON character_activity_stats.activity = activity.activity_id,
-            character on character_activity_stats.character = character.character_id,
-            member on member.member_id = character.member
-        WHERE
-            member.member_id = @memberId AND
-            (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
-            period > @startDate AND
-            period < @endDate AND
-            exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
-            not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId) AND
-            medal_result.reference_id NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')
-      GROUP BY medal_result.reference_id
-	  order by count desc`);
-
-        this.#select_player_activity_summary = this.#db.prepare(`
-        SELECT
-            count(*) as activityCount,
-            COALESCE(sum(time_played_seconds),0) as timePlayedSeconds,
-            COALESCE(sum(character_activity_stats.standing = 0),0) as wins,
-            COALESCE(sum( character_activity_stats.completion_reason = 4),0) as completionReasonMercy,
-            COALESCE(sum(completed),0) as completed,
-            COALESCE(sum(assists),0) as assists,
-            COALESCE(sum(character_activity_stats.kills),0) as kills,
-            COALESCE(sum(deaths),0) as deaths,
-            COALESCE(sum(opponents_defeated),0) as opponentsDefeated,
-            COALESCE(sum(weapon_kills_grenade),0) as grenadeKills,
-            COALESCE(sum(weapon_kills_melee),0) as meleeKills,
-            COALESCE(sum(weapon_kills_super),0) as superKills,
-            COALESCE(sum(weapon_kills_ability),0) as abilityKills,
-            COALESCE(sum(character_activity_stats.precision_kills),0) as precision,
-            COALESCE(max(assists),0) as highestAssists,
-            COALESCE(max(character_activity_stats.kills),0) as highestKills,
-            COALESCE(max(deaths),0) as highestDeaths,
-            COALESCE(max(opponents_defeated),0) as highestOpponentsDefeated,
-            COALESCE(max(weapon_kills_grenade),0) as highestGrenadeKills,
-            COALESCE(max(weapon_kills_melee),0) as highestMeleeKills,
-            COALESCE(max(weapon_kills_super),0) as highestSuperKills,
-            COALESCE(max(weapon_kills_ability),0) as highestAbilityKills,
-            COALESCE(max(
+                max(
                 cast(character_activity_stats.kills as real) 
                 / 
                 cast(
                     IFNULL(
                         NULLIF(character_activity_stats.deaths, 0), 
                     1) as real
-                )),0.0)
-            as highestKillsDeathsRatio,
-            COALESCE(max(
-                cast((character_activity_stats.kills + character_activity_stats.assists) as real) 
-                / 
+                ))
+                as highestKillsDeathsRatio,
+                max(
+                    cast((character_activity_stats.kills + character_activity_stats.assists) as real) 
+                    / 
                 cast(
                     IFNULL(
                         NULLIF(character_activity_stats.deaths, 0), 
                     1) as real
-                )),0.0)
-            as highestEfficiency
+                ))
+                as highestEfficiency
+
             FROM
-            character_activity_stats
+                character_activity_stats
             INNER JOIN
-            activity ON character_activity_stats.activity = activity.activity_id,
-            character on character_activity_stats.character = character.character_id,
-            member on member.member_id = character.member
+                activity ON character_activity_stats.activity = activity.activity_id,
+                character on character_activity_stats.character = character.character_id,
+                member on member.member_id = character.member
             WHERE
-            member.member_id = @memberId AND
-            (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
-            period > @startDate AND
-            period < @endDate AND
-            exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
-            not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)`);
+                member.member_id = @memberId AND
+                (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+                period > @startDate AND
+                period < @endDate AND
+                exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
+                not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)
+                group by activity.reference_id
+            ORDER BY
+                activityCount`);
+
+        this.#select_weapons_summary = this.#db.prepare(`
+            SELECT
+                weapon_result.reference_id as id,
+                count(*) as count,
+                sum(weapon_result.precision_kills) as precision,
+                sum(weapon_result.kills) as kills
+            FROM
+                character_activity_stats
+            INNER JOIN
+                weapon_result on character_activity_stats.id = weapon_result.character_activity_stats,
+                activity ON character_activity_stats.activity = activity.activity_id,
+                character on character_activity_stats.character = character.character_id,
+                member on member.member_id = character.member
+            WHERE
+                member.member_id = @memberId AND
+                (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+                period > @startDate AND
+                period < @endDate AND
+                exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
+                not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)
+            GROUP BY
+                weapon_result.reference_id
+            ORDER BY
+                count DESC`);
+
+        this.#select_medals_summary = this.#db.prepare(`
+            SELECT
+                medal_result.reference_id as id,
+                sum(count) as count
+            FROM
+                character_activity_stats
+            INNER JOIN
+                medal_result on character_activity_stats.id = medal_result.character_activity_stats,
+                activity ON character_activity_stats.activity = activity.activity_id,
+                character on character_activity_stats.character = character.character_id,
+                member on member.member_id = character.member
+            WHERE
+                member.member_id = @memberId AND
+                (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+                period > @startDate AND
+                period < @endDate AND
+                exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
+                not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId) AND
+                medal_result.reference_id NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')
+            GROUP BY
+                medal_result.reference_id
+            ORDER BY
+                count DESC`);
+
+        this.#select_player_activity_summary = this.#db.prepare(`
+            SELECT
+                count(*) as activityCount,
+                COALESCE(sum(time_played_seconds),0) as timePlayedSeconds,
+                COALESCE(sum(character_activity_stats.standing = 0),0) as wins,
+                COALESCE(sum( character_activity_stats.completion_reason = 4),0) as completionReasonMercy,
+                COALESCE(sum(completed),0) as completed,
+                COALESCE(sum(assists),0) as assists,
+                COALESCE(sum(character_activity_stats.kills),0) as kills,
+                COALESCE(sum(deaths),0) as deaths,
+                COALESCE(sum(opponents_defeated),0) as opponentsDefeated,
+                COALESCE(sum(weapon_kills_grenade),0) as grenadeKills,
+                COALESCE(sum(weapon_kills_melee),0) as meleeKills,
+                COALESCE(sum(weapon_kills_super),0) as superKills,
+                COALESCE(sum(weapon_kills_ability),0) as abilityKills,
+                COALESCE(sum(character_activity_stats.precision_kills),0) as precision,
+                COALESCE(max(assists),0) as highestAssists,
+                COALESCE(max(character_activity_stats.kills),0) as highestKills,
+                COALESCE(max(deaths),0) as highestDeaths,
+                COALESCE(max(opponents_defeated),0) as highestOpponentsDefeated,
+                COALESCE(max(weapon_kills_grenade),0) as highestGrenadeKills,
+                COALESCE(max(weapon_kills_melee),0) as highestMeleeKills,
+                COALESCE(max(weapon_kills_super),0) as highestSuperKills,
+                COALESCE(max(weapon_kills_ability),0) as highestAbilityKills,
+                COALESCE(max(
+                    cast(character_activity_stats.kills as real) 
+                    / 
+                    cast(
+                        IFNULL(
+                            NULLIF(character_activity_stats.deaths, 0), 
+                        1) as real
+                    )),0.0)
+                as highestKillsDeathsRatio,
+                COALESCE(max(
+                    cast((character_activity_stats.kills + character_activity_stats.assists) as real) 
+                    / 
+                    cast(
+                        IFNULL(
+                            NULLIF(character_activity_stats.deaths, 0), 
+                        1) as real
+                    )),0.0)
+                as highestEfficiency
+            FROM
+                character_activity_stats
+            INNER JOIN
+                activity ON character_activity_stats.activity = activity.activity_id,
+                character on character_activity_stats.character = character.character_id,
+                member on member.member_id = character.member
+            WHERE
+                member.member_id = @memberId AND
+                (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+                period > @startDate AND
+                period < @endDate AND
+                exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
+                not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)`);
     }
 
     retrieveMetaWeaponsSummary(
@@ -590,48 +602,47 @@ class ActivityStoreInterface {
 
         //We can't pass in order by parameters for a precompiled query, so we
         //need to dynamically create the query here.
-        let queryString = `SELECT
+        let queryString = `
+            SELECT
+                activity.mode as activity_mode,
+                CAST(activity.activity_id as TEXT) as activity_id,
 
-        activity.mode as activity_mode,
-        CAST(activity.activity_id as TEXT) as activity_id,
+                CAST(character.member as TEXT) as member_id,
+                CAST(character_activity_stats.character as TEXT) as character_id,
+                CAST(character_activity_stats.fireteam_id as TEXT) as fireteam_id,
 
-        CAST(character.member as TEXT) as member_id,
-        CAST(character_activity_stats.character as TEXT) as character_id,
-        CAST(character_activity_stats.fireteam_id as TEXT) as fireteam_id,
+                assists, score, kills, deaths, completed, opponents_defeated, activity_duration_seconds,
+                standing, team, completion_reason, start_seconds, time_played_seconds, team_score,
+                precision_kills, weapon_kills_grenade, weapon_kills_melee, weapon_kills_super,
+                all_medals_earned, light_level, emblem_hash,
 
-        assists, score, kills, deaths, completed, opponents_defeated, activity_duration_seconds,
-        standing, team, completion_reason, start_seconds, time_played_seconds, team_score,
-        precision_kills, weapon_kills_grenade, weapon_kills_melee, weapon_kills_super,
-        all_medals_earned, light_level, emblem_hash,
-
-        activity.period as period, 
-        activity.mode as mode,
-        activity.platform as platform,
-        activity.director_activity_hash as director_activity_hash,
-        activity.reference_id as reference_id,
-        character.class as class,
-          
-        member.bungie_display_name as bungie_display_name,
-        member.bungie_display_name_code as bungie_display_name_code,
-        member.platform_id as platform_id,
-        character_activity_stats.id as character_activity_stats_index
-
-      FROM
-        character_activity_stats
-      INNER JOIN
-        activity ON character_activity_stats.activity = activity.activity_id,
-        character on character_activity_stats.character = character.character_id,
-        member on member.member_id = character.member
-      WHERE
-        member.member_id = @memberId AND
-        (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
-        period > @startMoment AND
-        period < @endMoment AND
-        exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
-        not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)
-      ORDER BY
-          ${orderByStr}
-      LIMIT 25`;
+                activity.period as period, 
+                activity.mode as mode,
+                activity.platform as platform,
+                activity.director_activity_hash as director_activity_hash,
+                activity.reference_id as reference_id,
+                character.class as class,
+                
+                member.bungie_display_name as bungie_display_name,
+                member.bungie_display_name_code as bungie_display_name_code,
+                member.platform_id as platform_id,
+                character_activity_stats.id as character_activity_stats_index
+            FROM
+                character_activity_stats
+            INNER JOIN
+                activity ON character_activity_stats.activity = activity.activity_id,
+                character on character_activity_stats.character = character.character_id,
+                member on member.member_id = character.member
+            WHERE
+                member.member_id = @memberId AND
+                (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+                period > @startMoment AND
+                period < @endMoment AND
+                exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
+                not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)
+            ORDER BY
+                ${orderByStr}
+            LIMIT 25`;
 
         //we compile to a prepared statement every time, since we need to dynamically generate
         //the query (see above). We could compile and cache for each order by, but the
@@ -656,56 +667,55 @@ class ActivityStoreInterface {
 
         //select all of the weapon results for the activity set we retrieved
         const ws = `
-      SELECT
-        weapon_result.reference_id as id,
-        weapon_result.kills as kills,
-        weapon_result.precision_kills as precision,
-        weapon_result.character_activity_stats as character_activity_stats_index
-      FROM
-        weapon_result
-      INNER JOIN
-        character_activity_stats on character_activity_stats.id = weapon_result.character_activity_stats,
-        activity ON character_activity_stats.activity = activity.activity_id,
-        character on character_activity_stats.character = character.character_id,
-        member on member.member_id = character.member
-      WHERE
-        member.member_id = '${memberId}' AND
-        (character.class = ${characterSelection.id} OR 4 = ${characterSelection.id}) AND
-        activity.activity_id IN (${activityIdSQLList})`;
+            SELECT
+                weapon_result.reference_id as id,
+                weapon_result.kills as kills,
+                weapon_result.precision_kills as precision,
+                weapon_result.character_activity_stats as character_activity_stats_index
+            FROM
+                weapon_result
+            INNER JOIN
+                character_activity_stats on character_activity_stats.id = weapon_result.character_activity_stats,
+                activity ON character_activity_stats.activity = activity.activity_id,
+                character on character_activity_stats.character = character.character_id,
+                member on member.member_id = character.member
+            WHERE
+                member.member_id = '${memberId}' AND
+                (character.class = ${characterSelection.id} OR 4 = ${characterSelection.id}) AND
+                activity.activity_id IN (${activityIdSQLList})`;
 
         const weapons = this.#db.prepare(ws).all();
 
-        //const activityRowIds = rows.map((row) => row.activity_id);
-
         //select all of the team data for the activity set we retrieved
         const t = `
-      SELECT
-        *
-      FROM
-        team_result
-      WHERE
-        activity IN (${activityIdSQLList})`;
+            SELECT
+                *
+            FROM
+                team_result
+            WHERE
+                activity IN (${activityIdSQLList})`;
 
         const teamRows = this.#db.prepare(t).all();
 
         const m = `
-      SELECT
-        medal_result.reference_id as id,
-        count,
-        character_activity_stats as character_activity_stats_index
-      FROM
-        medal_result
-      INNER JOIN
-        character_activity_stats on character_activity_stats.id = medal_result.character_activity_stats,
-        character on character_activity_stats.character = character.character_id,
-        member on member.member_id = character.member
-      WHERE
-        member.member_id = '${memberId}' AND
-        (character.class = ${characterSelection.id} OR 4 = ${characterSelection.id}) AND
-        character_activity_stats.activity IN (${activityIdSQLList})
-      AND
-        medal_result.reference_id
-          NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')`;
+            SELECT
+                medal_result.reference_id as id,
+                count,
+                character_activity_stats as character_activity_stats_index
+            FROM
+                medal_result
+            INNER JOIN
+                character_activity_stats on character_activity_stats.id = medal_result.character_activity_stats,
+                character on character_activity_stats.character = character.character_id,
+                member on member.member_id = character.member
+            WHERE
+                member.member_id = '${memberId}' AND
+                (character.class = ${characterSelection.id} OR 4 = ${characterSelection.id}) AND
+                character_activity_stats.activity IN (${activityIdSQLList})
+            AND
+                medal_result.reference_id NOT IN ('precisionKills',
+                'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee',
+                'weaponKillsSuper', 'allMedalsEarned')`;
 
         const medals = this.#db.prepare(m).all();
 
@@ -791,36 +801,37 @@ class ActivityStoreInterface {
             });
 
         const ws = `
-    SELECT
-      weapon_result.reference_id as id,
-      weapon_result.kills as kills,
-      weapon_result.precision_kills as precision,
-      weapon_result.character_activity_stats as character_activity_stats_index
-    FROM
-      weapon_result
-    INNER JOIN
-      character_activity_stats on character_activity_stats.id = weapon_result.character_activity_stats,
-      activity ON character_activity_stats.activity = activity.activity_id
-    WHERE
-      activity.activity_id = (${activity.activityId})`;
+            SELECT
+                weapon_result.reference_id as id,
+                weapon_result.kills as kills,
+                weapon_result.precision_kills as precision,
+                weapon_result.character_activity_stats as character_activity_stats_index
+            FROM
+                weapon_result
+            INNER JOIN
+                character_activity_stats on character_activity_stats.id = weapon_result.character_activity_stats,
+                activity ON character_activity_stats.activity = activity.activity_id
+            WHERE
+                activity.activity_id = (${activity.activityId})`;
 
         const weapons = this.#db.prepare(ws).all();
 
         const m = `
-      SELECT
-        medal_result.reference_id as id,
-        count,
-        character_activity_stats as character_activity_stats_index
-      FROM
-        medal_result
-      INNER JOIN
-        character_activity_stats on character_activity_stats.id = medal_result.character_activity_stats,
-        activity ON character_activity_stats.activity = activity.activity_id
-      WHERE
-      activity.activity_id = (${activity.activityId})
-      AND
-        medal_result.reference_id
-          NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')`;
+            SELECT
+                medal_result.reference_id as id,
+                count,
+                character_activity_stats as character_activity_stats_index
+            FROM
+                medal_result
+            INNER JOIN
+                character_activity_stats on character_activity_stats.id = medal_result.character_activity_stats,
+                activity ON character_activity_stats.activity = activity.activity_id
+            WHERE
+                activity.activity_id = (${activity.activityId})
+            AND
+                medal_result.reference_id NOT IN ('precisionKills', 
+                'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 
+                'weaponKillsSuper', 'allMedalsEarned')`;
 
         const medals = this.#db.prepare(m).all();
 
