@@ -74,30 +74,6 @@ class ActivityStoreInterface {
     }
 
     #initStatements() {
-        this.#select_activities_for_member_since = this.#db.prepare(
-            `SELECT
-                *,
-                activity.mode as activity_mode,
-                CAST(activity.activity_id as TEXT) as activity_id,
-                character_activity_stats.id as character_activity_stats_index  
-            FROM
-                character_activity_stats
-            INNER JOIN
-                activity ON character_activity_stats.activity = activity.activity_id,
-                character on character_activity_stats.character = character.character_id,
-                member on member.member_id = character.member
-            WHERE
-                member.member_id = @memberId AND
-                (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
-                period > @startMoment AND
-                period < @endMoment AND
-                exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
-                not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)
-            ORDER BY
-                activity.period DESC
-            LIMIT 25`
-        );
-
         this.#select_latest_activity_id_for_member = this.#db.prepare(`
             SELECT
                 CAST(max(activity_id) as TEXT) as activity_id
