@@ -22,44 +22,21 @@ const PlayerMetaWeaponsDetailView = (props) => {
     let sortOptions = [
         {
             label: "Players",
-            sort: (a, b) => {
-                return b.count - a.count;
-            },
         },
         {
             label: "Kills",
-            sort: (a, b) => {
-                return b.kills - a.kills;
-            },
         },
         {
             label: `Kills / p`,
-            sort: (a, b) => {
-                return (
-                    calculateAverage(b.kills, b.count) -
-                    calculateAverage(a.kills, a.count)
-                );
-            },
         },
         {
             label: "Precision",
-            sort: (a, b) => {
-                return (
-                    calculatePercent(b.precision, b.kills) -
-                    calculatePercent(a.precision, a.kills)
-                );
-            },
         },
     ];
 
     const onSortChange = (item, index) => {
         setSortIndex(index);
     };
-
-    weapons.sort(sortOptions[sortIndex].sort);
-
-    //add formatter option
-    //then sort items not weapons
 
     let data = [];
     for (const w of weapons) {
@@ -93,6 +70,10 @@ const PlayerMetaWeaponsDetailView = (props) => {
             weapon: w.item,
         });
     }
+
+    data.sort((a, b) => {
+        return b.items[sortIndex].value - a.items[sortIndex].value;
+    });
 
     return (
         <PlayerWeaponsDetailList

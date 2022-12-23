@@ -84,7 +84,6 @@ const PlayerWeaponsDetailListItem = (props) => {
                     </div>
                     <div style={valuesStyle}>
                         {item.items.map((stat, i) => {
-                            console.log(stat);
                             let align =
                                 i === item.items.length - 1 ? "right" : "left";
                             return (
