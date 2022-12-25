@@ -4,7 +4,7 @@ export const DIVIDER_HEADER = "DIVIDER_HEADER";
 export const DIVIDER_SUBHEADER = "DIVIDER_SUBHEADER";
 
 let dividerStyleBase = {
-    width: "485px",
+    width: "505px",
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr",
     justifyItems: "center",

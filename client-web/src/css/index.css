@@ -708,7 +708,7 @@ label {
 
 .compare_data_row {
   display: grid;
-  grid-template-columns: 135px 150px 150px 50px;
+  grid-template-columns: 155px 150px 150px 50px;
   row-gap: 4px;
 }
 

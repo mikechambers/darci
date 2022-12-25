@@ -167,10 +167,24 @@ const formatData = function (s0, s1) {
         ),
 
         createRow(
+            "Weapon Kills / g",
+            calculateAverage(s0.summary.weaponKills, s0.summary.activityCount),
+            calculateAverage(s1.summary.weaponKills, s1.summary.activityCount),
+            formatFloat
+        ),
+
+        createRow(
             "Precision Kills",
             calculateRatio(s0.summary.precision, s0.summary.kills),
             calculateRatio(s1.summary.precision, s1.summary.kills),
             formatPercentInt
+        ),
+
+        createRow(
+            "Precision Kills / g",
+            calculateAverage(s0.summary.precision, s0.summary.activityCount),
+            calculateAverage(s1.summary.precision, s1.summary.activityCount),
+            formatFloat
         ),
 
         createRow(
@@ -181,6 +195,13 @@ const formatData = function (s0, s1) {
         ),
 
         createRow(
+            "Melee Kills / g",
+            calculateAverage(s0.summary.meleeKills, s0.summary.activityCount),
+            calculateAverage(s1.summary.meleeKills, s1.summary.activityCount),
+            formatFloat
+        ),
+
+        createRow(
             "Grenade Kills",
             calculateRatio(s0.summary.grenadeKills, s0.summary.kills),
             calculateRatio(s1.summary.grenadeKills, s1.summary.kills),
@@ -188,10 +209,24 @@ const formatData = function (s0, s1) {
         ),
 
         createRow(
+            "Grenade Kills / g",
+            calculateAverage(s0.summary.grenadeKills, s0.summary.activityCount),
+            calculateAverage(s1.summary.grenadeKills, s1.summary.activityCount),
+            formatFloat
+        ),
+
+        createRow(
             "Super Kills",
             calculateRatio(s0.summary.superKills, s0.summary.kills),
             calculateRatio(s1.summary.superKills, s1.summary.kills),
             formatPercentInt
+        ),
+
+        createRow(
+            "Super Kills / g",
+            calculateAverage(s0.summary.superKills, s0.summary.activityCount),
+            calculateAverage(s1.summary.superKills, s1.summary.activityCount),
+            formatFloat
         ),
 
         createDivider("Weapon Types"),
@@ -204,6 +239,19 @@ const formatData = function (s0, s1) {
         ),
 
         createRow(
+            "Primary Weapon / g",
+            calculateAverage(
+                s0.summary.primaryAmmoKills,
+                s0.summary.activityCount
+            ),
+            calculateAverage(
+                s1.summary.primaryAmmoKills,
+                s1.summary.activityCount
+            ),
+            formatFloat
+        ),
+
+        createRow(
             "Special Weapon",
             calculateRatio(s0.summary.specialAmmoKills, s0.summary.weaponKills),
             calculateRatio(s1.summary.specialAmmoKills, s1.summary.weaponKills),
@@ -211,10 +259,36 @@ const formatData = function (s0, s1) {
         ),
 
         createRow(
+            "Special Weapon / g",
+            calculateAverage(
+                s0.summary.specialAmmoKills,
+                s0.summary.activityCount
+            ),
+            calculateAverage(
+                s1.summary.specialAmmoKills,
+                s1.summary.activityCount
+            ),
+            formatFloat
+        ),
+
+        createRow(
             "Heavy Weapon",
             calculateRatio(s0.summary.heavyAmmoKills, s0.summary.weaponKills),
             calculateRatio(s1.summary.heavyAmmoKills, s1.summary.weaponKills),
             formatPercentInt
+        ),
+
+        createRow(
+            "Heavy Weapon / g",
+            calculateAverage(
+                s0.summary.heavyAmmoKills,
+                s0.summary.activityCount
+            ),
+            calculateAverage(
+                s1.summary.heavyAmmoKills,
+                s1.summary.activityCount
+            ),
+            formatFloat
         ),
 
         createDivider("Medals"),
