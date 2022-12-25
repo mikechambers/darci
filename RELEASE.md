@@ -1,5 +1,9 @@
 # DARCI Release Notes
 
+## v0.4.0 December 25, 2022
+
+-   Updated to support new dcli database scheme in dcli. This release requires dcli (v0.96.0) or higher.
+
 ## v0.3.0 NOT RELEASED
 
 -   Added stream overlay view. Can configure from search tab.
