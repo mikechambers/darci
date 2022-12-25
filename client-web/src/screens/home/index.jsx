@@ -28,11 +28,7 @@ import ErrorContainerView from "../../components/ErrorContainerView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
-import {
-    ADD_ERROR,
-    GlobalAction,
-    GlobalContext,
-} from "../../contexts/GlobalContext";
+import { GlobalContext } from "../../contexts/GlobalContext";
 import { useFetchPlayersMetrics } from "../../hooks/remote";
 import AllTimeLeaderView from "./components/AllTimeLeaderView";
 import SeasonLeaderView from "./components/SeasonLeaderView";

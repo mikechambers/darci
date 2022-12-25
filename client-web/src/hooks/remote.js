@@ -474,7 +474,7 @@ export const useFetchPlayerMetrics = (
 export const useFetchPlayersMetrics = (players) => {
     const [output, setOutput] = useState({
         data: undefined,
-        isLoading: undefined,
+        isLoading: true,
         errors: undefined,
     });
 
@@ -484,7 +484,7 @@ export const useFetchPlayersMetrics = (players) => {
         }
 
         const f = async () => {
-            let s = reducer(output, "isLoading", false);
+            let s = output;
 
             let urls = players.map(async (p) => {
                 let m = p;
@@ -556,6 +556,7 @@ export const useFetchPlayersMetrics = (players) => {
                     s = reducer(s, "errors", [error]);
                 })
                 .finally(() => {
+                    s = reducer(s, "isLoading", false);
                     setOutput(s);
                 });
         };
