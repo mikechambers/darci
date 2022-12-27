@@ -144,7 +144,7 @@ class Mode extends EnumBase {
     );
     static PVP_COMPETITIVE = new Mode("Competitive", 69, "Competitive");
     static PVP_QUICKPLAY = new Mode("Quickplay", 70, "Quickplay");
-    static CLASH_QUICKPLAY = new Mode("ClashQuickplay", 71, "Clash Quickplay");
+    static CLASH_QUICKPLAY = new Mode("ClashQuickplay", 71, "Quickplay Clash");
     static CLASH_COMPETITIVE = new Mode(
         "ClashCompetitive",
         72,
@@ -153,7 +153,7 @@ class Mode extends EnumBase {
     static CONTROL_QUICKPLAY = new Mode(
         "ControlQuickplay",
         73,
-        "Control Quickplay"
+        "Quickplay Control"
     );
     static CONTROL_COMPETITIVE = new Mode(
         "ControlCompetitive",
