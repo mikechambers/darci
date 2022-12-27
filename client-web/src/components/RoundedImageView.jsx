@@ -6,6 +6,7 @@ const RoundedImageView = (props) => {
     const height = props.height;
     const image = props.image;
     const title = props.title;
+    const backgroundColor = props.backgroundColor;
 
     return (
         <ImageView
@@ -14,6 +15,7 @@ const RoundedImageView = (props) => {
             width={width}
             height={height}
             image={image}
+            backgroundColor={backgroundColor}
         />
     );
 };

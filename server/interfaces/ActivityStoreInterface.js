@@ -38,6 +38,7 @@ class ActivityStoreInterface {
     #select_character_activity_stats_for_activity;
     #select_version;
     #select_meta_weapons_summary;
+    #select_class_meta_summary;
     #select_map_summary;
     #select_weapons_summary;
     #select_player_activity_summary;
@@ -215,6 +216,55 @@ class ActivityStoreInterface {
             ) 
             GROUP BY reference_id`);
 
+        this.#select_class_meta_summary = this.#db.prepare(`
+            SELECT
+                character.class as classId,
+				count(character.class) as count,
+                sum(standing = 0) as wins
+            FROM
+                character_activity_stats
+            INNER JOIN
+                character on 
+                character_activity_stats.character = character.character_id
+            WHERE
+                activity in (
+                    SELECT
+                        activity.activity_id
+                    FROM
+                        character_activity_stats
+                    INNER JOIN
+                        activity ON character_activity_stats.activity = activity.activity_id,
+                        character on character_activity_stats.character = character.character_id,
+                        member on member.member_id = character.member
+                    WHERE
+                        member.member_id = @memberId AND
+                        (character.class = @characterSelectionId OR @characterSelectionId = 4) AND
+                        period > @startDate AND
+                        period < @endDate AND
+                        exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
+                        not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)
+                )
+                AND
+                    fireteam_id not in (
+                        SELECT
+                            fireteam_id
+                        FROM
+                            character_activity_stats
+                        INNER JOIN
+                            activity ON character_activity_stats.activity = activity.activity_id,
+                            character on character_activity_stats.character = character.character_id,
+                            member on member.member_id = character.member
+                        WHERE
+                            member.member_id = @memberId AND
+                            (character.class = @characterSelectionId OR @characterSelectionId = 4) AND
+                            period > @startDate AND
+                            period < @endDate AND
+                            exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
+                            not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)
+                ) 
+            GROUP BY class
+        `);
+
         this.#select_map_summary = this.#db.prepare(`
             SELECT
                 activity.reference_id as referenceId,
@@ -384,6 +434,28 @@ class ActivityStoreInterface {
                 period < @endDate AND
                 exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
                 not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)`);
+    }
+
+    retrieveCharacterClassMetaSummary(
+        memberId,
+        characterSelection,
+        mode,
+        startDate,
+        endDate
+    ) {
+        let restrictModeId = this.getRestrictModeId(mode);
+
+        //todo: should this be get not all?
+        let meta = this.#select_class_meta_summary.all({
+            memberId,
+            restrictModeId,
+            characterSelectionId: characterSelection.id,
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString(),
+            modeId: mode.id,
+        });
+
+        return meta ? meta : [];
     }
 
     retrieveMetaWeaponsSummary(

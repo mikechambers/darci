@@ -225,6 +225,15 @@ app.get(
             endDate
         );
 
+        const characterClassMeta =
+            activityStore.retrieveCharacterClassMetaSummary(
+                memberId,
+                characterClassSelection,
+                mode,
+                startDate,
+                endDate
+            );
+
         const player = activityStore.retrieveMember(memberId);
 
         summary.weapons = weapons;
@@ -247,6 +256,7 @@ app.get(
             //activities: activities,
             maps: maps,
             meta: meta,
+            characterClassMeta: characterClassMeta,
         };
 
         sendJsonResponse(res, out);

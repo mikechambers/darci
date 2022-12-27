@@ -51,6 +51,7 @@ import ScreenNavigationView from "../../components/ScreenNavigationView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PlayerMetaWeaponsDetailView from "./components/PlayerMetaWeaponsDetailView";
 import ErrorContainerView from "../../components/ErrorContainerView";
+import ClassMetaSummaryList from "./components/ClassMetaSummaryList";
 
 const { useQuery } = require("../../hooks/browser");
 
@@ -203,14 +204,15 @@ const PlayerView = () => {
         return <LoadingAnimationView message="Loading Player data." />;
     }
 
-    let summary = playerSummary.summary;
-    let weapons = summary.weapons;
-    let medals = summary.medals;
-    let meta = playerSummary.meta;
-    let maps = playerSummary.maps;
-    let player = playerSummary.player;
+    const summary = playerSummary.summary;
+    const weapons = summary.weapons;
+    const medals = summary.medals;
+    const meta = playerSummary.meta;
+    const maps = playerSummary.maps;
+    const player = playerSummary.player;
+    const characterClassMeta = playerSummary.characterClassMeta;
 
-    let activities = playerActivities ? playerActivities.activities : [];
+    const activities = playerActivities ? playerActivities.activities : [];
 
     mode = Mode.fromType(playerSummary.query.mode);
     startMoment = Moment.fromType(playerSummary.query.startMoment);
@@ -244,6 +246,18 @@ const PlayerView = () => {
                 {summary.activityCount ? (
                     <React.Fragment>
                         <div style={itemDetailsStyle}>
+                            <div>
+                                {" "}
+                                <PageSectionView
+                                    id="classes"
+                                    title="Class Meta"
+                                    description="Class Meta"
+                                />
+                                <ClassMetaSummaryList
+                                    characterClassMeta={characterClassMeta}
+                                />
+                            </div>
+
                             <div>
                                 {" "}
                                 <PageSectionView

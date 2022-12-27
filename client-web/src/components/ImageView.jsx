@@ -29,6 +29,9 @@ const ImageView = (props) => {
     const image = props.image;
     const borderRadius = props.borderRadius ? props.borderRadius : 0;
     const title = props.title ? props.title : "";
+    const backgroundColor = !!props.backgroundColor
+        ? props.backgroundColor
+        : "#00000000";
 
     const elementStyle = {
         width: width,
@@ -38,6 +41,7 @@ const ImageView = (props) => {
         backgroundPosition: "center",
         borderRadius: borderRadius,
         flexShrink: "0",
+        backgroundColor: backgroundColor,
     };
     return <div style={elementStyle} title={title} alt={title}></div>;
 };

@@ -21,8 +21,14 @@
  * SOFTWARE.
  */
 
-import { AmmunitionType } from "shared";
-import Manifest from "./Manifest";
+import { AmmunitionType, CharacterClass } from "shared";
+import ClassMetaSummaryList from "../../screens/player/components/ClassMetaSummaryList";
+import Manifest, {
+    HUNTER_ICON_URL,
+    TITAN_ICON_URL,
+    UNKNOWN_ICON_URL,
+    WARLOCK_ICON_URL,
+} from "./Manifest";
 import Player from "./Player";
 
 const {
@@ -36,6 +42,7 @@ class PlayerSummary {
     player;
     query;
     maps;
+    characterClassMeta;
 
     constructor(options = {}) {
         this.summary = options.summary;
@@ -43,18 +50,12 @@ class PlayerSummary {
         this.player = options.player;
         this.query = options.query;
         this.maps = options.maps;
+        this.characterClassMeta = options.characterClassMeta;
     }
 
     static fromApi(data, manifest) {
         let summary = data.summary;
         let query = data.query;
-
-        /*
-    summary.weaponKills = summary.weapons.reduce(
-      (previous, current) => previous + current.kills,
-      0
-    );
-    */
 
         let player = Player.fromApi(data.player, manifest);
 
@@ -69,6 +70,39 @@ class PlayerSummary {
         summary.weapons = parseWeaponsFromServer(summary.weapons, manifest);
         summary.medals = parseMedalsFromServer(summary.medals, manifest);
         meta = parseWeaponsFromServer(meta, manifest);
+
+        let characterClassMeta = [];
+
+        for (const m of data.characterClassMeta) {
+            const characterClass = CharacterClass.fromId(m.classId);
+
+            let icon;
+
+            switch (characterClass) {
+                case CharacterClass.HUNTER: {
+                    icon = HUNTER_ICON_URL;
+                    break;
+                }
+                case CharacterClass.TITAN: {
+                    icon = TITAN_ICON_URL;
+                    break;
+                }
+                case CharacterClass.WARLOCK: {
+                    icon = WARLOCK_ICON_URL;
+                    break;
+                }
+                default: {
+                    icon = UNKNOWN_ICON_URL;
+                }
+            }
+
+            characterClassMeta.push({
+                characterClass,
+                count: m.count,
+                wins: m.wins,
+                icon: icon,
+            });
+        }
 
         summary.weaponKills = 0;
         summary.specialAmmoKills = 0;
@@ -104,7 +138,14 @@ class PlayerSummary {
             m.map = map;
         }
 
-        return new PlayerSummary({ meta, summary, player, query, maps });
+        return new PlayerSummary({
+            meta,
+            summary,
+            player,
+            query,
+            maps,
+            characterClassMeta,
+        });
     }
 }
 

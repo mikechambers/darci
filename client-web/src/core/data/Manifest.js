@@ -21,7 +21,18 @@
  * SOFTWARE.
  */
 
-const { ItemSubType, AmmunitionType, Mode } = require("shared");
+const { ItemSubType, AmmunitionType } = require("shared");
+
+//hard coded from Manifest from DestinyPresentationNodeDefinition
+//if they change, then we can add them to our own manifest data on the server
+export const UNKNOWN_ICON_URL =
+    "https://www.bungie.net/common/destiny2_content/icons/f3c27772a3d98c91fef127ce32e9f1e0.png";
+export const HUNTER_ICON_URL =
+    "https://www.bungie.net/common/destiny2_content/icons/e7324e8c29c5314b8bce166ff167859d.png";
+export const TITAN_ICON_URL =
+    "https://www.bungie.net/common/destiny2_content/icons/8956751663b4394cd41076f93d2dd0d6.png";
+export const WARLOCK_ICON_URL =
+    "https://www.bungie.net/common/destiny2_content/icons/bf7b2848d2f5fbebbf350d418b8ec148.png";
 
 class Manifest {
     #manifestData;
@@ -50,9 +61,8 @@ class Manifest {
             itemType: undefined,
             itemSubType: ItemSubType.UNKNOWN,
             id: id,
-            icon: "https://www.bungie.net/common/destiny2_content/icons/f3c27772a3d98c91fef127ce32e9f1e0.png",
-            collectionIcon:
-                "https://www.bungie.net/common/destiny2_content/icons/f3c27772a3d98c91fef127ce32e9f1e0.png",
+            icon: UNKNOWN_ICON_URL,
+            collectionIcon: UNKNOWN_ICON_URL,
             ammunitionType: AmmunitionType.UNKNOWN,
             screenshot: undefined,
         };
@@ -110,7 +120,7 @@ class Manifest {
         let out = {
             name: "Unknown",
             description: undefined,
-            icon: "https://www.bungie.net/common/destiny2_content/icons/f3c27772a3d98c91fef127ce32e9f1e0.png",
+            icon: UNKNOWN_ICON_URL,
             id: id,
         };
 
@@ -188,7 +198,7 @@ class Manifest {
         let out = {
             name: "Unknown",
             description: undefined,
-            icon: "https://www.bungie.net/common/destiny2_content/icons/f2154b781b36b19760efcb23695c66fe.png",
+            icon: UNKNOWN_ICON_URL,
             isGold: false,
             id: id,
         };
