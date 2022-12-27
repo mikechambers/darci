@@ -220,7 +220,10 @@ class ActivityStoreInterface {
             SELECT
                 character.class as classId,
 				count(character.class) as count,
-                sum(standing = 0) as wins
+                sum(standing = 0) as wins,
+                sum(kills) as kills,
+                sum(deaths) as deaths,
+                sum(assists) as assists
             FROM
                 character_activity_stats
             INNER JOIN

@@ -101,6 +101,9 @@ class PlayerSummary {
                 count: m.count,
                 wins: m.wins,
                 icon: icon,
+                kills: m.kills,
+                deaths: m.deaths,
+                assists: m.assists,
             });
         }
 

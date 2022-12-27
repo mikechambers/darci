@@ -82,11 +82,15 @@ const pageLinks = [
         id: "overview",
     },
     {
+        value: "Class Meta",
+        id: "classMeta",
+    },
+    {
         value: "Weapons",
         id: "weapons",
     },
     {
-        value: "Meta Weapons",
+        value: "Weapon Meta",
         id: "meta",
     },
     {
@@ -249,9 +253,9 @@ const PlayerView = () => {
                             <div>
                                 {" "}
                                 <PageSectionView
-                                    id="classes"
+                                    id="classMeta"
                                     title="Class Meta"
-                                    description="Class Meta"
+                                    description="Class usage not including players in your fireteam"
                                 />
                                 <ClassMetaSummaryList
                                     characterClassMeta={characterClassMeta}
@@ -274,7 +278,7 @@ const PlayerView = () => {
                             <div>
                                 <PageSectionView
                                     id="meta"
-                                    title="Meta Weapons"
+                                    title="Weapon Meta"
                                     description="Weapon meta from your matches excluding you and your fireteam members"
                                 />
                                 <PlayerMetaWeaponsDetailView weapons={meta} />

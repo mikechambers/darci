@@ -3,7 +3,7 @@ import { calculateRatio } from "shared/packages/utils";
 import RoundedImageView from "../../../components/RoundedImageView";
 import StatView from "../../../components/StatView";
 import { RIGHT } from "../../../core/consts";
-import { formatPercentInt } from "../../../core/utils/string";
+import { formatFloat, formatPercentInt } from "../../../core/utils/string";
 
 const rootStyle = {
     display: "flex",
@@ -24,7 +24,7 @@ const containerStyle = {
     borderRadius: "var(--radius-border)",
     padding: "12px",
     //gap: "var(--gap-list-item)",
-    width: 200,
+    width: 260,
 };
 
 const valuesStyle = {
@@ -40,13 +40,19 @@ const ClassMetaSummaryView = (props) => {
     const percent = formatPercentInt(calculateRatio(data.count, playerCount));
     const winPercent = formatPercentInt(calculateRatio(data.wins, data.count));
 
+    const kd = formatFloat(calculateRatio(data.kills, data.deaths));
+    const eff = formatFloat(
+        calculateRatio(data.kills + data.deaths, data.deaths)
+    );
+
     return (
         <div style={containerStyle}>
             <RoundedImageView
                 height={64}
                 width={64}
                 image={data.icon}
-                backgroundColor="var(--color-list-item-detail-background)"
+                //backgroundColor="var(--color-list-item-detail-background)"
+                backgroundColor="#3b4569"
             />
             <div style={dataContainerStyle}>
                 <div className="subsection_header">
@@ -55,12 +61,9 @@ const ClassMetaSummaryView = (props) => {
 
                 <div style={valuesStyle}>
                     <StatView value={percent} label="usage" key="usage" />
-                    <StatView
-                        value={winPercent}
-                        label="Wins"
-                        key="wins"
-                        align={RIGHT}
-                    />
+                    <StatView value={winPercent} label="Win" key="wins" />
+                    <StatView value={kd} label="kd" key="kd" align={RIGHT} />
+                    <StatView value={eff} label="Eff" key="eff" align={RIGHT} />
                 </div>
             </div>
         </div>
