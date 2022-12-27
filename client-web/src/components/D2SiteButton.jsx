@@ -27,16 +27,18 @@ const siteIconStyle = {
     verticalAlign: "middle",
 };
 
-const TrialsReportButton = (props) => {
+const D2SiteButton = (props) => {
+    const image = props.image;
     const url = props.url;
-    const description = props.description ? props.description : "Trials Report";
+    const width = !!props.width ? props.width : 12;
+    const description = !!props.description ? props.description : "";
 
     return (
         <div>
             <a href={url}>
                 <img
-                    src="https://trials.report/assets/svg/icon.svg"
-                    width="12"
+                    src={image}
+                    width={width}
                     alt={description}
                     title={description}
                     style={siteIconStyle}
@@ -46,4 +48,4 @@ const TrialsReportButton = (props) => {
     );
 };
 
-export default TrialsReportButton;
+export default D2SiteButton;

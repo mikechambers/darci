@@ -22,29 +22,15 @@
  */
 
 import React from "react";
-import DestinyTrackerIcon from "../components/images/destinytracker.webp";
+import D2SiteButton from "./D2SiteButton";
 
-const siteIconStyle = {
-    verticalAlign: "middle",
-};
-
-const DestinyTrackerButton = (props) => {
+const D2FoundryButton = (props) => {
     const url = props.url;
-    const description = props.description ? props.description : "Trials Report";
+    const description = props.description
+        ? props.description
+        : "View Weapon on D2 Foundry";
 
-    return (
-        <div>
-            <a href={url}>
-                <img
-                    src={DestinyTrackerIcon}
-                    width="18"
-                    alt={description}
-                    title={description}
-                    style={siteIconStyle}
-                />
-            </a>
-        </div>
-    );
+    return <D2SiteButton url={url} width="12" description={description} />;
 };
 
-export default DestinyTrackerButton;
+export default D2FoundryButton;

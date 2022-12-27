@@ -27,8 +27,9 @@ import Icon, { DESTINY_LOGO } from "../../../components/Icon";
 import DurationView from "../../../components/DurationView";
 import ActivityPlayerStatBreakdownView from "../../../components/ActivityPlayerStatBreakdownView";
 import ActivityPlayerWeaponsList from "../../../components/ActivityPlayerWeaponsList";
-import DestinyTrackerButton from "../../../components/DestinyTrackerButton";
-import TrialsReportButton from "../../../components/TrialsReportButton";
+import DestinyTrackerIconButton from "../../../components/DestinyTrackerIconButton";
+import TrialsReportIconButton from "../../../components/TrialsReportIconButton";
+import BungieIconButton from "../../../components/BungieIconButton";
 
 const dataContainerStyle = {
     display: "flex",
@@ -140,25 +141,20 @@ const PlayerActivityListItemDrawer = (props) => {
                     />
                 </div>
                 <div style={linksStyle}>
-                    <TrialsReportButton
+                    <TrialsReportIconButton
                         url={`https://crucible.report/pgcr/${activityId}`}
                         description="View game on Crucible Report"
                     />
                     &nbsp;
-                    <DestinyTrackerButton
+                    <DestinyTrackerIconButton
                         url={`https://destinytracker.com/destiny-2/pgcr/${activityId}`}
                         description="View game on Destiny Tracker"
                     />
                     &nbsp;
-                    <a
-                        href={`https://www.bungie.net/en/PGCR/${activityId}?character=${characterId}`}
-                    >
-                        <Icon
-                            icon={DESTINY_LOGO}
-                            style={siteIconStyle}
-                            title="View game on Bungie.com"
-                        />
-                    </a>
+                    <BungieIconButton
+                        url={`https://www.bungie.net/en/PGCR/${activityId}?character=${characterId}`}
+                        description="View game on Bungie.com"
+                    />
                 </div>
             </div>
         </div>
