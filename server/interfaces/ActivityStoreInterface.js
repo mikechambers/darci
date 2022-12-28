@@ -153,7 +153,9 @@ class ActivityStoreInterface {
                 
                 member.bungie_display_name as bungie_display_name,
                 member.bungie_display_name_code as bungie_display_name_code,
-                member.platform_id as platform_id
+                member.platform_id as platform_id,
+
+                character.class as class
             FROM
                 character_activity_stats
             INNER JOIN

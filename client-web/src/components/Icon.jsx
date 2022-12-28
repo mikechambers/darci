@@ -39,6 +39,11 @@ import { ReactComponent as ChevronsDown } from "./images/tabler/chevrons-down.sv
 import { ReactComponent as ChevronsUp } from "./images/tabler/chevrons-up.svg";
 import { ReactComponent as Alert } from "./images/tabler/alert-triangle.svg";
 
+import { ReactComponent as Hunter } from "./images/hunter.svg";
+import { ReactComponent as Warlock } from "./images/warlock.svg";
+import { ReactComponent as Titan } from "./images/titan.svg";
+import { CharacterClass } from "shared";
+
 export const PRECISION_ICON = "PRECISION_ICON";
 export const GRENADE_ICON = "GRENADE_ICON";
 export const MELEE_ICON = "MELEE_ICON";
@@ -56,6 +61,10 @@ export const CHEVRONS_UP = "CHEVRONS_UP";
 
 export const ALERT_ICON = "ALERT_ICON";
 
+export const HUNTER_ICON = "HUNTER_ICON";
+export const TITAN_ICON = "TITAN_ICON";
+export const WARLOCK_ICON = "WARLOCK_ICON";
+
 const Icon = (props) => {
     let icon = props.icon;
     let width = props.width ? props.width : 10;
@@ -64,6 +73,38 @@ const Icon = (props) => {
 
     let out;
     switch (icon) {
+        case HUNTER_ICON:
+            out = (
+                <Hunter
+                    title="Hunter"
+                    width={width}
+                    height={width}
+                    style={style}
+                />
+            );
+            break;
+
+        case WARLOCK_ICON:
+            out = (
+                <Hunter
+                    title="Warlock"
+                    width={width}
+                    height={width}
+                    style={style}
+                />
+            );
+            break;
+
+        case TITAN_ICON:
+            out = (
+                <Titan
+                    title="Titan"
+                    width={width}
+                    height={width}
+                    style={style}
+                />
+            );
+            break;
         case PRECISION_ICON:
             out = (
                 <PrecisionIcon
@@ -188,10 +229,40 @@ const Icon = (props) => {
         case BLANK_ICON:
         //fall through
         default:
-            out = <BlankIcon style={style} title={title} />;
+            out = (
+                <BlankIcon
+                    style={style}
+                    title={title}
+                    width={width}
+                    height={width}
+                />
+            );
     }
 
     return out;
+};
+
+export const getIconForCharacterClass = function (characterClass) {
+    let icon;
+    switch (characterClass) {
+        case CharacterClass.HUNTER: {
+            icon = HUNTER_ICON;
+            break;
+        }
+        case CharacterClass.TITAN: {
+            icon = TITAN_ICON;
+            break;
+        }
+        case CharacterClass.WARLOCK: {
+            icon = WARLOCK_ICON;
+            break;
+        }
+        default: {
+            icon = BLANK_ICON;
+        }
+    }
+
+    return icon;
 };
 
 export default Icon;

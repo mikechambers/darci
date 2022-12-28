@@ -72,7 +72,7 @@ const PlayerWeaponsDetailListItem = (props) => {
     let index = props.index;
 
     let item = weapons[index];
-    console.log(item);
+
     return (
         <div style={style}>
             <div style={containerStyle}>

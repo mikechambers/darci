@@ -28,7 +28,7 @@ import DestinyLogo from "./images/destiny_logo.svg";
 const BungieIconButton = (props) => {
     const url = props.url;
     const description = props.description ? props.description : "Bungie";
-    console.log(DestinyLogo);
+
     return (
         <D2SiteButton
             url={url}

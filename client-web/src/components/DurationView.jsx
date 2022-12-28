@@ -25,8 +25,7 @@ import React from "react";
 
 import { humanDuration } from "../core/utils/date";
 
-const rootStyle = {
-    background: "var(--color-text-container-background)",
+const rootStyleBase = {
     padding: "4px 12px",
     fontWeight: "var(--regular)",
     borderRadius: "var(--radius-border)",
@@ -34,6 +33,14 @@ const rootStyle = {
 
 const DurationView = (props) => {
     const duration = props.duration;
+    const backgroundColor = !!props.backgroundColor
+        ? props.backgroundColor
+        : "var(--color-text-container-background)";
+
+    let rootStyle = {
+        ...rootStyleBase,
+        background: backgroundColor,
+    };
 
     const d = humanDuration(duration);
 

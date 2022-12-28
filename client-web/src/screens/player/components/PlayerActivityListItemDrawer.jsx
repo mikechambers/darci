@@ -23,7 +23,10 @@
 
 import React from "react";
 
-import Icon, { DESTINY_LOGO } from "../../../components/Icon";
+import Icon, {
+    DESTINY_LOGO,
+    getIconForCharacterClass,
+} from "../../../components/Icon";
 import DurationView from "../../../components/DurationView";
 import ActivityPlayerStatBreakdownView from "../../../components/ActivityPlayerStatBreakdownView";
 import ActivityPlayerWeaponsList from "../../../components/ActivityPlayerWeaponsList";
@@ -57,16 +60,47 @@ const backgroundStyleBase = {
     alignItems: "flex-end",
 };
 
-let detailStyleBase = {
+const detailStyleBase = {
     display: "flex",
     flexDirection: "column",
     gap: 4,
 };
 
-let dataStyle = {
+const dataStyle = {
     display: "flex",
     flexDirection: "row",
     width: "100%",
+};
+
+const characterClassStyle = {
+    display: "flex",
+    flexDirection: "row",
+    gap: 4,
+
+    padding: "4px 12px",
+};
+
+const metaDataStyle = {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+};
+
+const linksStyle = {
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    padding: "4px 12px",
+};
+
+const scoreStyle = {
+    backgroundColor: "#00000088",
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    borderRadius: "0px 0px 4px 4px",
+    paddingTop: "2px",
 };
 
 const PlayerActivityListItemDrawer = (props) => {
@@ -81,33 +115,9 @@ const PlayerActivityListItemDrawer = (props) => {
         backgroundImage: `url(${activity.activity.map.image})`,
     };
 
-    const metaDataStyle = {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-    };
-
-    const linksStyle = {
-        display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "center",
-    };
-
-    const siteIconStyle = {
-        verticalAlign: "middle",
-    };
-
     let activityId = activity.activity.activityId;
     let characterId = activity.player.character.characterId;
 
-    let scoreStyle = {
-        backgroundColor: "#00000088",
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        borderRadius: "0px 0px 4px 4px",
-        paddingTop: "2px",
-    };
     let scoreDiv =
         activity.stats.opponentTeamScore !== -1 ? (
             <div style={scoreStyle}>
@@ -116,6 +126,8 @@ const PlayerActivityListItemDrawer = (props) => {
         ) : (
             ""
         );
+
+    let icon = getIconForCharacterClass(activity.player.character.classType);
 
     return (
         <div className="list_item_drawer" style={detailStyle}>
@@ -137,8 +149,13 @@ const PlayerActivityListItemDrawer = (props) => {
             <div style={metaDataStyle}>
                 <div style={timePlayedStyle} className="section_entry">
                     <DurationView
+                        backgroundColor="#00000000"
                         duration={activity.stats.activityDurationSeconds * 1000}
                     />
+                </div>
+                <div style={characterClassStyle}>
+                    <Icon icon={icon} width={14} />{" "}
+                    {activity.player.character.classType.label}
                 </div>
                 <div style={linksStyle}>
                     <TrialsReportIconButton
