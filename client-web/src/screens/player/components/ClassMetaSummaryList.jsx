@@ -1,4 +1,5 @@
 import React from "react";
+import { CharacterClass } from "shared";
 import ClassMetaSummaryView from "./ClassMetaSummaryView";
 
 const rootStyle = {
@@ -18,6 +19,10 @@ const ClassMetaSummaryList = (props) => {
         <div style={rootStyle}>
             {characterClassMeta.map((item) => {
                 //filter unknown
+
+                if (item.characterClass === CharacterClass.UNKNOWN) {
+                    return "";
+                }
 
                 return (
                     <ClassMetaSummaryView
