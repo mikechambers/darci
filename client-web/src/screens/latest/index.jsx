@@ -51,16 +51,9 @@ const LatestView = (props) => {
         return <div>Loading...</div>;
     }
 
-    const rootStyle = {
-        //maxWidth: "var(--page-max-width)",
-    };
-    const refreshWrapperStyle = {
-        padding: "var(--padding-page-container)",
-    };
-
     return (
-        <div style={rootStyle}>
-            <div style={refreshWrapperStyle}>
+        <div>
+            <div>
                 <RefreshStatusView
                     lastUpdate={lastUpdate}
                     refreshInterval={LATEST_ACTIVITY_REFRESH_INTERVAL}
