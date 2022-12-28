@@ -22,6 +22,7 @@
  */
 
 import React from "react";
+import D2FoundryButton from "../../../components/D2FoundryIconButton";
 import RoundedImageView from "../../../components/RoundedImageView";
 
 import StatView from "../../../components/StatView";
@@ -58,13 +59,20 @@ const valuesStyle = {
     justifyContent: "space-between",
 };
 
+const titleStyle = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    gap: 4,
+};
+
 const PlayerWeaponsDetailListItem = (props) => {
     let weapons = props.data;
     let style = props.style;
     let index = props.index;
 
     let item = weapons[index];
-
+    console.log(item);
     return (
         <div style={style}>
             <div style={containerStyle}>
@@ -75,8 +83,12 @@ const PlayerWeaponsDetailListItem = (props) => {
                 />
                 <div id="data_container" style={dataContainerStyle}>
                     <div style={headerStyle}>
-                        <div className="subsection_header">
-                            {item.weapon.name}
+                        <div className="subsection_header" style={titleStyle}>
+                            {item.weapon.name}{" "}
+                            <D2FoundryButton
+                                description={`View ${item.weapon.name} on D2Foundry`}
+                                url={`https://d2foundry.gg/w/${item.id}`}
+                            />
                         </div>
                         <div className="list_subtitle">
                             {item.weapon.itemSubType.label}

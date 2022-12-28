@@ -30,7 +30,14 @@ const D2FoundryButton = (props) => {
         ? props.description
         : "View Weapon on D2 Foundry";
 
-    return <D2SiteButton url={url} width="12" description={description} />;
+    return (
+        <D2SiteButton
+            url={url}
+            width="12"
+            description={description}
+            image="https://d2foundry.gg/favicon.ico"
+        />
+    );
 };
 
 export default D2FoundryButton;
