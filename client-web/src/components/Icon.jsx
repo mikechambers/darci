@@ -86,7 +86,7 @@ const Icon = (props) => {
 
         case WARLOCK_ICON:
             out = (
-                <Hunter
+                <Warlock
                     title="Warlock"
                     width={width}
                     height={width}
