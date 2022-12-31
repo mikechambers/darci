@@ -28,12 +28,12 @@ import ActivityTeamSummaryView from "./ActivityTeamSummaryView";
 
 const ActivityTeamDetailsView = (props) => {
     const team = props.team;
-    const players = team.players;
+    const topStats = props.topStats;
 
     return (
         <div>
             <ActivityTeamSummaryView team={team} />
-            <ActivityPlayerList players={players} />
+            <ActivityPlayerList players={team.players} topStats={topStats} />
         </div>
     );
 };

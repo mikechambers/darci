@@ -42,7 +42,7 @@ const style = {
     backdropFilter: "var(--blur-background)",
 };
 
-const PlayerStatsView = (props) => {
+const APlayerStatsView = (props) => {
     const summary = props.summary;
 
     return (
@@ -135,4 +135,4 @@ const PlayerStatsView = (props) => {
     );
 };
 
-export default PlayerStatsView;
+export default APlayerStatsView;

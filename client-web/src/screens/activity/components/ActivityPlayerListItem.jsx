@@ -36,6 +36,7 @@ const rootStyle = {
 const ActivityPlayerListItem = (props) => {
     const player = props.player;
     const teamColor = props.teamColor;
+    const topStats = props.topStats;
 
     const [expanded, setExpanded] = useState(false);
 
@@ -56,6 +57,7 @@ const ActivityPlayerListItem = (props) => {
                 player={player}
                 onClick={handleOnClick}
                 teamColor={teamColor}
+                topStats={topStats}
             />
             {drawer}
         </div>

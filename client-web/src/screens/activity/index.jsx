@@ -37,6 +37,7 @@ import ActivityPlayerEffectivenessView from "./components/ActivityPlayerEffectiv
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 import { ActivityNotFoundError } from "../../core/errors";
 import ErrorContainerView from "../../components/ErrorContainerView";
+import { calculateEfficiency, calculateKillsDeathsRatio } from "shared";
 
 const pageContainerStyle = {
     minWidth: "720px",
@@ -92,6 +93,16 @@ const ActivityView = (props) => {
     const details = activity.details;
     const teams = activity.teams;
 
+    let topStats = {
+        score: 0,
+        kills: 0,
+        assists: 0,
+        deaths: 0,
+        opponentsDefeated: 0,
+        kd: 0.0,
+        efficiency: 0.0,
+    };
+
     //todo: need to test this with rumble
     let players = [];
     for (const t of teams) {
@@ -100,6 +111,40 @@ const ActivityView = (props) => {
                 player: p,
                 teamName: t.name,
             });
+
+            if (p.stats.score > topStats.score) {
+                topStats.score = p.stats.score;
+            }
+
+            if (p.stats.kills > topStats.kills) {
+                topStats.kills = p.stats.kills;
+            }
+
+            if (p.stats.assists > topStats.assists) {
+                topStats.assists = p.stats.assists;
+            }
+
+            if (p.stats.opponentsDefeated > topStats.opponentsDefeated) {
+                topStats.opponentsDefeated = p.stats.opponentsDefeated;
+            }
+
+            if (p.stats.deaths > topStats.deaths) {
+                topStats.deaths = p.stats.deaths;
+            }
+
+            const kd = calculateKillsDeathsRatio(p.stats.kills, p.stats.deaths);
+            if (kd > topStats.kd) {
+                topStats.kd = kd;
+            }
+
+            const efficiency = calculateEfficiency(
+                p.stats.kills,
+                p.stats.deaths,
+                p.stats.assists
+            );
+            if (efficiency > topStats.efficiency) {
+                topStats.efficiency = efficiency;
+            }
         }
     }
 
@@ -158,7 +203,10 @@ const ActivityView = (props) => {
                                 title={`${team.name} Team`}
                                 description={`${team.name} Team details`}
                             />
-                            <ActivityTeamDetailsView team={team} />
+                            <ActivityTeamDetailsView
+                                team={team}
+                                topStats={topStats}
+                            />
                         </div>
                     );
                 })}

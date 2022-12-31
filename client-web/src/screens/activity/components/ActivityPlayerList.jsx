@@ -32,6 +32,7 @@ const elementStyle = {
 };
 const ActivityPlayerList = (props) => {
     const players = props.players;
+    const topStats = props.topStats;
 
     let teamMap = new Map();
 
@@ -62,6 +63,7 @@ const ActivityPlayerList = (props) => {
                         player={player}
                         key={player.player.memberId}
                         teamColor={teamMap.get(player.stats.fireteamId).color}
+                        topStats={topStats}
                     />
                 );
             })}
