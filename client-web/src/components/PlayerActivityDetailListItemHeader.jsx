@@ -20,7 +20,6 @@ const statusViewStyle = {
 
 const PlayerActivityDetailListItemHeader = (props) => {
     const player = props.player;
-    const onClick = props.onClick;
     const topStats = props.topStats;
 
     const goldMedals = player.stats.extended.medals.filter(
@@ -28,11 +27,7 @@ const PlayerActivityDetailListItemHeader = (props) => {
     );
 
     return (
-        <div
-            className="list_item_header clickable"
-            style={rootStyle}
-            onClick={onClick}
-        >
+        <div className="list_item_header clickable" style={rootStyle}>
             {props.children}
             <PlayerActivityDetailStatsView
                 stats={player.stats}

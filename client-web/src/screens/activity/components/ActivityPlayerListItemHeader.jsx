@@ -29,18 +29,13 @@ import DetailListIndicatorView from "./DetailListIndicatorView";
 
 const ActivityPlayerListItemHeader = (props) => {
     const player = props.player;
-    const onClick = props.onClick;
     const teamColor = props.teamColor;
     const topStats = props.topStats;
 
     let teamStyleColor = teamColor ? teamColor : "#00000000";
 
     return (
-        <PlayerActivityDetailListItemHeader
-            player={player}
-            onClick={onClick}
-            topStats={topStats}
-        >
+        <PlayerActivityDetailListItemHeader player={player} topStats={topStats}>
             <DetailListIndicatorView
                 color={teamStyleColor}
                 description="Fireteam"
