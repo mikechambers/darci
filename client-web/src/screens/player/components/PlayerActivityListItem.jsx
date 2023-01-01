@@ -40,11 +40,6 @@ const PlayerActivityListItem = (props) => {
 
     let navigate = useNavigate();
 
-    const onGameDetailNavClick = (e, activityId) => {
-        e.stopPropagation();
-        navigate(`/activity/${activityId}`);
-    };
-
     let gm = new Map();
     for (let m of activity.stats.extended.medals) {
         if (m.info.isGold) {
@@ -85,6 +80,9 @@ const PlayerActivityListItem = (props) => {
             <PlayerActivityDetailListItemHeader
                 stats={activity.stats}
                 topStats={topStats}
+                onClick={() => {
+                    navigate(`/activity/${activity.activity.activityId}`);
+                }}
             >
                 <DetailListIndicatorView
                     color={indicatorData.color}

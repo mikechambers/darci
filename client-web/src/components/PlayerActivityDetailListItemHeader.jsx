@@ -4,10 +4,11 @@ import PlayerActivityDetailStatsView from "./PlayerActivityDetailStatsView";
 import { SMALL } from "../core/consts";
 
 import React from "react";
+import ListLinkIndicatorView from "./ListLinkIndicatorView";
 
 const rootStyle = {
     display: "grid",
-    gridTemplateColumns: "6px 218px 370px 20px auto",
+    gridTemplateColumns: "6px 218px 370px 20px auto 10px",
     alignItems: "center",
     columnGap: 6,
     //justifyContent: "center",
@@ -21,6 +22,7 @@ const statusViewStyle = {
 const PlayerActivityDetailListItemHeader = (props) => {
     const stats = props.stats;
     const topStats = props.topStats;
+    const onClick = props.onClick;
 
     const goldMedals = stats.extended.medals.filter((m) => m.info.isGold);
 
@@ -35,6 +37,8 @@ const PlayerActivityDetailListItemHeader = (props) => {
                 />
             </div>
             <CompactMedalsList medals={goldMedals} size={SMALL} />
+
+            <ListLinkIndicatorView onClick={onClick} />
         </div>
     );
 };
