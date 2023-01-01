@@ -31,11 +31,10 @@ import PlayerActivityDetailListItem from "../../../components/PlayerActivityDeta
 import DetailListIndicatorView from "../../activity/components/DetailListIndicatorView";
 import PlayerActivityDetailListItemHeader from "../../../components/PlayerActivityDetailListItemHeader";
 
-import PlayerMapInfoView from "../../activity/components/PlayerMapInfoView";
+import PlayerMapInfoView from "./PlayerMapInfoView";
 
 const PlayerActivityListItem = (props) => {
     let activity = props.activity;
-    let summary = props.summary;
     let topStats = props.topStats;
 
     let navigate = useNavigate();
