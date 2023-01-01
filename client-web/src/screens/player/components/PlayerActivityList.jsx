@@ -23,7 +23,7 @@
 
 import { DateTime, Interval } from "luxon";
 import React from "react";
-import PlayerActivityListItemHeader from "./PlayerActivityListItemHeader";
+import PlayerActivityListItem from "./PlayerActivityListItem";
 
 const containerStyle = {
     display: "flex",
@@ -88,7 +88,7 @@ const PlayerActivityList = (props) => {
                     return (
                         <React.Fragment key={game.activity.activityId}>
                             {dateDiv}
-                            <PlayerActivityListItemHeader
+                            <PlayerActivityListItem
                                 activity={game}
                                 summary={summary}
                                 key={game.activity.activityId}

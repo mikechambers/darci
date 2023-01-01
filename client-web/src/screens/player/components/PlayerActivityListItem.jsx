@@ -23,104 +23,17 @@
 
 import React from "react";
 
-import { useState } from "react";
-import PlayerActivityListItemDrawer from "./PlayerActivityListItemDrawer";
-import StatView from "../../../components/StatView";
 import { useNavigate } from "react-router-dom";
-
-import { ReactComponent as ChevronRight } from "../../../components/images/tabler/chevron-right.svg";
-import StatusView from "../../../components/StatusView";
-import ActivityCompletionReasonView from "../../../components/CompletionReasonView";
-
 import { Standing } from "shared";
-import CompactMedalsList from "../../../components/CompactMedalsList";
-import { SMALL } from "../../../core/consts";
 
-const resultWinStyle = {
-    backgroundColor: "var(--color-win)",
-    //width: "6px",
-    borderRadius: "var(--radius-border) 0px 0px var(--radius-border)",
-};
+import PlayerActivityDetailListItem from "../../../components/PlayerActivityDetailListItem";
 
-const resultLossStyle = {
-    backgroundColor: "var(--color-loss)",
-    //width: "6px",
-    borderRadius: "var(--radius-border) 0px 0px var(--radius-border)",
-};
+import DetailListIndicatorView from "../../activity/components/DetailListIndicatorView";
+import PlayerActivityDetailListItemHeader from "../../../components/PlayerActivityDetailListItemHeader";
 
-const statsStyle = {
-    alignItems: "center",
-    display: "grid",
-    gridTemplateColumns: "repeat(6, 50px)",
-    columnGap: "var(--gap-stat-item)",
-};
+import PlayerMapInfoView from "../../activity/components/PlayerMapInfoView";
 
-//todo: remove this here or in parent
-
-const gameContainerStyle = {
-    height: "46px",
-    display: "grid",
-    gridTemplateColumns: "6px 170px 400px 39px 75px 10px",
-    flexDirection: "row",
-};
-
-const gameTitleStyle = {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    paddingLeft: "4px",
-};
-
-const gameContainerWrapper = {
-    display: "flex",
-    flexDirection: "column",
-
-    width: "min-content",
-};
-
-const statusStyleWrapper = {
-    //width: "35px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-};
-
-const mercyStyle = {
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-};
-
-const statusStyle = {
-    display: "flex",
-
-    alignItems: "flex-end",
-};
-
-const medalsStyle = {
-    //width: "60px",
-    display: "flex",
-    justifyContent: "flex-start",
-    alignItems: "center",
-};
-
-const gameDetailNavStyle = {
-    backgroundColor: "#FFFFFFee",
-    width: "10px",
-    borderRadius: "0px var(--radius-border) var(--radius-border) 0px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-};
-
-const chevronIconStyle = {
-    color: "#000000",
-    width: 16,
-    height: 16,
-};
-
-const PlayerActivityListItemHeader = (props) => {
+const PlayerActivityListItem = (props) => {
     let activity = props.activity;
     let summary = props.summary;
 
@@ -130,11 +43,6 @@ const PlayerActivityListItemHeader = (props) => {
         e.stopPropagation();
         navigate(`/activity/${activityId}`);
     };
-
-    let resultStyle =
-        activity.stats.standing === Standing.VICTORY
-            ? resultWinStyle
-            : resultLossStyle;
 
     let gm = new Map();
     for (let m of activity.stats.extended.medals) {
@@ -173,20 +81,31 @@ const PlayerActivityListItemHeader = (props) => {
         summary.highestEfficiency.toFixed(2);
     let effTitle = effHighlight ? title : "";
 
-    let [isExpanded, setIsExpanded] = useState(
-        props.expanded === undefined ? false : props.expanded
+    const topStats = {};
+
+    const data = { player: activity.player, stats: activity.stats };
+
+    const indicatorColor =
+        activity.stats.standing === Standing.VICTORY
+            ? "var(--color-win)"
+            : "var(--color-loss)";
+
+    return (
+        <PlayerActivityDetailListItem player={data}>
+            <PlayerActivityDetailListItemHeader
+                player={data}
+                topStats={topStats}
+            >
+                <DetailListIndicatorView
+                    color={indicatorColor}
+                    description="Fireteam"
+                />
+                <PlayerMapInfoView activity={activity} />
+            </PlayerActivityDetailListItemHeader>
+        </PlayerActivityDetailListItem>
     );
 
-    const onItemClick = function (e) {
-        setIsExpanded(!isExpanded);
-    };
-
-    let detailsDiv = isExpanded ? (
-        <PlayerActivityListItemDrawer activity={activity} />
-    ) : (
-        ""
-    );
-
+    /*
     return (
         <div style={gameContainerWrapper}>
             <div
@@ -272,6 +191,7 @@ const PlayerActivityListItemHeader = (props) => {
             {detailsDiv}
         </div>
     );
+*/
 };
 
-export default PlayerActivityListItemHeader;
+export default PlayerActivityListItem;
