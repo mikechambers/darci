@@ -28,13 +28,30 @@ import PlayerActivityDetailListItem from "../../../components/PlayerActivityDeta
 
 const ActivityPlayerListItem = (props) => {
     const player = props.player;
+    const stats = props.stats;
     const teamColor = props.teamColor;
     const topStats = props.topStats;
 
+    const links = {
+        trialsReport: {
+            url: `https://destinytrialsreport.com/report/${player.platformId}/${player.memberId}`,
+            description: "View Player on Trials Report",
+        },
+        destinyTracker: {
+            url: `https://destinytracker.com/destiny-2/profile/bungie/${player.memberId}/overview`,
+            description: "View Player on Destiny Tracker",
+        },
+    };
+
     return (
-        <PlayerActivityDetailListItem player={player}>
+        <PlayerActivityDetailListItem
+            links={links}
+            player={player}
+            stats={stats}
+        >
             <ActivityPlayerListItemHeader
                 player={player}
+                stats={stats}
                 teamColor={teamColor}
                 topStats={topStats}
             />

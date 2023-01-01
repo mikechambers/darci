@@ -57,12 +57,13 @@ const ActivityPlayerList = (props) => {
 
     return (
         <div style={elementStyle}>
-            {players.map((player) => {
+            {players.map((data) => {
                 return (
                     <ActivityPlayerListItem
-                        player={player}
-                        key={player.player.memberId}
-                        teamColor={teamMap.get(player.stats.fireteamId).color}
+                        player={data.player}
+                        stats={data.stats}
+                        key={data.player.memberId}
+                        teamColor={teamMap.get(data.stats.fireteamId).color}
                         topStats={topStats}
                     />
                 );

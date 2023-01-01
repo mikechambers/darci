@@ -23,14 +23,14 @@
 
 import React from "react";
 
-import ActivityPlayerMedalsView from "./ActivityPlayerMedalsView";
-import ActivityPlayerStatBreakdownView from "../../../components/ActivityPlayerStatBreakdownView";
-import ActivityPlayerWeaponsList from "../../../components/ActivityPlayerWeaponsList";
-import DestinyTrackerIconButton from "../../../components/DestinyTrackerIconButton";
-import DurationView from "../../../components/DurationView";
-import TrialsReportIconButton from "../../../components/TrialsReportIconButton";
-import { SMALL } from "../../../core/consts";
-import BungieIconButton from "../../../components/BungieIconButton";
+import ActivityPlayerMedalsView from "../screens/activity/components/ActivityPlayerMedalsView";
+import ActivityPlayerStatBreakdownView from "./ActivityPlayerStatBreakdownView";
+import ActivityPlayerWeaponsList from "./ActivityPlayerWeaponsList";
+import DestinyTrackerIconButton from "./DestinyTrackerIconButton";
+import DurationView from "./DurationView";
+import TrialsReportIconButton from "./TrialsReportIconButton";
+import { SMALL } from "../core/consts";
+import BungieIconButton from "./BungieIconButton";
 
 const rootStyle = {
     height: "min-content",
@@ -77,7 +77,7 @@ const ActivityPlayerListItemDrawer = (props) => {
                 </div>
                 <div style={linksStyle}>
                     {(() => {
-                        if (!!links.destinyTracker) {
+                        if (links && !!links.destinyTracker) {
                             return (
                                 <DestinyTrackerIconButton
                                     url={links.destinyTracker.url}
@@ -90,7 +90,7 @@ const ActivityPlayerListItemDrawer = (props) => {
                     })()}
 
                     {(() => {
-                        if (!!links.trialsReport) {
+                        if (links && !!links.trialsReport) {
                             return (
                                 <TrialsReportIconButton
                                     url={links.trialsReport.url}
@@ -101,7 +101,7 @@ const ActivityPlayerListItemDrawer = (props) => {
                     })()}
 
                     {(() => {
-                        if (!!links.bungie) {
+                        if (links && !!links.bungie) {
                             return (
                                 <BungieIconButton
                                     url={links.bungie.url}

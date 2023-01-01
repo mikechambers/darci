@@ -19,7 +19,6 @@ const chevronIconStyle = {
 
 const ListLinkIndicatorView = (props) => {
     const onClick = props.onClick;
-    console.log(onClick);
 
     if (!onClick) {
         return <div></div>;

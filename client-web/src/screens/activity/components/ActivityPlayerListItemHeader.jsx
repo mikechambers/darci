@@ -28,6 +28,7 @@ import PlayerActivityDetailListItemHeader from "../../../components/PlayerActivi
 import DetailListIndicatorView from "./DetailListIndicatorView";
 
 const ActivityPlayerListItemHeader = (props) => {
+    const stats = props.stats;
     const player = props.player;
     const teamColor = props.teamColor;
     const topStats = props.topStats;
@@ -35,7 +36,11 @@ const ActivityPlayerListItemHeader = (props) => {
     let teamStyleColor = teamColor ? teamColor : "#00000000";
 
     return (
-        <PlayerActivityDetailListItemHeader player={player} topStats={topStats}>
+        <PlayerActivityDetailListItemHeader
+            stats={stats}
+            player={player}
+            topStats={topStats}
+        >
             <DetailListIndicatorView
                 color={teamStyleColor}
                 description="Fireteam"

@@ -57,7 +57,7 @@ const nameStyle = {
 };
 
 const ActivityPlayerInfoView = (props) => {
-    const player = props.player.player;
+    const player = props.player;
     const character = player.character;
 
     let icon = getIconForCharacterClass(player.character.classType);

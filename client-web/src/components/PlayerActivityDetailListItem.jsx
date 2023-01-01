@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useState } from "react";
-import ActivityPlayerListItemDrawer from "../screens/activity/components/ActivityPlayerListItemDrawer";
+import ActivityPlayerListItemDrawer from "./ActivityPlayerListItemDrawer";
 
 const rootStyle = {
     width: "min-content", //min-content
