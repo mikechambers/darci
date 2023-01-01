@@ -52,7 +52,9 @@ const PlayerActivityDetailStatsView = (props) => {
                 key="score"
                 label="Score"
                 value={stats.score}
-                highlight={topStats.score === stats.score} //TODO: add highlights
+                highlight={
+                    topStats.score !== 0 && topStats.score === stats.score
+                } //TODO: add highlights
                 title="Score"
             />
             <StatView

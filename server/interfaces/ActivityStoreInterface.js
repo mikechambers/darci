@@ -401,6 +401,7 @@ class ActivityStoreInterface {
                 COALESCE(sum(weapon_kills_ability),0) as abilityKills,
                 COALESCE(sum(character_activity_stats.precision_kills),0) as precision,
                 COALESCE(max(assists),0) as highestAssists,
+                COALESCE(max(score),0) as highestScore,
                 COALESCE(max(character_activity_stats.kills),0) as highestKills,
                 COALESCE(max(deaths),0) as highestDeaths,
                 COALESCE(max(opponents_defeated),0) as highestOpponentsDefeated,

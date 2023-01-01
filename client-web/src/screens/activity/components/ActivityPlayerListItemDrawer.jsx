@@ -30,62 +30,86 @@ import DestinyTrackerIconButton from "../../../components/DestinyTrackerIconButt
 import DurationView from "../../../components/DurationView";
 import TrialsReportIconButton from "../../../components/TrialsReportIconButton";
 import { SMALL } from "../../../core/consts";
+import BungieIconButton from "../../../components/BungieIconButton";
+
+const rootStyle = {
+    height: "min-content",
+    display: "flex",
+    flexDirection: "column",
+    rowGap: 20,
+};
+
+const statsContainterStyle = {
+    display: "grid",
+    gridTemplateColumns: "55% 25% 20%",
+    justifyItems: "center",
+};
+
+const infoContainerStyle = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+};
+
+const linksStyle = {
+    display: "flex",
+    flexDirection: "row",
+    columnGap: 4,
+};
 
 const ActivityPlayerListItemDrawer = (props) => {
-    const rootStyle = {
-        height: "min-content",
-        display: "flex",
-        flexDirection: "column",
-        rowGap: 20,
-    };
-
-    const statsContainterStyle = {
-        display: "grid",
-        gridTemplateColumns: "55% 25% 20%",
-        justifyItems: "center",
-    };
-
-    const infoContainerStyle = {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-    };
-
-    const linksStyle = {
-        display: "flex",
-        flexDirection: "row",
-        columnGap: 4,
-    };
-
-    const player = props.player;
+    const stats = props.stats;
+    const links = props.links;
 
     return (
         <div style={rootStyle} className="list_item_drawer">
             <div style={statsContainterStyle}>
-                <ActivityPlayerWeaponsList
-                    weapons={player.stats.extended.weapons}
-                />
-                <ActivityPlayerStatBreakdownView stats={player.stats} />
+                <ActivityPlayerWeaponsList weapons={stats.extended.weapons} />
+                <ActivityPlayerStatBreakdownView stats={stats} />
                 <ActivityPlayerMedalsView
-                    medals={player.stats.extended.medals}
+                    medals={stats.extended.medals}
                     size={SMALL}
                 />
             </div>
             <div style={infoContainerStyle}>
                 <div>
-                    <DurationView
-                        duration={player.stats.timePlayedSeconds * 1000}
-                    />
+                    <DurationView duration={stats.timePlayedSeconds * 1000} />
                 </div>
                 <div style={linksStyle}>
-                    <DestinyTrackerIconButton
-                        url={`https://destinytracker.com/destiny-2/profile/bungie/${player.player.memberId}/overview`}
-                        description="View player on Destiny Tracker."
-                    />
-                    <TrialsReportIconButton
-                        url={`https://destinytrialsreport.com/report/${player.player.platformId}/${player.player.memberId}`}
-                        description="View player on Trials Report"
-                    />
+                    {(() => {
+                        if (!!links.destinyTracker) {
+                            return (
+                                <DestinyTrackerIconButton
+                                    url={links.destinyTracker.url}
+                                    description={
+                                        links.destinyTracker.description
+                                    }
+                                />
+                            );
+                        }
+                    })()}
+
+                    {(() => {
+                        if (!!links.trialsReport) {
+                            return (
+                                <TrialsReportIconButton
+                                    url={links.trialsReport.url}
+                                    description={links.trialsReport.description}
+                                />
+                            );
+                        }
+                    })()}
+
+                    {(() => {
+                        if (!!links.bungie) {
+                            return (
+                                <BungieIconButton
+                                    url={links.bungie.url}
+                                    description={links.bungie.description}
+                                />
+                            );
+                        }
+                    })()}
                 </div>
             </div>
         </div>

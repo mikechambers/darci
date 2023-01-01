@@ -23,6 +23,7 @@
 
 import { DateTime, Interval } from "luxon";
 import React from "react";
+import { formatFloat } from "../../../core/utils/string";
 import PlayerActivityListItem from "./PlayerActivityListItem";
 
 const containerStyle = {
@@ -54,6 +55,17 @@ const PlayerActivityList = (props) => {
 
     let lastDate;
     let now = DateTime.now();
+
+    let topStats = {
+        score: summary.highestScore,
+        kills: summary.highestKills,
+        assists: summary.highestAssists,
+        deaths: summary.highestDeaths,
+        opponentsDefeated: summary.highestOpponentsDefeated,
+        kd: formatFloat(summary.highestKillsDeathsRatio),
+        efficiency: formatFloat(summary.highestEfficiency),
+    };
+
     return (
         <div style={containerStyle}>
             <div style={wrapperStyle}>
@@ -91,6 +103,7 @@ const PlayerActivityList = (props) => {
                             <PlayerActivityListItem
                                 activity={game}
                                 summary={summary}
+                                topStats={topStats}
                                 key={game.activity.activityId}
                             />
                         </React.Fragment>

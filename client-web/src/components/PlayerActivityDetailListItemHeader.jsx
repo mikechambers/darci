@@ -19,24 +19,19 @@ const statusViewStyle = {
 };
 
 const PlayerActivityDetailListItemHeader = (props) => {
-    const player = props.player;
+    const stats = props.stats;
     const topStats = props.topStats;
 
-    const goldMedals = player.stats.extended.medals.filter(
-        (m) => m.info.isGold
-    );
+    const goldMedals = stats.extended.medals.filter((m) => m.info.isGold);
 
     return (
         <div className="list_item_header clickable" style={rootStyle}>
             {props.children}
-            <PlayerActivityDetailStatsView
-                stats={player.stats}
-                topStats={topStats}
-            />
+            <PlayerActivityDetailStatsView stats={stats} topStats={topStats} />
             <div style={statusViewStyle}>
                 <StatusView
-                    completed={player.stats.completed}
-                    joinedLate={player.stats.joinedLate}
+                    completed={stats.completed}
+                    joinedLate={stats.joinedLate}
                 />
             </div>
             <CompactMedalsList medals={goldMedals} size={SMALL} />

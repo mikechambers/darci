@@ -9,7 +9,7 @@ const elementStyle = {
 };
 const PlayerMapInfoView = (props) => {
     const activity = props.activity;
-    console.log(activity.activity.map.image);
+
     return (
         <div>
             <div style={elementStyle}>

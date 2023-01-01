@@ -10,13 +10,15 @@ const rootStyle = {
 };
 
 const PlayerActivityDetailListItem = (props) => {
+    const stats = props.stats;
     const player = props.player;
+    const links = props.links;
 
     const [expanded, setExpanded] = useState(false);
 
     let drawer;
     if (expanded) {
-        drawer = <ActivityPlayerListItemDrawer player={player} />;
+        drawer = <ActivityPlayerListItemDrawer stats={stats} links={links} />;
     } else {
         drawer = <div></div>;
     }
@@ -24,9 +26,9 @@ const PlayerActivityDetailListItem = (props) => {
     const handleOnClick = (e) => {
         setExpanded(!expanded);
     };
-    console.log(player);
+
     return (
-        <div style={rootStyle} id={player.player.getFullName()}>
+        <div style={rootStyle} id={player.getFullName()}>
             <div onClick={handleOnClick}>{props.children}</div>
             {drawer}
         </div>
