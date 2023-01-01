@@ -7,7 +7,6 @@ import OrderBySelect from "../../../../components/OrderBySelect";
 import PlayerSelect from "../../../../components/PlayerSelect";
 
 import { GlobalContext } from "../../../../contexts/GlobalContext";
-import { MOMENT_TYPE, SEASON_TYPE } from "../../../../core/consts";
 import { createPlayerUrl } from "../../../../core/utils";
 import { useNavigate } from "react-router-dom";
 import CharacterClassSelection from "shared/packages/enums/CharacterClassSelection";
