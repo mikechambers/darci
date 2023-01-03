@@ -30,7 +30,7 @@ class CompletionReason extends EnumBase {
         "Objective Complete"
     );
     static TIMER_FINISHED = new CompletionReason(
-        "TimeFinished",
+        "TimerFinished",
         1,
         "Timer Finished"
     );
