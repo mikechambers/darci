@@ -254,7 +254,7 @@ const PlayerView = () => {
                                 <PageSectionView
                                     id="classMeta"
                                     title="Player Meta"
-                                    description="Class usage not including players in your fireteam"
+                                    description="Player meta and stats for players in your matches excluding you and players in your fireteam"
                                 />
                                 <LobbyMetaView
                                     characterClassMeta={characterClassMeta}
