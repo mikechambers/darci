@@ -6,7 +6,6 @@ const elementStyle = {
     display: "flex",
     flexDirection: "row",
     columnGap: 4,
-    alignItems: "space-apart",
 };
 
 const detailsStyle = {
