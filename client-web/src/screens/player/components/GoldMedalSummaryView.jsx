@@ -41,7 +41,10 @@ const medal_style = {
 
 const GoldMedalSummaryView = (props) => {
     let medals = props.medals ? props.medals : [];
-    let max = props.max ? props.max : 5;
+    let max = props.max ? props.max : 12;
+
+    //only display gold medals
+    medals = medals.filter((m) => m.info.isGold);
 
     medals.sort((a, b) => {
         if (b.info.isGold === a.info.isGold) {
@@ -55,9 +58,6 @@ const GoldMedalSummaryView = (props) => {
         return -1;
     });
 
-    //only display gold medals
-    medals = medals.filter((m) => m.info.isGold);
-
     if (medals.length > max) {
         medals = medals.slice(0, max);
     }
@@ -69,11 +69,15 @@ const GoldMedalSummaryView = (props) => {
     return (
         <div style={style}>
             {medals.map((m, index) => {
+                let nameElement = "";
+                if (medals.length < 5) {
+                    nameElement = m.info.name;
+                }
+
                 return (
                     <div style={medal_style} key={m.id}>
                         <Medal medal={m.info} count={m.count} size={MEDIUM} />
-                        &nbsp;
-                        {m.info.name}
+                        &nbsp;{nameElement}
                     </div>
                 );
             })}
