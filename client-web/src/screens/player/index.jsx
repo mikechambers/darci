@@ -25,7 +25,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import PlayerActivityList from "./components/PlayerActivityList";
 import PlayerWeaponsDetailView, {
     WEAPONS_DETAIL_GAME,
-    WEAPONS_DETAIL_PLAYER,
 } from "./components/PlayerWeaponsDetailView";
 import PlayerMapSummaryList from "./components/PlayerMapSummaryList";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
@@ -51,7 +50,7 @@ import ScreenNavigationView from "../../components/ScreenNavigationView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PlayerMetaWeaponsDetailView from "./components/PlayerMetaWeaponsDetailView";
 import ErrorContainerView from "../../components/ErrorContainerView";
-import ClassMetaSummaryList from "./components/ClassMetaSummaryList";
+import LobbyMetaView from "./components/LobbyMetaView";
 
 const { useQuery } = require("../../hooks/browser");
 
@@ -254,10 +253,10 @@ const PlayerView = () => {
                                 {" "}
                                 <PageSectionView
                                     id="classMeta"
-                                    title="Class Meta"
+                                    title="Player Meta"
                                     description="Class usage not including players in your fireteam"
                                 />
-                                <ClassMetaSummaryList
+                                <LobbyMetaView
                                     characterClassMeta={characterClassMeta}
                                 />
                             </div>

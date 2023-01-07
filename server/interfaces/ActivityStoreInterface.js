@@ -225,7 +225,11 @@ class ActivityStoreInterface {
                 sum(standing = 0) as wins,
                 sum(kills) as kills,
                 sum(deaths) as deaths,
-                sum(assists) as assists
+                sum(assists) as assists,
+                sum(opponents_defeated) as opponentsDefeated,
+                sum(weapon_kills_grenade) as grenadeKills,
+                sum(weapon_kills_super) as superKills,
+                sum(weapon_kills_melee) as meleeKills
             FROM
                 character_activity_stats
             INNER JOIN

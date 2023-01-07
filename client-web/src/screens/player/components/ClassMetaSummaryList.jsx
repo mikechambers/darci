@@ -1,5 +1,6 @@
 import React from "react";
-import { CharacterClass } from "shared";
+import { calculateKillsDeathsRatio, CharacterClass } from "shared";
+import { calculateEfficiency } from "shared/packages/utils";
 import ClassMetaSummaryView from "./ClassMetaSummaryView";
 
 const rootStyle = {
@@ -19,7 +20,6 @@ const ClassMetaSummaryList = (props) => {
         <div style={rootStyle}>
             {characterClassMeta.map((item) => {
                 //filter unknown
-
                 if (item.characterClass === CharacterClass.UNKNOWN) {
                     return "";
                 }
