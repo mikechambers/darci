@@ -37,11 +37,11 @@ const ResultSummaryView = (props) => {
     let values = [
         {
             value: wins,
-            label: "win",
+            label: wins === 1 ? "win" : "wins",
         },
         {
             value: losses,
-            label: "loss",
+            label: losses === 1 ? "loss" : "losses",
         },
         {
             value: calculatePercent(mercies, activityCount).toFixed() + "%",
