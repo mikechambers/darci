@@ -99,3 +99,7 @@ export const truncate = function (str, n) {
 export const generateId = function (base) {
     return `${base}_${getRandomIntInclusive(0, 1000000)}`;
 };
+
+export const setPlural = function (count, single, multiple) {
+    return count === 1 ? single : multiple;
+};

@@ -36,6 +36,7 @@ import SearchView from "./screens/search";
 import LatestView from "./screens/latest";
 import CompareView from "./screens/compare";
 import OverlayView from "./screens/overlay";
+import ProfileView from "./screens/profile";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -45,6 +46,10 @@ ReactDOM.render(
                     <Route index path="/" element={<HomeView />} />
                     <Route index path="/about" element={<AboutView />} />
                     <Route index path="/search" element={<SearchView />} />
+                    <Route
+                        path="/profile/:memberId/:platformId/"
+                        element={<ProfileView />}
+                    />
                     <Route
                         path="/overlay/:memberId/:platformId/:classType/:mode/:startMoment/:data/"
                         element={<OverlayView />}

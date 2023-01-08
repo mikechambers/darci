@@ -26,6 +26,7 @@ import React from "react";
 import { calculatePercent } from "shared/packages/utils";
 
 import StatCollectionView from "../../../components/StatCollectionView";
+import { setPlural } from "../../../core/utils/string";
 
 const ResultSummaryView = (props) => {
     let wins = props.wins;
@@ -37,11 +38,11 @@ const ResultSummaryView = (props) => {
     let values = [
         {
             value: wins,
-            label: wins === 1 ? "win" : "wins",
+            label: setPlural(wins, "win", "wins"),
         },
         {
             value: losses,
-            label: losses === 1 ? "loss" : "losses",
+            label: setPlural(losses, "loss", "losses"),
         },
         {
             value: calculatePercent(mercies, activityCount).toFixed() + "%",

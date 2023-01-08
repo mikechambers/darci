@@ -93,7 +93,7 @@ class PlayerProfile {
                 data.characterProgressions.data[cId].progressions;
 
             let valor = {};
-            let glory = {};
+            //let glory = {};
             let ironBanner = {};
             let trials = {};
 
@@ -109,6 +109,7 @@ class PlayerProfile {
                         progressions[VALOR_STREAK_ID].currentResetCount,
                 };
 
+                /*
                 glory = {
                     currentProgress:
                         progressions[GLORY_PROGRESSION_ID].currentProgress,
@@ -117,6 +118,7 @@ class PlayerProfile {
                         progressions[GLORY_PROGRESSION_ID].progressToNextLevel,
                     streak: progressions[GLORY_STREAK_ID].currentProgress,
                 };
+                */
 
                 ironBanner = {
                     currentProgress:
@@ -201,7 +203,7 @@ class PlayerProfile {
                 progressions: {
                     trials: trials,
                     valor: valor,
-                    glory: glory,
+                    //glory: glory,
                     ironBanner: ironBanner,
                 },
             };
