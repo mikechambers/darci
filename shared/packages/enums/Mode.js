@@ -30,7 +30,7 @@ class Mode extends EnumBase {
     //static TITAN = new Mode("Strike", 3);
     //static TITAN = new Mode("Raid", 4);
     static ALL_PVP = new Mode("AllPvP", 5, "All PvP");
-    //static TITAN = new Mode("Patrol", 6);
+    static TITAN = new Mode("Patrol", 6);
     //static TITAN = new Mode("AllPvE", 7);
     //static TITAN = new Mode("Reserved9", 9);
     static CONTROL = new Mode("Control", 10);

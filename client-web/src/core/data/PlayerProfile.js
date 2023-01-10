@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-import { CharacterClass } from "shared";
+import { CharacterClass, Mode } from "shared";
 
 const GLORY_PROGRESSION_ID = "1647151960";
 
@@ -69,7 +69,7 @@ const parseCharacterFromProfile = (data, manifest) => {
     let character = {
         characterId: data.characterId,
         classType: CharacterClass.fromId(data.classType),
-        lightLevel: data.lightLevel,
+        lightLevel: data.light,
         dateLastPlayed: new Date(Date.parse(data.dateLastPlayed)),
         emblem: emblem,
     };
@@ -81,6 +81,7 @@ class PlayerProfile {
     //#data;
     #characterProfiles;
     #lastActiveCharacterProfile;
+    #currentActivity;
 
     constructor(data, manifest) {
         //this.#data = data;
@@ -220,6 +221,48 @@ class PlayerProfile {
         }
 
         this.#lastActiveCharacterProfile = lastActiveCharacterProfile;
+
+        //const profileTransitoryData = data.profileTransitoryData;
+
+        //************ parse current activity info *****************//
+        if (!lastActiveCharacterProfile) {
+            return;
+        }
+
+        const characterActivities = data.characterActivities.data; //obj
+        const currentChar = lastActiveCharacterProfile.character;
+        const currentCharData = characterActivities[currentChar.characterId];
+
+        const currentActivityModeTypes =
+            currentCharData.currentActivityModeTypes;
+
+        if (
+            !currentActivityModeTypes ||
+            !(
+                currentActivityModeTypes.includes(Mode.ALL_PVP.id) ||
+                currentActivityModeTypes.includes(Mode.PRIVATE_MATCHES_ALL.id)
+            )
+        ) {
+            //NOTE: will fail if modes data is wrong. could go off of mode and manually check it in our code
+            //not a PVP activity
+            return;
+        }
+
+        const currentModeId = currentCharData.currentActivityModeType;
+        const mode = Mode.fromId(currentModeId);
+        const location = manifest.getActivityDefinition(
+            currentCharData.currentActivityHash
+        );
+
+        this.#currentActivity = {
+            character: currentChar,
+            mode,
+            location,
+        };
+    }
+
+    get currentActivity() {
+        return this.#currentActivity;
     }
 
     get lastActiveCharacterProfile() {

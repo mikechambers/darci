@@ -2,9 +2,11 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import ErrorContainerView from "../../components/ErrorContainerView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
+import PageSectionView from "../../components/PageSectionView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../core/consts";
 import { useFetchPlayerProfile } from "../../hooks/remote";
+import CurrentActivityView from "./components/CurrentActivityView";
 
 const pageLinks = [
     {
@@ -34,12 +36,21 @@ const ProfileView = (props) => {
         return <ErrorContainerView errors={[error]} />;
     }
 
-    console.log(profile);
-
     return (
         <div id="page_nav" className="page_containter">
             <div className="page_content">
                 <ScreenNavigationView links={pageLinks} />
+
+                <div>
+                    <PageSectionView
+                        id="current"
+                        title="Current PVP Activity"
+                        description="Current PVP Activity"
+                    />
+                    <CurrentActivityView
+                        currentActivity={profile.currentActivity}
+                    />
+                </div>
             </div>
         </div>
     );
