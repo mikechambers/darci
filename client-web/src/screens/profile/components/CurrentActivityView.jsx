@@ -1,4 +1,5 @@
 import React from "react";
+import ActivityInfoView from "../../../components/ActivityInfoView";
 import NoActivityImage from "./images/pvp_no_activity.jpg";
 
 const summaryStyleBase = {
@@ -10,11 +11,18 @@ const summaryStyleBase = {
     borderRadius: 4,
     display: "flex",
     flexDirection: "column",
-    //alignItems: "space-around",
+    justifyContent: "flex-end",
+};
+
+const activityInfoStyle = {
+    padding: "var(--padding-content)",
 };
 
 const CurrentActivityView = (props) => {
     const currentActivity = props.currentActivity;
+    console.log(currentActivity);
+    const modeInfo = currentActivity ? currentActivity.modeInfo : undefined;
+    const mapName = currentActivity ? currentActivity.location.name : undefined;
 
     const backgroundImage = currentActivity
         ? currentActivity.location.image
@@ -25,7 +33,15 @@ const CurrentActivityView = (props) => {
         backgroundImage: `url(${backgroundImage})`,
     };
 
-    return <div style={summaryStyle}></div>;
+    console.log(currentActivity);
+
+    return (
+        <div style={summaryStyle}>
+            <div style={activityInfoStyle}>
+                <ActivityInfoView modeInfo={modeInfo} mapName={mapName} />
+            </div>
+        </div>
+    );
 };
 
 export default CurrentActivityView;

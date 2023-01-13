@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { SEASON_OF_THE_FORGE } from "shared/packages/enums/Moment";
 import ErrorContainerView from "../../components/ErrorContainerView";
 import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PageSectionView from "../../components/PageSectionView";
+import RefreshStatusView from "../../components/RefreshStatusView";
 import ScreenNavigationView from "../../components/ScreenNavigationView";
 import { PLAYER_VIEW_REFRESH_INTERVAL } from "../../core/consts";
 import { useFetchPlayerProfile } from "../../hooks/remote";
@@ -20,13 +22,19 @@ const ProfileView = (props) => {
     const memberId = params.memberId;
     const platformId = params.platformId;
 
-    const refreshInterval = PLAYER_VIEW_REFRESH_INTERVAL;
+    const refreshInterval = 15 * 1000;
 
     const [profile, isLoading, error] = useFetchPlayerProfile(
         refreshInterval,
         memberId,
         platformId
     );
+
+    const [lastUpdate, setLastUpdate] = useState();
+
+    useEffect(() => {
+        setLastUpdate(new Date());
+    }, [profile]);
 
     if (isLoading) {
         return <LoadingAnimationView message="Loading Player data." />;
@@ -40,6 +48,12 @@ const ProfileView = (props) => {
         <div id="page_nav" className="page_containter">
             <div className="page_content">
                 <ScreenNavigationView links={pageLinks} />
+
+                <RefreshStatusView
+                    lastUpdate={lastUpdate}
+                    refreshInterval={refreshInterval}
+                    align="left"
+                />
 
                 <div>
                     <PageSectionView

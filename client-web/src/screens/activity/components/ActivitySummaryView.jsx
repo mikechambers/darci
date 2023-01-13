@@ -26,6 +26,7 @@ import React from "react";
 import { DateTime, Interval } from "luxon";
 import DurationView from "../../../components/DurationView";
 import { capitalize } from "../../../core/utils/string";
+import ActivityInfoView from "../../../components/ActivityInfoView";
 
 const scoreStyle = {
     padding: "var(--padding-content)",
@@ -65,16 +66,6 @@ const matchTimeStyle = {
     whiteSpace: "nowrap",
 };
 
-const modeMapContainerStyle = {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-};
-
-const dividerStyle = {
-    margin: 0,
-};
-
 const teamScoresStyle = {
     display: "flex",
     flexDirection: "row",
@@ -99,12 +90,6 @@ const summaryStyleBase = {
     //alignItems: "space-around",
 };
 
-const modeIconStyleBase = {
-    width: 70,
-    height: 70,
-    backgroundSize: "cover",
-};
-
 const ActivitySummaryView = (props) => {
     const details = props.details;
     const teams = props.teams;
@@ -112,11 +97,6 @@ const ActivitySummaryView = (props) => {
     const summaryStyle = {
         ...summaryStyleBase,
         backgroundImage: `url(${details.map.image})`,
-    };
-
-    let modeIconStyle = {
-        ...modeIconStyleBase,
-        backgroundImage: `url(${details.modeInfo.icon})`,
     };
 
     let alphaTeam = teams[0];
@@ -172,20 +152,10 @@ const ActivitySummaryView = (props) => {
             <div style={spacerContainerStyle}></div>
             <div style={gameInfoContainterStyle}>
                 <div style={gameInfoStyle}>
-                    <div style={modeMapContainerStyle}>
-                        <div style={modeIconStyle}></div>
-                        <div className="activity_mode_name">
-                            <div className="activity_map_name">
-                                {details.map.name}
-                            </div>
-                            <div>
-                                <hr style={dividerStyle} />
-                            </div>
-                            <div className="activity_mode_name">
-                                {details.modeInfo.name}
-                            </div>
-                        </div>
-                    </div>
+                    <ActivityInfoView
+                        modeInfo={details.modeInfo}
+                        mapName={details.map.name}
+                    />
                 </div>
                 <div style={matchTimeStyle}>
                     <div>{periodHuman}</div>
