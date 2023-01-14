@@ -9,13 +9,14 @@ import RefreshStatusView from "../../../../components/RefreshStatusView";
 import { useFetchPlayerProfile } from "../../../../hooks/remote";
 import CurrentActivityView from "./CurrentActivityView";
 import CompExperienceView from "./CompExperienceView";
+import TrialsExperienceView from "./TrialsExperienceView";
+import IronBannerExperienceView from "./IronBannerExperienceView";
+import ValorExperienceView from "./ValorExperienceView";
 
 const rootStyle = {
-    width: 780,
-    height: 120,
     display: "flex",
     flexDirection: "column",
-    gap: 4,
+    gap: "var(--gap-list-item)",
     justifyContent: "flex-end",
 };
 
@@ -26,12 +27,12 @@ const refreshStyle = {
     width: "100%",
 };
 
-const backgroundStyleBase = {
-    height: "100%",
-    width: "100%",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    borderRadius: 4,
+const expListStyle = {
+    display: "flex",
+    flexDirection: "row",
+    gap: "var(--gap-list-item)",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
 };
 
 const PlayerProfileView = (props) => {
@@ -64,17 +65,24 @@ const PlayerProfileView = (props) => {
 
     return (
         <div style={rootStyle}>
-            <CurrentActivityView currentActivity={currentActivity} />
-            <div style={refreshStyle}>
-                <RefreshStatusView
-                    lastUpdate={lastUpdate}
-                    refreshInterval={refreshInterval}
-                    align="left"
-                    showLabel={false}
-                    width="100%"
-                />
+            <div>
+                <CurrentActivityView currentActivity={currentActivity} />
+                <div style={refreshStyle}>
+                    <RefreshStatusView
+                        lastUpdate={lastUpdate}
+                        refreshInterval={refreshInterval}
+                        align="left"
+                        showLabel={false}
+                        width="100%"
+                    />
+                </div>
             </div>
-            <CompExperienceView profile={profile} />
+            <div style={expListStyle}>
+                <ValorExperienceView profile={profile} />
+                <CompExperienceView profile={profile} />
+                <IronBannerExperienceView profile={profile} />
+                <TrialsExperienceView profile={profile} />
+            </div>
         </div>
     );
 };

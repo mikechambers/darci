@@ -18,8 +18,8 @@ const opacityLayerStyle = {
 };
 
 const backgroundStyleBase = {
-    height: "100%",
     width: "100%",
+    height: 120,
     backgroundSize: "cover",
     backgroundPosition: "center",
     borderRadius: 4,

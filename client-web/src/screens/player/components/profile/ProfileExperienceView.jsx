@@ -1,6 +1,7 @@
 import React from "react";
 import RoundedImageView from "../../../../components/RoundedImageView";
 import StatView from "../../../../components/StatView";
+import { RIGHT } from "../../../../core/consts";
 
 const dataContainerStyle = {
     width: "100%",
@@ -26,7 +27,7 @@ const valuesStyle = {
 
 const ProfileExperienceView = (props) => {
     const progression = props.progression;
-    const title = props.title ? `${props.title} : ` : "";
+    const title = props.title ? `${props.title}` : "";
 
     return (
         <div style={containerStyle}>
@@ -34,25 +35,31 @@ const ProfileExperienceView = (props) => {
                 height={64}
                 width={64}
                 image={progression.step.icon}
-                //backgroundColor="var(--color-list-item-detail-background)"
-                backgroundColor="#3b4569"
+                backgroundColor="var(--color-list-item-detail-background)"
             />
             <div style={dataContainerStyle}>
-                <div className="subsection_header">{`${title}${progression.step.name}`}</div>
+                <div className="subsection_header">{`${title}`}</div>
 
                 <div style={valuesStyle}>
                     <StatView
-                        value={progression.currentProgress}
-                        label="level"
-                        key="level"
+                        value={progression.step.name.toLocaleUpperCase()}
+                        label="rank"
+                        key="rank"
                     />
                     <StatView
-                        value={`+${
+                        value={progression.currentProgress}
+                        label="exp"
+                        key="exp"
+                    />
+                    <StatView
+                        value={`${
                             progression.nextLevelAt -
-                            progression.progressToNextLevel
+                            progression.progressToNextLevel +
+                            progression.currentProgress
                         }`}
-                        label="Next"
+                        label="Next lvl"
                         key="next"
+                        align={RIGHT}
                     />
                 </div>
             </div>

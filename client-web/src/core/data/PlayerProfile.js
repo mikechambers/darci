@@ -145,6 +145,7 @@ class PlayerProfile {
                     nextLevelAt: ironBannerProgression.nextLevelAt,
                     progressToNextLevel:
                         ironBannerProgression.progressToNextLevel,
+                    step,
                 };
 
                 let trialsPassageIds = manifest.trialsPassageIds;
@@ -195,12 +196,17 @@ class PlayerProfile {
                 }
 
                 const trialsProgression = progressions[TRIALS_PROGRESSION_ID];
+                step = manifest.getProgressionStep(
+                    TRIALS_PROGRESSION_ID,
+                    trialsProgression.level
+                );
                 trials = {
                     level: trialsProgression.level,
                     currentProgress: trialsProgression.currentProgress,
                     nextLevelAt: trialsProgression.nextLevelAt,
                     progressToNextLevel: trialsProgression.progressToNextLevel,
                     currentCard: currentCard,
+                    step,
                 };
             }
 
