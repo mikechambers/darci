@@ -18,7 +18,7 @@ const containerStyle = {
     borderRadius: "var(--radius-border)",
     padding: "12px",
     //gap: "var(--gap-list-item)",
-    width: 260,
+    width: 266,
 };
 
 const valuesStyle = {

@@ -611,7 +611,7 @@ export const useFetchPlayerProfile = (
         return () => {
             cleanUpTimeout(timeoutId);
         };
-    }, []);
+    }, [memberId, platformId]);
 
     return [output.profile, output.isLoading, output.error];
 };
