@@ -51,6 +51,7 @@ import LoadingAnimationView from "../../components/LoadingAnimationView";
 import PlayerMetaWeaponsDetailView from "./components/PlayerMetaWeaponsDetailView";
 import ErrorContainerView from "../../components/ErrorContainerView";
 import LobbyMetaView from "./components/LobbyMetaView";
+import PlayerProfileView from "./components/profile/PlayerProfileView";
 
 const { useQuery } = require("../../hooks/browser");
 
@@ -76,6 +77,10 @@ const itemDetailsStyle = {
 };
 
 const pageLinks = [
+    {
+        value: "Profile",
+        id: "profile",
+    },
     {
         value: "Overview",
         id: "overview",
@@ -110,6 +115,9 @@ const PlayerView = () => {
     let params = useParams();
     let query = useQuery();
 
+    const memberId = params.memberId;
+    const platformId = params.platformId;
+
     let mode = Mode.fromType(params.mode);
 
     let startMoment;
@@ -136,7 +144,7 @@ const PlayerView = () => {
     let [playerSummary, isPlayerSummaryLoading, playerSummaryLoadError] =
         useFetchPlayerSummary({
             refreshInterval: PLAYER_VIEW_REFRESH_INTERVAL,
-            memberId: params.memberId,
+            memberId: memberId,
             mode,
             startMoment,
             endMoment,
@@ -150,7 +158,7 @@ const PlayerView = () => {
         playerActivitiesLoadError,
     ] = useFetchPlayerActivities({
         refreshInterval: PLAYER_VIEW_REFRESH_INTERVAL,
-        memberId: params.memberId,
+        memberId: memberId,
         mode,
         startMoment,
         endMoment,
@@ -227,7 +235,7 @@ const PlayerView = () => {
         <div id="page_nav" className="page_containter">
             <div className="page_content">
                 <ScreenNavigationView links={pageLinks} />
-                <div id="overview">
+                <div>
                     <PlayerActivitiesHeader
                         player={player}
                         classSelection={characterClass}
@@ -237,6 +245,24 @@ const PlayerView = () => {
                         momentType={momentType}
                     />
                 </div>
+
+                <PageSectionView
+                    id="profile"
+                    title="Profile"
+                    description="Your weapon stats"
+                />
+
+                <PlayerProfileView
+                    memberId={memberId}
+                    platformId={platformId}
+                />
+
+                <PageSectionView
+                    id="overview"
+                    title="Overview"
+                    description="Your weapon stats"
+                />
+
                 <RefreshStatusView
                     lastUpdate={lastUpdate}
                     refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}

@@ -23,13 +23,13 @@
 
 import { CharacterClass, Mode } from "shared";
 
-const GLORY_PROGRESSION_ID = "1647151960";
-
+//const GLORY_PROGRESSION_ID = "1647151960";
+const COMP_PROGRESSION_ID = "3696598664";
 const VALOR_PROGRESSION_ID = "2083746873";
 const TRIALS_PROGRESSION_ID = "2755675426";
 const IRON_BANNER_PROGRESSION_ID = "599071390";
 
-const GLORY_STREAK_ID = "2572719399";
+//const GLORY_STREAK_ID = "2572719399";
 const VALOR_STREAK_ID = "2203850209";
 
 //IB streak? 4271189086
@@ -97,44 +97,54 @@ class PlayerProfile {
             //let glory = {};
             let ironBanner = {};
             let trials = {};
+            let competitive = {};
 
             if (progressions) {
+                const valorProgression = progressions[VALOR_PROGRESSION_ID];
+
+                let step = manifest.getProgressionStep(
+                    VALOR_PROGRESSION_ID,
+                    valorProgression.level
+                );
+
                 valor = {
-                    currentProgress:
-                        progressions[VALOR_PROGRESSION_ID].currentProgress,
-                    nextLevelAt: progressions[VALOR_PROGRESSION_ID].nextLevelAt,
-                    progressToNextLevel:
-                        progressions[VALOR_PROGRESSION_ID].progressToNextLevel,
+                    level: valorProgression.level,
+                    currentProgress: valorProgression.currentProgress,
+                    nextLevelAt: valorProgression.nextLevelAt,
+                    progressToNextLevel: valorProgression.progressToNextLevel,
                     streak: progressions[VALOR_STREAK_ID].currentProgress,
-                    currentResetCount:
-                        progressions[VALOR_STREAK_ID].currentResetCount,
+                    step,
                 };
 
-                /*
-                glory = {
-                    currentProgress:
-                        progressions[GLORY_PROGRESSION_ID].currentProgress,
-                    nextLevelAt: progressions[GLORY_PROGRESSION_ID].nextLevelAt,
-                    progressToNextLevel:
-                        progressions[GLORY_PROGRESSION_ID].progressToNextLevel,
-                    streak: progressions[GLORY_STREAK_ID].currentProgress,
+                const compProgression = progressions[COMP_PROGRESSION_ID];
+
+                step = manifest.getProgressionStep(
+                    COMP_PROGRESSION_ID,
+                    compProgression.level
+                );
+
+                competitive = {
+                    level: compProgression.level,
+                    currentProgress: compProgression.currentProgress,
+                    nextLevelAt: compProgression.nextLevelAt,
+                    progressToNextLevel: compProgression.progressToNextLevel,
+                    step,
                 };
-                */
+
+                const ironBannerProgression =
+                    progressions[IRON_BANNER_PROGRESSION_ID];
+
+                step = manifest.getProgressionStep(
+                    IRON_BANNER_PROGRESSION_ID,
+                    ironBannerProgression.level
+                );
 
                 ironBanner = {
-                    currentProgress:
-                        progressions[IRON_BANNER_PROGRESSION_ID]
-                            .currentProgress,
-                    nextLevelAt:
-                        progressions[IRON_BANNER_PROGRESSION_ID].nextLevelAt,
+                    level: ironBannerProgression.level,
+                    currentProgress: ironBannerProgression.currentProgress,
+                    nextLevelAt: ironBannerProgression.nextLevelAt,
                     progressToNextLevel:
-                        progressions[IRON_BANNER_PROGRESSION_ID]
-                            .progressToNextLevel,
-                    streak: progressions[IRON_BANNER_PROGRESSION_ID]
-                        .currentProgress,
-                    currentResetCount:
-                        progressions[IRON_BANNER_PROGRESSION_ID]
-                            .currentResetCount,
+                        ironBannerProgression.progressToNextLevel,
                 };
 
                 let trialsPassageIds = manifest.trialsPassageIds;
@@ -184,13 +194,12 @@ class PlayerProfile {
                     };
                 }
 
+                const trialsProgression = progressions[TRIALS_PROGRESSION_ID];
                 trials = {
-                    currentProgress:
-                        progressions[TRIALS_PROGRESSION_ID].currentProgress,
-                    nextLevelAt:
-                        progressions[TRIALS_PROGRESSION_ID].nextLevelAt,
-                    progressToNextLevel:
-                        progressions[TRIALS_PROGRESSION_ID].progressToNextLevel,
+                    level: trialsProgression.level,
+                    currentProgress: trialsProgression.currentProgress,
+                    nextLevelAt: trialsProgression.nextLevelAt,
+                    progressToNextLevel: trialsProgression.progressToNextLevel,
                     currentCard: currentCard,
                 };
             }
@@ -202,10 +211,10 @@ class PlayerProfile {
             let out = {
                 character: character,
                 progressions: {
-                    trials: trials,
-                    valor: valor,
-                    //glory: glory,
-                    ironBanner: ironBanner,
+                    trials,
+                    valor,
+                    competitive,
+                    ironBanner,
                 },
             };
 

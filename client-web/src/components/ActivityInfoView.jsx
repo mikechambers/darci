@@ -4,6 +4,7 @@ const modeMapContainerStyle = {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    width: "100%",
 };
 
 const modeIconStyleBase = {
@@ -16,12 +17,25 @@ const dividerStyle = {
     margin: 0,
 };
 
+const noActivityStyle = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    font: "var(--regular) 26px 'Roboto'",
+};
+
 const ActivityInfoView = (props) => {
     const mapName = props.mapName;
     const modeInfo = props.modeInfo;
 
-    const icon = !!modeInfo ? modeInfo.icon : undefined;
-    const modeName = !!modeInfo ? modeInfo.name : "Not in a PVP Match";
+    if (!modeInfo) {
+        return <div style={noActivityStyle}>Not Currently in a Match</div>;
+    }
+
+    const icon = modeInfo.icon;
+    const modeName = modeInfo.name;
 
     let modeIconStyle = {
         ...modeIconStyleBase,

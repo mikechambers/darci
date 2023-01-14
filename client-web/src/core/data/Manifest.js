@@ -55,6 +55,41 @@ class Manifest {
         return this.#manifestData.data.weaponItemDefinition;
     }
 
+    getProgressionStep(id, level) {
+        let out = {
+            name: "Unknown",
+            icon: undefined,
+        };
+
+        const p = this.getProgressionDefinition(id);
+
+        const steps = p.steps;
+        if (steps.length < level) {
+            return out;
+        }
+
+        return steps[level];
+    }
+
+    getProgressionDefinition(id) {
+        let out = {
+            id: id,
+            steps: [],
+        };
+
+        if (!this.#manifestData.data.progressionDefinitions) {
+            return out;
+        }
+
+        let d = this.#manifestData.data.progressionDefinitions[id];
+
+        if (!d) {
+            return out;
+        }
+
+        return d;
+    }
+
     getWeaponDefinition(id) {
         let out = {
             name: "Unknown",

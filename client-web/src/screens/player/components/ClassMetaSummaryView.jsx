@@ -5,11 +5,6 @@ import StatView from "../../../components/StatView";
 import { RIGHT } from "../../../core/consts";
 import { formatFloat, formatPercentInt } from "../../../core/utils/string";
 
-const rootStyle = {
-    display: "flex",
-    flexDirection: "column",
-};
-
 const dataContainerStyle = {
     width: "100%",
     display: "flex",

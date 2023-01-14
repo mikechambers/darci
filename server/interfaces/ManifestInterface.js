@@ -43,6 +43,7 @@ class ManifestInterface {
     #select_emblem_definitions;
     #select_medal_record_definition;
     #select_collectible_definition;
+    #select_experience_progressions;
 
     #manifestDbPath;
     #manifestInfoPath;
@@ -109,6 +110,18 @@ class ManifestInterface {
     }
 
     #initStatements() {
+        this.#select_experience_progressions = this.#db.prepare(`
+            SELECT
+                *
+            FROM
+                DestinyProgressionDefinition
+            WHERE
+                id = -598368632 OR
+                id = 2083746873 OR
+                id = -1539291870 OR
+                id = 599071390
+        `);
+
         this.#select_weapon_item_definitions = this.#db.prepare(`
         SELECT
             *
@@ -408,15 +421,39 @@ class ManifestInterface {
             emblemDefinitions[id] = out;
         }
 
+        rows = this.#select_experience_progressions.all();
+
+        let progressionDefinitions = {};
+        for (const row of rows) {
+            let d = JSON.parse(row.json);
+
+            const hash = d.hash;
+
+            let steps = [];
+
+            for (const step of d.steps) {
+                steps.push({
+                    name: step.stepName,
+                    icon: createResourceUrl(step.icon),
+                });
+            }
+
+            progressionDefinitions[hash] = {
+                id: hash,
+                steps,
+            };
+        }
+
         this.#manifest = {
             version: this.#version,
             data: {
-                activityDefinition: activityDefinition,
-                weaponItemDefinition: weaponItemDefinition,
-                medalDefinitions: medalDefinitions,
-                trialsPassageItemDefinitions: trialsPassageItemDefinitions,
-                activityModeDefinitions: activityModeDefinitions,
-                emblemDefinitions: emblemDefinitions,
+                activityDefinition,
+                weaponItemDefinition,
+                medalDefinitions,
+                trialsPassageItemDefinitions,
+                activityModeDefinitions,
+                emblemDefinitions,
+                progressionDefinitions,
             },
         };
     }

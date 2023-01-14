@@ -27,8 +27,7 @@ import { DateTime } from "luxon";
 import { useEffect, useState } from "react";
 import { calculatePercent } from "shared/packages/utils";
 
-const barContainerStyle = {
-    width: "50%",
+const barContainerStyleBase = {
     backgroundColor: "#FFFFFF22",
 };
 
@@ -36,6 +35,7 @@ const elementStyleBase = {
     display: "flex",
     flexDirection: "column",
     rowGap: 4,
+    height: "100%",
 };
 
 const barStyleBase = {
@@ -47,6 +47,8 @@ const RefreshStatusView = (props) => {
     const lastUpdate = props.lastUpdate;
     const refreshInterval = props.refreshInterval;
     const align = props.align;
+    const showLabel = props.showLabel !== undefined ? props.showLabel : true;
+    const width = props.width ? props.width : "50%";
 
     let elementAlign = "flex-start";
     if (align === "center") {
@@ -108,12 +110,19 @@ const RefreshStatusView = (props) => {
         width: `${percent.toFixed(2)}%`,
     };
 
+    const barContainerStyle = {
+        ...barContainerStyleBase,
+        width: width,
+    };
+
+    const labelDiv = showLabel ? <div>{s}</div> : "";
+
     return (
         <div style={elementStyle}>
             <div style={barContainerStyle}>
                 <div style={barStyle}></div>
             </div>
-            <div>{s}</div>
+            {labelDiv}
         </div>
     );
 };
