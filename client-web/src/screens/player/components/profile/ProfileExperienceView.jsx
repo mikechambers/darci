@@ -2,6 +2,7 @@ import React from "react";
 import RoundedImageView from "../../../../components/RoundedImageView";
 import StatView from "../../../../components/StatView";
 import { RIGHT } from "../../../../core/consts";
+import { formatInt } from "../../../../core/utils/string";
 
 const dataContainerStyle = {
     width: "100%",
@@ -57,11 +58,11 @@ const ProfileExperienceView = (props) => {
                         key="exp"
                     />
                     <StatView
-                        value={`${
+                        value={`${formatInt(
                             progression.nextLevelAt -
-                            progression.progressToNextLevel +
-                            progression.currentProgress
-                        }`}
+                                progression.progressToNextLevel +
+                                progression.currentProgress
+                        )}`}
                         label="Next lvl"
                         key="next"
                     />
@@ -70,7 +71,7 @@ const ProfileExperienceView = (props) => {
                         if (showResets) {
                             return (
                                 <StatView
-                                    value={progression.resets}
+                                    value={formatInt(progression.resets)}
                                     label="resets"
                                     key="resets"
                                     align={RIGHT}
