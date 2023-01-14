@@ -254,8 +254,10 @@ export const useFetchPlayerActivities = (args) => {
 
     const { global, dispatchGlobal } = useContext(GlobalContext);
     const manifest = global.manifest;
-
+    let [lastTimeoutId, setLastTimeoutId] = useState();
     useEffect(() => {
+        cleanUpTimeout(lastTimeoutId);
+        let out = reducer(output, "isLoading", true);
         if (
             !manifest ||
             !memberId ||
@@ -291,8 +293,10 @@ export const useFetchPlayerActivities = (args) => {
             setOutput(s);
 
             timeoutId = startTimeout(f, refreshInterval);
+            setLastTimeoutId(timeoutId);
         };
 
+        setOutput(out);
         f();
 
         return () => {
@@ -331,7 +335,10 @@ export const useFetchPlayerSummary = (args) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
     const manifest = global.manifest;
 
+    let [lastTimeoutId, setLastTimeoutId] = useState();
     useEffect(() => {
+        cleanUpTimeout(lastTimeoutId);
+        let out = reducer(output, "isLoading", true);
         if (
             !manifest ||
             !memberId ||
@@ -362,8 +369,10 @@ export const useFetchPlayerSummary = (args) => {
             setOutput(s);
 
             timeoutId = startTimeout(f, refreshInterval);
+            setLastTimeoutId(timeoutId);
         };
 
+        setOutput(out);
         f();
 
         return () => {
@@ -436,7 +445,9 @@ export const useFetchPlayerMetrics = (
     const { global, dispatchGlobal } = useContext(GlobalContext);
     const manifest = global.manifest;
 
+    let [lastTimeoutId, setLastTimeoutId] = useState();
     useEffect(() => {
+        cleanUpTimeout(lastTimeoutId);
         if (!memberId || !platformId) {
             return;
         }
@@ -458,6 +469,7 @@ export const useFetchPlayerMetrics = (
 
             setOutput(s);
             timeoutId = startTimeout(f, refreshInterval);
+            setLastTimeoutId(timeoutId);
         };
 
         f();
@@ -466,7 +478,7 @@ export const useFetchPlayerMetrics = (
         return () => {
             cleanUpTimeout(timeoutId);
         };
-    }, []);
+    }, [memberId, platformId]);
 
     return [output.metrics, output.isLoading, output.error];
 };
@@ -582,8 +594,12 @@ export const useFetchPlayerProfile = (
     const { global, dispatchGlobal } = useContext(GlobalContext);
     const manifest = global.manifest;
 
+    let [lastTimeoutId, setLastTimeoutId] = useState();
     useEffect(() => {
+        cleanUpTimeout(lastTimeoutId);
+
         let out = reducer(output, "isLoading", true);
+
         if (!memberId || !platformId) {
             return;
         }
@@ -604,11 +620,14 @@ export const useFetchPlayerProfile = (
 
             setOutput(s);
             timeoutId = startTimeout(f, refreshInterval);
+            setLastTimeoutId(timeoutId);
         };
 
         setOutput(out);
         f();
 
+        //store last timeoutId, and if useEffect is called with differnt member,
+        //then manually clear previous one
         let timeoutId;
         return () => {
             cleanUpTimeout(timeoutId);
