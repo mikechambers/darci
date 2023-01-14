@@ -583,6 +583,7 @@ export const useFetchPlayerProfile = (
     const manifest = global.manifest;
 
     useEffect(() => {
+        let out = reducer(output, "isLoading", true);
         if (!memberId || !platformId) {
             return;
         }
@@ -605,6 +606,7 @@ export const useFetchPlayerProfile = (
             timeoutId = startTimeout(f, refreshInterval);
         };
 
+        setOutput(out);
         f();
 
         let timeoutId;
