@@ -190,6 +190,7 @@ body {
 
 .subsection_header {
   font:var(--font-subsection-header);
+  text-transform: capitalize;
 }
 
 .section_entry {

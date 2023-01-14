@@ -113,6 +113,7 @@ class PlayerProfile {
                     nextLevelAt: valorProgression.nextLevelAt,
                     progressToNextLevel: valorProgression.progressToNextLevel,
                     streak: progressions[VALOR_STREAK_ID].currentProgress,
+                    resets: valorProgression.currentResetCount,
                     step,
                 };
 
@@ -145,6 +146,7 @@ class PlayerProfile {
                     nextLevelAt: ironBannerProgression.nextLevelAt,
                     progressToNextLevel:
                         ironBannerProgression.progressToNextLevel,
+                    resets: ironBannerProgression.currentResetCount,
                     step,
                 };
 
@@ -205,7 +207,8 @@ class PlayerProfile {
                     currentProgress: trialsProgression.currentProgress,
                     nextLevelAt: trialsProgression.nextLevelAt,
                     progressToNextLevel: trialsProgression.progressToNextLevel,
-                    currentCard: currentCard,
+                    resets: trialsProgression.currentResetCount,
+                    currentCard,
                     step,
                 };
             }

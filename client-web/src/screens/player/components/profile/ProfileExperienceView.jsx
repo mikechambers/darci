@@ -27,7 +27,17 @@ const valuesStyle = {
 
 const ProfileExperienceView = (props) => {
     const progression = props.progression;
-    const title = props.title ? `${props.title}` : "";
+    const showResets = props.showResets !== undefined ? props.showResets : true;
+
+    //Sometimes first string is all uppercase, sometimes capitalized
+    //This is the make is consistent as Foo and not FOO
+    let n = progression.step.name.split(" ");
+
+    if (n.length > 0) {
+        n[0] = n[0].toLocaleLowerCase();
+        n[0] = n[0].charAt(0).toUpperCase() + n[0].slice(1);
+    }
+    const title = props.title ? `${props.title} : ${n.join(" ")}` : "";
 
     return (
         <div style={containerStyle}>
@@ -42,11 +52,6 @@ const ProfileExperienceView = (props) => {
 
                 <div style={valuesStyle}>
                     <StatView
-                        value={progression.step.name.toLocaleUpperCase()}
-                        label="rank"
-                        key="rank"
-                    />
-                    <StatView
                         value={progression.currentProgress}
                         label="exp"
                         key="exp"
@@ -59,8 +64,20 @@ const ProfileExperienceView = (props) => {
                         }`}
                         label="Next lvl"
                         key="next"
-                        align={RIGHT}
                     />
+
+                    {(() => {
+                        if (showResets) {
+                            return (
+                                <StatView
+                                    value={progression.resets}
+                                    label="resets"
+                                    key="resets"
+                                    align={RIGHT}
+                                />
+                            );
+                        }
+                    })()}
                 </div>
             </div>
         </div>

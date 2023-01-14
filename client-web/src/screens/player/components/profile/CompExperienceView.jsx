@@ -14,6 +14,7 @@ const CompExperienceView = (props) => {
         <ProfileExperienceView
             progression={char.progressions.competitive}
             title="Competitive"
+            showResets={false}
         />
     );
 };
