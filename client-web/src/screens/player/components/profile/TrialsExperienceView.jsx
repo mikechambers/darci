@@ -10,8 +10,6 @@ const TrialsExperienceView = (props) => {
 
     const char = profile.lastActiveCharacterProfile;
 
-    console.log(char);
-
     return (
         <ProfileExperienceView
             progression={char.progressions.trials}

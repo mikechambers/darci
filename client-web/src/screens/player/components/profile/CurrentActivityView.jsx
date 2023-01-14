@@ -29,6 +29,9 @@ const CurrentActivityView = (props) => {
     const currentActivity = props.currentActivity;
     const modeInfo = currentActivity ? currentActivity.modeInfo : undefined;
     const mapName = currentActivity ? currentActivity.location.name : undefined;
+    const playlist = currentActivity
+        ? currentActivity.playlist.name
+        : undefined;
 
     const backgroundImage = currentActivity
         ? currentActivity.location.image
@@ -43,7 +46,11 @@ const CurrentActivityView = (props) => {
         <div style={backgroundStyle}>
             <div style={opacityLayerStyle}>
                 <div style={summaryStyle}>
-                    <ActivityInfoView modeInfo={modeInfo} mapName={mapName} />
+                    <ActivityInfoView
+                        modeInfo={modeInfo}
+                        playlist={playlist}
+                        mapName={mapName}
+                    />
                 </div>
             </div>
         </div>

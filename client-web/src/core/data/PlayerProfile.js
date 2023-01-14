@@ -271,6 +271,7 @@ class PlayerProfile {
         const currentModeId = currentCharData.currentActivityModeType;
         let mode = Mode.fromId(currentModeId);
 
+        /*
         //fix / workaround for https://github.com/Bungie-net/api/issues/1767
         if (currentCharData.currentPlaylistActivityHash === 3959500077) {
             switch (mode) {
@@ -306,9 +307,13 @@ class PlayerProfile {
                 }
             }
         }
-
+*/
         const location = manifest.getActivityDefinition(
             currentCharData.currentActivityHash
+        );
+
+        const playlist = manifest.getActivityDefinition(
+            currentCharData.currentPlaylistActivityHash
         );
 
         const modeInfo = manifest.getModeInfo(mode);
@@ -319,6 +324,7 @@ class PlayerProfile {
             modeInfo,
             modes,
             location,
+            playlist,
         };
     }
 

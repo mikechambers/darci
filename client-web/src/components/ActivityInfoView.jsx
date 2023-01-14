@@ -29,13 +29,16 @@ const noActivityStyle = {
 const ActivityInfoView = (props) => {
     const mapName = props.mapName;
     const modeInfo = props.modeInfo;
+    const playlist = props.playlist;
 
     if (!modeInfo) {
         return <div style={noActivityStyle}>Not Currently in a Match</div>;
     }
 
     const icon = modeInfo.icon;
-    const modeName = modeInfo.name;
+    const modeName = playlist
+        ? `${playlist} : ${modeInfo.name}`
+        : modeInfo.name;
 
     let modeIconStyle = {
         ...modeIconStyleBase,
