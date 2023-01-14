@@ -226,6 +226,11 @@ class Manifest {
 
         out = Object.assign(out, m);
 
+        //workaround for https://github.com/Bungie-net/api/issues/1762
+        if (out.id === 1639772990) {
+            out.name = "Iron Banner : Zone Control";
+        }
+
         return out;
     }
 

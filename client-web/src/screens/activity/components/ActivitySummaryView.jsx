@@ -79,8 +79,8 @@ const scoreDivider = {
 };
 
 const summaryStyleBase = {
-    width: 700,
-    height: 400,
+    width: 800,
+    height: 500,
 
     backgroundSize: "cover",
 
