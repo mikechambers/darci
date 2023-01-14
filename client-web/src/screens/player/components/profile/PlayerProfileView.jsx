@@ -12,6 +12,7 @@ import CompExperienceView from "./CompExperienceView";
 import TrialsExperienceView from "./TrialsExperienceView";
 import IronBannerExperienceView from "./IronBannerExperienceView";
 import ValorExperienceView from "./ValorExperienceView";
+import TrialsCardView from "./images/TrialsCardView";
 
 const rootStyle = {
     display: "flex",
@@ -32,7 +33,7 @@ const expListStyle = {
     flexDirection: "row",
     gap: "var(--gap-list-item)",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
 };
 
 const PlayerProfileView = (props) => {
@@ -82,6 +83,7 @@ const PlayerProfileView = (props) => {
                 <CompExperienceView profile={profile} />
                 <IronBannerExperienceView profile={profile} />
                 <TrialsExperienceView profile={profile} />
+                <TrialsCardView profile={profile} />
             </div>
         </div>
     );

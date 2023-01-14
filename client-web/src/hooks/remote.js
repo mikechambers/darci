@@ -588,9 +588,11 @@ export const useFetchPlayerProfile = (
         }
         const f = async () => {
             let s = reducer(output, "isLoading", false);
+
+            const rnd = new Date().getTime();
             try {
                 const data = await fetchDestinyApi(
-                    `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=100,200,202,204,1000`
+                    `https://www.bungie.net/Platform/Destiny2/${platformId}/Profile/${memberId}/?components=200,202,204,1000&rnd=${rnd}`
                 );
 
                 let profile = new PlayerProfile(data, manifest);

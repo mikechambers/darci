@@ -271,43 +271,6 @@ class PlayerProfile {
         const currentModeId = currentCharData.currentActivityModeType;
         let mode = Mode.fromId(currentModeId);
 
-        /*
-        //fix / workaround for https://github.com/Bungie-net/api/issues/1767
-        if (currentCharData.currentPlaylistActivityHash === 3959500077) {
-            switch (mode) {
-                case Mode.CONTROL: {
-                    mode = Mode.PRIVATE_MATCHES_CONTROL;
-                    break;
-                }
-                case Mode.CLASH: {
-                    mode = Mode.PRIVATE_MATCHES_CLASH;
-                    break;
-                }
-                case Mode.SUPREMACY: {
-                    mode = Mode.PRIVATE_MATCHES_SUPREMACY;
-                    break;
-                }
-                case Mode.COUNTDOWN: {
-                    mode = Mode.PRIVATE_MATCHES_COUNTDOWN;
-                    break;
-                }
-                case Mode.SURVIVAL: {
-                    mode = Mode.PRIVATE_MATCHES_SURVIVAL;
-                    break;
-                }
-                case Mode.MAYHEM: {
-                    mode = Mode.PRIVATE_MATCHES_MAYHEM;
-                    break;
-                }
-                case Mode.RUMBLE: {
-                    mode = Mode.PRIVATE_MATCHES_RUMBLE;
-                    break;
-                }
-                default: {
-                }
-            }
-        }
-*/
         const location = manifest.getActivityDefinition(
             currentCharData.currentActivityHash
         );
