@@ -68,6 +68,12 @@ class Manifest {
             return out;
         }
 
+        //if you are at max exp, then your level will be one higher than
+        //the number of steps. So, we have to reduce it by one
+        if (level === steps.length) {
+            level--;
+        }
+
         return steps[level];
     }
 

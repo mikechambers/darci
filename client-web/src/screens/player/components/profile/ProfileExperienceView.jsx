@@ -30,6 +30,10 @@ const ProfileExperienceView = (props) => {
     const progression = props.progression;
     const showResets = props.showResets !== undefined ? props.showResets : true;
 
+    if (!progression) {
+        return <div style={containerStyle}></div>;
+    }
+
     //Sometimes first string is all uppercase, sometimes capitalized
     //This is the make is consistent as Foo and not FOO
     let n = progression.step.name.split(" ");
