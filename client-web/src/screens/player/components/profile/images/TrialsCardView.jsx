@@ -2,8 +2,8 @@ import React from "react";
 import RoundedImageView from "../../../../../components/RoundedImageView";
 import StatView from "../../../../../components/StatView";
 import { RIGHT } from "../../../../../core/consts";
-import OverlayTrialsFlawlessView from "../../../../overlay/components/OverlayTrialsFlawlessView";
 import ProfileFlawlessView from "../ProfileFlawlessView";
+import ProfileMercyView from "../ProfileMercyView";
 import ProfilePassageStatusView from "../ProfilePassageStatusView";
 
 const dataContainerStyle = {
@@ -14,13 +14,11 @@ const dataContainerStyle = {
     marginLeft: "12px",
 };
 
-const containerStyle = {
+const containerStyleBase = {
     display: "flex",
     backgroundColor: "var(--color-list-item-background)",
     borderRadius: "var(--radius-border)",
     padding: "12px",
-    //gap: "var(--gap-list-item)",
-    width: 360,
 };
 
 const valuesStyle = {
@@ -38,6 +36,14 @@ const TrialsCardView = (props) => {
         return "";
     }
 
+    const mercy = card.passage.id === 1600065451;
+    const containerStyle = {
+        ...containerStyleBase,
+        width: mercy ? 420 : 360,
+    };
+
+    let mercyDiv = mercy ? <ProfileMercyView card={card} /> : "";
+
     return (
         <div style={containerStyle}>
             <RoundedImageView
@@ -52,6 +58,7 @@ const TrialsCardView = (props) => {
                 <div style={valuesStyle}>
                     <ProfilePassageStatusView card={card} />
                     <ProfileFlawlessView flawless={card.isFlawless} />
+                    {mercyDiv}
 
                     <StatView
                         value={card.roundsWon}

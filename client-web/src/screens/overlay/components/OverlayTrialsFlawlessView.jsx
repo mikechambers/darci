@@ -1,9 +1,5 @@
 import React from "react";
-import CardSwatchView, {
-    CARD_EMPTY,
-    CARD_FLAWLESS,
-    CARD_NO_FLAWLESS,
-} from "./CardSwatchView";
+import CardSwatchView, { CARD_EMPTY, CARD_FILLED } from "./CardSwatchView";
 
 const rootStyle = {
     display: "flex",
@@ -16,10 +12,10 @@ const OverlayTrialsFlawlessView = (props) => {
 
     let type;
 
-    if (flawless === undefined) {
+    if (flawless === undefined || flawless === false) {
         type = CARD_EMPTY;
     } else {
-        type = flawless ? CARD_FLAWLESS : CARD_NO_FLAWLESS;
+        type = CARD_FILLED;
     }
 
     return (

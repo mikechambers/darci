@@ -1,10 +1,5 @@
 import React from "react";
-import SwatchView from "../../../components/SwatchView";
-import CardSwatchView, {
-    CARD_EMPTY,
-    CARD_FLAWLESS,
-    CARD_WIN,
-} from "./CardSwatchView";
+import CardSwatchView, { CARD_EMPTY, CARD_FILLED } from "./CardSwatchView";
 
 const listStyle = {
     display: "flex",
@@ -31,7 +26,7 @@ const PassageStatusView = (props) => {
                 {[...Array(7)].map((item, index) => {
                     const t =
                         index < card.wins ? (
-                            <CardSwatchView type={CARD_WIN} key={index} />
+                            <CardSwatchView type={CARD_FILLED} key={index} />
                         ) : (
                             <CardSwatchView type={CARD_EMPTY} key={index} />
                         );

@@ -1,34 +1,22 @@
 import React from "react";
-import CardSwatchView, {
+import {
     CARD_EMPTY,
-    CARD_FLAWLESS,
-    CARD_NO_FLAWLESS,
+    CARD_FILLED,
 } from "../../../overlay/components/CardSwatchView";
-
-const rootStyle = {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    alignItems: "flex-end",
-};
+import ProfileCardStatView from "./ProfileCardStatView";
 
 const ProfileFlawlessView = (props) => {
     const flawless = props.flawless;
 
     let type;
 
-    if (flawless === undefined) {
+    if (flawless === undefined || flawless === false) {
         type = CARD_EMPTY;
     } else {
-        type = flawless ? CARD_FLAWLESS : CARD_NO_FLAWLESS;
+        type = CARD_FILLED;
     }
 
-    return (
-        <div style={rootStyle}>
-            <CardSwatchView type={type} />
-            <div className="label">Flawless</div>
-        </div>
-    );
+    return <ProfileCardStatView type={type} label="flawless" />;
 };
 
 export default ProfileFlawlessView;

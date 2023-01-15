@@ -2,7 +2,7 @@ import React from "react";
 
 import CardSwatchView, {
     CARD_EMPTY,
-    CARD_WIN,
+    CARD_FILLED,
 } from "../../../overlay/components/CardSwatchView";
 
 const listStyle = {
@@ -27,7 +27,7 @@ const ProfilePassageStatusView = (props) => {
                 {[...Array(7)].map((item, index) => {
                     const t =
                         index < card.wins ? (
-                            <CardSwatchView type={CARD_WIN} key={index} />
+                            <CardSwatchView type={CARD_FILLED} key={index} />
                         ) : (
                             <CardSwatchView type={CARD_EMPTY} key={index} />
                         );
