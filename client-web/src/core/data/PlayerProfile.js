@@ -28,6 +28,7 @@ const COMP_PROGRESSION_ID = "3696598664";
 const VALOR_PROGRESSION_ID = "2083746873";
 const TRIALS_PROGRESSION_ID = "2755675426";
 const IRON_BANNER_PROGRESSION_ID = "599071390";
+export const MERCY_PASSAGE_ID = 1600065451;
 
 //const GLORY_STREAK_ID = "2572719399";
 const VALOR_STREAK_ID = "2203850209";
@@ -194,12 +195,48 @@ class PlayerProfile {
                     }
 
                     const passage = manifest.getTrialsPassageDefinition(id);
+
+                    let hasMercy = false;
+                    let showMercy = false;
+                    if (id === MERCY_PASSAGE_ID) {
+                        const uninstancedItemPerks =
+                            data.characterProgressions.data[cId][
+                                "uninstancedItemPerks"
+                            ];
+
+                        if (
+                            uninstancedItemPerks &&
+                            uninstancedItemPerks[MERCY_PASSAGE_ID]
+                        ) {
+                            const perks =
+                                uninstancedItemPerks[MERCY_PASSAGE_ID].perks;
+
+                            for (const p of perks) {
+                                //Forgives one loss per run
+                                if (p.perkHash === 989028955) {
+                                    hasMercy = p.visible;
+                                    showMercy = true;
+                                }
+
+                                /*
+                                if (p.perkHash === 1349727737) {
+                                    //Loss Has Been Forgiven
+                                    hasMercy = !p.visible;
+                                    showMercy = true;
+                                }
+                                */
+                            }
+                        }
+                    }
+
                     currentCard = {
-                        wins: wins,
-                        losses: losses,
-                        roundsWon: roundsWon,
-                        isFlawless: isFlawless,
-                        passage: passage,
+                        wins,
+                        losses,
+                        roundsWon,
+                        isFlawless,
+                        passage,
+                        showMercy,
+                        hasMercy,
                     };
                 }
 

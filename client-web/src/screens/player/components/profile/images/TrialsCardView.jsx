@@ -5,6 +5,7 @@ import { RIGHT } from "../../../../../core/consts";
 import ProfileFlawlessView from "../ProfileFlawlessView";
 import ProfileMercyView from "../ProfileMercyView";
 import ProfilePassageStatusView from "../ProfilePassageStatusView";
+import MERCY_PASSAGE_ID from "../../../../../core/data/PlayerProfile";
 
 const dataContainerStyle = {
     width: "100%",
@@ -36,13 +37,12 @@ const TrialsCardView = (props) => {
         return "";
     }
 
-    const mercy = card.passage.id === 1600065451;
     const containerStyle = {
         ...containerStyleBase,
-        width: mercy ? 420 : 360,
+        width: card.showMercy ? 420 : 360,
     };
 
-    let mercyDiv = mercy ? <ProfileMercyView card={card} /> : "";
+    let mercyDiv = card.showMercy ? <ProfileMercyView card={card} /> : "";
 
     return (
         <div style={containerStyle}>

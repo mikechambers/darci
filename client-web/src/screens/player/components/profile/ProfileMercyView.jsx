@@ -8,7 +8,7 @@ import ProfileCardStatView from "./ProfileCardStatView";
 const ProfileMercyView = (props) => {
     const card = props.card;
 
-    let type = card.isFlawless && !card.losses ? CARD_FILLED : CARD_EMPTY;
+    let type = card.hasMercy ? CARD_FILLED : CARD_EMPTY;
 
     return <ProfileCardStatView type={type} label="mercy" />;
 };
