@@ -23,7 +23,7 @@
 
 import React from "react";
 
-import PlayerInfoView from "./ActivityPlayerInfoView";
+import ActivityPlayerInfoView from "./ActivityPlayerInfoView";
 import PlayerActivityDetailListItemHeader from "../../../components/PlayerActivityDetailListItemHeader";
 import DetailListIndicatorView from "./DetailListIndicatorView";
 
@@ -40,12 +40,13 @@ const ActivityPlayerListItemHeader = (props) => {
             stats={stats}
             player={player}
             topStats={topStats}
+            showMercy={false}
         >
             <DetailListIndicatorView
                 color={teamStyleColor}
                 description="Fireteam"
             />
-            <PlayerInfoView player={player} />
+            <ActivityPlayerInfoView player={player} />
         </PlayerActivityDetailListItemHeader>
     );
 };

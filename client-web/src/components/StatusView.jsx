@@ -25,15 +25,24 @@ import React from "react";
 
 import { ReactComponent as JoinedLateIcon } from "./images/tabler/joined_late_icon.svg";
 import { ReactComponent as JoinedLateLeftEarlyIcon } from "./images/tabler/joined_late_left_early_icon.svg";
+import { ReactComponent as MercyIcon } from "./images/tabler/mercy_icon.svg";
 
 const rotateStyle = { transform: "rotate(180deg)" };
+
+const rootStyle = {
+    display: "flex",
+    flexDirection: "column",
+    gap: 2,
+};
+
 const StatusView = (props) => {
     const joinedLate = props.joinedLate;
     const completed = props.completed;
+    const mercy = props.mercy;
 
-    const dimension = props.dimension ? props.dimension : 18;
+    const dimension = props.dimension ? props.dimension : 16;
 
-    let statusIcon = <div></div>;
+    let statusIcon = "";
     if (!completed) {
         statusIcon = (
             <JoinedLateIcon
@@ -65,7 +74,23 @@ const StatusView = (props) => {
         );
     }
 
-    return statusIcon;
+    let mercyDiv = "";
+    if (mercy) {
+        mercyDiv = (
+            <MercyIcon
+                width={dimension}
+                height={dimension}
+                title="Game ended in mercy"
+            />
+        );
+    }
+
+    return (
+        <div style={rootStyle}>
+            {statusIcon}
+            {mercyDiv}
+        </div>
+    );
 };
 
 export default StatusView;

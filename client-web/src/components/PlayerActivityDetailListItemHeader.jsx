@@ -5,6 +5,7 @@ import { SMALL } from "../core/consts";
 
 import React from "react";
 import ListLinkIndicatorView from "./ListLinkIndicatorView";
+import { CompletionReason } from "shared";
 
 const rootStyle = {
     display: "grid",
@@ -23,8 +24,12 @@ const PlayerActivityDetailListItemHeader = (props) => {
     const stats = props.stats;
     const topStats = props.topStats;
     const onClick = props.onClick;
+    const showMercy = props.showMercy === false ? false : true;
 
     const goldMedals = stats.extended.medals.filter((m) => m.info.isGold);
+
+    const mercy =
+        showMercy && stats.completionReason === CompletionReason.MERCY;
 
     return (
         <div className="list_item_header clickable" style={rootStyle}>
@@ -34,6 +39,7 @@ const PlayerActivityDetailListItemHeader = (props) => {
                 <StatusView
                     completed={stats.completed}
                     joinedLate={stats.joinedLate}
+                    mercy={mercy}
                 />
             </div>
             <CompactMedalsList medals={goldMedals} size={SMALL} />
