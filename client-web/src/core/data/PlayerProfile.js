@@ -83,8 +83,14 @@ class PlayerProfile {
     #lastActiveCharacterProfile;
     #currentActivity;
 
+    #timestamp;
+    #secondaryTimestamp;
+
     constructor(data, manifest) {
-        //this.#data = data;
+        this.#timestamp = new Date(data.responseMintedTimestamp);
+        this.#secondaryTimestamp = new Date(
+            data.secondaryComponentsMintedTimestamp
+        );
 
         let lastActiveCharacterProfile = undefined;
         this.#characterProfiles = [];
@@ -305,6 +311,14 @@ class PlayerProfile {
 
     get member() {
         return undefined;
+    }
+
+    get timestamp() {
+        return this.#timestamp;
+    }
+
+    get secondaryTimestamp() {
+        return this.#secondaryTimestamp;
     }
 }
 

@@ -26,7 +26,7 @@ import PlayerSummary from "../core/data/PlayerSummary";
 import PlayerProfile from "../core/data/PlayerProfile";
 import Activity from "../core/data/Activity";
 
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, useRef } from "react";
 import Manifest from "../core/data/Manifest";
 
 import { MANIFEST_CHECK_INTERVAL } from "../core/consts";
@@ -595,6 +595,9 @@ export const useFetchPlayerProfile = (
     const manifest = global.manifest;
 
     let [lastTimeoutId, setLastTimeoutId] = useState();
+    //let [mostRecentTimeStamp, setMostRecentTimeStamp] = useState();
+
+    const mostRecentTimeStampRef = useRef();
     useEffect(() => {
         cleanUpTimeout(lastTimeoutId);
 
@@ -606,6 +609,7 @@ export const useFetchPlayerProfile = (
         const f = async () => {
             let s = reducer(output, "isLoading", false);
 
+            let shouldUpdate = true;
             const rnd = new Date().getTime();
             try {
                 const data = await fetchDestinyApi(
@@ -613,12 +617,24 @@ export const useFetchPlayerProfile = (
                 );
 
                 let profile = new PlayerProfile(data, manifest);
-                s = reducer(s, "profile", profile);
+
+                if (
+                    !mostRecentTimeStampRef.current ||
+                    profile.timestamp > mostRecentTimeStampRef.current
+                ) {
+                    console.log("fresh data : using");
+                    s = reducer(s, "profile", profile);
+                    mostRecentTimeStampRef.current = profile.timestamp;
+                } else {
+                    shouldUpdate = false;
+                }
             } catch (err) {
                 s = reducer(s, "error", err);
             }
 
-            setOutput(s);
+            if (shouldUpdate) {
+                setOutput(s);
+            }
             timeoutId = startTimeout(f, refreshInterval);
             setLastTimeoutId(timeoutId);
         };
