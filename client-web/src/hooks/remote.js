@@ -622,7 +622,6 @@ export const useFetchPlayerProfile = (
                     !mostRecentTimeStampRef.current ||
                     profile.timestamp > mostRecentTimeStampRef.current
                 ) {
-                    console.log("fresh data : using");
                     s = reducer(s, "profile", profile);
                     mostRecentTimeStampRef.current = profile.timestamp;
                 } else {
