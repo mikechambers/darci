@@ -30,7 +30,7 @@ import StatCollectionView from "../../../components/StatCollectionView";
 const PlayerWeaponStatSummaryView = (props) => {
     let total = props.total;
     let primary = props.primary;
-    let secondary = props.secondary;
+    let special = props.special;
     let heavy = props.heavy;
 
     let values = [
@@ -39,8 +39,8 @@ const PlayerWeaponStatSummaryView = (props) => {
             label: "primary",
         },
         {
-            value: calculatePercent(secondary, total).toFixed() + "%",
-            label: "secondary",
+            value: calculatePercent(special, total).toFixed() + "%",
+            label: "special",
         },
         {
             value: calculatePercent(heavy, total).toFixed() + "%",

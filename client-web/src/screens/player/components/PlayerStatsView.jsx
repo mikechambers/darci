@@ -128,7 +128,7 @@ const APlayerStatsView = (props) => {
             <PlayerWeaponStatSummaryView
                 total={summary.weaponKills}
                 primary={summary.primaryAmmoKills}
-                secondary={summary.specialAmmoKills}
+                special={summary.specialAmmoKills}
                 heavy={summary.heavyAmmoKills}
             />
         </div>
