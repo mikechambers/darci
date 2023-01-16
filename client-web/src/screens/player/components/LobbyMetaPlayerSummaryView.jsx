@@ -57,7 +57,7 @@ const LobbyMetaPlayerSummaryView = (props) => {
         <div style={rootStyle}>
             <StatView label="Players" value={count} />
             <StatView label="KD" value={formatFloat(kd)} align={RIGHT} />
-            <StatView label="KD" value={formatFloat(eff)} align={RIGHT} />
+            <StatView label="EFF" value={formatFloat(eff)} align={RIGHT} />
 
             <StatView
                 label="Kills / p"
