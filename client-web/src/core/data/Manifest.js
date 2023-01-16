@@ -70,11 +70,11 @@ class Manifest {
 
         //if you are at max exp, then your level will be one higher than
         //the number of steps. So, we have to reduce it by one
-        if (level === steps.length) {
-            level--;
-        }
+        //if (level === steps.length) {
+        //    level--;
+        //}
 
-        return steps[level];
+        return steps[Math.min(level, steps.length - 1)];
     }
 
     getProgressionDefinition(id) {
