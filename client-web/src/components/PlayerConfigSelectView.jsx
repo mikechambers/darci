@@ -101,10 +101,27 @@ const PlayerConfigSelectView = (props) => {
     });
 
     useEffect(() => {
+        console.log(player, players);
         if (players && players.length) {
+            let p = player;
             if (!player) {
-                setPlayer(players[0]);
+                p = players[0];
+            } else {
+                let found = false;
+                for (const pl of players) {
+                    if (player.memberId === p.memberId) {
+                        p = pl;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    p = players[0];
+                }
             }
+
+            setPlayer(p);
         }
     }, [players]);
 
