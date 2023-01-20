@@ -192,25 +192,19 @@ class Mode extends EnumBase {
     static RIFT_COMPETITIVE = new Mode(
         "RiftCompetitive",
         700,
-        "Rift Competitive"
-    );
-
-    static RIFT_COMPETITIVE = new Mode(
-        "RiftCompetitive",
-        700,
-        "Rift Competitive"
+        "Competitive Rift"
     );
 
     static SHOWDOWN_COMPETITIVE = new Mode(
         "ShowdownCompetitive",
         701,
-        "Showdown Competitive"
+        "Competitive Showdown"
     );
 
     static SURVIVAL_COMPETITIVE = new Mode(
         "SurvivalCompetitive",
         702,
-        "Survival Competitive"
+        "Competitive Survival"
     );
 
     constructor(type, id, label = undefined) {
