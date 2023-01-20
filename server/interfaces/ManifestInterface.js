@@ -23,6 +23,7 @@
 
 const Database = require("better-sqlite3");
 const fs = require("fs");
+const { Mode } = require("shared");
 const { createResourceUrl } = require("shared/packages/utils");
 
 const MANIFEST_CHECK_INTERVAL_MS_MIN = 1000 * 60 * 60; //1 min
@@ -402,6 +403,27 @@ class ManifestInterface {
 
             activityModeDefinitions[d.modeType] = out;
         }
+
+        //Rift Competitive
+        activityModeDefinitions[Mode.RIFT_COMPETITIVE.id] = {
+            ...activityModeDefinitions[Mode.RIFT.id],
+            name: "Rift: Competitive",
+            mode: Mode.RIFT_COMPETITIVE.id,
+        };
+
+        //Showdown Competitive
+        activityModeDefinitions[Mode.SHOWDOWN_COMPETITIVE.id] = {
+            ...activityModeDefinitions[Mode.SHOWDOWN.id],
+            name: "Showdown: Competitive",
+            mode: Mode.SHOWDOWN_COMPETITIVE.id,
+        };
+
+        //Survival Competitive
+        activityModeDefinitions[Mode.SURVIVAL_COMPETITIVE.id] = {
+            ...activityModeDefinitions[Mode.SURVIVAL.id],
+            name: "Survival: Competitive",
+            mode: Mode.SURVIVAL_COMPETITIVE.id,
+        };
 
         rows = this.#select_emblem_definitions.all();
 

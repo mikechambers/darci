@@ -189,6 +189,30 @@ class Mode extends EnumBase {
         "Iron Banner Zone Control"
     );
 
+    static RIFT_COMPETITIVE = new Mode(
+        "RiftCompetitive",
+        700,
+        "Rift Competitive"
+    );
+
+    static RIFT_COMPETITIVE = new Mode(
+        "RiftCompetitive",
+        700,
+        "Rift Competitive"
+    );
+
+    static SHOWDOWN_COMPETITIVE = new Mode(
+        "ShowdownCompetitive",
+        701,
+        "Showdown Competitive"
+    );
+
+    static SURVIVAL_COMPETITIVE = new Mode(
+        "SurvivalCompetitive",
+        702,
+        "Survival Competitive"
+    );
+
     constructor(type, id, label = undefined) {
         super(type, id, label);
     }
