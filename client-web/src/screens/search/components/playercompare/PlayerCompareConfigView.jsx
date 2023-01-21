@@ -5,7 +5,6 @@ import CharacterClassSelectionSelect from "../../../../components/CharacterClass
 import ModeSelect from "../../../../components/ModeSelect";
 import PlayerSelect from "../../../../components/PlayerSelect";
 import { GlobalContext } from "../../../../contexts/GlobalContext";
-import { reducer } from "../../../../core/utils/data";
 import PeriodSearchConfigView from "../PeriodSearchConfigView";
 
 const formContainerStyle = {

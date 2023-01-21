@@ -101,7 +101,6 @@ const PlayerConfigSelectView = (props) => {
     });
 
     useEffect(() => {
-        console.log(player, players);
         if (players && players.length) {
             let p = player;
             if (!player) {

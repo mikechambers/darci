@@ -143,6 +143,7 @@ app.get(
             startMoment: startMoment.toString(),
             endMoment: endMoment.toString(),
             mode: mode.toString(),
+            modeId: mode.id,
             classSelection: characterClassSelection.toString(),
             executionTime: new Date().getTime() - startTime,
         };
@@ -245,6 +246,7 @@ app.get(
             startMoment: startMoment.toString(),
             endMoment: endMoment.toString(),
             mode: mode.toString(),
+            modeId: mode.id,
             classSelection: characterClassSelection.toString(),
             executionTime: new Date().getTime() - startTime,
         };

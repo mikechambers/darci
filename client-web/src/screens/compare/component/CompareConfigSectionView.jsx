@@ -1,6 +1,6 @@
 import React from "react";
 import PlayerNameView from "../../../components/PlayerNameView";
-import { Moment, Season } from "shared";
+import { Mode, Moment, Season } from "shared";
 import { SEASON_TYPE } from "../../../core/consts";
 
 const CompareConfigSectionView = (props) => {
@@ -30,8 +30,8 @@ const CompareConfigSectionView = (props) => {
             </div>
             <div className="compare_row compare_data_row">
                 <div>Mode</div>
-                <div>{summary1.query.mode}</div>
-                <div>{summary1.query.mode}</div>
+                <div>{Mode.fromId(summary1.query.modeId).label}</div>
+                <div>{Mode.fromId(summary2.query.modeId).label}</div>
                 <div></div>
             </div>
             <div className="compare_row compare_data_row">
