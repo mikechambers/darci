@@ -1,5 +1,9 @@
 import React from "react";
-import { calculateRatio } from "shared/packages/utils";
+import {
+    calculateEfficiency,
+    calculateKillsDeathsRatio,
+    calculateRatio,
+} from "shared/packages/utils";
 import RoundedImageView from "../../../components/RoundedImageView";
 import StatView from "../../../components/StatView";
 import { RIGHT } from "../../../core/consts";
@@ -35,9 +39,9 @@ const ClassMetaSummaryView = (props) => {
     const percent = formatPercentInt(calculateRatio(data.count, playerCount));
     const winPercent = formatPercentInt(calculateRatio(data.wins, data.count));
 
-    const kd = formatFloat(calculateRatio(data.kills, data.deaths));
+    const kd = formatFloat(calculateKillsDeathsRatio(data.kills, data.deaths));
     const eff = formatFloat(
-        calculateRatio(data.kills + data.deaths, data.deaths)
+        calculateEfficiency(data.kills, data.deaths, data.assists)
     );
 
     return (
