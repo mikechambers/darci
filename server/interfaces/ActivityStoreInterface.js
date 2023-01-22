@@ -118,6 +118,7 @@ class ActivityStoreInterface {
                 member_id = @memberId`
         );
 
+        //TODO: does this need an ORDER BY AND LIMIT?
         this.#select_activity = this.#db.prepare(`
             SELECT
                 CAST(activity.activity_id as TEXT) as activity_id,
