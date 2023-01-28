@@ -39,6 +39,8 @@ import { ReactComponent as ChevronsDown } from "./images/tabler/chevrons-down.sv
 import { ReactComponent as ChevronsUp } from "./images/tabler/chevrons-up.svg";
 import { ReactComponent as Alert } from "./images/tabler/alert-triangle.svg";
 
+import { ReactComponent as CloseIcon } from "./images/tabler/square-x.svg";
+
 import { ReactComponent as Hunter } from "./images/hunter.svg";
 import { ReactComponent as Warlock } from "./images/warlock.svg";
 import { ReactComponent as Titan } from "./images/titan.svg";
@@ -58,6 +60,8 @@ export const SEARCH_ICON = "SEARCH_ICON";
 
 export const CHEVRONS_DOWN = "CHEVRONS_DOWN";
 export const CHEVRONS_UP = "CHEVRONS_UP";
+
+export const CLOSE_ICON = "CLOSE_ICON";
 
 export const ALERT_ICON = "ALERT_ICON";
 
@@ -99,6 +103,16 @@ const Icon = (props) => {
             out = (
                 <Titan
                     title="Titan"
+                    width={width}
+                    height={width}
+                    style={style}
+                />
+            );
+            break;
+        case CLOSE_ICON:
+            out = (
+                <CloseIcon
+                    title={title}
                     width={width}
                     height={width}
                     style={style}

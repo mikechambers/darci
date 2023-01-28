@@ -25,11 +25,15 @@ import React, { useState } from "react";
 import { FixedSizeList as List } from "react-window";
 import { AmmunitionType, ItemSubType } from "shared";
 import SelectView from "../../../components/SelectView";
+import TextOutputView from "../../../components/TextOutputView";
 import { LEFT } from "../../../core/consts";
 import PlayerWeaponsDetailListItem from "./PlayerWeaponsDetailListItem";
 
 const elementStyle = {
+    display: "flex",
+    flexDirection: "column",
     width: "422px",
+    gap: 2,
 };
 
 const ITEM_HEIGHT = 100;
@@ -41,6 +45,12 @@ const configStyle = {
     justifyContent: "space-between",
 };
 
+const exportStyle = {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+};
+
 const PlayerWeaponsDetailList = (props) => {
     const onSortChange = props.onSortChange;
     let weapons = props.weapons;
@@ -48,6 +58,7 @@ const PlayerWeaponsDetailList = (props) => {
     const sortOptions = props.sortOptions;
 
     const [filterIndex, setFilterIndex] = useState(0);
+    const [displayExport, setDisplayExport] = useState(false);
 
     let itemKey = (index, weapons) => weapons[index].id;
 
@@ -113,7 +124,32 @@ const PlayerWeaponsDetailList = (props) => {
         setFilterIndex(index);
     };
 
+    const onClick = (e) => {
+        e.preventDefault();
+        setDisplayExport(!displayExport);
+    };
+
     weapons = weapons.filter(filterOptions[filterIndex].filter);
+
+    const generateMarkdown = () => {
+        var out = [];
+
+        out.push("|NAME|TYPE|GAMES|KILLS|KILLS/G|PRECISION|");
+        out.push("|---|---|---:|---:|---:|---:|");
+        const v = (item) => {
+            return item.formatter(item.value);
+        };
+
+        for (const w of weapons) {
+            out.push(
+                `|${w.weapon.name}|${w.weapon.itemSubType.label}|${v(
+                    w.items[0]
+                )}|${v(w.items[1])}|${v(w.items[2])}|${v(w.items[3])}|`
+            );
+        }
+
+        return out.join("\n");
+    };
 
     return (
         <div style={elementStyle}>
@@ -135,6 +171,23 @@ const PlayerWeaponsDetailList = (props) => {
             >
                 {PlayerWeaponsDetailListItem}
             </List>
+            <div style={exportStyle} className="link" onClick={onClick}>
+                export
+            </div>
+            {(() => {
+                if (displayExport) {
+                    return (
+                        <TextOutputView
+                            value={generateMarkdown()}
+                            onClose={() => {
+                                setDisplayExport(false);
+                            }}
+                        />
+                    );
+                } else {
+                    return "";
+                }
+            })()}
         </div>
     );
 };
