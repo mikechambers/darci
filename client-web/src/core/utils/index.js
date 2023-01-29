@@ -23,20 +23,6 @@
 
 import { MOMENT_TYPE } from "../consts";
 
-/*
-export const calculateRatio = (a, b) => {
-    if (!b) {
-        return 0;
-    }
-
-    return a / b;
-};
-
-export const calculatePercent = (value, total) => {
-    return calculateRatio(value, total) * 100.0;
-};
-*/
-
 /***
 {
   player,
@@ -68,4 +54,21 @@ export const createPlayerUrl = function (opts) {
     let url = `/player/${opts.player.memberId}/${opts.player.platformId}/${opts.characterClass.type}/${opts.mode.type}/${opts.periodType}/${seasonStartMomentString}/${lastArgStr}?fr=${ts}${orderByStr}`;
 
     return url;
+};
+
+export const downloadTextAsFile = function (text, filename) {
+    const link = document.createElement("a");
+
+    // Create a blog object with the file content which you want to add to the file
+    const file = new Blob([text], { type: "text/plain" });
+
+    // Add file content in the object URL
+    link.href = URL.createObjectURL(file);
+
+    // Add file name
+    link.download = filename;
+
+    // Add click event to <a> tag to save file.
+    link.click();
+    URL.revokeObjectURL(link.href);
 };

@@ -1,4 +1,6 @@
 import React from "react";
+import ExportData from "../core/data/export/ExportData";
+import { downloadTextAsFile } from "../core/utils";
 import Icon, { CLOSE_ICON } from "./Icon";
 
 const rootStyle = {
@@ -40,13 +42,19 @@ const iconContainerStyle = {
 };
 
 const TextOutputView = (props) => {
-    const value = props.value ? props.value : "";
+    const data = props.data;
     const onClose = props.onClose;
 
     const handleClose = (e) => {
         if (onClose) {
             onClose();
         }
+    };
+
+    const text = data ? data.export(ExportData.MARKDOWN) : "";
+
+    const handleSave = (e) => {
+        downloadTextAsFile(text, "darci.markdown");
     };
 
     return (
@@ -62,7 +70,7 @@ const TextOutputView = (props) => {
                     cols="50"
                     autoComplete="off"
                     readOnly={true}
-                    value={value}
+                    value={text}
                     id="export-area"
                 />
                 <div style={buttonContainerStyle}>
@@ -75,6 +83,7 @@ const TextOutputView = (props) => {
                     >
                         Copy
                     </button>
+                    <button onClick={handleSave}>Download</button>
                 </div>
             </div>
         </div>

@@ -26,7 +26,8 @@ import { FixedSizeList as List } from "react-window";
 import { AmmunitionType, ItemSubType } from "shared";
 import SelectView from "../../../components/SelectView";
 import TextOutputView from "../../../components/TextOutputView";
-import { LEFT } from "../../../core/consts";
+import { LEFT, RIGHT } from "../../../core/consts";
+import ExportData from "../../../core/data/export/ExportData";
 import PlayerWeaponsDetailListItem from "./PlayerWeaponsDetailListItem";
 
 const elementStyle = {
@@ -131,24 +132,34 @@ const PlayerWeaponsDetailList = (props) => {
 
     weapons = weapons.filter(filterOptions[filterIndex].filter);
 
-    const generateMarkdown = () => {
-        var out = [];
+    const generateData = () => {
+        const d = new ExportData();
 
-        out.push("|NAME|TYPE|GAMES|KILLS|KILLS/G|PRECISION|");
-        out.push("|---|---|---:|---:|---:|---:|");
+        d.addHeader("NAME", LEFT);
+        d.addHeader("TYPE", LEFT);
+        d.addHeader("GAMES", RIGHT);
+        d.addHeader("KILLS", RIGHT);
+        d.addHeader("KILLS/G", RIGHT);
+        d.addHeader("PRECISION", RIGHT);
+
         const v = (item) => {
             return item.formatter(item.value);
         };
 
         for (const w of weapons) {
-            out.push(
-                `|${w.weapon.name}|${w.weapon.itemSubType.label}|${v(
-                    w.items[0]
-                )}|${v(w.items[1])}|${v(w.items[2])}|${v(w.items[3])}|`
-            );
+            let row = [];
+
+            row.push(w.weapon.name);
+            row.push(w.weapon.itemSubType.label);
+            row.push(v(w.items[0]));
+            row.push(v(w.items[1]));
+            row.push(v(w.items[2]));
+            row.push(v(w.items[3]));
+
+            d.addRow(row);
         }
 
-        return out.join("\n");
+        return d;
     };
 
     return (
@@ -178,7 +189,7 @@ const PlayerWeaponsDetailList = (props) => {
                 if (displayExport) {
                     return (
                         <TextOutputView
-                            value={generateMarkdown()}
+                            data={generateData()}
                             onClose={() => {
                                 setDisplayExport(false);
                             }}
