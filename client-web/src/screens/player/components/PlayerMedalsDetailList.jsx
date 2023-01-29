@@ -38,7 +38,7 @@ const titleStyle = {
     justifyContent: "flex-end",
 };
 
-const ITEM_HEIGHT = 122;
+const ITEM_HEIGHT = 114;
 const MAX_HEIGHT = 488;
 const PlayerMedalsDetailList = (props) => {
     let medals = props.medals;

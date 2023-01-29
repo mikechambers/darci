@@ -37,10 +37,6 @@ const containerStyle = {
     //gap: "var(--gap-list-item)",
 };
 
-const gapStyle = {
-    height: "var(--gap-list-item)",
-};
-
 const dataContainerStyle = {
     width: "100%",
     display: "flex",
@@ -114,7 +110,6 @@ const PlayerMedalsDetailListItem = (props) => {
                     />
                 </div>
             </div>
-            <div style={gapStyle}>&nbsp;</div>
         </div>
     );
 };

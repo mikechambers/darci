@@ -35,10 +35,6 @@ const containerStyle = {
     //gap: "var(--gap-list-item)",
 };
 
-const gapStyle = {
-    width: "var(--gap-list-item)",
-};
-
 const dataContainerStyle = {
     width: "100%",
     display: "flex",
@@ -110,7 +106,6 @@ const PlayerWeaponsDetailListItem = (props) => {
                     </div>
                 </div>
             </div>
-            <div style={gapStyle}></div>
         </div>
     );
 };
