@@ -40,6 +40,7 @@ import { ReactComponent as ChevronsUp } from "./images/tabler/chevrons-up.svg";
 import { ReactComponent as Alert } from "./images/tabler/alert-triangle.svg";
 
 import { ReactComponent as CloseIcon } from "./images/tabler/square-x.svg";
+import { ReactComponent as DownloadIcon } from "./images/tabler/file-download.svg";
 
 import { ReactComponent as Hunter } from "./images/hunter.svg";
 import { ReactComponent as Warlock } from "./images/warlock.svg";
@@ -62,6 +63,7 @@ export const CHEVRONS_DOWN = "CHEVRONS_DOWN";
 export const CHEVRONS_UP = "CHEVRONS_UP";
 
 export const CLOSE_ICON = "CLOSE_ICON";
+export const DOWNLOAD_ICON = "DOWNLOAD_ICON";
 
 export const ALERT_ICON = "ALERT_ICON";
 
@@ -119,6 +121,18 @@ const Icon = (props) => {
                 />
             );
             break;
+
+        case DOWNLOAD_ICON:
+            out = (
+                <DownloadIcon
+                    title={title}
+                    width={width}
+                    height={width}
+                    style={style}
+                />
+            );
+            break;
+
         case PRECISION_ICON:
             out = (
                 <PrecisionIcon

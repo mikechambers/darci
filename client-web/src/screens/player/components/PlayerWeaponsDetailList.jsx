@@ -24,8 +24,8 @@
 import React, { useState } from "react";
 import { FixedSizeList as List } from "react-window";
 import { AmmunitionType, ItemSubType } from "shared";
+import ExportDataView from "../../../components/ExportDataView";
 import SelectView from "../../../components/SelectView";
-import TextOutputView from "../../../components/TextOutputView";
 import { LEFT, RIGHT } from "../../../core/consts";
 import ExportData from "../../../core/data/export/ExportData";
 import PlayerWeaponsDetailListItem from "./PlayerWeaponsDetailListItem";
@@ -49,7 +49,7 @@ const configStyle = {
 const exportStyle = {
     display: "flex",
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
 };
 
 const PlayerWeaponsDetailList = (props) => {
@@ -59,7 +59,6 @@ const PlayerWeaponsDetailList = (props) => {
     const sortOptions = props.sortOptions;
 
     const [filterIndex, setFilterIndex] = useState(0);
-    const [displayExport, setDisplayExport] = useState(false);
 
     let itemKey = (index, weapons) => weapons[index].id;
 
@@ -125,11 +124,6 @@ const PlayerWeaponsDetailList = (props) => {
         setFilterIndex(index);
     };
 
-    const onClick = (e) => {
-        e.preventDefault();
-        setDisplayExport(!displayExport);
-    };
-
     weapons = weapons.filter(filterOptions[filterIndex].filter);
 
     const generateData = () => {
@@ -162,6 +156,8 @@ const PlayerWeaponsDetailList = (props) => {
         return d;
     };
 
+    const data = generateData();
+
     return (
         <div style={elementStyle}>
             <div style={configStyle}>
@@ -182,23 +178,9 @@ const PlayerWeaponsDetailList = (props) => {
             >
                 {PlayerWeaponsDetailListItem}
             </List>
-            <div style={exportStyle} className="link" onClick={onClick}>
-                export
+            <div style={exportStyle}>
+                <ExportDataView data={data} />
             </div>
-            {(() => {
-                if (displayExport) {
-                    return (
-                        <TextOutputView
-                            data={generateData()}
-                            onClose={() => {
-                                setDisplayExport(false);
-                            }}
-                        />
-                    );
-                } else {
-                    return "";
-                }
-            })()}
         </div>
     );
 };
