@@ -108,7 +108,7 @@ const PlayerConfigSelectView = (props) => {
             } else {
                 let found = false;
                 for (const pl of players) {
-                    if (player.memberId === p.memberId) {
+                    if (player.memberId === pl.memberId) {
                         p = pl;
                         found = true;
                         break;
