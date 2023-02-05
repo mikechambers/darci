@@ -27,9 +27,18 @@ import {
     calculateEfficiency,
     calculateKillsDeathsRatio,
     calculatePercent,
+    calculateRatio,
 } from "shared/packages/utils";
+import ExportDataView from "../../../components/ExportDataView";
 import SelectView from "../../../components/SelectView";
 import { LEFT, RIGHT } from "../../../core/consts";
+import ExportData from "../../../core/data/export/ExportData";
+import { humanDuration } from "../../../core/utils/date";
+import {
+    formatFloat,
+    formatPercent,
+    formatPercentInt,
+} from "../../../core/utils/string";
 
 import PlayerMapSummaryView from "./PlayerMapSummaryView";
 
@@ -37,6 +46,7 @@ const rootStyle = {
     display: "flex",
     flexDirection: "column",
     maxWidth: 730,
+    gap: 2,
 };
 
 const wrapperStyle = {
@@ -185,6 +195,100 @@ const PlayerMapSummaryList = (props) => {
         setSortIndex(selectedIndex);
     };
 
+    const generateData = () => {
+        const d = new ExportData();
+
+        d.addHeader("NAME", LEFT);
+        d.addHeader("GAMES", RIGHT);
+        d.addHeader("TOTAL %", RIGHT);
+
+        d.addHeader("WIN %", RIGHT);
+        d.addHeader("COMPLETED", RIGHT);
+        d.addHeader("MERCY", RIGHT);
+        d.addHeader("OBJECTIVE", RIGHT);
+        d.addHeader("EXPIRED", RIGHT);
+        d.addHeader("KD", RIGHT);
+        d.addHeader("EFF", RIGHT);
+
+        d.addHeader("TIME / G", LEFT);
+
+        for (const m of maps) {
+            let row = [];
+
+            row.push(m.map.name);
+
+            row.push(m.summary.activityCount);
+            row.push(
+                formatPercentInt(
+                    calculateRatio(m.summary.activityCount, totalGames)
+                )
+            );
+
+            row.push(
+                formatPercentInt(
+                    calculateRatio(m.summary.wins, m.summary.activityCount)
+                )
+            );
+            row.push(
+                formatPercentInt(
+                    calculateRatio(m.summary.completed, m.summary.activityCount)
+                )
+            );
+
+            row.push(
+                formatPercentInt(
+                    calculateRatio(
+                        m.summary.completionReasonMercy,
+                        m.summary.activityCount
+                    )
+                )
+            );
+
+            row.push(
+                formatPercentInt(
+                    calculateRatio(
+                        m.summary.completionReasonObjectiveCompleted,
+                        m.summary.activityCount
+                    )
+                )
+            );
+
+            row.push(
+                formatPercentInt(
+                    calculateRatio(
+                        m.summary.completionReasonTimeExpired,
+                        m.summary.activityCount
+                    )
+                )
+            );
+
+            row.push(
+                formatFloat(
+                    calculateKillsDeathsRatio(m.summary.kills, m.summary.deaths)
+                )
+            );
+            row.push(
+                formatFloat(
+                    calculateEfficiency(
+                        m.summary.kills,
+                        m.summary.deaths,
+                        m.summary.assists
+                    )
+                )
+            );
+
+            let ms =
+                (m.summary.timePlayedSeconds / m.summary.activityCount) * 1000;
+            row.push(humanDuration(ms, true, true));
+
+            d.addRow(row);
+        }
+
+        return d;
+    };
+
+    const data = generateData();
+
     return (
         <div style={rootStyle}>
             <div style={sortStyle}>
@@ -205,6 +309,7 @@ const PlayerMapSummaryList = (props) => {
                     );
                 })}
             </div>
+            <ExportDataView data={data} />
         </div>
     );
 };
