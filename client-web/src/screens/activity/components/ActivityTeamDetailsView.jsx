@@ -26,14 +26,36 @@ import React from "react";
 import ActivityPlayerList from "./ActivityPlayerList";
 import ActivityTeamSummaryView from "./ActivityTeamSummaryView";
 
+const siteIconStyle = {
+    verticalAlign: "middle",
+};
+
 const ActivityTeamDetailsView = (props) => {
     const team = props.team;
     const topStats = props.topStats;
+
+    const onClick = (e) => {
+        e.preventDefault();
+        for (const p of props.team.players) {
+            const url = `https://destinytrialsreport.com/report/${p.player.platformId}/${p.player.memberId}`;
+            window.open(url, `_blank_${p.player.memberId}`);
+        }
+    };
 
     return (
         <div>
             <ActivityTeamSummaryView team={team} />
             <ActivityPlayerList players={team.players} topStats={topStats} />
+
+            <img
+                className="link"
+                src="https://trials.report/assets/svg/icon.svg"
+                width={12}
+                alt="Open all players in Trials Report in new tabs (must disable popup blocker)"
+                title="Open all players in Trials Report in new tabs (must disable popup blocker)"
+                style={siteIconStyle}
+                onClick={onClick}
+            />
         </div>
     );
 };
