@@ -137,6 +137,13 @@ class Season extends EnumBase {
         Moment.NOW
     );
 
+    static SEASON_OF_DEFIANCE = new Season(
+        Moment.SEASON_OF_DEFIANCE.type,
+        Moment.SEASON_OF_DEFIANCE.label,
+        Moment.SEASON_OF_DEFIANCE,
+        Moment.NOW
+    );
+
     static UNKNOWN = new Season("unknown", "Unknown");
 
     constructor(type, label, startMoment, endMoment) {

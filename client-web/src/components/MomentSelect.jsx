@@ -24,6 +24,7 @@
 import React from "react";
 
 import { Moment } from "shared";
+import { CURRENT_SEASON } from "../core/consts";
 import EnumSelect from "./EnumSelect";
 
 const moments = [
@@ -33,7 +34,7 @@ const moments = [
     Moment.DAY,
     Moment.WEEK,
     Moment.MONTH,
-    Moment.SEASON_OF_THE_SERAPH,
+    CURRENT_SEASON.startMoment,
     Moment.NOW,
 ];
 
