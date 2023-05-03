@@ -80,11 +80,11 @@ const Medal = (props) => {
         ) : (
             ""
         );
+
+    const description = medal.description ? ` : ${medal.description}` : "";
+
     return (
-        <div
-            style={elementWrapperStyle}
-            title={`${medal.name} : ${medal.description}`}
-        >
+        <div style={elementWrapperStyle} title={`${medal.name}${description}`}>
             {badge}
         </div>
     );
