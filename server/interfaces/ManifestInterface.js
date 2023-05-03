@@ -154,6 +154,8 @@ class ManifestInterface {
                 DestinyHistoricalStatsDefinition
             WHERE
                 json like '%medalTierIdentifier%'
+            OR
+                json like '%"statId":"supremacy%'
         `);
 
         this.#select_activity_mode_definitions = this.#db.prepare(`
