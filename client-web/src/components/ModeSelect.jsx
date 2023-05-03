@@ -40,6 +40,7 @@ const modes = [
     Mode.MAYHEM,
     Mode.MOMENTUM,
     Mode.ELIMINATION,
+    Mode.SUPREMACY,
     Mode.PRIVATE_MATCHES_ALL,
     Mode.ALL_PVP,
 ];
