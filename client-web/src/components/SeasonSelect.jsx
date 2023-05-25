@@ -47,6 +47,7 @@ const seasons = [
     Season.SEASON_OF_PLUNDER,
     Season.SEASON_OF_THE_SERAPH,
     Season.SEASON_OF_DEFIANCE,
+    Season.SEASON_OF_THE_DEEP,
 ];
 
 const SeasonSelect = (props) => {
