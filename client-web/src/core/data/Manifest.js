@@ -28,11 +28,11 @@ const { ItemSubType, AmmunitionType } = require("shared");
 export const UNKNOWN_ICON_URL =
     "https://www.bungie.net/common/destiny2_content/icons/f3c27772a3d98c91fef127ce32e9f1e0.png";
 export const HUNTER_ICON_URL =
-    "https://www.bungie.net/common/destiny2_content/icons/e7324e8c29c5314b8bce166ff167859d.png";
+    "https://www.bungie.net/common/destiny2_content/icons/05e32a388d9a65a0ef59b2193eee2db4.png";
 export const TITAN_ICON_URL =
-    "https://www.bungie.net/common/destiny2_content/icons/8956751663b4394cd41076f93d2dd0d6.png";
+    "https://www.bungie.net/common/destiny2_content/icons/46a19ddd00d0f6ca822230943103b54a.png";
 export const WARLOCK_ICON_URL =
-    "https://www.bungie.net/common/destiny2_content/icons/bf7b2848d2f5fbebbf350d418b8ec148.png";
+    "https://www.bungie.net/common/destiny2_content/icons/e4006d9a8fe167bd7e83193d7601c89a.png";
 
 class Manifest {
     #manifestData;

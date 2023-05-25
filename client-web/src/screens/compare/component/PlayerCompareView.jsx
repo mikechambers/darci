@@ -58,6 +58,8 @@ const PlayerCompareView = (props) => {
             <CompareRowDivider label="Stats" id="stats" type={DIVIDER_HEADER} />
             <CompareStatSectionView summary1={summary1} summary2={summary2} />
 
+            <div>&nbsp;</div>
+
             <CompareRowDivider
                 label="Weapons"
                 id="weapons"
@@ -69,12 +71,7 @@ const PlayerCompareView = (props) => {
                 type={WEAPON_TYPE}
             />
 
-            <CompareRowDivider label="Meta" id="meta" type={DIVIDER_HEADER} />
-            <CompareWeaponsSectionView
-                summary1={summary1}
-                summary2={summary2}
-                type={META_TYPE}
-            />
+            <div>&nbsp;</div>
 
             <CompareRowDivider
                 label="Maps"

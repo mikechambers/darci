@@ -134,13 +134,20 @@ class Season extends EnumBase {
         Moment.SEASON_OF_THE_SERAPH.type,
         Moment.SEASON_OF_THE_SERAPH.label,
         Moment.SEASON_OF_THE_SERAPH,
-        Moment.NOW
+        Moment.SEASON_OF_DEFIANCE
     );
 
     static SEASON_OF_DEFIANCE = new Season(
         Moment.SEASON_OF_DEFIANCE.type,
         Moment.SEASON_OF_DEFIANCE.label,
         Moment.SEASON_OF_DEFIANCE,
+        Moment.SEASON_OF_THE_DEEP
+    );
+
+    static SEASON_OF_THE_DEEP = new Season(
+        Moment.SEASON_OF_THE_DEEP.type,
+        Moment.SEASON_OF_THE_DEEP.label,
+        Moment.SEASON_OF_THE_DEEP,
         Moment.NOW
     );
 
