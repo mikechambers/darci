@@ -378,7 +378,7 @@ $ pm2 reload darci
 
 ## Using with ChatGPT
 
-You can use data generated from DARCI as an input to ChatGPT using the Code Interpreter ChatGPT plugin. This is possible by generating JSON files from DARCI for the data you want, and then uploading the JSON files to chat GPT and querying it.
+You can use data generated from DARCI as an input to [ChatGPT](https://chat.openai.com/) using the Code Interpreter ChatGPT plugin. This is possible by generating JSON files from DARCI for the data you want, and then uploading the JSON files to chat GPT and querying it.
 
 In general, there are two pieces of data you need:
 
