@@ -30,7 +30,6 @@ const {
 const {
     SERVER_PORT,
     MANIFEST_CHECK_INTERVAL_MS,
-    MAX_ACTIVITIES_PAGE_LIMIT,
     DB_PATH,
     MANIFEST_DB_PATH,
     MANIFEST_INFO_PATH,
@@ -118,6 +117,12 @@ app.get(
 
         let mode = Mode.fromType(req.params.mode);
 
+        let limit = parseInt(req.query.limit);
+
+        if (!Number.parseInt(limit)) {
+            limit = 25;
+        }
+
         let endMoment =
             req.params.endMoment !== undefined
                 ? Moment.fromType(req.params.endMoment)
@@ -132,7 +137,8 @@ app.get(
             mode,
             startDate,
             endDate,
-            orderBy
+            orderBy,
+            limit
         );
 
         const player = activityStore.retrieveMember(memberId);
@@ -155,7 +161,7 @@ app.get(
             page: {
                 total: activities.length,
                 index: 0,
-                pageSize: MAX_ACTIVITIES_PAGE_LIMIT,
+                pageSize: limit,
                 packageSize: activities.length,
             },
         };

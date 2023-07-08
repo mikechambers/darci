@@ -24,7 +24,11 @@
 const Database = require("better-sqlite3");
 
 const NO_TEAMS_INDEX = 253;
-const { PLAYER_START_BUFFER, DB_SCHEMA_VERSION } = require("../config");
+const {
+    PLAYER_START_BUFFER,
+    DB_SCHEMA_VERSION,
+    DEFAULT_ACTIVITIES_PAGE_LIMIT,
+} = require("../config");
 
 const { Mode, Standing, OrderBy } = require("shared");
 
@@ -599,9 +603,14 @@ class ActivityStoreInterface {
         mode,
         startDate,
         endDate,
-        orderBy
+        orderBy,
+        limit = DEFAULT_ACTIVITIES_PAGE_LIMIT
     ) {
         let restrictModeId = this.getRestrictModeId(mode);
+
+        if (!Number.isInteger(limit) || limit < 1) {
+            limit = DEFAULT_ACTIVITIES_PAGE_LIMIT;
+        }
 
         let orderByStr;
         switch (orderBy) {
@@ -701,7 +710,7 @@ class ActivityStoreInterface {
                 not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)
             ORDER BY
                 ${orderByStr}
-            LIMIT 25`;
+            LIMIT ${limit}`;
 
         //we compile to a prepared statement every time, since we need to dynamically generate
         //the query (see above). We could compile and cache for each order by, but the
