@@ -189,6 +189,8 @@ class Mode extends EnumBase {
         "Iron Banner Zone Control"
     );
 
+    static RELIC = new Mode("Relic", 92, "Relic");
+
     static RIFT_COMPETITIVE = new Mode(
         "RiftCompetitive",
         700,

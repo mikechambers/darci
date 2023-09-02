@@ -42,4 +42,4 @@ export const LARGE = "LARGE";
 export const MOMENT_TYPE = "m";
 export const SEASON_TYPE = "s";
 
-export const CURRENT_SEASON = Season.SEASON_OF_THE_DEEP;
+export const CURRENT_SEASON = Season.SEASON_OF_THE_WITCH;
