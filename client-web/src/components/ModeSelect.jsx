@@ -28,15 +28,17 @@ import EnumSelect from "./EnumSelect";
 
 const modes = [
     Mode.PVP_QUICKPLAY,
-    Mode.CONTROL_QUICKPLAY,
-    Mode.CLASH_QUICKPLAY,
+
+    Mode.PVP_COMPETITIVE,
     Mode.TRIALS_OF_OSIRIS,
     Mode.IRON_BANNER,
     Mode.RUMBLE,
-    Mode.PVP_COMPETITIVE,
+    Mode.CONTROL_QUICKPLAY,
+    Mode.CLASH_QUICKPLAY,
     Mode.SURVIVAL_COMPETITIVE,
     Mode.SHOWDOWN_COMPETITIVE,
     Mode.RIFT_COMPETITIVE,
+    Mode.ZONE_CONTROL,
     Mode.MAYHEM,
     Mode.MOMENTUM,
     Mode.ELIMINATION,
