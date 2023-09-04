@@ -101,13 +101,14 @@ const pageLinks = [
         value: "medals",
         id: "medals",
     },
-    {
-        value: "maps",
-        id: "maps",
-    },
+
     {
         value: "games",
         id: "games",
+    },
+    {
+        value: "maps",
+        id: "maps",
     },
 ];
 
@@ -324,15 +325,6 @@ const PlayerView = () => {
 
                         <div>
                             <PageSectionView
-                                id="maps"
-                                description="Stats broken down by map"
-                                title="Maps"
-                            />
-                            <PlayerMapSummaryList maps={maps} />
-                        </div>
-
-                        <div>
-                            <PageSectionView
                                 description="Most recent matches"
                                 id="games"
                                 title="Games"
@@ -358,6 +350,15 @@ const PlayerView = () => {
                                 activities={activities}
                                 summary={summary}
                             />
+                        </div>
+
+                        <div>
+                            <PageSectionView
+                                id="maps"
+                                description="Stats broken down by map"
+                                title="Maps"
+                            />
+                            <PlayerMapSummaryList maps={maps} />
                         </div>
                     </React.Fragment>
                 ) : (
