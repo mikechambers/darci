@@ -110,14 +110,15 @@ to automate this).
 
 #### Setup Environment Variables
 
-Create the following environment variables, replacing `/home/mesh/.local/share/dcli/`
+Create the following environment variables, replacing `DCLI_BASE`
 with the path where your `manifest.sqlite3` was created.
 
 ```
-DCLI_DB_PATH='/home/mesh/.local/share/dcli/dcli.sqlite3'
-MANIFEST_DB_PATH='/home/mesh/.local/share/dcli/manifest.sqlite3'
-MANIFEST_INFO_PATH='/home/mesh/.local/share/dcli/manifest_info.json'
-DCLI_FIX_DATA=true
+DCLI_BASE='/Users/mesh/Library/Application Support/dcli'
+export DCLI_DB_PATH="$DCLI_BASE/dcli.sqlite3"
+export MANIFEST_DB_PATH="$DCLI_BASE/manifest.sqlite3"
+export MANIFEST_INFO_PATH="$DCLI_BASE/manifest_info.json"
+export DCLI_FIX_DATA=true
 ```
 
 The `DCLI_FIX_DATA` variable is used when syncing activity data. When set to `true` dclisync

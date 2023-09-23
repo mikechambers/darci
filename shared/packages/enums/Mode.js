@@ -209,6 +209,23 @@ class Mode extends EnumBase {
         "Competitive Survival"
     );
 
+    static CHECKMATE_ALL = new Mode("CheckmateAll", 710, "Checkmate All");
+    static CHECKMATE_CONTROL = new Mode(
+        "CheckmateControl",
+        711,
+        "Checkmate Control"
+    );
+    static CHECKMATE_SURVIVAL = new Mode(
+        "CheckmateSurvival",
+        712,
+        "Checkmate Survival"
+    );
+    static CHECKMATE_RUMBLE = new Mode(
+        "CheckmateRumble",
+        713,
+        "Checkmate Rumble"
+    );
+
     constructor(type, id, label = undefined) {
         super(type, id, label);
     }

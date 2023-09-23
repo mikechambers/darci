@@ -427,6 +427,45 @@ class ManifestInterface {
             mode: Mode.SURVIVAL_COMPETITIVE.id,
         };
 
+        let checkmateDescription =
+            "Ability recharge time: Slowed Special ammo is earned by engaging in combat. Special ammo is not lost on death";
+
+        activityModeDefinitions[Mode.CHECKMATE_ALL.id] = {
+            ...activityModeDefinitions[Mode.SURVIVAL.id],
+            name: "Checkmate",
+            icon: undefined,
+            image: undefined,
+            description: checkmateDescription,
+            mode: Mode.CHECKMATE_ALL.id,
+        };
+
+        activityModeDefinitions[Mode.CHECKMATE_CONTROL.id] = {
+            ...activityModeDefinitions[Mode.SURVIVAL.id],
+            name: "Checkmate: Control",
+            icon: undefined,
+            image: undefined,
+            description: checkmateDescription,
+            mode: Mode.CHECKMATE_CONTROL.id,
+        };
+
+        activityModeDefinitions[Mode.CHECKMATE_SURVIVAL.id] = {
+            ...activityModeDefinitions[Mode.SURVIVAL.id],
+            name: "Checkmate: Survival",
+            icon: undefined,
+            image: undefined,
+            description: checkmateDescription,
+            mode: Mode.CHECKMATE_SURVIVAL.id,
+        };
+
+        activityModeDefinitions[Mode.CHECKMATE_RUMBLE.id] = {
+            ...activityModeDefinitions[Mode.SURVIVAL.id],
+            name: "Checkmate: Rumble",
+            icon: undefined,
+            image: undefined,
+            description: checkmateDescription,
+            mode: Mode.CHECKMATE_RUMBLE.id,
+        };
+
         rows = this.#select_emblem_definitions.all();
 
         let emblemDefinitions = {};
