@@ -39,6 +39,7 @@ const modes = [
     Mode.SHOWDOWN_COMPETITIVE,
     Mode.RIFT_COMPETITIVE,
     Mode.ZONE_CONTROL,
+    Mode.RELIC,
     Mode.MAYHEM,
     Mode.MOMENTUM,
     Mode.ELIMINATION,
