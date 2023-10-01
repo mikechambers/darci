@@ -24,6 +24,7 @@
 import React from "react";
 
 import ResultSummaryView from "./ResultSummaryView";
+import StreakSummaryView from "./StreakSummaryView";
 import PlayerAbilityStatSummaryView from "./PlayerAbilityStatSummaryView";
 import StatSummaryView from "../../../components/StatSummaryView";
 
@@ -52,6 +53,11 @@ const APlayerStatsView = (props) => {
                 mercies={summary.completionReasonMercy}
                 activityCount={summary.activityCount}
                 completed={summary.completed}
+            />
+
+            <StreakSummaryView
+                maxWinStreak={summary.maxWinStreak}
+                maxLossStreak={summary.maxLossStreak}
             />
 
             <StatSummaryView

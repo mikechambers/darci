@@ -23,39 +23,25 @@
 
 import React from "react";
 
-import { Moment } from "shared";
-import { CURRENT_SEASON } from "../core/consts";
-import EnumSelect from "./EnumSelect";
+import StatCollectionView from "../../../components/StatCollectionView";
+import { setPlural } from "../../../core/utils/string";
 
-const moments = [
-    Moment.DAILY,
-    Moment.WEEKLY,
-    Moment.WEEKEND,
-    Moment.DAY,
-    Moment.WEEK,
-    Moment.MONTH,
-    CURRENT_SEASON.startMoment,
-    Moment.NOW,
-    Moment.ALL_TIME,
-];
+const StreakSummaryView = (props) => {
+    let maxWinStreak = props.maxWinStreak;
+    let maxLossStreak = props.maxLossStreak;
 
-const MomentSelect = (props) => {
-    const onChange = props.onChange;
-    const selected = props.selected;
-    const maxLabelLength = props.maxLabelLength;
-    const label = props.label ? props.label : "";
-    const disabled = props.disabled;
+    let values = [
+        {
+            value: maxWinStreak,
+            label: setPlural(maxWinStreak, "win", "wins"),
+        },
+        {
+            value: maxLossStreak,
+            label: setPlural(maxLossStreak, "loss", "losses"),
+        },
+    ];
 
-    return (
-        <EnumSelect
-            onChange={onChange}
-            options={moments}
-            selected={selected}
-            label={label}
-            maxLabelLength={maxLabelLength}
-            disabled={disabled}
-        />
-    );
+    return <StatCollectionView title="Streaks" values={values} />;
 };
 
-export default MomentSelect;
+export default StreakSummaryView;

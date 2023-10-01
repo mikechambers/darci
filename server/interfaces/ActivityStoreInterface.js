@@ -393,62 +393,116 @@ class ActivityStoreInterface {
             ORDER BY
                 count DESC`);
 
+        //includes longest streak
         this.#select_player_activity_summary = this.#db.prepare(`
+        WITH RankedMatches AS (
             SELECT
-                count(*) as activityCount,
-                COALESCE(sum(time_played_seconds),0) as timePlayedSeconds,
-                COALESCE(sum(character_activity_stats.standing = 0),0) as wins,
-                COALESCE(sum( character_activity_stats.completion_reason = 4),0) as completionReasonMercy,
-                COALESCE(sum(completed),0) as completed,
-                COALESCE(sum(assists),0) as assists,
-                COALESCE(sum(character_activity_stats.kills),0) as kills,
-                COALESCE(sum(deaths),0) as deaths,
-                COALESCE(sum(opponents_defeated),0) as opponentsDefeated,
-                COALESCE(sum(weapon_kills_grenade),0) as grenadeKills,
-                COALESCE(sum(weapon_kills_melee),0) as meleeKills,
-                COALESCE(sum(weapon_kills_super),0) as superKills,
-                COALESCE(sum(weapon_kills_ability),0) as abilityKills,
-                COALESCE(sum(character_activity_stats.precision_kills),0) as precision,
-                COALESCE(max(assists),0) as highestAssists,
-                COALESCE(max(score),0) as highestScore,
-                COALESCE(max(character_activity_stats.kills),0) as highestKills,
-                COALESCE(max(deaths),0) as highestDeaths,
-                COALESCE(max(opponents_defeated),0) as highestOpponentsDefeated,
-                COALESCE(max(weapon_kills_grenade),0) as highestGrenadeKills,
-                COALESCE(max(weapon_kills_melee),0) as highestMeleeKills,
-                COALESCE(max(weapon_kills_super),0) as highestSuperKills,
-                COALESCE(max(weapon_kills_ability),0) as highestAbilityKills,
-                COALESCE(max(
-                    cast(character_activity_stats.kills as real) 
-                    / 
-                    cast(
-                        IFNULL(
-                            NULLIF(character_activity_stats.deaths, 0), 
-                        1) as real
-                    )),0.0)
-                as highestKillsDeathsRatio,
-                COALESCE(max(
-                    cast((character_activity_stats.kills + character_activity_stats.assists) as real) 
-                    / 
-                    cast(
-                        IFNULL(
-                            NULLIF(character_activity_stats.deaths, 0), 
-                        1) as real
-                    )),0.0)
-                as highestEfficiency
-            FROM
-                character_activity_stats
-            INNER JOIN
-                activity ON character_activity_stats.activity = activity.activity_id,
-                character on character_activity_stats.character = character.character_id,
-                member on member.member_id = character.member
-            WHERE
-                member.member_id = @memberId AND
-                (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
-                period > @startDate AND
-                period < @endDate AND
-                exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
-                not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId)`);
+                cas.character,
+                cas.standing,
+                CASE WHEN cas.standing = 0 THEN 1 ELSE 0 END AS is_win,
+                CASE WHEN cas.standing != 0 THEN 1 ELSE 0 END AS is_loss,
+                ROW_NUMBER() OVER(PARTITION BY cas.character ORDER BY a.period) - 
+                    ROW_NUMBER() OVER(PARTITION BY cas.character, cas.standing ORDER BY a.period) AS streak_group
+            FROM character_activity_stats cas
+            INNER JOIN activity a ON cas.activity = a.activity_id
+            INNER JOIN character c ON cas.character = c.character_id
+            INNER JOIN member m ON c.member = m.member_id
+            WHERE 
+                m.member_id = @memberId AND
+                (c.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+                a.period BETWEEN @startDate AND @endDate AND
+                EXISTS (
+                    SELECT 1 
+                    FROM modes 
+                    WHERE activity = a.activity_id AND mode = @modeId
+                ) AND
+                NOT EXISTS (
+                    SELECT 1 
+                    FROM modes 
+                    WHERE activity = a.activity_id AND mode = @restrictModeId
+                )
+        ),
+        StreakCounts AS (
+            SELECT
+                character,
+                standing,
+                streak_group,
+                COUNT(*) AS streak_length
+            FROM RankedMatches
+            GROUP BY character, standing, streak_group
+        ),
+        StreakMax AS (
+            SELECT
+                character,
+                MAX(CASE WHEN standing = 0 THEN streak_length ELSE 0 END) AS longest_win_streak,
+                MAX(CASE WHEN standing != 0 THEN streak_length ELSE 0 END) AS longest_loss_streak
+            FROM StreakCounts
+            GROUP BY character
+        )
+        SELECT
+            count(*) as activityCount,
+            COALESCE(sum(time_played_seconds),0) as timePlayedSeconds,
+            COALESCE(sum(CASE WHEN character_activity_stats.standing = 0 THEN 1 ELSE 0 END),0) as wins,
+            COALESCE(sum(CASE WHEN character_activity_stats.completion_reason = 4 THEN 1 ELSE 0 END),0) as completionReasonMercy,
+            COALESCE(sum(completed),0) as completed,
+            COALESCE(sum(assists),0) as assists,
+            COALESCE(sum(character_activity_stats.kills),0) as kills,
+            COALESCE(sum(deaths),0) as deaths,
+            COALESCE(sum(opponents_defeated),0) as opponentsDefeated,
+            COALESCE(sum(weapon_kills_grenade),0) as grenadeKills,
+            COALESCE(sum(weapon_kills_melee),0) as meleeKills,
+            COALESCE(sum(weapon_kills_super),0) as superKills,
+            COALESCE(sum(weapon_kills_ability),0) as abilityKills,
+            COALESCE(sum(character_activity_stats.precision_kills),0) as precision,
+            COALESCE(max(assists),0) as highestAssists,
+            COALESCE(max(score),0) as highestScore,
+            COALESCE(max(character_activity_stats.kills),0) as highestKills,
+            COALESCE(max(deaths),0) as highestDeaths,
+            COALESCE(max(opponents_defeated),0) as highestOpponentsDefeated,
+            COALESCE(max(weapon_kills_grenade),0) as highestGrenadeKills,
+            COALESCE(max(weapon_kills_melee),0) as highestMeleeKills,
+            COALESCE(max(weapon_kills_super),0) as highestSuperKills,
+            COALESCE(max(weapon_kills_ability),0) as highestAbilityKills,
+            COALESCE(max(
+                cast(character_activity_stats.kills as real) 
+                / 
+                cast(
+                    IFNULL(
+                        NULLIF(character_activity_stats.deaths, 0), 
+                    1) as real
+                )
+            ),0.0) as highestKillsDeathsRatio,
+            COALESCE(max(
+                cast((character_activity_stats.kills + character_activity_stats.assists) as real) 
+                / 
+                cast(
+                    IFNULL(
+                        NULLIF(character_activity_stats.deaths, 0), 
+                    1) as real
+                )
+            ),0.0) as highestEfficiency,
+            COALESCE(MAX(longest_win_streak), 0) AS maxWinStreak,
+            COALESCE(MAX(longest_loss_streak), 0) AS maxLossStreak
+        FROM character_activity_stats
+        INNER JOIN activity ON character_activity_stats.activity = activity.activity_id
+        INNER JOIN character ON character_activity_stats.character = character.character_id
+        INNER JOIN member ON member.member_id = character.member
+        LEFT JOIN StreakMax ON character_activity_stats.character = StreakMax.character
+        WHERE
+            member.member_id = @memberId AND
+            (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
+            activity.period BETWEEN @startDate AND @endDate AND
+            EXISTS (
+                SELECT 1 
+                FROM modes 
+                WHERE activity = activity.activity_id AND mode = @modeId
+            ) AND
+            NOT EXISTS (
+                SELECT 1 
+                FROM modes 
+                WHERE activity = activity.activity_id AND mode = @restrictModeId
+            )
+        `);
     }
 
     retrieveCharacterClassMetaSummary(
@@ -593,6 +647,8 @@ class ActivityStoreInterface {
             endDate: endDate.toISOString(),
             modeId: mode.id,
         });
+
+        console.log(summary);
 
         return summary ? summary : {};
     }

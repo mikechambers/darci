@@ -43,7 +43,9 @@ class Moment extends EnumBase {
     //static NEXT_MONTH = new Moment("NextMonth");
     static ALL_TIME = new Moment("AllTime", "All Time");
     //static CUSTOM = new Moment("Custom");
+
     static LAUNCH = new Moment("Launch", "Destiny 2 Launch");
+
     static RED_WAR = new Moment("RedWar", "Red War");
     static CURSE_OF_OSIRIS = new Moment("CurseOfOsiris", "Curse of Osiris");
     static WARMIND = new Moment("Warmind");
