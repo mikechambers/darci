@@ -1100,7 +1100,7 @@ class ActivityStoreInterface {
         let restrictModeId = -1;
 
         if (mode.isPrivate()) {
-            restrictModeId === Mode.PRIVATE_MATCHES_ALL.id;
+            restrictModeId = Mode.PRIVATE_MATCHES_ALL.id;
         }
 
         return restrictModeId;
