@@ -145,30 +145,30 @@ class ActivityStoreInterface {
         `);
 
         this.#select_character_activity_stats_for_activity = this.#db.prepare(`
-            SELECT
-                CAST(character.member as TEXT) as member_id,
-                CAST(character_activity_stats.character as TEXT) as character_id,
-                CAST(character_activity_stats.fireteam_id as TEXT) as fireteam_id,
-
-                assists, score, kills, deaths, completed, opponents_defeated, activity_duration_seconds,
-                standing, team, completion_reason, start_seconds, time_played_seconds, team_score,
-                precision_kills, weapon_kills_grenade, weapon_kills_melee, weapon_kills_super,
-                all_medals_earned, light_level, emblem_hash,
-
-                character_activity_stats.id as character_activity_stats_index,
-                
-                member.bungie_display_name as bungie_display_name,
-                member.bungie_display_name_code as bungie_display_name_code,
-                member.platform_id as platform_id,
-
-                character.class as class
-            FROM
-                character_activity_stats
-            INNER JOIN
-                character on character_activity_stats.character = character.character_id,
-                member on character.member = member.member_id
-            WHERE
-                activity = @activityId
+        SELECT
+        CAST(c.character_id AS TEXT) AS member_id,
+        CAST(cas.character AS TEXT) AS character_id,
+        CAST(cas.fireteam_id AS TEXT) AS fireteam_id,
+        cas.assists, cas.score, cas.kills, cas.deaths, cas.completed, 
+        cas.opponents_defeated, cas.activity_duration_seconds, cas.standing, 
+        cas.team, cas.completion_reason, cas.start_seconds, 
+        cas.time_played_seconds, cas.team_score, cas.precision_kills, 
+        cas.weapon_kills_grenade, cas.weapon_kills_melee, cas.weapon_kills_super,
+        cas.all_medals_earned, cas.light_level, cas.emblem_hash,
+        cas.id AS character_activity_stats_index,
+        m.bungie_display_name AS bungie_display_name,
+        m.bungie_display_name_code AS bungie_display_name_code,
+        m.platform_id AS platform_id,
+        c.class AS class
+    FROM
+        character_activity_stats cas
+    INNER JOIN
+        character c ON cas.character = c.character_id
+    INNER JOIN
+        member m ON c.member = m.member_id
+    WHERE
+        cas.activity = @activityId;
+    
         `);
 
         this.#select_version = this.#db.prepare(`
@@ -406,28 +406,33 @@ class ActivityStoreInterface {
                 count DESC`);
 
         this.#select_medals_summary = this.#db.prepare(`
-            SELECT
-                medal_result.reference_id as id,
-                sum(count) as count
-            FROM
-                character_activity_stats
-            INNER JOIN
-                medal_result on character_activity_stats.id = medal_result.character_activity_stats,
-                activity ON character_activity_stats.activity = activity.activity_id,
-                character on character_activity_stats.character = character.character_id,
-                member on member.member_id = character.member
-            WHERE
-                member.member_id = @memberId AND
-                (character.class = @characterSelectionId OR 4 = @characterSelectionId) AND
-                period > @startDate AND
-                period < @endDate AND
-                exists (select 1 from modes where activity = activity.activity_id and mode = @modeId) AND
-                not exists (select 1 from modes where activity = activity.activity_id and mode = @restrictModeId) AND
-                medal_result.reference_id NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')
-            GROUP BY
-                medal_result.reference_id
-            ORDER BY
-                count DESC`);
+        SELECT
+            medal_result.reference_id as id,
+            sum(medal_result.count) as count
+        FROM
+            character_activity_stats
+        INNER JOIN medal_result 
+            ON character_activity_stats.id = medal_result.character_activity_stats
+        INNER JOIN activity 
+            ON character_activity_stats.activity = activity.activity_id
+        INNER JOIN character 
+            ON character_activity_stats.character = character.character_id
+        INNER JOIN member 
+            ON character.member = member.member_id
+        WHERE
+            member.member_id = @memberId AND
+            (character.class = @characterSelectionId OR @characterSelectionId = 4) AND
+            activity.period > @startDate AND
+            activity.period < @endDate AND
+            EXISTS (SELECT 1 FROM modes WHERE activity = activity.activity_id AND mode = @modeId) AND
+            NOT EXISTS (SELECT 1 FROM modes WHERE activity = activity.activity_id AND mode = @restrictModeId) AND
+            medal_result.reference_id NOT IN ('precisionKills', 'weaponKillsAbility', 'weaponKillsGrenade', 'weaponKillsMelee', 'weaponKillsSuper', 'allMedalsEarned')
+        GROUP BY
+            medal_result.reference_id
+        ORDER BY
+            count DESC
+
+    `);
 
         //includes longest streak
         this.#select_player_activity_summary = this.#db.prepare(`
