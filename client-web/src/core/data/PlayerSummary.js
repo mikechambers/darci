@@ -43,6 +43,8 @@ class PlayerSummary {
     query;
     maps;
     characterClassMeta;
+    playerTeamPerformance;
+    opponentTeamPerformance;
 
     constructor(options = {}) {
         this.summary = options.summary;
@@ -51,6 +53,8 @@ class PlayerSummary {
         this.query = options.query;
         this.maps = options.maps;
         this.characterClassMeta = options.characterClassMeta;
+        this.playerTeamPerformance = options.playerTeamPerformance;
+        this.opponentTeamPerformance = options.opponentTeamPerformance;
     }
 
     static fromApi(data, manifest) {
@@ -61,6 +65,9 @@ class PlayerSummary {
 
         let meta = data.meta;
         let maps = data.maps;
+
+        let playerTeamPerformance = data.teamPerformance.playerTeam;
+        let opponentTeamPerformance = data.teamPerformance.opponentTeam;
 
         //this is in case we cant load a manifest for some reason
         if (!manifest) {
@@ -144,6 +151,8 @@ class PlayerSummary {
             query,
             maps,
             characterClassMeta,
+            playerTeamPerformance,
+            opponentTeamPerformance,
         });
     }
 }

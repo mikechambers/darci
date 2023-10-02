@@ -28,6 +28,7 @@ import PlayerWeaponsDetailView, {
 } from "./components/PlayerWeaponsDetailView";
 import PlayerMapSummaryList from "./components/PlayerMapSummaryList";
 import PlayerActivitiesHeader from "./components/PlayerActivitiesHeader";
+import TeamPerformance from "./components/TeamPerformanceView";
 
 import {
     useFetchPlayerActivities,
@@ -66,6 +67,10 @@ const invalidParametersStyle = {
     rowGap: 8,
 };
 
+const teamPerformanceStyle = {
+    width: "100%",
+};
+
 const loadLatestLinkStyle = {
     padding: "15px 0",
 };
@@ -85,6 +90,11 @@ const pageLinks = [
         value: "Overview",
         id: "overview",
     },
+    {
+        value: "Team Performance",
+        id: "teamPerformance",
+    },
+
     {
         value: "Class Meta",
         id: "classMeta",
@@ -223,6 +233,8 @@ const PlayerView = () => {
     const maps = playerSummary.maps;
     const player = playerSummary.player;
     const characterClassMeta = playerSummary.characterClassMeta;
+    const playerTeamPerformance = playerSummary.playerTeamPerformance;
+    const opponentTeamPerformance = playerSummary.opponentTeamPerformance;
 
     const activities = playerActivities ? playerActivities.activities : [];
 
@@ -276,6 +288,23 @@ const PlayerView = () => {
                 {summary.activityCount ? (
                     <React.Fragment>
                         <div style={itemDetailsStyle}>
+                            <div style={teamPerformanceStyle}>
+                                {" "}
+                                <PageSectionView
+                                    id="teamPerformance"
+                                    title="Team Performance"
+                                    description="Aggregate stats for your team and opposing teams (omitting your data)"
+                                />
+                                <TeamPerformance
+                                    playerTeamPerformance={
+                                        playerTeamPerformance
+                                    }
+                                    opponentTeamPerformance={
+                                        opponentTeamPerformance
+                                    }
+                                />
+                            </div>
+
                             <div>
                                 {" "}
                                 <PageSectionView

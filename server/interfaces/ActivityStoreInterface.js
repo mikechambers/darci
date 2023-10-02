@@ -48,6 +48,7 @@ class ActivityStoreInterface {
     #select_player_activity_summary;
     #select_medals_summary;
     #select_latest_activity_id_for_member;
+    #select_summary_by_team;
 
     constructor(dbPath) {
         this.#dbPath = dbPath;
@@ -279,6 +280,68 @@ class ActivityStoreInterface {
             GROUP BY class
         `);
 
+        this.#select_summary_by_team = this.#db.prepare(`
+        WITH MainPlayerActivities AS (
+            SELECT
+                activity.activity_id,
+                character_activity_stats.team as player_team,
+                character.character_id as main_player_character_id
+            FROM
+                character_activity_stats
+            INNER JOIN
+                activity ON character_activity_stats.activity = activity.activity_id
+            INNER JOIN
+                character on character_activity_stats.character = character.character_id
+            INNER JOIN
+                member on member.member_id = character.member
+            WHERE
+                member.member_id = @memberId AND
+                (character.class = @characterSelectionId OR @characterSelectionId = 4) AND
+                period > @startDate AND
+                period < @endDate AND
+                EXISTS (SELECT 1 FROM modes WHERE activity = activity.activity_id AND mode = @modeId) AND
+                NOT EXISTS (SELECT 1 FROM modes WHERE activity = activity.activity_id AND mode = @restrictModeId)
+        )
+        
+        SELECT
+            0 as TeamType,
+            COUNT(*) as totalPlayers,
+            sum(kills) as kills,
+            sum(deaths) as deaths,
+            sum(assists) as assists,
+            sum(weapon_kills_grenade) as grenadeKills,
+            sum(weapon_kills_super) as superKills,
+            sum(weapon_kills_melee) as meleeKills
+        FROM
+            character_activity_stats
+        INNER JOIN
+            character on character_activity_stats.character = character.character_id
+        WHERE
+            activity IN (SELECT activity_id FROM MainPlayerActivities)
+            AND team = (SELECT player_team FROM MainPlayerActivities WHERE character_activity_stats.activity = MainPlayerActivities.activity_id LIMIT 1)
+            AND character.character_id != (SELECT main_player_character_id FROM MainPlayerActivities LIMIT 1)
+        
+        UNION
+        
+        SELECT
+            1 as TeamType,
+            COUNT(*) as totalPlayers,
+            sum(kills) as kills,
+            sum(deaths) as deaths,
+            sum(assists) as assists,
+            sum(weapon_kills_grenade) as grenadeKills,
+            sum(weapon_kills_super) as superKills,
+            sum(weapon_kills_melee) as meleeKills
+        FROM
+            character_activity_stats
+        INNER JOIN
+            character on character_activity_stats.character = character.character_id
+        WHERE
+            activity IN (SELECT activity_id FROM MainPlayerActivities)
+            AND team != (SELECT player_team FROM MainPlayerActivities WHERE character_activity_stats.activity = MainPlayerActivities.activity_id LIMIT 1)
+        
+        `);
+
         this.#select_map_summary = this.#db.prepare(`
             SELECT
                 activity.reference_id as referenceId,
@@ -505,6 +568,39 @@ class ActivityStoreInterface {
         `);
     }
 
+    retrieveTeamSummary(
+        memberId,
+        characterSelection,
+        mode,
+        startDate,
+        endDate
+    ) {
+        let restrictModeId = this.getRestrictModeId(mode);
+
+        //todo: should this be get not all?
+        let teamSummary = this.#select_summary_by_team.all({
+            memberId,
+            restrictModeId,
+            characterSelectionId: characterSelection.id,
+            startDate: startDate.toISOString(),
+            endDate: endDate.toISOString(),
+            modeId: mode.id,
+        });
+
+        let out = {};
+
+        //out.playerTeam = teamSummary[0];
+
+        if (teamSummary[1].totalPlayers == 0) {
+            out.opponentTeam = teamSummary[0];
+        } else {
+            out.playerTeam = teamSummary[0];
+            out.opponentTeam = teamSummary[1];
+        }
+
+        return out;
+    }
+
     retrieveCharacterClassMetaSummary(
         memberId,
         characterSelection,
@@ -647,8 +743,6 @@ class ActivityStoreInterface {
             endDate: endDate.toISOString(),
             modeId: mode.id,
         });
-
-        console.log(summary);
 
         return summary ? summary : {};
     }

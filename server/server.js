@@ -241,6 +241,14 @@ app.get(
                 endDate
             );
 
+        const teamPerformance = activityStore.retrieveTeamSummary(
+            memberId,
+            characterClassSelection,
+            mode,
+            startDate,
+            endDate
+        );
+
         const player = activityStore.retrieveMember(memberId);
 
         summary.weapons = weapons;
@@ -262,6 +270,7 @@ app.get(
             player: player,
             summary: summary,
             //activities: activities,
+            teamPerformance: teamPerformance,
             maps: maps,
             meta: meta,
             characterClassMeta: characterClassMeta,

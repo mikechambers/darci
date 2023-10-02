@@ -358,6 +358,7 @@ export const useFetchPlayerSummary = (args) => {
                 );
 
                 const as = PlayerSummary.fromApi(data, manifest);
+
                 s = reducer(s, "activityStats", as);
 
                 //clear any previous errors
