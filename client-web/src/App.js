@@ -34,7 +34,7 @@ const style = {
     maxWidth: "var(--page-max-width)",
     height: "100%",
     alignItems: "flex-start",
-    //width: "100%",
+    width: "100%",
 };
 
 const currentViewStyle = {

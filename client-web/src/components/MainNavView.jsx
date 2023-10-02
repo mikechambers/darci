@@ -63,7 +63,7 @@ const MainNavView = (props) => {
                 </div>
             </div>
             <PlayerConfigSelectView onUpdate={onUpdate} />
-            <hr className="page_section_title" />
+            <hr />
         </div>
     );
 };

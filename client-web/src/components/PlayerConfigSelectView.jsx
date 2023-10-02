@@ -160,7 +160,9 @@ const PlayerConfigSelectView = (props) => {
         flexDirection: "row",
         alignItems: "flex-start",
         columnGap: "6px",
+        rowGap: "6px",
         justifyContent: "flex-start",
+        flexWrap: "wrap",
     };
 
     return (

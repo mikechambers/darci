@@ -26,6 +26,7 @@ import React from "react";
 const headerStyle = {
     display: "flex",
     flexDirection: "column",
+    justifyContent: "flex-start",
 };
 
 const PageSectionView = (props) => {
@@ -39,7 +40,7 @@ const PageSectionView = (props) => {
                 {title}
             </div>
 
-            <hr className="page_section_title" />
+            <hr />
         </div>
     );
 };

@@ -131,6 +131,11 @@
     align-items: center;
     width: 100vw;
     overflow-y: scroll;
+
+    box-sizing: border-box;
+
+    min-width: 360px;
+    padding:10px
 }
 
 .list_item_header {
@@ -404,8 +409,8 @@ body {
 hr {
   border: none;
   height: 1px;
-  width: 100%;
-  /*margin-left: 0px;*/
+  width: 95%;
+  margin-left: 0px;
   background-color: #888;
 }
 
@@ -869,3 +874,8 @@ label {
   transform: rotate(180deg);
 }
 
+.leader_view_pod {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--leader-view-grid-gap);
+}

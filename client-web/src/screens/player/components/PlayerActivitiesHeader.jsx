@@ -98,7 +98,7 @@ const PlayerActivitiesOverview = (props) => {
                 <span className="player_name_code">#{playerNameCode}</span>{" "}
             </div>
 
-            <hr className="page_section_title" />
+            <hr />
 
             <div>
                 {mode.label} stats for {formatCharacterClass(classSelection)}{" "}

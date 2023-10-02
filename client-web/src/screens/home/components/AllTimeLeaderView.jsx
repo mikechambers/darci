@@ -26,13 +26,6 @@ import React from "react";
 import LeaderList from "../../../components/LeaderList";
 import { filterLeaderMetrics } from "../../../core/utils/components";
 
-const rootStyle = {
-    display: "grid",
-    gridTemplateColumns: "min-content min-content min-content",
-    gap: "var(--leader-view-grid-gap)",
-    flexWrap: "wrap",
-};
-
 const AllTimeLeaderView = (props) => {
     const metrics = props.metrics ? props.metrics : [];
 
@@ -61,7 +54,7 @@ const AllTimeLeaderView = (props) => {
     );
 
     return (
-        <div style={rootStyle}>
+        <div className="leader_view_pod">
             <LeaderList
                 title="Crucible Defeats"
                 leaderData={defeatsLifetime}
