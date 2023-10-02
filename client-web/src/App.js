@@ -24,8 +24,6 @@
 import React, { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
-import { useFetchManifest, useFetchPlayers } from "./hooks/remote";
-
 import { GlobalContext, useGlobalContext } from "./contexts/GlobalContext";
 import MainNavView from "./components/MainNavView";
 const { useQuery } = require("./hooks/browser");
@@ -33,7 +31,7 @@ const { useQuery } = require("./hooks/browser");
 const style = {
     display: "flex",
     flexDirection: "column",
-    width: "var(--page-max-width)",
+    maxWidth: "var(--page-max-width)",
     height: "100%",
     alignItems: "flex-start",
     //width: "100%",
