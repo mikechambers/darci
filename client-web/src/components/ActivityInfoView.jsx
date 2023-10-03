@@ -5,6 +5,7 @@ const modeMapContainerStyle = {
     flexDirection: "row",
     alignItems: "center",
     width: "100%",
+    flexWrap: "wrap",
 };
 
 const modeIconStyleBase = {

@@ -269,22 +269,24 @@ const PlayerView = () => {
                     memberId={memberId}
                     platformId={platformId}
                 />
-                {/*
+
                 <PageSectionView
                     id="overview"
                     title="Overview"
                     description="Your weapon stats"
                 />
+
                 <RefreshStatusView
                     lastUpdate={lastUpdate}
                     refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
                     align="left"
                 />
+
                 <PlayerPerformanceSummaryView
                     summary={summary}
                     medals={medals}
                 />
-                */}
+
                 {/*summary.activityCount ? (
                     <React.Fragment>
                         <div style={itemDetailsStyle}>

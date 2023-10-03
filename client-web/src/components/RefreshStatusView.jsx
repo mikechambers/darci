@@ -48,7 +48,7 @@ const RefreshStatusView = (props) => {
     const refreshInterval = props.refreshInterval;
     const align = props.align;
     const showLabel = props.showLabel !== undefined ? props.showLabel : true;
-    const width = props.width ? props.width : "50%";
+    const width = props.width ? props.width : "95%";
 
     let elementAlign = "flex-start";
     if (align === "center") {

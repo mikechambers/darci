@@ -299,7 +299,7 @@ body {
 
 .activity_map_name{
   font:var(--font-activity-map-name);
-  white-space: nowrap;
+  /*white-space: nowrap;*/
 }
 
 .activity_mode_name {
