@@ -15,11 +15,12 @@ const opacityLayerStyle = {
     width: "100%",
     height: "100%",
     backgroundColor: "#00000044",
+    minHeight: 120,
 };
 
 const backgroundStyleBase = {
     width: "100%",
-    height: 120,
+    minHeight: 120,
     backgroundSize: "cover",
     backgroundPosition: "center",
     borderRadius: 4,

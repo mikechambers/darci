@@ -91,12 +91,12 @@ const pageLinks = [
         id: "overview",
     },
     {
-        value: "Team Performance",
+        value: "Players",
         id: "teamPerformance",
     },
 
     {
-        value: "Class Meta",
+        value: "Meta",
         id: "classMeta",
     },
     {
@@ -104,7 +104,7 @@ const pageLinks = [
         id: "weapons",
     },
     {
-        value: "Weapon Meta",
+        value: "Meta",
         id: "meta",
     },
     {
@@ -269,13 +269,12 @@ const PlayerView = () => {
                     memberId={memberId}
                     platformId={platformId}
                 />
-
+                {/*
                 <PageSectionView
                     id="overview"
                     title="Overview"
                     description="Your weapon stats"
                 />
-
                 <RefreshStatusView
                     lastUpdate={lastUpdate}
                     refreshInterval={PLAYER_VIEW_REFRESH_INTERVAL}
@@ -285,7 +284,8 @@ const PlayerView = () => {
                     summary={summary}
                     medals={medals}
                 />
-                {summary.activityCount ? (
+                */}
+                {/*summary.activityCount ? (
                     <React.Fragment>
                         <div style={itemDetailsStyle}>
                             <div style={teamPerformanceStyle}>
@@ -392,7 +392,7 @@ const PlayerView = () => {
                     </React.Fragment>
                 ) : (
                     <div>No Activities</div>
-                )}
+                )*/}
             </div>
 
             <ErrorContainerView errors={errors} />

@@ -29,7 +29,7 @@ import PlayerConfigSelectView from "./PlayerConfigSelectView";
 const rootStyle = {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     //width: "var(--page-max-width)",
     width: "100%",
     gap: "var(--nav-item-gap)",
@@ -40,7 +40,7 @@ const rootStyle = {
 
 const navStyle = {
     display: "flex",
-    gap: "24px", //move this to css and reuse
+    gap: "var(--nav-item-gap)", //move this to css and reuse
 };
 
 const MainNavView = (props) => {

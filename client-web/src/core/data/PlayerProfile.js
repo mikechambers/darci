@@ -33,6 +33,9 @@ export const MERCY_PASSAGE_ID = 1600065451;
 //const GLORY_STREAK_ID = "2572719399";
 const VALOR_STREAK_ID = "2203850209";
 
+//number of times they have gone flawless this week
+//https://data.destinysets.com/i/Metric:122451876
+
 //IB streak? 4271189086
 
 /*
@@ -95,6 +98,12 @@ class PlayerProfile {
 
         let lastActiveCharacterProfile = undefined;
         this.#characterProfiles = [];
+
+        var weeklyFlawless = 0;
+        if (data.metrics.data.metrics[122451876]) {
+            weeklyFlawless =
+                data.metrics.data.metrics[122451876].objectiveProgress.progress;
+        }
 
         for (const cId in data.characters.data) {
             let progressions =
@@ -196,9 +205,12 @@ class PlayerProfile {
 
                     const passage = manifest.getTrialsPassageDefinition(id);
 
-                    let hasMercy = false;
                     let showMercy = false;
+                    let firstLossForgiven = false;
+                    let secondLossForgiven = false;
+
                     if (id === MERCY_PASSAGE_ID) {
+                        showMercy = true;
                         const uninstancedItemPerks =
                             data.characterProgressions.data[cId][
                                 "uninstancedItemPerks"
@@ -211,20 +223,38 @@ class PlayerProfile {
                             const perks =
                                 uninstancedItemPerks[MERCY_PASSAGE_ID].perks;
 
-                            for (const p of perks) {
-                                //Forgives one loss per run
-                                if (p.perkHash === 989028955) {
-                                    hasMercy = p.visible;
-                                    showMercy = true;
-                                }
+                            //First loss has been forgiven.
+                            let firstLossPerk = perks.find(
+                                (perk) => perk.perkHash === 2493747060
+                            );
 
-                                /*
-                                if (p.perkHash === 1349727737) {
-                                    //Loss Has Been Forgiven
-                                    hasMercy = !p.visible;
-                                    showMercy = true;
-                                }
-                                */
+                            //"Final loss has been forgiven."
+                            let finalLossPerk = perks.find(
+                                (perk) => perk.perkHash === 1349727737
+                            );
+
+                            //Forgives one loss per run. Forgives a second loss if you have not yet been flawless this week.
+                            let defaultStatePerk = perks.find(
+                                (perk) => perk.perkHash === 989028955
+                            );
+
+                            if (defaultStatePerk.visible) {
+                                firstLossForgiven = false;
+                                secondLossForgiven = false;
+                            }
+
+                            if (firstLossPerk.visible) {
+                                firstLossForgiven = true;
+                            }
+
+                            if (finalLossPerk.visible) {
+                                showMercy = true;
+                                firstLossForgiven = true;
+                                secondLossForgiven = true;
+                            }
+
+                            if (weeklyFlawless > 0) {
+                                firstLossForgiven = true;
                             }
                         }
                     }
@@ -236,7 +266,9 @@ class PlayerProfile {
                         isFlawless,
                         passage,
                         showMercy,
-                        hasMercy,
+                        firstLossForgiven,
+                        secondLossForgiven,
+                        weeklyFlawless,
                     };
                 }
 
@@ -253,6 +285,7 @@ class PlayerProfile {
                     resets: trialsProgression.currentResetCount,
                     currentCard,
                     step,
+                    weeklyFlawless,
                 };
             }
 

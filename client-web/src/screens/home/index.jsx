@@ -34,11 +34,6 @@ import AllTimeLeaderView from "./components/AllTimeLeaderView";
 import SeasonLeaderView from "./components/SeasonLeaderView";
 import WeeklyLeaderView from "./components/WeeklyLeaderView";
 
-const pageContainerStyle = {
-    //minWidth: "720px",
-    width: "100%",
-};
-
 const HomeView = (props) => {
     const { global, dispatchGlobal } = useContext(GlobalContext);
     const players = global.players;
@@ -67,11 +62,7 @@ const HomeView = (props) => {
     let errors = !!metricsErrors ? metricsErrors : [];
 
     return (
-        <div
-            id="page_nav"
-            className="page_containter"
-            style={pageContainerStyle}
-        >
+        <div id="page_nav" className="page_containter">
             <div className="page_content">
                 <ScreenNavigationView links={pageLinks} />
 

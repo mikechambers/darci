@@ -60,8 +60,6 @@ const AllTimeLeaderView = (props) => {
                 leaderData={defeatsLifetime}
                 showTeams={false}
             />
-            <div></div>
-            <div></div>
 
             <LeaderList
                 title="Trials Flawlesses"

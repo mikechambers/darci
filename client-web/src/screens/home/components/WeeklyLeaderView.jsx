@@ -72,7 +72,6 @@ const WeeklyLeaderView = (props) => {
                 leaderData={winStreakWeekly}
                 showTeams={false}
             />
-            <div></div>
 
             <LeaderList
                 title="Trials Flawlesses"

@@ -1,18 +1,18 @@
 import React from "react";
-import RoundedImageView from "../../../../../components/RoundedImageView";
-import StatView from "../../../../../components/StatView";
-import { RIGHT } from "../../../../../core/consts";
-import ProfileFlawlessView from "../ProfileFlawlessView";
-import ProfileMercyView from "../ProfileMercyView";
-import ProfilePassageStatusView from "../ProfilePassageStatusView";
-import MERCY_PASSAGE_ID from "../../../../../core/data/PlayerProfile";
+import RoundedImageView from "../../../../components/RoundedImageView";
+import StatView from "../../../../components/StatView";
+import { RIGHT } from "../../../../core/consts";
+import ProfileFlawlessView from "./ProfileFlawlessView";
+import ProfileMercyView from "./ProfileMercyView";
+import ProfilePassageStatusView from "./ProfilePassageStatusView";
+import MERCY_PASSAGE_ID from "../../../../core/data/PlayerProfile";
 
 const dataContainerStyle = {
-    width: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     marginLeft: "12px",
+    gap: "var(--gap-list-item)",
 };
 
 const containerStyleBase = {
@@ -24,7 +24,8 @@ const containerStyleBase = {
 
 const valuesStyle = {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
+    flexWrap: "wrap",
 };
 
 const TrialsCardView = (props) => {
@@ -39,10 +40,8 @@ const TrialsCardView = (props) => {
 
     const containerStyle = {
         ...containerStyleBase,
-        width: card.showMercy ? 420 : 360,
+        //width: card.showMercy ? 420 : 360,
     };
-
-    let mercyDiv = card.showMercy ? <ProfileMercyView card={card} /> : "";
 
     return (
         <div style={containerStyle}>
@@ -57,15 +56,6 @@ const TrialsCardView = (props) => {
 
                 <div style={valuesStyle}>
                     <ProfilePassageStatusView card={card} />
-                    <ProfileFlawlessView flawless={card.isFlawless} />
-                    {mercyDiv}
-
-                    <StatView
-                        value={card.roundsWon}
-                        label="rounds"
-                        key="rounds"
-                        align={RIGHT}
-                    />
                 </div>
             </div>
         </div>

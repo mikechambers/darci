@@ -12,7 +12,8 @@ import CompExperienceView from "./CompExperienceView";
 import TrialsExperienceView from "./TrialsExperienceView";
 import IronBannerExperienceView from "./IronBannerExperienceView";
 import ValorExperienceView from "./ValorExperienceView";
-import TrialsCardView from "./images/TrialsCardView";
+import TrialsCardView from "./TrialsCardView";
+import ProfileMercyView from "./ProfileMercyView";
 
 const rootStyle = {
     display: "flex",
@@ -84,6 +85,7 @@ const PlayerProfileView = (props) => {
                 <IronBannerExperienceView profile={profile} />
                 <TrialsExperienceView profile={profile} />
                 <TrialsCardView profile={profile} />
+                <ProfileMercyView profile={profile} />
             </div>
         </div>
     );

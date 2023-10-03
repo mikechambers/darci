@@ -54,6 +54,7 @@ const elementStyle = {
     alignItems: "flex-start",
     justifyContent: "center",
     //maxWidth: "720px",
+    flexwrap: "wrap",
 };
 
 const PlayerActivitiesOverview = (props) => {

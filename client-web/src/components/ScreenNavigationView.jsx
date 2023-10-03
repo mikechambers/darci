@@ -47,12 +47,12 @@ const onPageHomeClick = function () {
 const ScreenNavigationView = (props) => {
     const links = props.links;
 
-    const elementStyle = {};
-
     const linkContainerStyle = {
         display: "flex",
         flexDirection: "row",
+        flexWrap: "wrap",
         gap: "var(--nav-item-gap)",
+
         justifyContent: "flex-start",
     };
 
@@ -73,14 +73,14 @@ const ScreenNavigationView = (props) => {
                     className="page_nav_icon"
                 />
             </div>
-            <div id="s" style={elementStyle}>
+            <div id="s">
                 <div style={linkContainerStyle}>
                     {links.map((item, index) => {
                         return (
                             <div
                                 className="nav page"
                                 id={`page_view_nav_${index}`}
-                                key={item.value}
+                                key={item.id}
                                 onClick={() => onClick(index)}
                             >
                                 {item.value}

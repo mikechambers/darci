@@ -9,7 +9,7 @@ const rootStyle = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "flex-end",
+    alignItems: "flex-start",
 };
 
 const ProfileCardStatView = (props) => {
