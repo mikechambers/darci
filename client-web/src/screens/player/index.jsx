@@ -287,7 +287,7 @@ const PlayerView = () => {
                     medals={medals}
                 />
 
-                {/*summary.activityCount ? (
+                {summary.activityCount ? (
                     <React.Fragment>
                         <div style={itemDetailsStyle}>
                             <div style={teamPerformanceStyle}>
@@ -308,7 +308,6 @@ const PlayerView = () => {
                             </div>
 
                             <div>
-                                {" "}
                                 <PageSectionView
                                     id="classMeta"
                                     title="Player Meta"
@@ -340,7 +339,6 @@ const PlayerView = () => {
                                 />
                                 <PlayerMetaWeaponsDetailView weapons={meta} />
                             </div>
-
                             <div>
                                 <PageSectionView
                                     id="medals"
@@ -353,8 +351,9 @@ const PlayerView = () => {
                                 />
                             </div>
                         </div>
-
+                        {/*
                         <div>
+                            
                             <PageSectionView
                                 description="Most recent matches"
                                 id="games"
@@ -391,10 +390,11 @@ const PlayerView = () => {
                             />
                             <PlayerMapSummaryList maps={maps} />
                         </div>
+                                */}
                     </React.Fragment>
                 ) : (
                     <div>No Activities</div>
-                )*/}
+                )}
             </div>
 
             <ErrorContainerView errors={errors} />

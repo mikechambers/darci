@@ -13,15 +13,20 @@ import {
 } from "../../../core/utils/string";
 
 const rootStyle = {
-    display: "flex",
-    flexDirection: "row",
+    //display: "flex",
+    //flexDirection: "row",
 
     backgroundColor: "var(--color-list-item-background)",
     borderRadius: "var(--radius-border)",
     padding: "12px",
 
-    columnGap: "var(--gap-stat-item)",
-    justifyContent: "space-between",
+    //columnGap: "var(--gap-stat-item)",
+    //justifyContent: "space-between",
+
+    //display: "grid",
+    //gridTemplateColumns: "repeat(auto-fill, minmax(40px, 1fr))",
+    //gap: "40px",
+    //justifyContent: "space-between",
 };
 
 const LobbyMetaPlayerSummaryView = (props) => {
@@ -54,7 +59,7 @@ const LobbyMetaPlayerSummaryView = (props) => {
     eff = calculateEfficiency(kills, deaths, assists);
 
     return (
-        <div style={rootStyle}>
+        <div style={rootStyle} className="stat_grid">
             <StatView label="Players" value={count} />
             <StatView label="KD" value={formatFloat(kd)} align={RIGHT} />
             <StatView label="EFF" value={formatFloat(eff)} align={RIGHT} />

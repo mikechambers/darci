@@ -21,10 +21,35 @@
  * SOFTWARE.
  */
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export const useQuery = () => {
     const { search } = useLocation();
     return React.useMemo(() => new URLSearchParams(search), [search]);
 };
+
+function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+        windowWidth: width,
+        windowHeight: height,
+    };
+}
+
+export default function useWindowDimensions() {
+    const [windowDimensions, setWindowDimensions] = useState(
+        getWindowDimensions()
+    );
+
+    useEffect(() => {
+        function handleResize() {
+            setWindowDimensions(getWindowDimensions());
+        }
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    return windowDimensions;
+}

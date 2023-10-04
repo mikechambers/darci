@@ -32,7 +32,8 @@ const style = {
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: "100px",
+    rowGap: "20px",
+    columnGap: "40px",
 };
 
 const PlayerHighlightsView = (props) => {

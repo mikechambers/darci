@@ -5,6 +5,7 @@ import LobbyMetaPlayerSummaryView from "./LobbyMetaPlayerSummaryView";
 const rootStyle = {
     display: "flex",
     flexDirection: "column",
+
     width: "100%",
     gap: "var(--gap-list-item)",
 };

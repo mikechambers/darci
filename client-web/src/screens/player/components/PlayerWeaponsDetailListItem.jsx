@@ -73,6 +73,7 @@ const PlayerWeaponsDetailListItem = (props) => {
         <div style={style}>
             <div style={containerStyle}>
                 <RoundedImageView
+                    className="meta_weapon_icon"
                     height={64}
                     width={64}
                     image={item.weapon.icon}

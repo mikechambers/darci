@@ -32,6 +32,7 @@ const ImageView = (props) => {
     const backgroundColor = !!props.backgroundColor
         ? props.backgroundColor
         : "#00000000";
+    const className = props.className ? props.className : "";
 
     const elementStyle = {
         width: width,
@@ -43,7 +44,14 @@ const ImageView = (props) => {
         flexShrink: "0",
         backgroundColor: backgroundColor,
     };
-    return <div style={elementStyle} title={title} alt={title}></div>;
+    return (
+        <div
+            style={elementStyle}
+            title={title}
+            alt={title}
+            className={className}
+        ></div>
+    );
 };
 
 export default ImageView;

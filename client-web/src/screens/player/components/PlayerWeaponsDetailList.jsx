@@ -29,11 +29,12 @@ import SelectView from "../../../components/SelectView";
 import { LEFT, RIGHT } from "../../../core/consts";
 import ExportData from "../../../core/data/export/ExportData";
 import PlayerWeaponsDetailListItem from "./PlayerWeaponsDetailListItem";
+import useWindowDimensions from "../../../hooks/browser";
 
-const elementStyle = {
+const elementStyleBase = {
     display: "flex",
     flexDirection: "column",
-    width: "422px",
+    maxWidth: "422px",
     gap: 2,
 };
 
@@ -55,10 +56,10 @@ const exportStyle = {
 const PlayerWeaponsDetailList = (props) => {
     const onSortChange = props.onSortChange;
     let weapons = props.weapons;
-
     const sortOptions = props.sortOptions;
 
     const [filterIndex, setFilterIndex] = useState(0);
+    const { windowHeight, windowWidth } = useWindowDimensions();
 
     let itemKey = (index, weapons) => weapons[index].id;
 
@@ -66,6 +67,13 @@ const PlayerWeaponsDetailList = (props) => {
     if (height > MAX_HEIGHT) {
         height = MAX_HEIGHT;
     }
+
+    let itemWidth = windowWidth < 423 ? 340 : 422;
+
+    const elementStyle = {
+        ...elementStyleBase,
+        width: itemWidth,
+    };
 
     const f = (type) => {
         return {
@@ -158,6 +166,8 @@ const PlayerWeaponsDetailList = (props) => {
 
     const data = generateData();
 
+    //423
+
     return (
         <div style={elementStyle}>
             <div style={configStyle}>
@@ -170,7 +180,7 @@ const PlayerWeaponsDetailList = (props) => {
             </div>
             <List
                 height={height}
-                width={422}
+                width={itemWidth}
                 itemData={weapons}
                 itemCount={weapons.length}
                 itemSize={ITEM_HEIGHT}

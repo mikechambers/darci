@@ -39,7 +39,7 @@ const style = {
     backgroundColor: "var(--color-text-container-background)",
     padding: "10px",
     borderRadius: "var(--radius-border)",
-    width: "max-content",
+    //width: "max-content",
     backdropFilter: "var(--blur-background)",
 };
 

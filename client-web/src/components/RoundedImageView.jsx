@@ -7,9 +7,11 @@ const RoundedImageView = (props) => {
     const image = props.image;
     const title = props.title;
     const backgroundColor = props.backgroundColor;
+    const className = props.className ? props.className : "";
 
     return (
         <ImageView
+            className={className}
             title={title}
             borderRadius={4}
             width={width}

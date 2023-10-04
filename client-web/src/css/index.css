@@ -122,6 +122,10 @@
 
 }
 
+
+* {
+  box-sizing: border-box;
+}
 #root {
   height:100%;
 
@@ -655,7 +659,7 @@ input[type='radio'],input[type='checkbox']{
   align-items: center;
 }
 
-label {
+.label {
   white-space: nowrap;
 }
 
@@ -878,4 +882,19 @@ label {
   display: flex;
   flex-wrap: wrap;
   gap: var(--leader-view-grid-gap);
+}
+
+.stat_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+  gap: 40px
+}
+
+.meta_weapon_icon {
+  display:block;
+}
+@media (max-width: 423px) {
+  .meta_weapon_icon {
+    display: none;
+  }
 }

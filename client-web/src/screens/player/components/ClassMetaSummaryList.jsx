@@ -6,6 +6,7 @@ import ClassMetaSummaryView from "./ClassMetaSummaryView";
 const rootStyle = {
     display: "flex",
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: "var(--gap-list-item)",
 };
 

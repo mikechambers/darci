@@ -39,7 +39,7 @@ const elementStyle = {
     backgroundRepeat: "repeat",
     borderRadius: "var(--radius-border)",
     rowGap: "36px",
-    width: "min-content",
+    //width: "min-content",
     padding: "var(--padding-content)",
 };
 

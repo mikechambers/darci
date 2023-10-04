@@ -23,7 +23,7 @@
 
 import React from "react";
 
-import { LARGE, LEFT, SMALL } from "../core/consts";
+import { LARGE, LEFT, RIGHT, SMALL } from "../core/consts";
 
 const StatView = (props) => {
     const label = props.label;
@@ -51,7 +51,11 @@ const StatView = (props) => {
     }
 
     let s = {
+        display: "flex",
+        flexDirection: "column",
         textAlign: align,
+
+        alignItems: align === RIGHT ? "flex-end" : "flex-start",
     };
 
     let highlightStyle = {};

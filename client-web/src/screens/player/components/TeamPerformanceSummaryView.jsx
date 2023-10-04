@@ -14,57 +14,39 @@ import {
 
 const dataContainerStyle = {
     display: "flex",
-
     flexDirection: "column",
     backgroundColor: "var(--color-list-item-background)",
     borderRadius: "var(--radius-border)",
 
-    columnGap: "var(--gap-stat-item)",
+    gap: "var(--gap-stat-item)",
     justifyContent: "space-between",
     marginLeft: "12px",
-    height: "64px",
+    minHeight: "64px",
     width: "100%",
-};
-
-const dataContainerStyle2 = {
-    width: "100%",
-    display: "flex",
-
-    justifyContent: "space-between",
-    marginLeft: "12px",
 };
 
 const containerStyle = {
+    width: "100%",
     display: "flex",
     backgroundColor: "var(--color-list-item-background)",
     borderRadius: "var(--radius-border)",
     padding: "12px",
+    flexWrap: "wrap",
     //gap: "var(--gap-list-item)",
 };
 
+/*
 const valuesStyle = {
-    display: "flex",
-    justifyContent: "space-between",
-};
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(40px, 1fr))",
+
+    gap: "40px",
+    //justifyContent: "space-between",
+};*/
 
 const TeamPerformanceSummaryView = (props) => {
     const teamPerformance = props.teamPerformance;
     const label = props.label ?? "";
-
-    /*
-  '1': {
-    teamType: 1,
-    totalPlayers: 1202,
-    completed: 1012,
-    wins: 549,
-    kills: 11132,
-    deaths: 11295,
-    assists: 5398,
-    grenadeKills: 258,
-    superKills: 742,
-    meleeKills: 1082
-  }
-*/
 
     let count = teamPerformance.totalPlayers;
     let kills = teamPerformance.kills;
@@ -85,7 +67,7 @@ const TeamPerformanceSummaryView = (props) => {
             <div style={dataContainerStyle}>
                 <div className="subsection_header">{label}</div>
 
-                <div style={valuesStyle}>
+                <div className="stat_grid">
                     <StatView label="Players" value={count} />
                     <StatView
                         label="KD"
