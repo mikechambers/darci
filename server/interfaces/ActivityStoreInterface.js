@@ -146,7 +146,7 @@ class ActivityStoreInterface {
 
         this.#select_character_activity_stats_for_activity = this.#db.prepare(`
         SELECT
-        CAST(c.character_id AS TEXT) AS member_id,
+        CAST(c.member AS TEXT) AS member_id,
         CAST(cas.character AS TEXT) AS character_id,
         CAST(cas.fireteam_id AS TEXT) AS fireteam_id,
         cas.assists, cas.score, cas.kills, cas.deaths, cas.completed, 
