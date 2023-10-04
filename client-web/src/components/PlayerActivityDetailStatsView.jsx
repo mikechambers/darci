@@ -68,6 +68,7 @@ const PlayerActivityDetailStatsView = (props) => {
                 title="Kills"
             />
             <StatView
+                className="meta_weapon_icon"
                 key="assists"
                 label="assists"
                 value={stats.assists}

@@ -66,16 +66,18 @@ const StatView = (props) => {
     }
 
     return (
-        <div style={s} className="activity_header_stats">
-            <div
-                className={valueClassName}
-                title={title}
-                style={highlightStyle}
-            >
-                {value.toLocaleString()}
-            </div>
-            <div title={title} className={labelClassName}>
-                {label}
+        <div style={s}>
+            <div className={className}>
+                <div
+                    className={valueClassName}
+                    title={title}
+                    style={highlightStyle}
+                >
+                    {value.toLocaleString()}
+                </div>
+                <div title={title} className={labelClassName}>
+                    {label}
+                </div>
             </div>
         </div>
     );

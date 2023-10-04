@@ -8,10 +8,10 @@ import ListLinkIndicatorView from "./ListLinkIndicatorView";
 import { CompletionReason } from "shared";
 
 const rootStyle = {
-    display: "grid",
-    //gridTemplateColumns: "6px 218px 370px 20px auto 10px",
+    display: "flex",
+    gridTemplateColumns: "6px 218px 370px 20px auto 10px",
 
-    gridTemplateColumns: "6px auto 370px auto auto 10px",
+    //gridTemplateColumns: "6px 218px 370px auto auto 10px",
     //gridTemplateColumns: "repeat(auto-fill, minmax(40px, 1fr))",
     //display: "flex",
     //alignItems: "space-between",
@@ -21,7 +21,7 @@ const rootStyle = {
     alignItems: "center",
     columnGap: 6,
     justifyContent: "space-between",
-    backgroundColor: "yellow",
+    backgroundColor: "rgba(100,100,100,0.3)",
 };
 
 const statusViewStyle = {
