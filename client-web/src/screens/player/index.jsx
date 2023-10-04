@@ -351,9 +351,8 @@ const PlayerView = () => {
                                 />
                             </div>
                         </div>
-                        {/*
+
                         <div>
-                            
                             <PageSectionView
                                 description="Most recent matches"
                                 id="games"
@@ -381,7 +380,7 @@ const PlayerView = () => {
                                 summary={summary}
                             />
                         </div>
-
+                        {/*
                         <div>
                             <PageSectionView
                                 id="maps"

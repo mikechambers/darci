@@ -4,7 +4,7 @@ import { useState } from "react";
 import ActivityPlayerListItemDrawer from "./ActivityPlayerListItemDrawer";
 
 const rootStyle = {
-    width: "min-content", //min-content
+    width: "100%", //min-content
     display: "flex",
     flexDirection: "column",
 };

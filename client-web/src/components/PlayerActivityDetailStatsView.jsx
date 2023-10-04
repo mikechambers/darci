@@ -32,6 +32,8 @@ const rootStyle = {
     display: "grid",
     gridTemplateColumns: "repeat(7, 1fr)",
     columnGap: "var(--gap-stat-item)",
+
+    backgroundColor: "green",
 };
 
 const PlayerActivityDetailStatsView = (props) => {
@@ -47,8 +49,9 @@ const PlayerActivityDetailStatsView = (props) => {
     );
 
     return (
-        <div style={rootStyle}>
+        <div style={rootStyle} className="stats_grid">
             <StatView
+                className="meta_weapon_icon"
                 key="score"
                 label="Score"
                 value={stats.score}
@@ -72,6 +75,7 @@ const PlayerActivityDetailStatsView = (props) => {
                 title="Assists"
             />
             <StatView
+                className="meta_weapon_icon"
                 key="defeats"
                 label="defeats"
                 value={stats.opponentsDefeated}
@@ -95,6 +99,7 @@ const PlayerActivityDetailStatsView = (props) => {
                 title="KD"
             />
             <StatView
+                className="meta_weapon_icon"
                 key="eff"
                 label="eff"
                 value={efficiency}

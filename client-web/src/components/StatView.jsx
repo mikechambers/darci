@@ -29,6 +29,7 @@ const StatView = (props) => {
     const label = props.label;
     const value = props.value;
     const styleName = props.styleName;
+    const className = props.className ? props.className : "";
 
     const align = props.align ? props.align : LEFT;
     const highlight = props.highlight === true ? true : false;
@@ -51,10 +52,7 @@ const StatView = (props) => {
     }
 
     let s = {
-        display: "flex",
-        flexDirection: "column",
         textAlign: align,
-
         alignItems: align === RIGHT ? "flex-end" : "flex-start",
     };
 
@@ -68,7 +66,7 @@ const StatView = (props) => {
     }
 
     return (
-        <div style={s}>
+        <div style={s} className="activity_header_stats">
             <div
                 className={valueClassName}
                 title={title}

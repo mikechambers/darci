@@ -893,8 +893,18 @@ input[type='radio'],input[type='checkbox']{
 .meta_weapon_icon {
   display:block;
 }
+
+.activity_header_stats {
+  display: flex;
+  flex-direction: column;
+}
+
 @media (max-width: 423px) {
   .meta_weapon_icon {
     display: none;
+  }
+
+  .activity_header_stats {
+
   }
 }
