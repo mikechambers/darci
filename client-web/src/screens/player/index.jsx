@@ -91,7 +91,7 @@ const pageLinks = [
         id: "overview",
     },
     {
-        value: "Team Performance",
+        value: "Teams",
         id: "teamPerformance",
     },
 

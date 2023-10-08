@@ -221,7 +221,7 @@ class Manifest {
         };
 
         let m = this.#manifestData.data.activityModeDefinitions[mode.id];
-        console.log(m);
+
         if (!m) {
             console.log(
                 `Manifest.getModeInfo : Could not find activity mode definition [${mode.label}]`

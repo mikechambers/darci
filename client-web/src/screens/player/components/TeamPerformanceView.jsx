@@ -17,7 +17,7 @@ const TeamPerformance = (props) => {
     if (playerTeamPerformance) {
         pElement = (
             <TeamPerformanceSummaryView
-                label="Your Team Players"
+                label="Your Team"
                 teamPerformance={playerTeamPerformance}
             />
         );
@@ -28,7 +28,7 @@ const TeamPerformance = (props) => {
         oElement = (
             <TeamPerformanceSummaryView
                 teamPerformance={opponentTeamPerformance}
-                label="Opponent Team Players"
+                label="Opponent Team"
             />
         );
     }
