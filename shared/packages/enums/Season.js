@@ -155,6 +155,13 @@ class Season extends EnumBase {
         Moment.SEASON_OF_THE_WITCH.type,
         Moment.SEASON_OF_THE_WITCH.label,
         Moment.SEASON_OF_THE_WITCH,
+        Moment.SEASON_OF_THE_WISH
+    );
+
+    static SEASON_OF_THE_WISH = new Season(
+        Moment.SEASON_OF_THE_WISH.type,
+        Moment.SEASON_OF_THE_WISH.label,
+        Moment.SEASON_OF_THE_WISH,
         Moment.NOW
     );
 

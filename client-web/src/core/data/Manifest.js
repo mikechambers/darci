@@ -26,7 +26,7 @@ const { ItemSubType, AmmunitionType } = require("shared");
 //hard coded from Manifest from DestinyPresentationNodeDefinition
 //if they change, then we can add them to our own manifest data on the server
 export const UNKNOWN_ICON_URL =
-    "https://www.bungie.net/common/destiny2_content/icons/f3c27772a3d98c91fef127ce32e9f1e0.png";
+    "https://www.bungie.net/common/destiny2_content/icons/ae241856bffbe08ac1893e033245666d.png";
 export const HUNTER_ICON_URL =
     "https://www.bungie.net/common/destiny2_content/icons/05e32a388d9a65a0ef59b2193eee2db4.png";
 export const TITAN_ICON_URL =
