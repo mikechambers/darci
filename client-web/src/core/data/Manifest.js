@@ -141,7 +141,7 @@ class Manifest {
             directActivityModeHash: undefined,
             id: id,
         };
-
+        console.log(id);
         if (!this.#manifestData.data.activityDefinition) {
             return out;
         }

@@ -458,6 +458,32 @@ class ManifestInterface {
             mode: Mode.CHECKMATE_RUMBLE.id,
         };
 
+        activityModeDefinitions[Mode.CHECKMATE_CLASH.id] = {
+            ...activityModeDefinitions[Mode.CLASH.id],
+            name: "Checkmate: Clash",
+            description: checkmateDescription,
+            mode: Mode.CHECKMATE_CLASH.id,
+        };
+
+        activityModeDefinitions[Mode.CHECKMATE_COUNTDOWN.id] = {
+            ...activityModeDefinitions[Mode.COUNTDOWN.id],
+            name: "Checkmate: Countdown",
+            description: checkmateDescription,
+            mode: Mode.CHECKMATE_COUNTDOWN.id,
+        };
+
+        activityModeDefinitions[Mode.COUNTDOWN_COMPETITIVE.id] = {
+            ...activityModeDefinitions[Mode.COUNTDOWN.id],
+            name: "Countdown: Competitive",
+            mode: Mode.COUNTDOWN_COMPETITIVE.id,
+        };
+
+        activityModeDefinitions[Mode.IRON_BANNER_TRIBUTE.id] = {
+            ...activityModeDefinitions[Mode.IRON_BANNER.id],
+            name: "Iron Banner : Tribute",
+            mode: Mode.IRON_BANNER_TRIBUTE.id,
+        };
+
         rows = this.#select_emblem_definitions.all();
 
         let emblemDefinitions = {};

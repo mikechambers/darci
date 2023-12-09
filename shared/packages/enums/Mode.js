@@ -26,32 +26,12 @@ const EnumBase = require("./EnumBase");
 class Mode extends EnumBase {
     static UNKNOWN = new Mode("Unknown", -1);
     static NONE = new Mode("None", 0);
-    //static TITAN = new Mode("Story", 2);
-    //static TITAN = new Mode("Strike", 3);
-    //static TITAN = new Mode("Raid", 4);
     static ALL_PVP = new Mode("AllPvP", 5, "All PvP");
-    static TITAN = new Mode("Patrol", 6);
-    //static TITAN = new Mode("AllPvE", 7);
-    //static TITAN = new Mode("Reserved9", 9);
     static CONTROL = new Mode("Control", 10);
-    //static TITAN = new Mode("Reserved11", 11);
     static CLASH = new Mode("Clash", 12);
-    //static TITAN = new Mode("Reserved13", 13);
     static CRIMSON_DOUBLES = new Mode("CrimsonDoubles", 15, "Crimsom Doubles");
-    //static TITAN = new Mode("Nightfall", 16);
-    //static TITAN = new Mode("HeroicNightfall", 17);
-    //static TITAN = new Mode("AllStrikes", 18);
     static IRON_BANNER = new Mode("IronBanner", 19, "Iron Banner");
-    //static TITAN = new Mode("Reserved20", 20);
-    //static TITAN = new Mode("Reserved21", 21);
-    //static TITAN = new Mode("Reserved22", 22);
-    //static TITAN = new Mode("Reserved24", 24);
     static MAYHEM = new Mode("Mayhem", 25, "Mayhem");
-    //static TITAN = new Mode("Reserved26", 26);
-    //static TITAN = new Mode("Reserved27", 27);
-    //static TITAN = new Mode("Reserved28", 28);
-    //static TITAN = new Mode("Reserved29", 29);
-    //static TITAN = new Mode("Reserved30", 30);
     static SUPREMACY = new Mode("Supremacy", 31);
     static PRIVATE_MATCHES_ALL = new Mode(
         "PrivateMatchesAll",
@@ -127,15 +107,13 @@ class Mode extends EnumBase {
         57,
         "Private Matches Rumble"
     );
-    //static TITAN = new Mode("HeroicAdventure", 58);
+
     static SHOWDOWN = new Mode("Showdown", 59);
     static LOCKDOWN = new Mode("Lockdown", 60);
     static SCORCHED = new Mode("Scorched", 61);
     static SCORCHED_TEAM = new Mode("ScorchedTeam", 62, "Team Scorched");
-    //static TITAN = new Mode("Gambit", 63);
-    //static TITAN = new Mode("AllPvECompetitive", 64);
     static BREAKTHROUGH = new Mode("Breakthrough", 65);
-    //static TITAN = new Mode("BlackArmoryRun", 66);
+
     static SALVAGE = new Mode("Salvage", 67);
     static IRON_BANNER_SALVAGE = new Mode(
         "IronBannerSalvage",
@@ -160,21 +138,14 @@ class Mode extends EnumBase {
         74,
         "Control Competitive"
     );
-    //static TITAN = new Mode("GambitPrime", 75);
-    //static TITAN = new Mode("Reckoning", 76);
-    //static TITAN = new Mode("Menagerie", 77);
-    //static TITAN = new Mode("VexOffensive", 78);
-    //static TITAN = new Mode("NightmareHunt", 79);
+
     static ELIMINATION = new Mode("Elimination", 80);
     static MOMENTUM = new Mode("Momentum", 81);
-    //static TITAN = new Mode("Dungeon", 82);
-    //static TITAN = new Mode("Sundial", 83);
     static TRIALS_OF_OSIRIS = new Mode(
         "TrialsOfOsiris",
         84,
         "Trials of Osiris"
     );
-    //static TITAN = new Mode("Dares", 85);
     static RIFT = new Mode("Rift", 88, "Rift");
     static ZONE_CONTROL = new Mode("ZoneControl", 89, "Zone Control");
     static IRON_BANNER_RIFT = new Mode(
@@ -209,6 +180,12 @@ class Mode extends EnumBase {
         "Competitive Survival"
     );
 
+    static COUNTDOWN_COMPETITIVE = new Mode(
+        "CountdownCompetitive",
+        703,
+        "Countdown Survival"
+    );
+
     static CHECKMATE_ALL = new Mode("CheckmateAll", 710, "Checkmate All");
     static CHECKMATE_CONTROL = new Mode(
         "CheckmateControl",
@@ -225,6 +202,80 @@ class Mode extends EnumBase {
         713,
         "Checkmate Rumble"
     );
+
+    static CHECKMATE_CLASH = new Mode("CheckmateClash", 714, "Checkmate Clash");
+    static CHECKMATE_COUNTDOWN = new Mode(
+        "CheckmateCountdown",
+        715,
+        "Checkmate Countdown"
+    );
+
+    static IRON_BANNER_TRIBUTE = new Mode(
+        "IronBannerTribute",
+        800,
+        "Iron Banner Tribute"
+    );
+
+    static allCases = [
+        Mode.PVP_QUICKPLAY,
+        Mode.PVP_COMPETITIVE,
+        Mode.TRIALS_OF_OSIRIS,
+        Mode.IRON_BANNER,
+        Mode.RUMBLE,
+        Mode.CONTROL_QUICKPLAY,
+        Mode.CLASH_QUICKPLAY,
+        Mode.MAYHEM,
+        Mode.MOMENTUM,
+        Mode.ELIMINATION,
+        Mode.SUPREMACY,
+        Mode.CHECKMATE_ALL,
+        Mode.PRIVATE_MATCHES_ALL,
+        Mode.ALL_PVP,
+        Mode.CONTROL,
+        Mode.CLASH,
+        Mode.CRIMSON_DOUBLES,
+        Mode.SURVIVAL,
+        Mode.COUNTDOWN,
+        Mode.TRIALS_OF_THE_NINE,
+        Mode.TRIALS_COUNTDOWN,
+        Mode.TRIALS_SURVIVAL,
+        Mode.IRON_BANNER_CONTROL,
+        Mode.IRON_BANNER_CLASH,
+        Mode.IRON_BANNER_SUPREMACY,
+        Mode.ALL_DOUBLES,
+        Mode.DOUBLES,
+        Mode.PRIVATE_MATCHES_CLASH,
+        Mode.PRIVATE_MATCHES_CONTROL,
+        Mode.PRIVATE_MATCHES_SUPREMACY,
+        Mode.PRIVATE_MATCHES_COUNTDOWN,
+        Mode.PRIVATE_MATCHES_SURVIVAL,
+        Mode.PRIVATE_MATCHES_MAYHEM,
+        Mode.PRIVATE_MATCHES_RUMBLE,
+        Mode.SHOWDOWN,
+        Mode.LOCKDOWN,
+        Mode.SCORCHED,
+        Mode.SCORCHED_TEAM,
+        Mode.BREAKTHROUGH,
+        Mode.SALVAGE,
+        Mode.IRON_BANNER_SALVAGE,
+        Mode.CLASH_COMPETITIVE,
+        Mode.CONTROL_COMPETITIVE,
+        Mode.RIFT,
+        Mode.ZONE_CONTROL,
+        Mode.IRON_BANNER_RIFT,
+        Mode.IRON_BANNER_ZONE_CONTROL,
+        Mode.RELIC,
+        Mode.RIFT_COMPETITIVE,
+        Mode.SHOWDOWN_COMPETITIVE,
+        Mode.SURVIVAL_COMPETITIVE,
+        Mode.COUNTDOWN_COMPETITIVE,
+        Mode.CHECKMATE_CONTROL,
+        Mode.CHECKMATE_SURVIVAL,
+        Mode.CHECKMATE_RUMBLE,
+        Mode.CHECKMATE_CLASH,
+        Mode.CHECKMATE_COUNTDOWN,
+        Mode.IRON_BANNER_TRIBUTE,
+    ];
 
     constructor(type, id, label = undefined) {
         super(type, id, label);

@@ -26,9 +26,9 @@ import React from "react";
 import Mode from "shared/packages/enums/Mode";
 import EnumSelect from "./EnumSelect";
 
+/*
 const modes = [
     Mode.PVP_QUICKPLAY,
-
     Mode.PVP_COMPETITIVE,
     Mode.TRIALS_OF_OSIRIS,
     Mode.IRON_BANNER,
@@ -47,6 +47,7 @@ const modes = [
     Mode.PRIVATE_MATCHES_ALL,
     Mode.ALL_PVP,
 ];
+*/
 
 const ModeSelect = (props) => {
     const onChange = props.onChange;
@@ -58,7 +59,7 @@ const ModeSelect = (props) => {
     return (
         <EnumSelect
             onChange={onChange}
-            options={modes}
+            options={Mode.allCases}
             selected={selected}
             label={label}
             maxLabelLength={maxLabelLength}
