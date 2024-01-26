@@ -484,6 +484,12 @@ class ManifestInterface {
             mode: Mode.IRON_BANNER_TRIBUTE.id,
         };
 
+        activityModeDefinitions[Mode.IRON_BANNER_FORTRESS.id] = {
+            ...activityModeDefinitions[Mode.IRON_BANNER.id],
+            name: "Iron Banner : Fortress",
+            mode: Mode.IRON_BANNER_FORTRESS.id,
+        };
+
         rows = this.#select_emblem_definitions.all();
 
         let emblemDefinitions = {};

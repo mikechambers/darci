@@ -17,6 +17,8 @@ const CompareOverviewSectionView = (props) => {
 
     let data = formatData(summary1, summary2);
 
+    console.log(summary1);
+
     return <CompareSectionView data={data} id="stats" />;
 };
 
@@ -46,6 +48,31 @@ const formatData = function (s0, s1) {
             ),
             formatPercentInt
         ),
+        createRow(
+            "Timer Expired %",
+            calculateRatio(
+                s0.summary.completionReasonTimeExpired,
+                s0.summary.activityCount
+            ),
+            calculateRatio(
+                s1.summary.completionReasonTimeExpired,
+                s1.summary.activityCount
+            ),
+            formatPercentInt
+        ),
+        createRow(
+            "Objective Completed %",
+            calculateRatio(
+                s0.summary.completionReasonObjectiveCompleted,
+                s0.summary.activityCount
+            ),
+            calculateRatio(
+                s1.summary.completionReasonObjectiveCompleted,
+                s1.summary.activityCount
+            ),
+            formatPercentInt
+        ),
+
         createRow(
             "Completed %",
             calculateRatio(s0.summary.completed, s0.summary.activityCount),

@@ -216,6 +216,12 @@ class Mode extends EnumBase {
         "Iron Banner Tribute"
     );
 
+    static IRON_BANNER_FORTRESS = new Mode(
+        "IronBannerFortress",
+        801,
+        "Iron Banner Fortress"
+    );
+
     static allCases = [
         Mode.PVP_QUICKPLAY,
         Mode.PVP_COMPETITIVE,
@@ -275,6 +281,7 @@ class Mode extends EnumBase {
         Mode.CHECKMATE_CLASH,
         Mode.CHECKMATE_COUNTDOWN,
         Mode.IRON_BANNER_TRIBUTE,
+        Mode.IRON_BANNER_FORTRESS,
     ];
 
     constructor(type, id, label = undefined) {

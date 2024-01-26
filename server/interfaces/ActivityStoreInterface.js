@@ -485,6 +485,8 @@ class ActivityStoreInterface {
             COALESCE(sum(time_played_seconds),0) as timePlayedSeconds,
             COALESCE(sum(CASE WHEN character_activity_stats.standing = 0 THEN 1 ELSE 0 END),0) as wins,
             COALESCE(sum(CASE WHEN character_activity_stats.completion_reason = 4 THEN 1 ELSE 0 END),0) as completionReasonMercy,
+            COALESCE(sum(CASE WHEN character_activity_stats.completion_reason = 0 THEN 1 ELSE 0 END),0) as completionReasonObjectiveCompleted,
+            COALESCE(sum(CASE WHEN character_activity_stats.completion_reason = 1 THEN 1 ELSE 0 END),0) as completionReasonTimeExpired,
             COALESCE(sum(completed),0) as completed,
             COALESCE(sum(assists),0) as assists,
             COALESCE(sum(character_activity_stats.kills),0) as kills,
