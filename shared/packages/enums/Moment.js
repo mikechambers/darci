@@ -138,6 +138,16 @@ class Moment extends EnumBase {
         "Season of the Wish"
     );
 
+    static THE_FINAL_SHAPE = new Moment(
+        "TheFinalShape",
+        "The Final Shape"
+    );
+
+    static EPISODE_ECHOES = new Moment(
+        "EpisodeEchoes",
+        "Episode : Echoes"
+    );
+
     constructor(type, label = undefined) {
         super(type, undefined, label);
     }
@@ -265,6 +275,14 @@ class Moment extends EnumBase {
 
         if (this == Moment.SEASON_OF_THE_WISH) {
             return new Date(Date.UTC(2023, 10, 28, 17, 0, 0));
+        }
+
+        if (this == Moment.THE_FINAL_SHAPE) {
+            return new Date(Date.UTC(2024, 5, 4, 17, 0, 0));
+        }
+
+        if (this == Moment.EPISODE_ECHOES) {
+            return new Date(Date.UTC(2024, 5, 4, 17, 0, 0));
         }
 
         return undefined;

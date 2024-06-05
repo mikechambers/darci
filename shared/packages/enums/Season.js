@@ -162,6 +162,13 @@ class Season extends EnumBase {
         Moment.SEASON_OF_THE_WISH.type,
         Moment.SEASON_OF_THE_WISH.label,
         Moment.SEASON_OF_THE_WISH,
+        Moment.EPISODE_ECHOES
+    );
+
+    static EPISODE_ECHOES = new Season(
+        Moment.EPISODE_ECHOES.type,
+        Moment.EPISODE_ECHOES.label,
+        Moment.EPISODE_ECHOES,
         Moment.NOW
     );
 
